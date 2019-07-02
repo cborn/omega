@@ -1,0 +1,8 @@
+import omega.LessonPage
+
+model {
+	Iterable<LessonPage> lessonPageList
+}
+
+json tmpl.lessonPage(lessonPageList ?: [])
+

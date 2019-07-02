@@ -1,0 +1,7 @@
+import omega.LessonPage
+
+model {
+	LessonPage lessonPage
+}
+
+json g.render(lessonPage, [resolveTemplate: true,excludes: ["lesson"]])

@@ -1,0 +1,7 @@
+import omega.Course
+
+model {
+	Course course
+}
+
+json g.render(course, [resolveTemplate: false])

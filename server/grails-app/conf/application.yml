@@ -75,15 +75,33 @@ hibernate:
 dataSource:
     pooled: true
     jmxExport: true
-    driverClassName: org.h2.Driver
+    driverClassName: org.postgresql.Driver
     username: sa
     password: ''
 
 environments:
     development:
         dataSource:
+            pooled: true
+            jmxExport: true
+            driverClassName: org.postgresql.Driver
+            username: ${LL_DB_USERNAME}
+            password: ${LL_DB_PASSWORD}
             dbCreate: create-drop
-            url: jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+            url: jdbc:postgresql://${LL_DB_HOSTNAME}:${LL_DB_PORT}/${LL_DB_NAME}
+            properties:
+                timeBetweenEvictionRunsMillis: 5000
+                minEvictableIdleTimeMillis: 60000
+                validationQuery: "SELECT 1"
+                validationQueryTimeout: 3
+                validationInterval: 15000
+                testOnBorrow: true
+                testWhileIdle: true
+                testOnReturn: false
+                dbProperties:
+                    autoReconnect: false
+                    connectTimeout: 15000
+                    socketTimeout: 120000
     test:
         dataSource:
             dbCreate: update

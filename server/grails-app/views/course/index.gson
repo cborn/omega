@@ -1,0 +1,8 @@
+import omega.Course
+
+model {
+	Iterable<Course> courseList
+}
+
+json tmpl.course(courseList ?: [])
+

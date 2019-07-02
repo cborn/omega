@@ -1,0 +1,7 @@
+import omega.LessonPage
+
+model {
+	LessonPage lessonPage
+}
+
+json tmpl.lessonPage(lessonPage)

@@ -1,0 +1,27 @@
+import omega.Question
+
+model {
+	Question question
+}
+
+json {
+	id question.id
+	required question.required
+	type question.type
+	if (question.custom_properties.size() > 0){
+		custom_properties question.custom_properties
+	}
+	name question.name
+	max_grade question.max_grade
+	description question.description
+	if (question.hasFeedback()) {
+		prompts {
+			imagePrompt question.imagePrompt
+			imageFeedback question.imageFeedback
+			videoPrompt question.videoPrompt
+			videoFeedback question.videoFeedback
+			audioPrompt question.audioPrompt
+			audioFeedback question.audioFeedback
+		}
+	}
+}

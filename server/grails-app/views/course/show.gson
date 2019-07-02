@@ -1,0 +1,7 @@
+import omega.Course
+
+model {
+	Course course
+}
+
+json tmpl.course(course)

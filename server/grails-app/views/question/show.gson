@@ -1,0 +1,7 @@
+import omega.Question
+
+model {
+	Question question
+}
+
+json tmpl.question(question)

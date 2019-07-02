@@ -1,0 +1,8 @@
+import omega.Question
+
+model {
+	Iterable<Question> questionList
+}
+
+json tmpl.question(questionList ?: [])
+

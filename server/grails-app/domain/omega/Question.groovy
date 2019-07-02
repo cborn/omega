@@ -1,0 +1,108 @@
+package omega
+
+import grails.converters.JSON
+
+import static grails.converters.JSON.parse
+
+class Question {
+
+    static constraints = {
+        name nullable:false
+        description nullable:true
+        imagePrompt nullable:true
+        imageFeedback nullable:true
+        videoFeedback nullable:true
+        audioFeedback nullable:true
+        audioPrompt nullable:true
+        videoPrompt nullable:true
+
+
+    }
+
+    static belongsTo = [page:LessonPage]
+
+    QuestionType type;
+
+    boolean required = false;
+
+    String description;
+
+    String name;
+
+    ImageProperty imagePrompt;
+
+    ImageProperty imageFeedback;
+
+    VideoProperty videoPrompt;
+
+    VideoProperty videoFeedback;
+
+    AudioProperty audioPrompt;
+
+    AudioProperty audioFeedback;
+
+    int max_grade;
+
+    Map<QuestionPropertyKeys,String> custom_properties
+
+    def hasFeedback(){
+        return imagePrompt != null || imageFeedback != null || videoPrompt != null || videoFeedback != null || audioPrompt != null || audioFeedback != null;
+    }
+
+    static final enum QuestionPropertyKeys {
+
+
+        CORRECT_ANSWER("correct"),
+        FEEDBACK_CORRECT("feedback_correct"), // This can be a single string or an array to correspond with each choice.
+        FEEDBACK_INCORRECT("feedback_incorrect"), // this can be a single string or an array to correspond with each choice.
+        IS_MULTI_SELECT("multi"), // Allow the user to pick multiple answers
+        MULTI_LIMIT_MIN("multi_limit_min"), // the minimum number to pick
+        MULTI_LIMIT_MAX("multi_limit_max"), // the maximum number to pick
+        RANDOMISE("random"), // Randomize the order
+        STACK("stack"), // Stack them ontop of eachother
+        MAX_CHARS("max_chars"),
+        BUTTON_TEXT("button_text"),
+        IMAGES("images"), // for multi image question the images to show.
+        START("start"), // could be a number or a date.
+        END("end"), // number or a date
+        STEP("step"),
+        LABELS("labels"), // an array of three strings - the label for the start, middle and end of the scale.
+        FORMAT("format"), // format to diplay the date in
+        ALPHABETICAL("alphabetical"), // display the dropdown in alphaberical order.
+        MULTI_PART("multipart"),
+        LENGTH_LIMIT("length_limit"),
+        PROMPT_SYNC("prompt_sync"), // play the prompt when the student start recording
+        CLOZE_TEXT("cloze_text"), // This is a string which contains the @@ character where an input is required
+        CLOZE_PROMPTS("cloze_prompts"); // This is an array of arrays which contains number of prompts e.g. [[],["Bird","Fox","Hare"],[]] - here if the array is empty this means the user should type the answer in the space.
+
+
+        String key_name;
+
+        QuestionPropertyKeys(String key) {
+            this.key_name = key;
+        }
+
+    }
+
+
+
+}
+
+
+enum QuestionType {
+
+    MULTI_CHOICE,
+    SHORT_TEXT,
+    LONG_TEXT,
+    BLOCK_TEXT,
+    PICTURE_CHOICE,
+    BOOLEAN,
+    SCALE,
+    DATE,
+    NUMBER,
+    DROPDOWN,
+    VOICE,
+    CLOZE
+
+
+}
