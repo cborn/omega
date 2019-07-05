@@ -6,7 +6,7 @@ import {LessonBuilderComponent} from './lesson-builder/lesson-builder.component'
 const routes: Routes = [
   {path: '', redirectTo: 'index', pathMatch: 'full'},
   {path: 'index', component: IndexComponent},
-  {path: 'lesson/builder', component: LessonBuilderComponent}
+  {path: 'lesson/builder/:lessonId', component: LessonBuilderComponent}
 
 ];
 

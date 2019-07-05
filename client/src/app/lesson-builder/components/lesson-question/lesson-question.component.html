@@ -1,0 +1,28 @@
+<form [ngClass]="{'selected': selectedQuestion == question.id}" class="parent-container">
+
+    <table class="full-width" cellspacing="0">
+        <tr>
+            <td style="vertical-align: top;width: 100px;">
+                <div [classList]="'icon-q-block icon-q-block-'+question.type"
+                     (click)="toggleSidebar()">{{question.type}}</div>
+            </td>
+            <td>
+                <mat-form-field class="full-width">
+                    <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                              [(ngModel)]="question.name" placeholder="Type question here"
+                              name="question-text"></textarea>
+
+
+                </mat-form-field>
+
+                <mat-form-field class="full-width" *ngIf="question.description != null">
+                    <textarea matInput cdkTextareaAutosize #autosize2="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                              [(ngModel)]="question.description"
+                              placeholder="Write your description here" name="description-text"></textarea>
+                </mat-form-field>
+
+            </td>
+        </tr>
+    </table>
+
+</form>

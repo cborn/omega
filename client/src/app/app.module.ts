@@ -10,7 +10,15 @@ import {LessonBuilderComponent} from './lesson-builder/lesson-builder.component'
 import {HttpClientModule} from '@angular/common/http';
 import {AppRoutingModule} from './app-routing.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatGridList, MatGridListModule, MatSidenavModule, MatToolbarModule} from '@angular/material';
+import {
+    MatButtonModule,
+    MatGridList,
+    MatGridListModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatToolbarModule
+} from '@angular/material';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTableModule} from '@angular/material/table';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -24,13 +32,17 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatCardModule} from '@angular/material/card';
+import { LessonQuestionComponent } from './lesson-builder/components/lesson-question/lesson-question.component';
+import { SidebarComponent } from './lesson-builder/components/sidebar/sidebar.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         NavComponent,
         IndexComponent,
-        LessonBuilderComponent
+        LessonBuilderComponent,
+        LessonQuestionComponent,
+        SidebarComponent
     ],
     imports: [
         BrowserModule,
@@ -56,7 +68,9 @@ import {MatCardModule} from '@angular/material/card';
         MatCardModule,
         MatSidenavModule,
         MatGridListModule,
-        MatToolbarModule
+        MatToolbarModule,
+        MatOptionModule,
+        MatSelectModule
     ],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, NavService],
     bootstrap: [AppComponent]

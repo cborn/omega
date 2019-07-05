@@ -1,0 +1,24 @@
+.parent-container {
+    width: 100%;
+    padding: 10px;
+}
+
+.parent-container:hover {
+    background-color: rgb(250,250,250);
+}
+
+.parent-container.selected {
+    background-color: rgb(250,250,250);
+}
+
+.icon-q-block {
+    background: red;
+    width: 50px;
+    padding: 8px;
+    border-radius: 5px;
+    color: white;
+}
+
+.full-width {
+    width: 100%;
+}

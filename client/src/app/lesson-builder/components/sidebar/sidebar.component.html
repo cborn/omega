@@ -1,0 +1,25 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <span>Question Settings</span>
+    <span class="example-spacer"></span>
+    <mat-icon aria-hidden="false" class="sidebar-close-icon" aria-label="Close the sidebar" (click)="closeSidebarAction()">close</mat-icon>
+  </mat-toolbar-row>
+
+
+</mat-toolbar>
+
+<form>
+<mat-form-field>
+  <mat-label>Question Type</mat-label>
+  <mat-select [(ngModel)]="question.type" name="type-select">
+    <mat-option *ngFor="let type of questionTypes" [value]="type.value">
+      {{type.name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<br/>
+
+    <mat-slide-toggle color="primary" (click)="question.description == null ? question.description = '' : question.description = null">
+      Description!
+    </mat-slide-toggle>
+</form>

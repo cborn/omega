@@ -3,14 +3,7 @@
     <mat-sidenav mode="side" [(opened)]="sidebar_open" class="side-panel">
         <!--// This side panel content will be populated by what ever question is currently selected-->
 
-        <mat-toolbar>
-            <mat-toolbar-row>
-                <span>Question Settings</span>
-                <span class="example-spacer"></span>
-                <mat-icon aria-hidden="false" class="sidebar-close-icon" aria-label="Close the sidebar" (click)="sidebar_open = !sidebar_open">close</mat-icon>
-            </mat-toolbar-row>
-        </mat-toolbar>
-
+        <app-sidebar [question]="sidebar_question" (closeSidebar)="closeSidebar()" *ngIf="sidebar_question"></app-sidebar>
 
     </mat-sidenav>
     <mat-sidenav-content>
@@ -18,7 +11,11 @@
 
         <mat-grid-list cols="4" rowHeight="100%">
             <mat-grid-tile [colspan]="2" [rowspan]="1">
-                <button (click)="sidebar_open = !sidebar_open">Open / Close</button>
+
+
+                <div *ngIf="lesson">
+                    <app-lesson-question class="question-item" *ngFor="let question of lesson.questions" [question]="question" (questionSelected)="openSidebar($event)" [selectedQuestion]="currentQuestion"(click)="currentQuestion = question.id" ></app-lesson-question>
+                </div>
 
             </mat-grid-tile>
             <mat-grid-tile [colspan]="2" [rowspan]="1" class="right-panel">
@@ -30,7 +27,6 @@
 
 
         <div class="left-panel">
-
 
 
         </div>
