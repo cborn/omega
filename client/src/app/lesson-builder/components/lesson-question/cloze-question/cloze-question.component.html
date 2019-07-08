@@ -1,0 +1,4 @@
+<small style="color: grey;">Cloze Prompt</small>
+<div contenteditable="true" class="content-editable-block" #field (input)="updateQuestionText(field,$event)" [innerHTML]="question.custom_properties.cloze_text | clozeFormat : question.custom_properties.cloze_prompts">
+
+</div>

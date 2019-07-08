@@ -13,7 +13,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
     MatButtonModule,
     MatGridList,
-    MatGridListModule,
+    MatGridListModule, MatListModule,
     MatOptionModule,
     MatSelectModule,
     MatSidenavModule,
@@ -34,6 +34,11 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatCardModule} from '@angular/material/card';
 import { LessonQuestionComponent } from './lesson-builder/components/lesson-question/lesson-question.component';
 import { SidebarComponent } from './lesson-builder/components/sidebar/sidebar.component';
+import {
+    ClozeDialogComponent,
+    ClozeQuestionComponent
+} from './lesson-builder/components/lesson-question/cloze-question/cloze-question.component';
+import { ClozeFormatPipe } from './pipes/cloze-format.pipe';
 
 @NgModule({
     declarations: [
@@ -42,7 +47,13 @@ import { SidebarComponent } from './lesson-builder/components/sidebar/sidebar.co
         IndexComponent,
         LessonBuilderComponent,
         LessonQuestionComponent,
-        SidebarComponent
+        SidebarComponent,
+        ClozeQuestionComponent,
+        ClozeFormatPipe,
+        ClozeDialogComponent
+    ],
+    entryComponents : [
+        ClozeDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -70,7 +81,8 @@ import { SidebarComponent } from './lesson-builder/components/sidebar/sidebar.co
         MatGridListModule,
         MatToolbarModule,
         MatOptionModule,
-        MatSelectModule
+        MatSelectModule,
+        MatListModule
     ],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, NavService],
     bootstrap: [AppComponent]

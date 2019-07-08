@@ -1,0 +1,24 @@
+<mat-toolbar>
+    <mat-toolbar-row style="height: auto;margin-top: 10px;">
+    <span>Add dropdown item</span>
+    </mat-toolbar-row >
+    <mat-toolbar-row style="height: auto;color: #7b7b7b;">
+        <span style="font-size: 10px;">No items mean an open text field will be places for the input.</span>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+
+<div class="prompt_entry" *ngFor="let prompt of getPrompts();let i = index">
+    <i class="material-icons warn" (click)="deleteItem(i)">delete</i><input matInput [ngModel]="prompt" (change)="editInput($event,i)"/>
+</div>
+
+<div *ngIf="getPrompts().length == 0">
+    <p>No options - the question is open text entry.</p>
+</div>
+
+<div style="margin-top: 10px;">
+<button mat-raised-button color="primary" (click)="addNewItem()" style="margin: 10px">Add Dropdown Option</button>
+    <button mat-raised-button color="accent" (click)="onNoClick()">Done</button>
+</div>
+
+

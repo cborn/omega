@@ -29,3 +29,39 @@ $omega-app-theme: mat-light-theme($omega-app-primary, $omega-app-accent, $omega-
 .mat-grid-tile .mat-figure .ng-star-inserted{
   width: 100%;
 }
+
+body {
+  font-family: "gubblebum-blocky", monospace;
+}
+
+
+
+.warn {
+  color: mat-color($omega-app-warn);
+}
+
+.primary {
+  color: mat-color($omega-app-primary);
+}
+
+.accent {
+  color: mat-color($omega-app-warn);
+}
+
+.cloze_prompt {
+  display: inline-block;
+  cursor: pointer;
+  background-color: #607D8B;
+  border-radius: 5px;
+  color: white;
+  padding: 10px;
+  vertical-align: middle;
+  margin-bottom: 5px;
+
+}
+
+.align-middle {
+  vertical-align: middle;
+}
+
+

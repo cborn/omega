@@ -43,4 +43,8 @@ export class LessonQuestionComponent implements OnInit {
     this.questionSelected.emit(this.question);
   }
 
+  isSelected() {
+    return this.selectedQuestion === this.question.id;
+  }
+
 }

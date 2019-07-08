@@ -1,10 +1,9 @@
-<form [ngClass]="{'selected': selectedQuestion == question.id}" class="parent-container">
+<form [ngClass]="{'selected': isSelected()}" class="parent-container">
 
     <table class="full-width" cellspacing="0">
         <tr>
-            <td style="vertical-align: top;width: 100px;">
-                <div [classList]="'icon-q-block icon-q-block-'+question.type"
-                     (click)="toggleSidebar()">{{question.type}}</div>
+            <td style="vertical-align: top;width: 60px;">
+                <div [classList]="'icon-q-block icon-q-block-'+question.type + ' material-icons'" (click)="toggleSidebar()"></div>
             </td>
             <td>
                 <mat-form-field class="full-width">
@@ -20,9 +19,21 @@
                               [(ngModel)]="question.description"
                               placeholder="Write your description here" name="description-text"></textarea>
                 </mat-form-field>
+            </td>
 
+        </tr>
+        <tr>
+            <td colspan="2"><app-cloze-question *ngIf="question.type == 11" [question]="question"></app-cloze-question></td>
+        </tr>
+        <tr>
+            <td  colspan="2">
+                <div class="aux-buttons" [ngClass]="{'aux-selected': isSelected()}">
+                    <i class="material-icons primary" (click)="toggleSidebar()">edit</i>
+                    <i class="material-icons warn" >delete</i>
+                </div>
             </td>
         </tr>
+
     </table>
 
 </form>
