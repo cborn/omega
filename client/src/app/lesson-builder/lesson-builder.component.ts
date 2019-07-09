@@ -39,6 +39,10 @@ export class LessonBuilderComponent implements OnInit {
 
     }
 
+    addNewQuestion() {
+        this.lesson.questions.push(new Question(QuestionType.BLOCK_TEXT));
+    }
+
 
     openSidebar(question) {
 

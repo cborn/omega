@@ -33,13 +33,13 @@ export class ClozeQuestionComponent implements OnInit {
     onOpenPrompt(event) {
         // Run your service call here
 
-        const dialogRef = this.dialog.open(ClozeDialogComponent, {
-            height: '400px',
-            width: '600px',
-            data: {question: this.question, prompt: event.detail.number}
-        });
-
-
+        if(event.detail.questionId === this.question.id) {
+            const dialogRef = this.dialog.open(ClozeDialogComponent, {
+                height: '400px',
+                width: '600px',
+                data: {question: this.question, prompt: event.detail.number}
+            });
+        }
     }
 
     updateQuestionText(field, event) {
@@ -54,6 +54,11 @@ export class ClozeQuestionComponent implements OnInit {
 
         this.cachedSelection = {offset: getSelection().anchorOffset, parent: getSelection().anchorNode.parentNode, childIndex: childIndex};
 
+        /**
+         * Above code is for handling the cursor positioning.
+         */
+
+
         const newText = event.target.innerHTML;
 
         let replacementText = newText;
@@ -61,11 +66,11 @@ export class ClozeQuestionComponent implements OnInit {
         let result;
         let instancesCount = 0;
 
-        const regex2 = new RegExp(/openPrompt\(\d*\)/mg);
+        const regex2 = new RegExp(/openPrompt\(\d*,\d*\)/mg);
         let result2;
         const copyIndices = [];
         while ((result2 = regex2.exec(newText)) !== null) {
-            copyIndices.push(parseInt(result2[0].substring(11, result2[0].length - 1))); // Work out the existing indicies that remain.
+            copyIndices.push(parseInt(result2[0].substring(11, result2[0].indexOf(",")))); // Work out the existing indicies that remain.
         }
 
 
@@ -96,7 +101,6 @@ export class ClozeQuestionComponent implements OnInit {
         }
 
         if (newInsertTextPosition > -1 && !foundPosition) {
-            console.log('Should insert');
             foundPosition = true;
             const prompts = JSON.parse(this.question.custom_properties.cloze_prompts);
             prompts.push([]);

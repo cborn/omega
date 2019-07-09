@@ -9,13 +9,18 @@
     <mat-sidenav-content>
 
 
-        <mat-grid-list cols="4" rowHeight="100%">
-            <mat-grid-tile [colspan]="2" [rowspan]="1">
+        <mat-grid-list cols="4" rowHeight="100%" >
+            <mat-grid-tile [colspan]="2" [rowspan]="1" style="overflow-y: scroll;">
 
 
                 <div *ngIf="lesson">
                     <app-lesson-question class="question-item" *ngFor="let question of lesson.questions" [question]="question" (questionSelected)="openSidebar($event)" [selectedQuestion]="currentQuestion"(click)="currentQuestion = question.id" ></app-lesson-question>
+                    <div class="add_new_primary_button">
+                    <button mat-fab color="primary" (click)="addNewQuestion()"><i class="material-icons">add</i></button><span style="margin-left: 15px;">Add question</span>
+                    </div>
                 </div>
+
+
 
             </mat-grid-tile>
             <mat-grid-tile [colspan]="2" [rowspan]="1" class="right-panel">
@@ -23,19 +28,6 @@
             </mat-grid-tile>
         </mat-grid-list>
 
-
-
-
-        <div class="left-panel">
-
-
-        </div>
-
-        <div class="right-panel">
-
-
-
-        </div>
 
 
     </mat-sidenav-content>

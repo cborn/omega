@@ -10,10 +10,8 @@
 
   <script>
 
-    function openPrompt(questionNumber) {
-      console.log(questionNumber);
-      var event = new CustomEvent("openPrompt",{ detail : {number:questionNumber} });
-
+    function openPrompt(questionNumber,questionId) {
+      var event = new CustomEvent("openPrompt",{ detail : {number:questionNumber, questionId: questionId} });
       window.dispatchEvent(event);
     }
 

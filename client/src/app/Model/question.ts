@@ -1,5 +1,14 @@
 export class Question {
 
+    constructor(type) {
+        this.id = 12;
+        this.required = false;
+        this.type = type;
+        this.custom_properties = {
+            cloze_text: ''
+        };
+    }
+
     description: string;
     id: number;
     max_grade: number;
@@ -7,6 +16,8 @@ export class Question {
     required: boolean;
     type: QuestionType;
     custom_properties: any;
+
+
 
 
     static questionTypeList() {
