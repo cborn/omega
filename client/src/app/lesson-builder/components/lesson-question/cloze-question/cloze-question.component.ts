@@ -26,6 +26,12 @@ export class ClozeQuestionComponent implements OnInit {
     }
 
     ngOnInit() {
+
+        if (this.question.custom_properties == null) {
+            this.question.custom_properties = {
+                cloze_text: ''
+            };
+        }
     }
 
 

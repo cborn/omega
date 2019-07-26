@@ -2,7 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9f3fb400-e4bb-46f6-aa42-f0393edd57df" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/client/.gradle/yarn/node_modules/yarn/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/.gradle/yarn/node_modules/yarn/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/Model/question.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/Model/question.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/lesson-builder/components/lesson-question/cloze-question/cloze-question.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/lesson-builder/components/lesson-question/cloze-question/cloze-question.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/lesson-builder/components/lesson-question/lesson-question.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/lesson-builder/components/lesson-question/lesson-question.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/lesson-builder/components/lesson-question/lesson-question.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/lesson-builder/components/lesson-question/lesson-question.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/lesson-builder/components/lesson-question/lesson-question.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/lesson-builder/components/lesson-question/lesson-question.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/lesson-builder/components/sidebar/sidebar.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/lesson-builder/components/sidebar/sidebar.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/lesson-builder/components/sidebar/sidebar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/lesson-builder/components/sidebar/sidebar.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/lesson-builder/components/sidebar/sidebar.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/lesson-builder/components/sidebar/sidebar.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/lesson-builder/lesson-builder.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/lesson-builder/lesson-builder.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/lesson-builder/lesson-builder.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/lesson-builder/lesson-builder.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/lesson-builder/lesson-builder.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/lesson-builder/lesson-builder.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/lesson-builder/lesson-builder.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/lesson-builder/lesson-builder.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/grails-app/domain/omega/Question.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/server/grails-app/domain/omega/Question.groovy" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -10,6 +24,19 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="Question.groovy" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/server/grails-app/domain/omega/Question.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="840">
+              <caret line="58" column="108" selection-start-line="58" selection-start-column="108" selection-end-line="58" selection-end-column="108" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -24,6 +51,13 @@
       </map>
     </option>
   </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/server/grails-app/domain/omega/Question.groovy" />
+      </list>
+    </option>
+  </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsGulpfileManager">
@@ -35,7 +69,7 @@
     <handled-path value="$PROJECT_DIR$/client/.gradle/yarn/node_modules" />
     <handled-path value="$PROJECT_DIR$/client/node_modules" />
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="44" />
     <option name="y" value="23" />
     <option name="width" value="1636" />
@@ -46,8 +80,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
@@ -68,11 +102,13 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SearchEverywhereHistoryKey" value="Question&#9;FILE&#9;file:///Users/leewilliams/projects/clients/carleton/omega/server/grails-app/domain/omega/Question.groovy" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/client/node_modules/typescript/lib" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -141,14 +177,16 @@
       <updated>1561559306481</updated>
       <workItem from="1561559312610" duration="454000" />
       <workItem from="1562580072158" duration="565000" />
+      <workItem from="1562858783889" duration="1194000" />
+      <workItem from="1562921333729" duration="27000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1019000" />
+    <option name="totallyTimeSpent" value="2240000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="44" y="23" width="1636" height="1027" extended-state="6" />
+    <frame x="45" y="23" width="1635" height="1027" extended-state="6" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -163,7 +201,7 @@
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25219575" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25863153" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -175,6 +213,7 @@
       <window_info anchor="right" id="Gradle" order="3" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="TypeScript" order="8" visible="true" weight="0.32903227" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" />
@@ -185,6 +224,29 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/server/grails-app/domain/omega/Question.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="870">
+          <caret line="58" column="108" selection-start-line="58" selection-start-column="108" selection-end-line="58" selection-end-column="108" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/Model/question.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-50">
+          <caret column="13" selection-start-column="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/grails-app/domain/omega/Question.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="840">
+          <caret line="58" column="108" selection-start-line="58" selection-start-column="108" selection-end-line="58" selection-end-column="108" />
+        </state>
+      </provider>
+    </entry>
   </component>
   <component name="masterDetails">
     <states>

@@ -20,10 +20,6 @@ export class ClozeFormatPipe implements PipeTransform {
         let instancesCount = 0;
         const questionid = args.id;
         while ((result = regex.exec(value)) !== null) {
-
-            console.log(JSON.parse(args.custom_properties.cloze_prompts));
-            console.log(instancesCount);
-
             const prompts = JSON.parse(args.custom_properties.cloze_prompts)[instancesCount];
 
 

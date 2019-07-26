@@ -1,4 +1,3 @@
-
 <mat-sidenav-container class="panel-containers">
     <mat-sidenav mode="side" [(opened)]="sidebar_open" class="side-panel">
         <!--// This side panel content will be populated by what ever question is currently selected-->
@@ -13,10 +12,18 @@
             <mat-grid-tile [colspan]="2" [rowspan]="1" style="overflow-y: scroll;">
 
 
-                <div *ngIf="lesson">
-                    <app-lesson-question class="question-item" *ngFor="let question of lesson.questions" [question]="question" (questionSelected)="openSidebar($event)" [selectedQuestion]="currentQuestion"(click)="currentQuestion = question.id" ></app-lesson-question>
+                <div *ngIf="lesson$ | async as lesson">
+                    <app-lesson-question class="question-item" *ngFor="let question of lesson.questions | positionOrder : 'asc'" [question]="question" (questionDeleted)="deleteQuestion($event)" (questionSelected)="openSidebar($event)" [selectedQuestion]="currentQuestion"(click)="currentQuestion = question.id" ></app-lesson-question>
                     <div class="add_new_primary_button">
                     <button mat-fab color="primary" (click)="addNewQuestion()"><i class="material-icons">add</i></button><span style="margin-left: 15px;">Add question</span>
+                    <div *ngIf="addQuestionDialogShown" class="new_question_dialog_menu">
+                        <mat-list>
+                            <mat-list-item *ngFor="let questionType of questionTypeList" (click)="addNewQuestionWithType(questionType)" style="cursor:pointer;">
+                                <div [classList]="'icon-q-block icon-q-block-'+questionType.value + ' material-icons'"></div>
+                                <h4 mat-line>{{questionType.name}}</h4>
+                            </mat-list-item>
+                        </mat-list>
+                    </div>
                     </div>
                 </div>
 

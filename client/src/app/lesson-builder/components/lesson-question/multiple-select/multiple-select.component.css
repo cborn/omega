@@ -1,0 +1,25 @@
+.list-input {
+    width: 90%;
+    height: 23px;
+    border: none;
+    background: transparent;
+    font-size: 15px;
+}
+
+.option-list:before {
+    content: "-";
+    top: -2px;
+    left: -10px;
+    position: relative;
+    color: grey;
+}
+
+ul{
+    list-style-type: none;
+}
+
+
+.option-list {
+    height: 27px;
+    font-size: 15px;
+}

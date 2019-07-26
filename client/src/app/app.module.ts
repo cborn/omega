@@ -39,6 +39,8 @@ import {
     ClozeQuestionComponent
 } from './lesson-builder/components/lesson-question/cloze-question/cloze-question.component';
 import { ClozeFormatPipe } from './pipes/cloze-format.pipe';
+import { MultipleSelectComponent } from './lesson-builder/components/lesson-question/multiple-select/multiple-select.component';
+import { PositionOrderPipe } from './pipes/position-order.pipe';
 
 @NgModule({
     declarations: [
@@ -50,7 +52,9 @@ import { ClozeFormatPipe } from './pipes/cloze-format.pipe';
         SidebarComponent,
         ClozeQuestionComponent,
         ClozeFormatPipe,
-        ClozeDialogComponent
+        ClozeDialogComponent,
+        MultipleSelectComponent,
+        PositionOrderPipe
     ],
     entryComponents : [
         ClozeDialogComponent

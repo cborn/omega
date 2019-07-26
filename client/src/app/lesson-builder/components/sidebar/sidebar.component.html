@@ -8,8 +8,8 @@
 
 </mat-toolbar>
 
-<form>
-<mat-form-field>
+<form class="sidebar-form">
+<mat-form-field class="sidebar-form-input">
   <mat-label>Question Type</mat-label>
   <mat-select [(ngModel)]="question.type" name="type-select">
     <mat-option *ngFor="let type of questionTypes" [value]="type.value">
@@ -19,7 +19,49 @@
 </mat-form-field>
 <br/>
 
-    <mat-slide-toggle color="primary" (click)="question.description == null ? question.description = '' : question.description = null">
-      Description!
+  <mat-slide-toggle class="sidebar-form-input" color="primary" [(ngModel)]="question.required" name="required">
+    Required
+  </mat-slide-toggle>
+
+    <mat-slide-toggle class="sidebar-form-input" color="primary" name="description" [(ngModel)]="question.custom_properties.description_enabled">
+      Description
     </mat-slide-toggle>
+
+    <mat-slide-toggle *ngIf="isOfType([QuestionType.MULTI_CHOICE,QuestionType.PICTURE_CHOICE])" class="sidebar-form-input" color="primary" name="multi" [(ngModel)]="question.custom_properties.multi">
+  Multiple selection
+</mat-slide-toggle>
+
+  <mat-form-field class="sidebar-form-input" *ngIf="isOfType([QuestionType.MULTI_CHOICE,QuestionType.PICTURE_CHOICE]) && question.custom_properties.multi">
+    <mat-label>Selection Limits</mat-label>
+    <mat-select [(ngModel)]="question.custom_properties.multi_select_type" name="selection-limit">
+      <mat-option value="1">
+        Unlimited
+      </mat-option>
+      <mat-option value="2">
+        Range
+      </mat-option>
+      <mat-option value="3">
+        Exact Number
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="sidebar-form-input" *ngIf="isOfType([QuestionType.MULTI_CHOICE,QuestionType.PICTURE_CHOICE]) && question.custom_properties.multi && question.custom_properties.multi_select_type == 3">
+    <input matInput [(ngModel)]="question.custom_properties.max" name="selection-limit-exact" class='sidebar-sub-input' type="number" />
+  </mat-form-field>
+
+  <mat-form-field class="sidebar-form-input" *ngIf="isOfType([QuestionType.MULTI_CHOICE,QuestionType.PICTURE_CHOICE]) && question.custom_properties.multi && question.custom_properties.multi_select_type == 2">
+    <input matInput [(ngModel)]="question.custom_properties.min" name="selection-limit-range-min" class='sidebar-sub-input' type="number"/> <span style="padding: 10px;line-height: 30px;">-</span> <input matInput [(ngModel)]="question.custom_properties.max" name="selection-limit-range-max" class='sidebar-sub-input' type="number"/>
+  </mat-form-field>
+
+  <mat-form-field class="sidebar-form-input" *ngIf="isOfType([QuestionType.DATE])">
+    <mat-label>Date Format (YYYY-MM-DD)</mat-label>
+    <input matInput [(ngModel)]="question.custom_properties.format" name="selection-date-format" class='sidebar-sub-input input-extra-long' type="text"/>
+  </mat-form-field>
+
+  <mat-slide-toggle *ngIf="isOfType([QuestionType.MULTI_CHOICE,QuestionType.PICTURE_CHOICE])" class="sidebar-form-input" color="primary" name="random" [(ngModel)]="question.custom_properties.random">
+    Randomize
+  </mat-slide-toggle>
+
+
 </form>

@@ -38,10 +38,11 @@ class BootStrap {
         l.save([failOnError:true,flush:true]);
 
 
-
+        println "Initialising Boot scripts"
         Question q = new Question();
 
         q.setName("Is R a Vowel?")
+        q.setPosition(0)
         q.setType(QuestionType.BOOLEAN);
         q.setMax_grade(1);
         q.setPage(page);
@@ -55,6 +56,7 @@ class BootStrap {
         def q2 = new Question();
 
         q2.setName("Fill in the blanks from the song 'Sosban Fach'?")
+        q2.setPosition(1);
         q2.setType(QuestionType.CLOZE);
         q2.setMax_grade(4);
         q2.setPage(page);
@@ -65,7 +67,28 @@ class BootStrap {
         q2.setCustom_properties(customProperties)
 
         q2.save([failOnError:true,flush:true])
-        page.addToQuestions(q2);
+
+
+
+
+        def q3 = new Question();
+
+        q3.setName("Whats something out of this list.")
+        q3.setPosition(2);
+        q3.setType(QuestionType.MULTI_CHOICE);
+        q3.setMax_grade(4);
+        q3.setPage(page);
+
+        Map customProperties2 = new HashMap<String, ? extends Object>();
+        customProperties2.put(Question.QuestionPropertyKeys.MULTI_CHOICE_OPTIONS.key_name,"Mae@@ond@@peth@@");
+        q3.setCustom_properties(customProperties2)
+
+        q3.save([failOnError:true,flush:true])
+
+
+
+
+        page.addToQuestions(q3);
         page.save([failOnError:true,flush:true])
 
 

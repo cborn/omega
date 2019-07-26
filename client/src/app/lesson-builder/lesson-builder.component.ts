@@ -18,9 +18,15 @@ export class LessonBuilderComponent implements OnInit {
 
     currentQuestion = -1;
 
+    addQuestionDialogShown = false;
+
+    questionTypeList = Question.questionTypeList();
+
+
+
 
     // DATA OBJECTS
-    lesson: LessonPage;
+    lesson$ = this.lessonBuilderService.editingLessonPage;
 
 
     constructor(private lessonBuilderService: LessonBuilderService, private router: Router, private route: ActivatedRoute) {
@@ -31,16 +37,20 @@ export class LessonBuilderComponent implements OnInit {
 
 
         this.route.paramMap.subscribe(value => {
-            this.lessonBuilderService.getLessonToEdit(value.get('lessonId')).subscribe(value2 => {
-                this.lesson = value2;
-            });
+            this.lessonBuilderService.getLessonToEdit(value.get('lessonId'));
         });
 
 
     }
 
     addNewQuestion() {
-        this.lesson.questions.push(new Question(QuestionType.BLOCK_TEXT));
+        this.addQuestionDialogShown = !this.addQuestionDialogShown;
+
+    }
+
+    addNewQuestionWithType(type) {
+        this.addQuestionDialogShown = false;
+        this.lessonBuilderService.addNewQuestion(type.value);
     }
 
 
@@ -56,6 +66,11 @@ export class LessonBuilderComponent implements OnInit {
         this.sidebar_question = null;
         this.sidebar_open = false;
 
+    }
+
+
+    deleteQuestion(event) {
+        this.lessonBuilderService.deleteQuestion(event);
     }
 
 }

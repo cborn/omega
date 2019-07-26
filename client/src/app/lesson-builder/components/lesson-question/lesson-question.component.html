@@ -3,6 +3,7 @@
     <table class="full-width" cellspacing="0">
         <tr>
             <td style="vertical-align: top;width: 60px;">
+                <i class="field-required" *ngIf="question.required">*</i>
                 <div [classList]="'icon-q-block icon-q-block-'+question.type + ' material-icons'" (click)="toggleSidebar()"></div>
             </td>
             <td>
@@ -14,22 +15,23 @@
 
                 </mat-form-field>
 
-                <mat-form-field class="full-width" *ngIf="question.description != null">
+                <mat-form-field class="full-width" *ngIf="question.custom_properties != null && question.custom_properties.description_enabled">
                     <textarea matInput cdkTextareaAutosize #autosize2="cdkTextareaAutosize" cdkAutosizeMinRows="1"
                               [(ngModel)]="question.description"
-                              placeholder="Write your description here" name="description-text"></textarea>
+                              placeholder="Write your description here" name="description-text" style="color: #7d7d7d;"></textarea>
                 </mat-form-field>
             </td>
 
         </tr>
         <tr>
-            <td colspan="2"><app-cloze-question *ngIf="question.type == 11" [question]="question"></app-cloze-question></td>
+            <td colspan="2" *ngIf="question.type == 11"><app-cloze-question  [question]="question"></app-cloze-question></td>
+            <td colspan="2" *ngIf="question.type == 0 || question.type == 9"><app-multiple-select [question]="question"></app-multiple-select></td>
         </tr>
         <tr>
             <td  colspan="2">
                 <div class="aux-buttons" [ngClass]="{'aux-selected': isSelected()}">
                     <i class="material-icons primary" (click)="toggleSidebar()">edit</i>
-                    <i class="material-icons warn" >delete</i>
+                    <i class="material-icons warn" (click)="delete()">delete</i>
                 </div>
             </td>
         </tr>

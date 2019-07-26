@@ -6,6 +6,7 @@ model {
 
 json {
 	id question.id
+	position question.position
 	required question.required
 	type question.type
 	if (question.custom_properties.size() > 0){
@@ -14,6 +15,7 @@ json {
 	name question.name
 	max_grade question.max_grade
 	description question.description
+
 	if (question.hasFeedback()) {
 		prompts {
 			imagePrompt question.imagePrompt

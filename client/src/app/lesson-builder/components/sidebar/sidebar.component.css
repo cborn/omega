@@ -5,3 +5,32 @@
 .example-spacer {
     flex: 1 1 auto;
 }
+
+.sidebar-form {
+    padding: 10px;
+}
+
+.sidebar-form-input {
+    width: 90%;
+    margin: 0 5%;
+    border-bottom: 1px solid lightgrey;
+    padding: 20px 0;
+
+}
+
+.sidebar-sub-input {
+    border: 1px solid #a7a7a7;
+    border-radius: 5px;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.input-long {
+    width: 200px;
+}
+.input-extra-long {
+    width: 300px;
+}
+
+

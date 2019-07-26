@@ -26,14 +26,24 @@ $omega-app-theme: mat-light-theme($omega-app-primary, $omega-app-accent, $omega-
   align-items: initial !important;
 }
 
-.mat-grid-tile .mat-figure .ng-star-inserted{
-  width: 100%;
-}
+//.mat-grid-tile .mat-figure .ng-star-inserted{
+//  width: 100%;
+//}
 
 body {
   font-family: "gubblebum-blocky", monospace;
 }
 
+
+.mat-form-field-label {
+  height: 100%;
+}
+
+.mat-form-field-label > mat-label {
+  position: relative;
+  top:4px;
+  left:4px;
+}
 
 
 .warn {
@@ -46,6 +56,10 @@ body {
 
 .accent {
   color: mat-color($omega-app-warn);
+}
+
+*:focus {
+  outline: none;
 }
 
 .cloze_prompt {
@@ -64,4 +78,127 @@ body {
   vertical-align: middle;
 }
 
+
+.icon-q-block {
+
+  width: 30px;
+  padding: 8px;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+}
+
+.icon-q-block-0 {
+  /*    Question Type - MULTI_CHOICE */
+  background: #E91E63;
+}
+
+.icon-q-block-0::before {
+  content: "list";
+}
+
+.icon-q-block-1 {
+  /*    Question Type - SHORT_TEXT */
+  background: #9C27B0;
+}
+
+.icon-q-block-1::before {
+  content: "text_fields";
+}
+
+.icon-q-block-2 {
+  /*    Question Type - LONG_TEXT */
+  background: #673AB7;
+}
+
+.icon-q-block-2::before {
+  content: "assignment";
+}
+
+.icon-q-block-3 {
+  /*    Question Type - BLOCK_TEXT */
+  background: #3F51B5;
+}
+
+.icon-q-block-3::before {
+  content: "format_quote";
+}
+
+.icon-q-block-4 {
+  /*    Question Type - PICTURE_CHOICE */
+  background: #2196F3;
+}
+
+.icon-q-block-4::before {
+  content: "insert_photo";
+}
+
+.icon-q-block-5 {
+  /*    Question Type - BOOLEAN */
+  background: #F44336;
+}
+
+.icon-q-block-5::before {
+  content: "flip";
+}
+
+.icon-q-block-6 {
+  /*    Question Type - SCALE */
+  background: #03A9F4;
+}
+
+.icon-q-block-6::before {
+  content: "linear_scale";
+}
+
+
+.icon-q-block-7 {
+  /*    Question Type - DATE */
+  background: #00BCD4;
+}
+.icon-q-block-7::before {
+  content: "date_range";
+}
+
+
+.icon-q-block-8 {
+  /*    Question Type - NUMBER */
+  background: #009688;
+}
+
+.icon-q-block-8::before {
+  content: "exposure_neg_1";
+}
+
+.icon-q-block-9 {
+  /*    Question Type - DROPDOWN */
+  background: #4CAF50;
+}
+
+.icon-q-block-9::before {
+  content: "arrow_drop_down";
+}
+.icon-q-block-10 {
+  /*    Question Type - VOICE */
+  background: #795548;
+}
+
+.icon-q-block-10::before {
+  content: "mic";
+}
+
+.icon-q-block-11 {
+  /*    Question Type - CLOZE */
+  background: #607D8B;
+}
+
+.icon-q-block-11::before {
+  content: "minimize";
+}
+
+
+
+.sidebar-form-input > .mat-form-field-wrapper {
+  padding-bottom: 0;
+}
 

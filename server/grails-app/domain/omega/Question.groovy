@@ -23,6 +23,8 @@ class Question {
 
     QuestionType type;
 
+    int position;
+
     boolean required = false;
 
     String description;
@@ -53,9 +55,11 @@ class Question {
 
 
         CORRECT_ANSWER("correct"),
+        MULTI_CHOICE_OPTIONS('options'),
         FEEDBACK_CORRECT("feedback_correct"), // This can be a single string or an array to correspond with each choice.
         FEEDBACK_INCORRECT("feedback_incorrect"), // this can be a single string or an array to correspond with each choice.
         IS_MULTI_SELECT("multi"), // Allow the user to pick multiple answers
+        MULTI_SELECT_TYPE("multi_select_type"), //  1 = unlimited, 2 = range, 3 = exact (use the max number.)
         MULTI_LIMIT_MIN("multi_limit_min"), // the minimum number to pick
         MULTI_LIMIT_MAX("multi_limit_max"), // the maximum number to pick
         RANDOMISE("random"), // Randomize the order

@@ -1,29 +1,42 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Question} from '../../../Model/question';
+import {Question, QuestionType} from '../../../Model/question';
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css']
+    selector: 'app-sidebar',
+    templateUrl: './sidebar.component.html',
+    styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
 
 
-  questionTypes = Question.questionTypeList();
+    questionTypes = Question.questionTypeList();
+
+    get QuestionType() {
+        return QuestionType;
+    }
+
+    @Input() question: Question;
+
+    @Output() closeSidebar = new EventEmitter();
 
 
-  @Input() question: Question;
+    constructor() {
+    }
 
-  @Output() closeSidebar = new EventEmitter();
+    ngOnInit() {
+    }
+
+    closeSidebarAction() {
+        this.closeSidebar.emit(true);
+    }
+
+    isOfType(options: QuestionType[]) {
+
+        if (options.indexOf(this.question.type) > -1) {
+            return true;
+        }
+        return false;
 
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-  closeSidebarAction() {
-    this.closeSidebar.emit(true);
-  }
-
+    }
 }

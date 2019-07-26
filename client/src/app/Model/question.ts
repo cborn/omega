@@ -1,14 +1,16 @@
 export class Question {
 
-    constructor(type) {
+    constructor(type, position) {
         this.id = 12;
         this.required = false;
         this.type = type;
         this.custom_properties = {
             cloze_text: ''
         };
+        this.position = position;
     }
 
+    position: number;
     description: string;
     id: number;
     max_grade: number;
@@ -36,6 +38,8 @@ export class Question {
             {name: 'Recording', value: QuestionType.VOICE}];
 
     }
+
+
 
 
 
@@ -67,6 +71,8 @@ export class Question {
                 return QuestionType.VOICE;
         }
     }
+
+
 
 }
 
