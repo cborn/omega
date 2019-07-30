@@ -18,6 +18,12 @@
 
 }
 
+.sidebar-form-input-right {
+    position: relative;
+    top: -79px;
+    left: 148px;
+}
+
 .sidebar-sub-input {
     border: 1px solid #a7a7a7;
     border-radius: 5px;
