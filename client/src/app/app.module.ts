@@ -43,6 +43,19 @@ import { MultipleSelectComponent } from './lesson-builder/components/lesson-ques
 import { PositionOrderPipe } from './pipes/position-order.pipe';
 import { PictureSelectComponent } from './lesson-builder/components/lesson-question/picture-select/picture-select.component';
 import { ImageUrlFilterPipe } from './pipes/image-url-filter.pipe';
+import { LessonRendererComponent } from './lesson-page-renderer/lesson-renderer/lesson-renderer.component';
+import { ShortTextRendererComponent } from './lesson-page-renderer/components/short-text-renderer/short-text-renderer.component';
+import { MultiChoiceRendererComponent } from './lesson-page-renderer/components/multi-choice-renderer/multi-choice-renderer.component';
+import { LongTextRendererComponent } from './lesson-page-renderer/components/long-text-renderer/long-text-renderer.component';
+import { BlockTextRendererComponent } from './lesson-page-renderer/components/block-text-renderer/block-text-renderer.component';
+import { PictureChoiceRendererComponent } from './lesson-page-renderer/components/picture-choice-renderer/picture-choice-renderer.component';
+import { BooleanRendererComponent } from './lesson-page-renderer/components/boolean-renderer/boolean-renderer.component';
+import { ScaleRendererComponent } from './lesson-page-renderer/components/scale-renderer/scale-renderer.component';
+import { DateRendererComponent } from './lesson-page-renderer/components/date-renderer/date-renderer.component';
+import { NumberRendererComponent } from './lesson-page-renderer/components/number-renderer/number-renderer.component';
+import { DropdownRendererComponent } from './lesson-page-renderer/components/dropdown-renderer/dropdown-renderer.component';
+import { VoiceRendererComponent } from './lesson-page-renderer/components/voice-renderer/voice-renderer.component';
+import { ClozeRendererComponent } from './lesson-page-renderer/components/cloze-renderer/cloze-renderer.component';
 
 @NgModule({
     declarations: [
@@ -58,7 +71,20 @@ import { ImageUrlFilterPipe } from './pipes/image-url-filter.pipe';
         MultipleSelectComponent,
         PositionOrderPipe,
         PictureSelectComponent,
-        ImageUrlFilterPipe
+        ImageUrlFilterPipe,
+        LessonRendererComponent,
+        ShortTextRendererComponent,
+        MultiChoiceRendererComponent,
+        LongTextRendererComponent,
+        BlockTextRendererComponent,
+        PictureChoiceRendererComponent,
+        BooleanRendererComponent,
+        ScaleRendererComponent,
+        DateRendererComponent,
+        NumberRendererComponent,
+        DropdownRendererComponent,
+        VoiceRendererComponent,
+        ClozeRendererComponent
     ],
     entryComponents : [
         ClozeDialogComponent

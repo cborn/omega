@@ -44,7 +44,7 @@ describe('Component: Index', () => {
     component = fixture.debugElement.componentInstance;
   });
 
-  it('should create the component', async(() => {
+  it('should create the components', async(() => {
     expect(component).toBeTruthy();
   }));
 

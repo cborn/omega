@@ -68,9 +68,7 @@ class QuestionController {
             return
         }
 
-
         def response = questionImageUploaderService.uploadFeatureImage(params.image);
-
 
         ImageProperty im = new ImageProperty();
         im.setAutoPlay(false)
