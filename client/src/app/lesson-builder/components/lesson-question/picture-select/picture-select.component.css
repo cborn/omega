@@ -1,13 +1,22 @@
 .image-add {
     width: 120px;
     height: 150px;
-    background: #c7c7c7;
+    background: #ffffff;
     border: 1px solid grey;
     border-radius: 5px;
     cursor: pointer;
     display: inline-block;
     margin-left: 10px;
     float: left;
+}
+
+.image-add > img {
+    width: 90%;
+    margin-left:5%;
+    height: auto;
+    top: 50%;
+    position: relative;
+    transform: translate(0, -50%)
 }
 
 .image-add > p {
@@ -19,4 +28,12 @@
     transform: translate(0, -50%);
     font-size: 50px;
     color: grey;
+}
+.remove-image {
+    position: absolute;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
 }

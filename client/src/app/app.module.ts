@@ -42,6 +42,7 @@ import { ClozeFormatPipe } from './pipes/cloze-format.pipe';
 import { MultipleSelectComponent } from './lesson-builder/components/lesson-question/multiple-select/multiple-select.component';
 import { PositionOrderPipe } from './pipes/position-order.pipe';
 import { PictureSelectComponent } from './lesson-builder/components/lesson-question/picture-select/picture-select.component';
+import { ImageUrlFilterPipe } from './pipes/image-url-filter.pipe';
 
 @NgModule({
     declarations: [
@@ -56,7 +57,8 @@ import { PictureSelectComponent } from './lesson-builder/components/lesson-quest
         ClozeDialogComponent,
         MultipleSelectComponent,
         PositionOrderPipe,
-        PictureSelectComponent
+        PictureSelectComponent,
+        ImageUrlFilterPipe
     ],
     entryComponents : [
         ClozeDialogComponent

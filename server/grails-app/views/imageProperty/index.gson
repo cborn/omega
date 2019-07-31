@@ -1,0 +1,8 @@
+import omega.ImageProperty
+
+model {
+	Iterable<ImageProperty> imagePropertyList
+}
+
+json tmpl.imageProperty(imagePropertyList ?: [])
+

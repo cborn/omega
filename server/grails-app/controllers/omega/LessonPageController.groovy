@@ -61,4 +61,5 @@ class LessonPageController {
 
         render status: NO_CONTENT
     }
+
 }

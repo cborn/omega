@@ -58,6 +58,8 @@ dependencies {
 
     compile group: 'org.postgresql', name: 'postgresql', version: '9.4.1212'
 
+    compile "org.grails.plugins:aws-sdk-s3:$awsSdkS3Version"
+
 
 }
 

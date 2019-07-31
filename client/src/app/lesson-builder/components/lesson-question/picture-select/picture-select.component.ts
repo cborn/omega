@@ -1,5 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit} from '@angular/core';
 import {Question} from '../../../../Model/question';
+import {HttpClient} from '@angular/common/http';
+import {LessonBuilderService} from '../../../lesson-builder.service';
+import {environment} from '../../../../../environments/environment.prod';
 
 @Component({
   selector: 'app-picture-select',
@@ -10,18 +13,50 @@ export class PictureSelectComponent implements OnInit {
 
   @Input() question: Question;
 
+  environment = environment;
+
+  selectedFile: File;
+
+
   workingCopy;
 
-  constructor() { }
+  constructor(private lessonBuilderService: LessonBuilderService) { }
 
   ngOnInit() {
 
-    if (this.question.custom_properties.pictures === undefined) {
-      this.question.custom_properties.pictures = '';
+    if (this.question.custom_properties.images === undefined) {
+      this.question.custom_properties.images = '';
     }
 
-    this.workingCopy = this.question.custom_properties.pictures;
+    this.workingCopy = this.question.custom_properties.images;
 
+  }
+
+  onFileChanged(event) {
+    this.selectedFile = event.target.files[0];
+    this.onUpload();
+  }
+
+  onUpload() {
+
+    const promise = this.lessonBuilderService.addImageToQuestion(this.question, this.selectedFile);
+
+    promise.subscribe(value => {
+      // new image on question...
+      this.question = value;
+      this.workingCopy = this.question.custom_properties.images;
+    });
+
+  }
+
+  removeImage(image) {
+    const promise = this.lessonBuilderService.removeImageToQuestion(this.question, image);
+
+    promise.subscribe(value => {
+      // new image on question...
+      this.question = value;
+      this.workingCopy = this.question.custom_properties.images;
+    });
   }
 
 }

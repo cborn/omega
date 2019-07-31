@@ -1,0 +1,7 @@
+import omega.ImageProperty
+
+model {
+	ImageProperty imageProperty
+}
+
+json tmpl.imageProperty(imageProperty)

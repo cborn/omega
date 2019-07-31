@@ -1,7 +1,12 @@
-<div *ngFor="let option of workingCopy?.split('@@'); let index = index" class="image-add" >
-
+<div *ngIf="workingCopy !== ''">
+    <div *ngFor="let option of workingCopy?.split('@@'); let index = index" class="image-add">
+        <i  (click)="removeImage(option)" class="material-icons warn remove-image">delete</i>
+        <img [src]='option | imageUrlFilter' />
+    </div>
 </div>
 
-<div class="image-add">
-  <p>+</p>
+<div class="image-add" (click)="fileInput.click()">
+    <p>+</p>
 </div>
+
+<input type="file" style="display: none;" (change)="onFileChanged($event)" #fileInput>

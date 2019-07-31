@@ -43,6 +43,18 @@ export class LessonBuilderService {
 
     }
 
+    addImageToQuestion(question, image): Observable<Question> {
+
+        const uploadData = new FormData();
+        uploadData.append('image', image, 'IGNORED');
+        return this.httpClient.post(environment.serverUrl + 'question/addImage/' + question.id, uploadData) as Observable<Question>;
+
+    }
+
+    removeImageToQuestion(question, imageToRemove) {
+        return this.httpClient.delete(environment.serverUrl + 'question/removeImage/' + question.id + '?image=' + imageToRemove) as Observable<Question>;
+    }
+
 
     deleteQuestion(question) {
         const lessonPage = this.editingLessonPageSubject.value;
@@ -59,6 +71,11 @@ export class LessonBuilderService {
             lessonPage.questions.splice(ind, 1);
         }
 
+        this.httpClient.delete(environment.serverUrl + 'question/' + question.id).subscribe(value => {
+            this.sync();
+        });
+
+
     }
 
     addNewQuestion(type) {
@@ -67,5 +84,32 @@ export class LessonBuilderService {
 
         lessonPage.questions.push(new Question(type, lessonPage.questions.length));
 
+        this.sync();
+
+
+    }
+
+
+    sync() {
+        const lessonPage = this.editingLessonPageSubject.value;
+        this.httpClient.put(environment.serverUrl + 'lessonPage/' + lessonPage.id, lessonPage).pipe(map(value => {
+
+            const modifiedQuestions = Object.assign({}, value);
+
+            for (const q in modifiedQuestions['questions']) {
+                if (modifiedQuestions['questions'].hasOwnProperty(q)) {
+                    const question: Question = modifiedQuestions['questions'][q];
+                    question.type = Question.getTypeForString(question.type);
+                    if (question.custom_properties === undefined) {
+                        question.custom_properties = {};
+                    }
+                }
+            }
+
+            return modifiedQuestions;
+
+        })).pipe(tap(x => {
+            this.editingLessonPageSubject.next(x as LessonPage);
+        })).pipe(publishReplay()).pipe(refCount()).subscribe();
     }
 }

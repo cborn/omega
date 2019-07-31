@@ -1,13 +1,9 @@
 package omega
 
-import grails.converters.JSON
-
-import static grails.converters.JSON.parse
-
 class Question {
 
     static constraints = {
-        name nullable:false
+        name nullable:true
         description nullable:true
         imagePrompt nullable:true
         imageFeedback nullable:true
@@ -15,7 +11,6 @@ class Question {
         audioFeedback nullable:true
         audioPrompt nullable:true
         videoPrompt nullable:true
-
 
     }
 

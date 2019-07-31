@@ -1,0 +1,7 @@
+import omega.Property
+
+model {
+	Property property
+}
+
+json tmpl.property(property)

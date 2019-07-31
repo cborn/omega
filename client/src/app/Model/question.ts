@@ -1,7 +1,6 @@
 export class Question {
 
     constructor(type, position) {
-        this.id = 12;
         this.required = false;
         this.type = type;
         this.custom_properties = {

@@ -1,0 +1,8 @@
+import omega.Property
+
+model {
+	Iterable<Property> propertyList
+}
+
+json tmpl.property(propertyList ?: [])
+
