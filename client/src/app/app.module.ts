@@ -41,6 +41,7 @@ import {
 import { ClozeFormatPipe } from './pipes/cloze-format.pipe';
 import { MultipleSelectComponent } from './lesson-builder/components/lesson-question/multiple-select/multiple-select.component';
 import { PositionOrderPipe } from './pipes/position-order.pipe';
+import { PictureSelectComponent } from './lesson-builder/components/lesson-question/picture-select/picture-select.component';
 
 @NgModule({
     declarations: [
@@ -54,7 +55,8 @@ import { PositionOrderPipe } from './pipes/position-order.pipe';
         ClozeFormatPipe,
         ClozeDialogComponent,
         MultipleSelectComponent,
-        PositionOrderPipe
+        PositionOrderPipe,
+        PictureSelectComponent
     ],
     entryComponents : [
         ClozeDialogComponent

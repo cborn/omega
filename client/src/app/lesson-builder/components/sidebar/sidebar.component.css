@@ -18,6 +18,13 @@
 
 }
 
+.sidebar-form-input-group {
+    width: 90%;
+    margin: 0 5%;
+    border-bottom: 1px solid lightgrey;
+    padding: 20px 0;
+}
+
 .sidebar-form-input-right {
     position: relative;
     top: -79px;

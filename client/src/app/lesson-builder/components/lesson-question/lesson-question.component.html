@@ -26,6 +26,8 @@
         <tr>
             <td colspan="2" *ngIf="question.type == 11"><app-cloze-question  [question]="question"></app-cloze-question></td>
             <td colspan="2" *ngIf="question.type == 0 || question.type == 9"><app-multiple-select [question]="question"></app-multiple-select></td>
+            <td colspan="2" *ngIf="question.type == 4"><app-picture-select [question]="question"></app-picture-select></td>
+
         </tr>
         <tr>
             <td  colspan="2">

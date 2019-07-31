@@ -83,6 +83,17 @@
     Stack Options
   </mat-slide-toggle>
 
+  <mat-slide-toggle *ngIf="isOfType([QuestionType.VOICE])" class="sidebar-form-input" color="primary" name="random" [(ngModel)]="question.custom_properties.prompt_sync">
+    Play prompt at the same time
+  </mat-slide-toggle>
+
+  <mat-form-field class="sidebar-form-input" *ngIf="isOfType([QuestionType.VOICE])">
+    <mat-label>Length Limit</mat-label>
+    <input matInput [(ngModel)]="question.custom_properties.length_limit" name="selection-step-value" class='sidebar-sub-input' type="time" />
+  </mat-form-field>
+
+
+
 
 
   <mat-form-field class="sidebar-form-input" *ngIf="isOfType([QuestionType.DATE])">
@@ -116,13 +127,29 @@
     <input matInput [(ngModel)]="question.custom_properties.step" name="selection-step-value" class='sidebar-sub-input' type="number" />
   </mat-form-field>
 
-  <mat-form-field class="sidebar-form-input" *ngIf="isOfType([QuestionType.SCALE])">
-    <mat-label>Label</mat-label>
-    <input matInput [(ngModel)]="question.custom_properties.label" name="selection-label-value-1" class='sidebar-sub-input'/><span style="padding: 10px;line-height: 30px;">-</span>
-    <input matInput [(ngModel)]="question.custom_properties.label" name="selection-label-value-2" class='sidebar-sub-input'/><span style="padding: 10px;line-height: 30px;">-</span>
-    <input matInput [(ngModel)]="question.custom_properties.label" name="selection-label-value-3" class='sidebar-sub-input'/>
+  <div class="sidebar-form-input-group" *ngIf="isOfType([QuestionType.SCALE])">
 
-  </mat-form-field>
+    <mat-slide-toggle color="primary" name="random" [(ngModel)]="question.custom_properties.show_labels">
+      Show Labels
+    </mat-slide-toggle>
+    <br/>
+
+    <mat-form-field *ngIf="question.custom_properties.show_labels">
+      <mat-label>Left</mat-label>
+      <input matInput [(ngModel)]="question.custom_properties.label_start"  name="selection-label-value-1" class='sidebar-sub-input'/>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="question.custom_properties.show_labels">
+      <mat-label>Center</mat-label>
+      <input matInput [(ngModel)]="question.custom_properties.label_middle"  name="selection-label-value-2" class='sidebar-sub-input'/>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="question.custom_properties.show_labels">
+      <mat-label>Right</mat-label>
+      <input matInput [(ngModel)]="question.custom_properties.label_end"  name="selection-label-value-3" class='sidebar-sub-input'/>
+    </mat-form-field>
+
+  </div>
 
 
 

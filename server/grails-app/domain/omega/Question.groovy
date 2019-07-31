@@ -68,6 +68,8 @@ class Question {
 
         MAX_CHARS("max_chars"),
 
+
+
         MIN("min"), // min number value
         MAX("max"), // max number value
 
@@ -76,7 +78,10 @@ class Question {
         START("start"), // could be a number or a date.
         END("end"), // number or a date
         STEP("step"),
-        LABELS("labels"), // an array of three strings - the label for the start, middle and end of the scale.
+        SHOW_LABELS("show_labels"),
+        LABEL_START("label_start"),
+        LABEL_MIDDLE("label_middle"),
+        LABEL_END("label_end"),
 
         FORMAT("format"), // format to display the date in
 
