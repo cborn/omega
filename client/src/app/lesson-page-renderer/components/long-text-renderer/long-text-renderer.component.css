@@ -1,0 +1,9 @@
+.input-style-textarea {
+    color: #3193bb;
+}
+
+.input-style-textarea::placeholder {
+    color: #3193bb;
+    opacity: 1;
+}
+

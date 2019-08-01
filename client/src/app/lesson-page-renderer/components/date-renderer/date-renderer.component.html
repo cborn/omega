@@ -1,3 +1,6 @@
-<p>
-  date-renderer works!
-</p>
+<mat-form-field style="width: 100%" [ngClass]="{'invalid':(value < question.custom_properties.min || value > question.custom_properties.max)}">
+  <mat-label class="answer-label">Type your answer here...</mat-label>
+  <input matInput [matDatepicker]="dp" [formControl]="date">
+  <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+  <mat-datepicker #dp></mat-datepicker>
+</mat-form-field>

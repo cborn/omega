@@ -40,7 +40,7 @@ class Question {
 
     int max_grade;
 
-    Map<QuestionPropertyKeys,String> custom_properties
+    Map<QuestionPropertyKeys,Object> custom_properties
 
     def hasFeedback(){
         return imagePrompt != null || imageFeedback != null || videoPrompt != null || videoFeedback != null || audioPrompt != null || audioFeedback != null;

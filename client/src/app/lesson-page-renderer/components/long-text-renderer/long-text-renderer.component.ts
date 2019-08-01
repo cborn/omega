@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, NgZone, OnInit, ViewChild} from '@angular/core';
+import {CdkTextareaAutosize} from '@angular/cdk/text-field';
+import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-long-text-renderer',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LongTextRendererComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild('autosize', {static: false}) autosize: CdkTextareaAutosize;
+
+
+  value;
+
+  constructor(private _ngZone: NgZone) { }
 
   ngOnInit() {
+
+    this._ngZone.onStable.pipe(take(1))
+        .subscribe(() => {
+          this.autosize.resizeToFitContent(true);
+        });
+
+
   }
 
 }

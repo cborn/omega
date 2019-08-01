@@ -11,6 +11,8 @@ export class MultipleSelectComponent implements OnInit {
 
     @Input() question: Question;
 
+    changedIndex = -1;
+
     workingCopy;
 
     constructor() {
@@ -28,20 +30,21 @@ export class MultipleSelectComponent implements OnInit {
     }
 
     itsChanged(event, index) {
-        const input = this.workingCopy.split('@@');
+        const input = this.question.custom_properties.options.split('@@');
         if (event === '') {
             input.splice(index, 1);
-            this.workingCopy = input.join('@@');
+            this.question.custom_properties.options = input.join('@@');
         } else {
             input[index] = event;
         }
         this.question.custom_properties.options = input.join('@@');
+        // this.workingCopy = input.join('@@');
 
 
     }
 
     newLine(index) {
-        const input = this.workingCopy.split('@@');
+        const input = this.question.custom_properties.options.split('@@');
 
         input.splice(index + 1, 0, '');
         this.workingCopy = input.join('@@');
@@ -50,13 +53,12 @@ export class MultipleSelectComponent implements OnInit {
     }
 
     delete(content, index) {
-        console.log(content);
-        const input = this.workingCopy.split('@@');
+        const input = this.question.custom_properties.options.split('@@');
         if (content === '') {
             input.splice(index, 1);
-            this.workingCopy = input.join('@@');
+            this.question.custom_properties.options = input.join('@@');
         }
         this.question.custom_properties.options = input.join('@@');
+        this.workingCopy = input.join('@@');
     }
-
 }

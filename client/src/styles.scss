@@ -60,6 +60,26 @@ body {
   top: 9px !important;
 }
 
+.ng-touched.invalid  input {
+  border: 1px solid #ff4d52 !important;
+  padding: 10px !important;
+  border-radius: 5px !important;
+  color: #ff4d52 !important;
+}
+
+
+.ng-touched.invalid mat-label {
+  color: #ff4d52 !important;
+}
+
+.answer-input-flex .check-icon {
+  transform: translate(-4px, 7%) !important;
+  float: unset !important;
+}
+
+.answer-input-flex .option-item {
+  text-align: center;
+}
 
 
 .warn {

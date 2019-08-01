@@ -1,0 +1,26 @@
+.option-item {
+    border: 1px solid #3193bb;
+    width: 100%;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #3193bb1a;
+    color: #3193bb;
+}
+
+.option-item:hover {
+    background-color: rgba(49, 147, 187, 0.2);
+}
+
+.option-item.selected {
+    background-color: rgba(49, 147, 187, 0.2);
+}
+
+
+.check-icon {
+    float: right;
+    position: relative;
+    transform: translate(0, -14%);
+    width: 24px;
+}

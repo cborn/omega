@@ -92,6 +92,17 @@ export class LessonBuilderService {
 
     sync() {
         const lessonPage = this.editingLessonPageSubject.value;
+
+        lessonPage.questions.forEach(value => {
+            if (value.custom_properties.max !== undefined) {
+                value.custom_properties.max = value.custom_properties.max + '';
+            }
+            if (value.custom_properties.min !== undefined) {
+                value.custom_properties.min = value.custom_properties.min + '';
+            }
+        });
+
+
         this.httpClient.put(environment.serverUrl + 'lessonPage/' + lessonPage.id, lessonPage).pipe(map(value => {
 
             const modifiedQuestions = Object.assign({}, value);

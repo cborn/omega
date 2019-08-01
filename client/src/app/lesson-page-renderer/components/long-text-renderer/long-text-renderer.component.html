@@ -1,3 +1,5 @@
-<p>
-  long-text-renderer works!
-</p>
+<mat-form-field style="width: 100%">
+  <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+            [(ngModel)]="value"
+            placeholder="Type your answer here..." class="input-style-textarea" name="description-text"></textarea>
+</mat-form-field>

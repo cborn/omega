@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Question} from '../../../Model/question';
 
 @Component({
   selector: 'app-multi-choice-renderer',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MultiChoiceRendererComponent implements OnInit {
 
+  @Input() question: Question;
+
+  value;
+
   constructor() { }
 
   ngOnInit() {
   }
 
+  didSelect(value) {
+    this.value = value;
+  }
 }

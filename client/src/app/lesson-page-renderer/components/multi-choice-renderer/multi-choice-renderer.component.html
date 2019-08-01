@@ -1,3 +1,5 @@
-<p>
-  multi-choice-renderer works!
-</p>
+<div class="option-item" *ngFor="let option of question.custom_properties.options.split('@@')"
+     [ngClass]="{'selected':(value != null && value == option)}" (click)="didSelect(option)">
+  {{option == '' ? "..." : option}}
+  <i class="material-icons check-icon" *ngIf="value != null && value == option">checkmark</i>
+</div>

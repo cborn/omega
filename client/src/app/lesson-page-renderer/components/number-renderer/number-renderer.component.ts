@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Question} from '../../../Model/question';
 
 @Component({
   selector: 'app-number-renderer',
@@ -6,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./number-renderer.component.css']
 })
 export class NumberRendererComponent implements OnInit {
+
+
+  @Input() question: Question;
+  value: string;
 
   constructor() { }
 
