@@ -21,10 +21,12 @@
 
 
 .answer-input {
-    display: block;
+    display: inline-block;
     margin-top: 40px;
+    margin-bottom: 40px;
     margin-left: 30px;
     width: 100%;
+    height: 100%;
 }
 
 .answer-input.fit-content {

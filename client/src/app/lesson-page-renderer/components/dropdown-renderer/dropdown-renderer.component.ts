@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Question} from '../../../Model/question';
 
 @Component({
   selector: 'app-dropdown-renderer',
@@ -6,6 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dropdown-renderer.component.css']
 })
 export class DropdownRendererComponent implements OnInit {
+
+  @Input() question: Question;
+
+  value: string;
+
+
 
   constructor() { }
 

@@ -1,0 +1,34 @@
+.scale-render{
+    display: flex;
+    width: 100%;
+}
+.scale-input {
+    border: 1px solid #3193bb;
+    width: fit-content;
+    padding: 18px;
+    cursor: pointer;
+    background: #3193bb1a;
+    color: #3193bb;
+    margin-left: 0;
+    margin-right: 0;
+    font-size: 18px;
+    text-align: center;
+}
+
+.scale-input:first-child {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+
+}
+
+.scale-input:last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.selected {
+    border: 1px solid #3193bb;
+    background: #3193bb;
+    color: #badbe8;
+}
+

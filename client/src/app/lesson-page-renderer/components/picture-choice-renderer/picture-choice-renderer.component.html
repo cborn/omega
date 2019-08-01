@@ -1,3 +1,8 @@
-<p>
-  picture-choice-renderer works!
-</p>
+<div *ngIf="question.custom_properties.images !== ''">
+  <div *ngFor="let option of question.custom_properties.images?.split('@@'); let index = index" class="image-add" (click)="doSelect(option)">
+    <div class="selected"  *ngIf="value != null && value == option">
+      <i class="material-icons check-icon-rotated">checkmark</i>
+    </div>
+    <img [src]='option | imageUrlFilter' />
+  </div>
+</div>

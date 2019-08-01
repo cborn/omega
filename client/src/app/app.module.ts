@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {LocationStrategy, HashLocationStrategy} from '@angular/common';
+import {LocationStrategy, HashLocationStrategy, ViewportScroller} from '@angular/common';
 import {IndexComponent} from './index/index.component';
 import {AppComponent} from './app.component';
 import {NavComponent} from './nav/nav.component';
@@ -13,7 +13,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
     MatButtonModule,
     MatGridList,
-    MatGridListModule, MatListModule,
+    MatGridListModule, MatListModule, MatNativeDateModule,
     MatOptionModule,
     MatSelectModule,
     MatSidenavModule,
@@ -56,7 +56,10 @@ import { NumberRendererComponent } from './lesson-page-renderer/components/numbe
 import { DropdownRendererComponent } from './lesson-page-renderer/components/dropdown-renderer/dropdown-renderer.component';
 import { VoiceRendererComponent } from './lesson-page-renderer/components/voice-renderer/voice-renderer.component';
 import { ClozeRendererComponent } from './lesson-page-renderer/components/cloze-renderer/cloze-renderer.component';
+import { DateFormatPipe } from './pipes/date-format.pipe';
+import {MatMomentDateModule} from '@angular/material-moment-adapter';
 
+// @ts-ignore
 @NgModule({
     declarations: [
         AppComponent,
@@ -84,7 +87,8 @@ import { ClozeRendererComponent } from './lesson-page-renderer/components/cloze-
         NumberRendererComponent,
         DropdownRendererComponent,
         VoiceRendererComponent,
-        ClozeRendererComponent
+        ClozeRendererComponent,
+        DateFormatPipe
     ],
     entryComponents : [
         ClozeDialogComponent
@@ -116,9 +120,11 @@ import { ClozeRendererComponent } from './lesson-page-renderer/components/cloze-
         MatToolbarModule,
         MatOptionModule,
         MatSelectModule,
-        MatListModule
+        MatListModule,
+        MatNativeDateModule,
+        MatMomentDateModule
     ],
-    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, NavService],
+    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, NavService, ViewportScroller],
     bootstrap: [AppComponent]
 })
 export class AppModule {

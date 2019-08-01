@@ -1,0 +1,39 @@
+.image-add {
+    width: 120px;
+    height: 150px;
+    background: #ffffff;
+    border: 1px solid #3193bb;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    margin-left: 10px;
+    float: left;
+    overflow: hidden;
+}
+
+
+.image-add > img {
+    width: 90%;
+    margin-left:5%;
+    height: auto;
+    top: 50%;
+    position: relative;
+    transform: translate(0, -50%)
+}
+
+.check-icon-rotated {
+    width: 24px;
+    transform: translate(-2px,-21px) rotate(90deg);
+    color: #daf4ff;
+}
+
+.selected {
+    position: absolute;
+    border: 24px solid;
+    border-color: #3193bb #3193bb transparent transparent;
+    width: 0;
+    height: 0;
+    transform: rotate(-90deg);
+    z-index: 1;
+
+}

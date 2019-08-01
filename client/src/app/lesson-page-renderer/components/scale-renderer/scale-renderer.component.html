@@ -1,3 +1,5 @@
-<p>
-  scale-renderer works!
-</p>
+<div class="scale-render">
+  <div *ngFor="let input of inputs" class="scale-input" (click)="didSelect(input)" [style.width.%]="100 / inputs.length" [ngClass]="{'selected' : (value != null && value == input)}">
+    {{input}}
+  </div>
+</div>

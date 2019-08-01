@@ -1,3 +1,8 @@
-<p>
-  dropdown-renderer works!
-</p>
+<mat-form-field>
+  <mat-label class="answer-label">Choose your answer here.</mat-label>
+  <mat-select class="classic-input-style">
+    <mat-option *ngFor="let option of question.custom_properties.options.split('@@')" [value]="option">
+      {{option == "" ? "..." : option}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

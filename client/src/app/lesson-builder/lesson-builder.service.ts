@@ -94,11 +94,15 @@ export class LessonBuilderService {
         const lessonPage = this.editingLessonPageSubject.value;
 
         lessonPage.questions.forEach(value => {
+
             if (value.custom_properties.max !== undefined) {
                 value.custom_properties.max = value.custom_properties.max + '';
             }
             if (value.custom_properties.min !== undefined) {
                 value.custom_properties.min = value.custom_properties.min + '';
+            }
+            if (value.custom_properties.stack !== undefined) {
+                value.custom_properties.stack = value.custom_properties.stack + '';
             }
         });
 

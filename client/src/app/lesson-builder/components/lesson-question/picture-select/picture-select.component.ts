@@ -49,6 +49,8 @@ export class PictureSelectComponent implements OnInit {
       // new image on question...
       this.question = value;
       this.workingCopy = this.question.custom_properties.images;
+    },error1 => {
+      this.imageLoading = false;
     });
 
   }
