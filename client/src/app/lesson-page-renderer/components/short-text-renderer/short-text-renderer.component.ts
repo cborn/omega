@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShortTextRendererComponent implements OnInit {
 
+
+  value: string;
+
   constructor() { }
 
   ngOnInit() {

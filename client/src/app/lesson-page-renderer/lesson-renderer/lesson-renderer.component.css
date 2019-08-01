@@ -1,0 +1,35 @@
+.question {
+    padding: 15px;
+    font-family: 'Roboto', sans-serif;
+    color: #232323;
+}
+
+
+.question > h3 {
+    margin-bottom: 5px;
+}
+.question > h3 > b {
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #3193bb;
+}
+
+.question > h6 {
+    margin: 0 0 0 45px;
+    color: grey;
+}
+
+
+.answer-input {
+    display: block;
+    margin-top: 40px;
+    margin-left: 30px;
+}
+
+.answer-input-block {
+    display: block;
+}
+
+.answer-input-flex {
+    display: block;
+}

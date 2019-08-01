@@ -1,17 +1,20 @@
-<div *ngFor="let question of lesson.questions | positionOrder">
+<div *ngFor="let question of lesson.questions | positionOrder:'asc'" class="question">
 
-    <app-multi-choice-renderer *ngIf="question.type == 0"></app-multi-choice-renderer>
-    <app-short-text-renderer *ngIf="question.type == 1"></app-short-text-renderer>
-    <app-long-text-renderer *ngIf="question.type == 2"></app-long-text-renderer>
-    <app-block-text-renderer *ngIf="question.type == 3"></app-block-text-renderer>
-    <app-picture-choice-renderer *ngIf="question.type == 4"></app-picture-choice-renderer>
-    <app-boolean-renderer *ngIf="question.type == 5"> </app-boolean-renderer>
-    <app-scale-renderer *ngIf="question.type == 6"> </app-scale-renderer>
-    <app-date-renderer *ngIf="question.type == 7"> </app-date-renderer>
-    <app-number-renderer *ngIf="question.type == 8"> </app-number-renderer>
-    <app-dropdown-renderer *ngIf="question.type == 9"> </app-dropdown-renderer>
-    <app-voice-renderer *ngIf="question.type == 10"> </app-voice-renderer>
-    <app-cloze-renderer *ngIf="question.type == 11"> </app-cloze-renderer>
+    <h3><b>({{question.position + 1}})</b>{{question.name == null || question.name == "" ? '...' : question.name}} <i class="required" *ngIf="question.required">*</i></h3>
+    <h6 *ngIf="question.description != null && question.description != ''">{{question.description}}</h6>
+
+    <app-multi-choice-renderer *ngIf="question.type == 0" class="answer-input"></app-multi-choice-renderer>
+    <app-short-text-renderer *ngIf="question.type == 1" class="answer-input"></app-short-text-renderer>
+    <app-long-text-renderer *ngIf="question.type == 2" class="answer-input"></app-long-text-renderer>
+    <app-block-text-renderer *ngIf="question.type == 3" class="answer-input"></app-block-text-renderer>
+    <app-picture-choice-renderer *ngIf="question.type == 4" class="answer-input"></app-picture-choice-renderer>
+    <app-boolean-renderer *ngIf="question.type == 5" class="answer-input"> </app-boolean-renderer>
+    <app-scale-renderer *ngIf="question.type == 6" class="answer-input"> </app-scale-renderer>
+    <app-date-renderer *ngIf="question.type == 7" class="answer-input"> </app-date-renderer>
+    <app-number-renderer *ngIf="question.type == 8" class="answer-input"> </app-number-renderer>
+    <app-dropdown-renderer *ngIf="question.type == 9" class="answer-input"> </app-dropdown-renderer>
+    <app-voice-renderer *ngIf="question.type == 10" class="answer-input"> </app-voice-renderer>
+    <app-cloze-renderer *ngIf="question.type == 11" class="answer-input"> </app-cloze-renderer>
 
 
 </div>

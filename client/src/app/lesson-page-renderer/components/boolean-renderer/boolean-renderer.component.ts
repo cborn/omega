@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BooleanRendererComponent implements OnInit {
 
+
+  value:boolean;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  didSelect(value) {
+    this.value = value;
   }
 
 }

@@ -21,6 +21,8 @@ $omega-app-theme: mat-light-theme($omega-app-primary, $omega-app-accent, $omega-
 @include angular-material-theme($omega-app-theme);
 
 
+
+
 .mat-grid-tile .mat-figure {
   justify-content: flex-start !important;
   align-items: initial !important;
@@ -44,6 +46,20 @@ body {
   top:4px;
   left:4px;
 }
+
+
+.classic-input-style {
+  border: 1px solid #3193bb !important;
+  padding: 10px !important;
+  border-radius: 5px !important;
+  color: #3193bb !important;
+}
+
+.answer-label {
+  color: #3193bb;
+  top: 9px !important;
+}
+
 
 
 .warn {
