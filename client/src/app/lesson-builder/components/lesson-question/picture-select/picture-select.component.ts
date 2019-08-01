@@ -17,6 +17,8 @@ export class PictureSelectComponent implements OnInit {
 
   selectedFile: File;
 
+  imageLoading = false;
+
 
   workingCopy;
 
@@ -38,10 +40,12 @@ export class PictureSelectComponent implements OnInit {
   }
 
   onUpload() {
+    this.imageLoading = true;
 
     const promise = this.lessonBuilderService.addImageToQuestion(this.question, this.selectedFile);
 
     promise.subscribe(value => {
+      this.imageLoading = false;
       // new image on question...
       this.question = value;
       this.workingCopy = this.question.custom_properties.images;
