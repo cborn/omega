@@ -26,23 +26,23 @@ export class ScaleRendererComponent implements OnInit, OnDestroy {
 
         this.inputs = [];
 
-        if (this.question.custom_properties.start == undefined) {
+        if (this.question.custom_properties.start === undefined) {
             this.question.custom_properties.start = 0;
         }
 
-        if (this.question.custom_properties.end == undefined) {
+        if (this.question.custom_properties.end === undefined) {
             this.question.custom_properties.end = 10;
         }
 
 
-        if (this.question.custom_properties.step == undefined) {
+        if (this.question.custom_properties.step === undefined) {
             this.question.custom_properties.step = 1;
         }
 
-        this.oldinput = Object.assign(this.oldinput, this.question.custom_properties);
+        this.oldinput = Object.assign({}, this.question.custom_properties);
 
 
-        for (const i = this.question.custom_properties.start; i <= this.question.custom_properties.end; i += this.question.custom_properties.step) {
+        for (let i = this.question.custom_properties.start; i <= this.question.custom_properties.end; i += this.question.custom_properties.step) {
             this.inputs.push(i);
         }
 
@@ -60,9 +60,9 @@ export class ScaleRendererComponent implements OnInit, OnDestroy {
     changes(x) {
 
         if (x.oldinput.start !== x.question.custom_properties.start || x.oldinput.end !== x.question.custom_properties.end || x.oldinput.step !== x.question.custom_properties.step) {
-            x.oldinput = Object.assign(x.oldinput, x.question.custom_properties);
+            x.oldinput = Object.assign({}, x.question.custom_properties);
             x.inputs = [];
-            for (const i = x.question.custom_properties.start; i <= x.question.custom_properties.end; i += x.question.custom_properties.step) {
+            for (let i = x.question.custom_properties.start; i <= x.question.custom_properties.end; i += x.question.custom_properties.step) {
                 x.inputs.push(i);
             }
         }

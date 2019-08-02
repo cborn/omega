@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Question, QuestionType} from '../../../Model/question';
 
 @Component({
@@ -6,7 +6,7 @@ import {Question, QuestionType} from '../../../Model/question';
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnChanges {
 
 
     questionTypes = Question.questionTypeList();
@@ -24,6 +24,10 @@ export class SidebarComponent implements OnInit {
     }
 
     ngOnInit() {
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        console.log(changes);
     }
 
     closeSidebarAction() {

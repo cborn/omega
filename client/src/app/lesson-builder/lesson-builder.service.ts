@@ -8,6 +8,8 @@ import {of} from 'rxjs/internal/observable/of';
 import {Question, QuestionType} from '../Model/question';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 
+const BOOLEAN_PROPERTIES = ['stack', 'random'];
+
 @Injectable({
     providedIn: 'root'
 })
@@ -20,24 +22,42 @@ export class LessonBuilderService {
     constructor(private httpClient: HttpClient) {
     }
 
-    getLessonToEdit(lessonPageId) {
-        this.httpClient.get(environment.serverUrl + 'lessonPage/' + lessonPageId).pipe(map(value => {
 
-            const modifiedQuestions = Object.assign({}, value);
+    filterFromServer(value) {
+        // console.log(value);
+        const modifiedLessonPage = Object.assign({}, value);
 
-            for (const q in modifiedQuestions['questions']) {
-                if (modifiedQuestions['questions'].hasOwnProperty(q)) {
-                    const question: Question = modifiedQuestions['questions'][q];
-                    question.type = Question.getTypeForString(question.type);
-                    if (question.custom_properties === undefined) {
-                        question.custom_properties = {};
+        for (const q in modifiedLessonPage['questions']) {
+            if (modifiedLessonPage['questions'].hasOwnProperty(q)) {
+
+                const question: Question = modifiedLessonPage['questions'][q];
+
+                question.type = Question.getTypeForString(question.type);
+
+                if (question.custom_properties === undefined) {
+                    question.custom_properties = {};
+                }
+
+                for (const customPropertiesKey in question.custom_properties) {
+
+                    if (question.custom_properties.hasOwnProperty(customPropertiesKey)) {
+                        if (BOOLEAN_PROPERTIES.indexOf(customPropertiesKey) > -1) {
+                            console.log('changing - ' + customPropertiesKey);
+                            question.custom_properties[customPropertiesKey] = (question.custom_properties[customPropertiesKey] === 'true');
+                        }
                     }
+
                 }
             }
+        }
 
-            return modifiedQuestions;
 
-        })).pipe(tap(x => {
+//         console.log(modifiedLessonPage);
+        return modifiedLessonPage;
+    }
+
+    getLessonToEdit(lessonPageId) {
+        this.httpClient.get(environment.serverUrl + 'lessonPage/' + lessonPageId).pipe(map(this.filterFromServer)).pipe(tap(x => {
             this.editingLessonPageSubject.next(x as LessonPage);
         })).pipe(publishReplay()).pipe(refCount()).subscribe();
 
@@ -91,39 +111,22 @@ export class LessonBuilderService {
 
 
     sync() {
-        const lessonPage = this.editingLessonPageSubject.value;
+        const lessonPage = Object.assign({}, this.editingLessonPageSubject.value);
 
         lessonPage.questions.forEach(value => {
 
-            if (value.custom_properties.max !== undefined) {
-                value.custom_properties.max = value.custom_properties.max + '';
+            for (const customPropertiesKey in value.custom_properties) {
+                if (value.custom_properties.hasOwnProperty(customPropertiesKey)) {
+                    value.custom_properties[customPropertiesKey] = value.custom_properties[customPropertiesKey] + '';
+                }
+
             }
-            if (value.custom_properties.min !== undefined) {
-                value.custom_properties.min = value.custom_properties.min + '';
-            }
-            if (value.custom_properties.stack !== undefined) {
-                value.custom_properties.stack = value.custom_properties.stack + '';
-            }
+
         });
 
 
-        this.httpClient.put(environment.serverUrl + 'lessonPage/' + lessonPage.id, lessonPage).pipe(map(value => {
-
-            const modifiedQuestions = Object.assign({}, value);
-
-            for (const q in modifiedQuestions['questions']) {
-                if (modifiedQuestions['questions'].hasOwnProperty(q)) {
-                    const question: Question = modifiedQuestions['questions'][q];
-                    question.type = Question.getTypeForString(question.type);
-                    if (question.custom_properties === undefined) {
-                        question.custom_properties = {};
-                    }
-                }
-            }
-
-            return modifiedQuestions;
-
-        })).pipe(tap(x => {
+        this.httpClient.put(environment.serverUrl + 'lessonPage/' + lessonPage.id, lessonPage).pipe(map(this.filterFromServer)).pipe(tap(x => {
+            console.log(x.questions[2].custom_properties.random);
             this.editingLessonPageSubject.next(x as LessonPage);
         })).pipe(publishReplay()).pipe(refCount()).subscribe();
     }

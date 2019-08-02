@@ -79,11 +79,11 @@
     Randomize
   </mat-slide-toggle>
 
-  <mat-slide-toggle *ngIf="isOfType([QuestionType.MULTI_CHOICE])" class="sidebar-form-input" color="primary" name="random" [(ngModel)]="question.custom_properties.stack">
+  <mat-slide-toggle *ngIf="isOfType([QuestionType.MULTI_CHOICE])" class="sidebar-form-input" color="primary" name="stack" [(ngModel)]="question.custom_properties.stack">
     Stack Options
   </mat-slide-toggle>
 
-  <mat-slide-toggle *ngIf="isOfType([QuestionType.VOICE])" class="sidebar-form-input" color="primary" name="random" [(ngModel)]="question.custom_properties.prompt_sync">
+  <mat-slide-toggle *ngIf="isOfType([QuestionType.VOICE])" class="sidebar-form-input" color="primary" name="sync-play" [(ngModel)]="question.custom_properties.prompt_sync">
     Play prompt at the same time
   </mat-slide-toggle>
 
