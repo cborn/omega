@@ -4,16 +4,15 @@ import {IndexComponent} from './index/index.component';
 import {LessonBuilderComponent} from './lesson-builder/lesson-builder.component';
 import {LoginComponent} from './login/login.component';
 import {UnauthorizedComponent} from './unauthorized/unauthorized.component';
-import {FacultyGuard} from './guards/faculty-guard';
+import {Guard, StudentGuard} from './guards/guard';
 
 const routes: Routes = [
     {path: '', redirectTo: 'index', pathMatch: 'full'},
-    {path: 'index', component: IndexComponent},
-    {path: 'lesson/builder/:lessonId', component: LessonBuilderComponent, canActivate: [FacultyGuard]},
+    {path: 'index', component: IndexComponent, canActivate: [StudentGuard]},
+    {path: 'lesson/builder/:lessonId', component: LessonBuilderComponent, canActivate: [Guard]},
+    // Anyone can access these
     {path: 'login', component: LoginComponent},
     {path: 'unauthorized', component: UnauthorizedComponent}
-
-
 
 ];
 

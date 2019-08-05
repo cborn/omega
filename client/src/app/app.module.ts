@@ -62,9 +62,8 @@ import {SessionManagerService} from './session-manager.service';
 import {Router} from '@angular/router';
 import {LoginComponent} from './login/login.component';
 import {AlertDialogComponent, NotificationService} from './notification.service';
-import {Alert} from 'selenium-webdriver';
 import {UnauthorizedComponent} from './unauthorized/unauthorized.component';
-import {FacultyGuard} from './guards/faculty-guard';
+import {AdminGuard, Guard, GraderGuard, StudentGuard, SuperAdminGuard} from './guards/guard';
 
 // @ts-ignore
 @NgModule({
@@ -140,10 +139,31 @@ import {FacultyGuard} from './guards/faculty-guard';
             useFactory: AuthenticatedHttpClientFactory,
             deps: [HttpClient, SessionManagerService, Router, NotificationService]
         }, NavService, {
-            provide: FacultyGuard, useFactory: (router, sessionManager) => {
-                return new FacultyGuard(sessionManager, router);
+            provide: SuperAdminGuard, useFactory: (router, sessionManager) => {
+                return new SuperAdminGuard(sessionManager, router);
             }, deps: [Router, SessionManagerService]
-        }],
+        },
+        {
+            provide: AdminGuard, useFactory: (router, sessionManager) => {
+                return new AdminGuard(sessionManager, router);
+            }, deps: [Router, SessionManagerService]
+        },
+        {
+            provide: Guard, useFactory: (router, sessionManager) => {
+                return new Guard(sessionManager, router);
+            }, deps: [Router, SessionManagerService]
+        },
+        {
+            provide: GraderGuard, useFactory: (router, sessionManager) => {
+                return new GraderGuard(sessionManager, router);
+            }, deps: [Router, SessionManagerService]
+        },
+        {
+            provide: StudentGuard, useFactory: (router, sessionManager) => {
+                return new StudentGuard(sessionManager, router);
+            }, deps: [Router, SessionManagerService]
+        }
+        ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

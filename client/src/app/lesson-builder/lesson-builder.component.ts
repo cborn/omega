@@ -22,23 +22,15 @@ export class LessonBuilderComponent implements OnInit {
 
     questionTypeList = Question.questionTypeList();
 
-
-
-
     // DATA OBJECTS
     lesson$ = this.lessonBuilderService.editingLessonPage;
 
 
-    constructor(private lessonBuilderService: LessonBuilderService, private router: Router, private route: ActivatedRoute, private sessionManager: SessionManagerService) {
+    constructor(private lessonBuilderService: LessonBuilderService, private router: Router, private route: ActivatedRoute) {
 
     }
 
     ngOnInit() {
-
-
-        if (!this.sessionManager.checkRoles(PERMISSION_ROLE.ROLE_FACULTY)) {
-            this.router.navigate(['/unauthorized']);
-        }
 
         this.route.paramMap.subscribe(value => {
             this.lessonBuilderService.getLessonToEdit(value.get('lessonId'));
