@@ -59,15 +59,16 @@ export class SessionManagerService {
     }
 
     /**
-     * The way role checking works is based of a hicherarchy basis. So if the person has a role of admin that means the can access the same as faculty or grader.
+     * The way role checking works is based of a hierarchy basis. So if the person has a role of admin that means the can access the same as faculty or grader.
      * @param role
      */
     checkRoles(role: PERMISSION_ROLE) {
 
         const roles = this.getRoles();
 
-        if(roles.indexOf('ROLE_SUPER_ADMIN') > -1)
-            return true; // You're a super admin, just go right ahead...
+        if (roles.indexOf('ROLE_SUPER_ADMIN') > -1) {
+            return true;
+        } // You're a super admin, just go right ahead...
 
         switch (role) {
             case PERMISSION_ROLE.ROLE_ADMIN:
@@ -77,7 +78,9 @@ export class SessionManagerService {
             case PERMISSION_ROLE.ROLE_GRADER:
                 return roles.indexOf('ROLE_GRADER') > -1 || roles.indexOf('ROLE_FACULTY') > -1 || roles.indexOf('ROLE_ADMIN') > -1;
             case PERMISSION_ROLE.ROLE_STUDENT:
-                return roles.length > 0;// have we got any role? if we have then let us in because they can see this page no matter what.
+                return roles.length > 0; // have we got any role? if we have then let us in because they can see this page no matter what.
+            default :
+                return false;
 
 
         }

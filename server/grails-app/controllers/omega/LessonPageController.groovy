@@ -4,7 +4,7 @@ import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
-@Secured(['ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_FACUTLY','ROLE_GRADER','ROLE_STUDENT'])
+@Secured(['ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_FACULTY','ROLE_GRADER','ROLE_STUDENT'])
 class LessonPageController {
 
     LessonPageService lessonPageService
@@ -37,7 +37,7 @@ class LessonPageController {
         respond lessonPage, [status: CREATED, view:"show"]
     }
 
-    @Secured(['ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_FACUTLY'])
+    @Secured(['ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_FACULTY'])
     def update(LessonPage lessonPage) {
         if (lessonPage == null) {
             render status: NOT_FOUND

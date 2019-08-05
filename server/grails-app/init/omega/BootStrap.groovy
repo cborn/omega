@@ -13,18 +13,33 @@ class BootStrap {
         Role grader = new Role(authority:"ROLE_GRADER").save(flush: true);
         Role student = new Role(authority:"ROLE_STUDENT").save(flush: true);
 
-        def testUser = new User(username: 'admin', password: 'admin',firstname: "Administrator", surname: "User").save(failOnError:true)
+        def testUser = new User(username: 'admin', password: 'test',firstname: "Administrator", surname: "User").save(failOnError:true)
+
+        def studentUser = new User(username: 'student', password: 'test',firstname: "Student", surname: "User").save(failOnError:true)
+        def facultyUser = new User(username: 'faculty', password: 'test',firstname: "Faculty", surname: "User").save(failOnError:true)
+        def graderUser = new User(username: 'grader', password: 'test',firstname: "Grader", surname: "User").save(failOnError:true)
+        def FacultyGraderUser = new User(username: 'facultyGrader', password: 'test',firstname: "Faculty Grader", surname: "User").save(failOnError:true)
+
+
 
         UserRole.create testUser, superAdminRole
+        UserRole.create studentUser, student
+        UserRole.create facultyUser, faculty
+        UserRole.create graderUser, grader
+        UserRole.create FacultyGraderUser, faculty
+        UserRole.create FacultyGraderUser, grader
+
+
+
 
         UserRole.withSession {
             it.flush()
             it.clear()
         }
 
-        assert User.count() == 1
+        assert User.count() == 5
         assert Role.count() == 5
-        assert UserRole.count() == 1
+        assert UserRole.count() == 6
 
         // Create some demo content in here.
 

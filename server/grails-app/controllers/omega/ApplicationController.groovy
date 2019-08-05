@@ -4,7 +4,7 @@ import grails.core.GrailsApplication
 import grails.plugin.springsecurity.annotation.Secured
 import grails.plugins.*
 
-@Secured(['ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_FACUTLY'])
+@Secured(['ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_FACULTY'])
 class ApplicationController implements PluginManagerAware {
 
     GrailsApplication grailsApplication
@@ -14,3 +14,4 @@ class ApplicationController implements PluginManagerAware {
         [grailsApplication: grailsApplication, pluginManager: pluginManager]
     }
 }
+
