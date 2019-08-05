@@ -58,7 +58,6 @@ export class ScaleRendererComponent implements OnInit, OnDestroy {
 
 
     changes(x) {
-
         if (x.oldinput.start !== x.question.custom_properties.start || x.oldinput.end !== x.question.custom_properties.end || x.oldinput.step !== x.question.custom_properties.step) {
             x.oldinput = Object.assign({}, x.question.custom_properties);
             x.inputs = [];

@@ -1,5 +1,6 @@
 package omega
 
+import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
@@ -10,6 +11,7 @@ class LessonController {
     static responseFormats = ['json', 'xml']
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    @Secured(['ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_FACUTLY','ROLE_GRADER','ROLE_STUDENT'])
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond lessonService.list(params), model:[lessonCount: lessonService.count()]

@@ -6,6 +6,26 @@ class BootStrap {
 
     def init = { servletContext ->
 
+
+        Role superAdminRole = new Role(authority:"ROLE_SUPER_ADMIN").save(flush: true);
+        Role admin = new Role(authority:"ROLE_ADMIN").save(flush: true);
+        Role faculty = new Role(authority:"ROLE_FACULTY").save(flush: true);
+        Role grader = new Role(authority:"ROLE_GRADER").save(flush: true);
+        Role student = new Role(authority:"ROLE_STUDENT").save(flush: true);
+
+        def testUser = new User(username: 'admin', password: 'admin',firstname: "Administrator", surname: "User").save(failOnError:true)
+
+        UserRole.create testUser, superAdminRole
+
+        UserRole.withSession {
+            it.flush()
+            it.clear()
+        }
+
+        assert User.count() == 1
+        assert Role.count() == 5
+        assert UserRole.count() == 1
+
         // Create some demo content in here.
 
         Course c = new Course();
@@ -23,19 +43,19 @@ class BootStrap {
         page.setName("(A, E, I)")
         page.setDueDate(new Date());
 
-        c.save([failOnError:true,flush:true])
+        c.save([failOnError: true, flush: true])
 
 
         l.setCourse(c);
-        l.save([failOnError:true,flush:true]);
+        l.save([failOnError: true, flush: true]);
         c.addToLessons(l);
-        c.save([failOnError:true,flush:true])
+        c.save([failOnError: true, flush: true])
 
         page.setLesson(l);
-        page.save([failOnError:true,flush:true]);
+        page.save([failOnError: true, flush: true]);
 
         l.addToPages(page);
-        l.save([failOnError:true,flush:true]);
+        l.save([failOnError: true, flush: true]);
 
 
         println "Initialising Boot scripts"
@@ -49,7 +69,7 @@ class BootStrap {
 
 
 
-        q.save([failOnError:true,flush:true])
+        q.save([failOnError: true, flush: true])
         page.addToQuestions(q);
 
 
@@ -62,11 +82,11 @@ class BootStrap {
         q2.setPage(page);
 
         Map customProperties = new HashMap<String, ? extends Object>();
-        customProperties.put(Question.QuestionPropertyKeys.CLOZE_TEXT.key_name,"Mae bys Meri Ann wedi @@, A Dafydd y gwas ddim yn iach. Mae'r baban yn y crud yn @@, A'r gath wedi sgrapo @@.");
+        customProperties.put(Question.QuestionPropertyKeys.CLOZE_TEXT.key_name, "Mae bys Meri Ann wedi @@, A Dafydd y gwas ddim yn iach. Mae'r baban yn y crud yn @@, A'r gath wedi sgrapo @@.");
         customProperties.put(Question.QuestionPropertyKeys.CLOZE_PROMPTS.key_name, ([[], ["Chwerthin", "Crio", "Tagu"], []] as JSON) as String);
         q2.setCustom_properties(customProperties)
 
-        q2.save([failOnError:true,flush:true])
+        q2.save([failOnError: true, flush: true])
 
 
 
@@ -80,18 +100,16 @@ class BootStrap {
         q3.setPage(page);
 
         Map customProperties2 = new HashMap<String, ? extends Object>();
-        customProperties2.put(Question.QuestionPropertyKeys.MULTI_CHOICE_OPTIONS.key_name,"Mae@@ond@@peth@@");
+        customProperties2.put(Question.QuestionPropertyKeys.MULTI_CHOICE_OPTIONS.key_name, "Mae@@ond@@peth@@");
         q3.setCustom_properties(customProperties2)
 
-        q3.save([failOnError:true,flush:true])
+        q3.save([failOnError: true, flush: true])
 
 
 
 
         page.addToQuestions(q3);
-        page.save([failOnError:true,flush:true])
-
-
+        page.save([failOnError: true, flush: true])
 
 
     }

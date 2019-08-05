@@ -1,8 +1,10 @@
 package omega
 
+import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
+@Secured(['ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_FACUTLY','ROLE_GRADER','ROLE_STUDENT'])
 class LessonPageController {
 
     LessonPageService lessonPageService
@@ -35,6 +37,7 @@ class LessonPageController {
         respond lessonPage, [status: CREATED, view:"show"]
     }
 
+    @Secured(['ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_FACUTLY'])
     def update(LessonPage lessonPage) {
         if (lessonPage == null) {
             render status: NOT_FOUND

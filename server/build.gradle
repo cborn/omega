@@ -6,19 +6,21 @@ buildscript {
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
         classpath "org.grails.plugins:angular-scaffolding:2.0.0"
-        classpath "org.grails.plugins:hibernate5:${gormVersion-".RELEASE"}"
+        classpath "org.grails.plugins:hibernate5:${gormVersion - ".RELEASE"}"
         classpath "org.grails.plugins:views-gradle:1.1.6"
+        classpath "org.grails.plugins:angular-scaffolding:2.0.0"
+
     }
 }
 
 version "0.1"
 group "omega"
 
-apply plugin:"eclipse"
-apply plugin:"idea"
-apply plugin:"war"
-apply plugin:"org.grails.grails-web"
-apply plugin:"org.grails.plugins.views-json"
+apply plugin: "eclipse"
+apply plugin: "idea"
+apply plugin: "war"
+apply plugin: "org.grails.grails-web"
+apply plugin: "org.grails.plugins.views-json"
 
 repositories {
     mavenLocal()
@@ -60,6 +62,8 @@ dependencies {
 
     compile "org.grails.plugins:aws-sdk-s3:$awsSdkS3Version"
 
+    compile 'org.grails.plugins:spring-security-core:3.2.3'
+    compile 'org.grails.plugins:spring-security-rest:2.0.0.RC1'
 
 }
 

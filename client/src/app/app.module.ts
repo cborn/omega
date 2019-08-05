@@ -7,14 +7,14 @@ import {AppComponent} from './app.component';
 import {NavComponent} from './nav/nav.component';
 import {NavService} from './nav/nav.service';
 import {LessonBuilderComponent} from './lesson-builder/lesson-builder.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {AppRoutingModule} from './app-routing.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
     MatButtonModule,
     MatGridList,
     MatGridListModule, MatListModule, MatNativeDateModule,
-    MatOptionModule,
+    MatOptionModule, MatProgressSpinnerModule,
     MatSelectModule,
     MatSidenavModule,
     MatToolbarModule
@@ -58,6 +58,10 @@ import { VoiceRendererComponent } from './lesson-page-renderer/components/voice-
 import { ClozeRendererComponent } from './lesson-page-renderer/components/cloze-renderer/cloze-renderer.component';
 import { DateFormatPipe } from './pipes/date-format.pipe';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
+import {AuthenticatedHttpClient, AuthenticatedHttpClientFactory} from './authenticated-http-service.service';
+import {SessionManagerService} from './session-manager.service';
+import {Router} from '@angular/router';
+import { LoginComponent } from './login/login.component';
 
 // @ts-ignore
 @NgModule({
@@ -88,7 +92,8 @@ import {MatMomentDateModule} from '@angular/material-moment-adapter';
         DropdownRendererComponent,
         VoiceRendererComponent,
         ClozeRendererComponent,
-        DateFormatPipe
+        DateFormatPipe,
+        LoginComponent
     ],
     entryComponents : [
         ClozeDialogComponent
@@ -122,9 +127,15 @@ import {MatMomentDateModule} from '@angular/material-moment-adapter';
         MatSelectModule,
         MatListModule,
         MatNativeDateModule,
-        MatMomentDateModule
+        MatMomentDateModule,
+        MatProgressSpinnerModule
     ],
-    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, NavService, ViewportScroller],
+    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},
+        {
+            provide: AuthenticatedHttpClient,
+            useFactory: AuthenticatedHttpClientFactory,
+            deps: [HttpClient, SessionManagerService, Router]
+        }, NavService, ViewportScroller],
     bootstrap: [AppComponent]
 })
 export class AppModule {

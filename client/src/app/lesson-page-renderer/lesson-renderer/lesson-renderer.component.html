@@ -3,7 +3,7 @@
     <h3>
         <b *ngIf="question.type !== 3">({{question.position + 1}})</b>
         <b *ngIf="question.type === 3" style="font-size: 47px;font-family: cursive;">&quot;</b>
-        {{question.name == null || question.name == "" ? '...' : question.name}}
+        <span [innerHTML]="question.name == null || question.name == '' ? '...' : question.name"></span>
         <i class="required" *ngIf="question.required">*</i>
     </h3>
     <h6 *ngIf="question.description != null && question.description != ''">{{question.description}}</h6>

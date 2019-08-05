@@ -57,7 +57,7 @@ export class LessonBuilderService {
     }
 
     getLessonToEdit(lessonPageId) {
-        this.httpClient.get(environment.serverUrl + 'lessonPage/' + lessonPageId).pipe(map(this.filterFromServer)).pipe(tap(x => {
+        this.httpClient.get(environment.BASE_URL + 'lessonPage/' + lessonPageId).pipe(map(this.filterFromServer)).pipe(tap(x => {
             this.editingLessonPageSubject.next(x as LessonPage);
         })).pipe(publishReplay()).pipe(refCount()).subscribe();
 
@@ -67,12 +67,12 @@ export class LessonBuilderService {
 
         const uploadData = new FormData();
         uploadData.append('image', image, 'IGNORED');
-        return this.httpClient.post(environment.serverUrl + 'question/addImage/' + question.id, uploadData) as Observable<Question>;
+        return this.httpClient.post(environment.BASE_URL + 'question/addImage/' + question.id, uploadData) as Observable<Question>;
 
     }
 
     removeImageToQuestion(question, imageToRemove) {
-        return this.httpClient.delete(environment.serverUrl + 'question/removeImage/' + question.id + '?image=' + imageToRemove) as Observable<Question>;
+        return this.httpClient.delete(environment.BASE_URL + 'question/removeImage/' + question.id + '?image=' + imageToRemove) as Observable<Question>;
     }
 
 
@@ -91,7 +91,7 @@ export class LessonBuilderService {
             lessonPage.questions.splice(ind, 1);
         }
 
-        this.httpClient.delete(environment.serverUrl + 'question/' + question.id).subscribe(value => {
+        this.httpClient.delete(environment.BASE_URL + 'question/' + question.id).subscribe(value => {
             this.sync();
         });
 
@@ -125,7 +125,7 @@ export class LessonBuilderService {
         });
 
 
-        this.httpClient.put(environment.serverUrl + 'lessonPage/' + lessonPage.id, lessonPage).pipe(map(this.filterFromServer)).pipe(tap(x => {
+        this.httpClient.put(environment.BASE_URL + 'lessonPage/' + lessonPage.id, lessonPage).pipe(map(this.filterFromServer)).pipe(tap(x => {
             console.log(x.questions[2].custom_properties.random);
             this.editingLessonPageSubject.next(x as LessonPage);
         })).pipe(publishReplay()).pipe(refCount()).subscribe();
