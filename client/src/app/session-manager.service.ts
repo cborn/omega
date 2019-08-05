@@ -30,12 +30,68 @@ export class SessionManagerService {
     }
 
     getRoles() {
-        return localStorage.getItem(SessionManagerService.ROLES);
+        return JSON.parse(localStorage.getItem(SessionManagerService.ROLES));
     }
 
     getExpires() {
         return localStorage.getItem(SessionManagerService.EXPIRES);
     }
 
+
+    setSessionToken(token) {
+        return localStorage.setItem(SessionManagerService.ACCESS_TOKEN, token);
+    }
+
+    setRefreshToken(token) {
+        return localStorage.setItem(SessionManagerService.REFRESH_TOKEN, token);
+    }
+
+    setUsername(username) {
+        return localStorage.setItem(SessionManagerService.USERNAME, username);
+    }
+
+    setRoles(roles) {
+        return localStorage.setItem(SessionManagerService.ROLES, JSON.stringify(roles));
+    }
+
+    setExpires(expires) {
+        return localStorage.setItem(SessionManagerService.EXPIRES, expires);
+    }
+
+    /**
+     * The way role checking works is based of a hicherarchy basis. So if the person has a role of admin that means the can access the same as faculty or grader.
+     * @param role
+     */
+    checkRoles(role: PERMISSION_ROLE) {
+
+        const roles = this.getRoles();
+
+        if(roles.indexOf('ROLE_SUPER_ADMIN') > -1)
+            return true; // You're a super admin, just go right ahead...
+
+        switch (role) {
+            case PERMISSION_ROLE.ROLE_ADMIN:
+                return roles.indexOf('ROLE_ADMIN') > -1;
+            case PERMISSION_ROLE.ROLE_FACULTY:
+                return roles.indexOf('ROLE_FACULTY') > -1 || roles.indexOf('ROLE_ADMIN') > -1;
+            case PERMISSION_ROLE.ROLE_GRADER:
+                return roles.indexOf('ROLE_GRADER') > -1 || roles.indexOf('ROLE_FACULTY') > -1 || roles.indexOf('ROLE_ADMIN') > -1;
+            case PERMISSION_ROLE.ROLE_STUDENT:
+                return roles.length > 0;// have we got any role? if we have then let us in because they can see this page no matter what.
+
+
+        }
+    }
+
+
+}
+
+export enum PERMISSION_ROLE {
+
+    ROLE_SUPER_ADMIN,
+    ROLE_ADMIN,
+    ROLE_FACULTY,
+    ROLE_GRADER,
+    ROLE_STUDENT
 
 }

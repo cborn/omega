@@ -1,0 +1,12 @@
+.main-login-card {
+    width: fit-content;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    padding: 35px;
+}
+
+.full-width {
+    width: 100%;
+}

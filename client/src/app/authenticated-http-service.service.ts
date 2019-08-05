@@ -6,6 +6,7 @@ import {of} from 'rxjs/internal/observable/of';
 import {catchError} from 'rxjs/operators';
 import {SessionManagerService} from './session-manager.service';
 import {Router} from '@angular/router';
+import {NotificationService} from './notification.service';
 
 export interface IRequestOptions {
     headers?: HttpHeaders;
@@ -17,8 +18,8 @@ export interface IRequestOptions {
     body?: any;
 }
 
-export function AuthenticatedHttpClientFactory(http: HttpClient, sessionManager: SessionManagerService, router: Router) {
-    return new AuthenticatedHttpClient(http, sessionManager, router);
+export function AuthenticatedHttpClientFactory(http: HttpClient, sessionManager: SessionManagerService, router: Router, notificationService: NotificationService) {
+    return new AuthenticatedHttpClient(http, sessionManager, router, notificationService);
 }
 
 @Injectable({
@@ -122,16 +123,16 @@ export class AuthenticatedHttpClient {
 
 
     // Extending the HttpClient through the Angular DI.
-    public constructor(public http: HttpClient, private sessionManager: SessionManagerService, private router: Router) {
+    public constructor(public http: HttpClient, private sessionManager: SessionManagerService, private router: Router, private notificationService: NotificationService) {
     }
 
 
     // /**
     //  * Refresh JWT authorization session token
     //  */
-    async refreshSessionToken() {
+    refreshSessionToken() {
 
-        const token = await this.sessionManager.getSessionToken();
+        const token = this.sessionManager.getSessionToken();
         this.headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     }
 
@@ -142,13 +143,11 @@ export class AuthenticatedHttpClient {
             this.router.navigate(['/login']);
         } else {
             if (!mute && errorMsg !== undefined) {
-                // this.notificationService.pushAlert('Error', errorMsg.message);
+                this.notificationService.publishAlert(errorMsg.message);
             }
-            return throwError(
-                new Error(JSON.stringify(errorMsg))
-            );
+            return new Error(JSON.stringify(errorMsg));
         }
-    };
+    }
 
 
     /**
@@ -164,7 +163,7 @@ export class AuthenticatedHttpClient {
         this.refreshSessionToken();
 
         return this.http.get<T>(endPoint, Object.assign({}, options, {headers: this.headers}))
-            .pipe(catchError(err => disableErrorHandling ? of(err) : this.errorHandler(err, mute)));
+            .pipe(catchError(err => disableErrorHandling ? throwError(err) : throwError(this.errorHandler(err, mute))));
     }
 
     /**
@@ -178,7 +177,7 @@ export class AuthenticatedHttpClient {
     public async post<T>(endPoint: string, params: Object, options?: IRequestOptions, mute?: boolean) {
         await this.refreshSessionToken();
         return this.http.post<T>(endPoint, params, Object.assign({}, options, {headers: this.headers}))
-            .pipe(catchError(err => this.errorHandler(err, mute)));
+            .pipe(catchError(err => throwError(this.errorHandler(err, mute))));
     }
 
     /**
@@ -192,7 +191,7 @@ export class AuthenticatedHttpClient {
     public async put<T>(endPoint: string, params: Object, options?: IRequestOptions, mute?: boolean) {
         await this.refreshSessionToken();
         return this.http.put<T>(endPoint, params, Object.assign({}, options, {headers: this.headers}))
-            .pipe(catchError(err => this.errorHandler(err, mute)));
+            .pipe(catchError(err => throwError(this.errorHandler(err, mute))));
     }
 
     /**
@@ -205,7 +204,7 @@ export class AuthenticatedHttpClient {
     public async delete<T>(endPoint: string, options?: IRequestOptions, mute?: boolean) {
         await this.refreshSessionToken();
         return this.http.delete<T>(endPoint, Object.assign({}, options, {headers: this.headers}))
-            .pipe(catchError(err => this.errorHandler(err, mute)));
+            .pipe(catchError(err => throwError(this.errorHandler(err, mute))));
     }
 
 }

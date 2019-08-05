@@ -57,11 +57,13 @@ import { DropdownRendererComponent } from './lesson-page-renderer/components/dro
 import { VoiceRendererComponent } from './lesson-page-renderer/components/voice-renderer/voice-renderer.component';
 import { ClozeRendererComponent } from './lesson-page-renderer/components/cloze-renderer/cloze-renderer.component';
 import { DateFormatPipe } from './pipes/date-format.pipe';
-import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {AuthenticatedHttpClient, AuthenticatedHttpClientFactory} from './authenticated-http-service.service';
 import {SessionManagerService} from './session-manager.service';
 import {Router} from '@angular/router';
 import { LoginComponent } from './login/login.component';
+import {AlertDialogComponent} from './notification.service';
+import {Alert} from 'selenium-webdriver';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 // @ts-ignore
 @NgModule({
@@ -93,10 +95,13 @@ import { LoginComponent } from './login/login.component';
         VoiceRendererComponent,
         ClozeRendererComponent,
         DateFormatPipe,
-        LoginComponent
+        LoginComponent,
+        AlertDialogComponent,
+        UnauthorizedComponent
     ],
     entryComponents : [
-        ClozeDialogComponent
+        ClozeDialogComponent,
+        AlertDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -126,8 +131,6 @@ import { LoginComponent } from './login/login.component';
         MatOptionModule,
         MatSelectModule,
         MatListModule,
-        MatNativeDateModule,
-        MatMomentDateModule,
         MatProgressSpinnerModule
     ],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},
@@ -135,7 +138,7 @@ import { LoginComponent } from './login/login.component';
             provide: AuthenticatedHttpClient,
             useFactory: AuthenticatedHttpClientFactory,
             deps: [HttpClient, SessionManagerService, Router]
-        }, NavService, ViewportScroller],
+        }, NavService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

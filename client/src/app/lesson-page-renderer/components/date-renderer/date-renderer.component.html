@@ -1,5 +1,3 @@
 <mat-form-field style="width: 100%" [ngClass]="{'invalid':(value < question.custom_properties.min || value > question.custom_properties.max)}">
-  <input matInput [matDatepicker]="dp" class="classic-input-style" [(ngModel)]="value" [value]="value | dateFormat">
-  <mat-datepicker-toggle matSuffix [for]="dp" class="classic-input-style-datepicker-toggle"></mat-datepicker-toggle>
-  <mat-datepicker #dp></mat-datepicker>
+  <input matInput class="classic-input-style" [(ngModel)]="value" [value]="value | dateFormat">
 </mat-form-field>

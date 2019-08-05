@@ -5,64 +5,65 @@ import {LessonBuilderService} from '../../../lesson-builder.service';
 import {environment} from '../../../../../environments/environment.prod';
 
 @Component({
-  selector: 'app-picture-select',
-  templateUrl: './picture-select.component.html',
-  styleUrls: ['./picture-select.component.css']
+    selector: 'app-picture-select',
+    templateUrl: './picture-select.component.html',
+    styleUrls: ['./picture-select.component.css']
 })
 export class PictureSelectComponent implements OnInit {
 
-  @Input() question: Question;
+    @Input() question: Question;
 
-  environment = environment;
+    environment = environment;
 
-  selectedFile: File;
+    selectedFile: File;
 
-  imageLoading = false;
+    imageLoading = false;
 
 
-  workingCopy;
+    workingCopy;
 
-  constructor(private lessonBuilderService: LessonBuilderService) { }
-
-  ngOnInit() {
-
-    if (this.question.custom_properties.images === undefined) {
-      this.question.custom_properties.images = '';
+    constructor(private lessonBuilderService: LessonBuilderService) {
     }
 
-    this.workingCopy = this.question.custom_properties.images;
+    ngOnInit() {
 
-  }
+        if (this.question.custom_properties.images === undefined) {
+            this.question.custom_properties.images = '';
+        }
 
-  onFileChanged(event) {
-    this.selectedFile = event.target.files[0];
-    this.onUpload();
-  }
+        this.workingCopy = this.question.custom_properties.images;
 
-  onUpload() {
-    this.imageLoading = true;
+    }
 
-    const promise = this.lessonBuilderService.addImageToQuestion(this.question, this.selectedFile);
+    onFileChanged(event) {
+        this.selectedFile = event.target.files[0];
+        this.onUpload();
+    }
 
-    promise.subscribe(value => {
-      this.imageLoading = false;
-      // new image on question...
-      this.question = value;
-      this.workingCopy = this.question.custom_properties.images;
-    },error1 => {
-      this.imageLoading = false;
-    });
+    async onUpload() {
+        this.imageLoading = true;
 
-  }
+        const promise = await this.lessonBuilderService.addImageToQuestion(this.question, this.selectedFile);
 
-  removeImage(image) {
-    const promise = this.lessonBuilderService.removeImageToQuestion(this.question, image);
+        promise.subscribe(value => {
+            this.imageLoading = false;
+            // new image on question...
+            this.question = value;
+            this.workingCopy = this.question.custom_properties.images;
+        }, error1 => {
+            this.imageLoading = false;
+        });
 
-    promise.subscribe(value => {
-      // new image on question...
-      this.question = value;
-      this.workingCopy = this.question.custom_properties.images;
-    });
-  }
+    }
+
+    async removeImage(image) {
+        const promise = await this.lessonBuilderService.removeImageToQuestion(this.question, image);
+
+        promise.subscribe(value => {
+            // new image on question...
+            this.question = value;
+            this.workingCopy = this.question.custom_properties.images;
+        });
+    }
 
 }

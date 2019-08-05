@@ -19,7 +19,8 @@
     <app-number-renderer *ngIf="question.type == 8" class="answer-input" [question]="question"> </app-number-renderer>
     <app-dropdown-renderer *ngIf="question.type == 9" class="answer-input" [question]="question"> </app-dropdown-renderer>
     <app-voice-renderer *ngIf="question.type == 10" class="answer-input"> </app-voice-renderer>
-    <app-cloze-renderer *ngIf="question.type == 11" class="answer-input"> </app-cloze-renderer>
+    <app-cloze-renderer *ngIf="question.type == 11" [question]="question"> </app-cloze-renderer>
+
 
 
 </div>

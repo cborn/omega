@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {LessonBuilderService} from './lesson-builder.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {LessonPage} from '../Model/lesson-page';
-import {Question, QuestionType} from '../Model/question';
+import {Question} from '../Model/question';
+import {PERMISSION_ROLE, SessionManagerService} from '../session-manager.service';
 
 @Component({
     selector: 'app-lesson-builder',
@@ -29,12 +29,16 @@ export class LessonBuilderComponent implements OnInit {
     lesson$ = this.lessonBuilderService.editingLessonPage;
 
 
-    constructor(private lessonBuilderService: LessonBuilderService, private router: Router, private route: ActivatedRoute) {
+    constructor(private lessonBuilderService: LessonBuilderService, private router: Router, private route: ActivatedRoute, private sessionManager: SessionManagerService) {
 
     }
 
     ngOnInit() {
 
+
+        if (!this.sessionManager.checkRoles(PERMISSION_ROLE.ROLE_FACULTY)) {
+            this.router.navigate(['/unauthorized']);
+        }
 
         this.route.paramMap.subscribe(value => {
             this.lessonBuilderService.getLessonToEdit(value.get('lessonId'));

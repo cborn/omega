@@ -7,6 +7,7 @@ import {LessonPage} from '../Model/lesson-page';
 import {of} from 'rxjs/internal/observable/of';
 import {Question, QuestionType} from '../Model/question';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
+import {AuthenticatedHttpClient} from '../authenticated-http-service.service';
 
 const BOOLEAN_PROPERTIES = ['stack', 'random'];
 
@@ -19,7 +20,7 @@ export class LessonBuilderService {
     editingLessonPageSubject: BehaviorSubject<LessonPage> = new BehaviorSubject<LessonPage>(new LessonPage());
     editingLessonPage = this.editingLessonPageSubject.asObservable();
 
-    constructor(private httpClient: HttpClient) {
+    constructor(private httpClient: AuthenticatedHttpClient) {
     }
 
 
@@ -63,20 +64,20 @@ export class LessonBuilderService {
 
     }
 
-    addImageToQuestion(question, image): Observable<Question> {
+    addImageToQuestion(question, image) {
 
         const uploadData = new FormData();
         uploadData.append('image', image, 'IGNORED');
-        return this.httpClient.post(environment.BASE_URL + 'question/addImage/' + question.id, uploadData) as Observable<Question>;
+        return this.httpClient.post<Question>(environment.BASE_URL + 'question/addImage/' + question.id, uploadData);
 
     }
 
     removeImageToQuestion(question, imageToRemove) {
-        return this.httpClient.delete(environment.BASE_URL + 'question/removeImage/' + question.id + '?image=' + imageToRemove) as Observable<Question>;
+        return this.httpClient.delete<Question>(environment.BASE_URL + 'question/removeImage/' + question.id + '?image=' + imageToRemove);
     }
 
 
-    deleteQuestion(question) {
+    async deleteQuestion(question) {
         const lessonPage = this.editingLessonPageSubject.value;
 
         let ind = -1;
@@ -91,7 +92,9 @@ export class LessonBuilderService {
             lessonPage.questions.splice(ind, 1);
         }
 
-        this.httpClient.delete(environment.BASE_URL + 'question/' + question.id).subscribe(value => {
+        const promise = await this.httpClient.delete(environment.BASE_URL + 'question/' + question.id);
+
+        promise.subscribe(value => {
             this.sync();
         });
 
@@ -110,7 +113,7 @@ export class LessonBuilderService {
     }
 
 
-    sync() {
+    async sync() {
         const lessonPage = Object.assign({}, this.editingLessonPageSubject.value);
 
         lessonPage.questions.forEach(value => {
@@ -125,7 +128,9 @@ export class LessonBuilderService {
         });
 
 
-        this.httpClient.put(environment.BASE_URL + 'lessonPage/' + lessonPage.id, lessonPage).pipe(map(this.filterFromServer)).pipe(tap(x => {
+        const promise = await this.httpClient.put<Question>(environment.BASE_URL + 'lessonPage/' + lessonPage.id, lessonPage);
+
+        promise.pipe(map(this.filterFromServer)).pipe(tap(x => {
             console.log(x.questions[2].custom_properties.random);
             this.editingLessonPageSubject.next(x as LessonPage);
         })).pipe(publishReplay()).pipe(refCount()).subscribe();

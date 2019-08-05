@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Question} from '../../../Model/question';
 
 @Component({
   selector: 'app-cloze-renderer',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cloze-renderer.component.css']
 })
 export class ClozeRendererComponent implements OnInit {
+
+  @Input() question: Question;
+
 
   constructor() { }
 
