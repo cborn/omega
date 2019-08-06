@@ -13,7 +13,7 @@
             <mat-grid-tile [colspan]="2" [rowspan]="1" style="overflow-y: scroll;">
 
 
-                <div *ngIf="lesson$ | async as lesson">
+                <div *ngIf="lesson$ | async as lesson" style="width: 100%">
                     <app-lesson-question class="question-item"
                                          *ngFor="let question of lesson.questions | positionOrder : 'asc'"
                                          [question]="question" (questionDeleted)="deleteQuestion($event)"
