@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 @Injectable({
     providedIn: 'root'
@@ -11,6 +12,7 @@ export class SessionManagerService {
     static USERNAME = 'omega-username-token';
     static ROLES = 'omega-roles-token';
     static EXPIRES = 'omega-expires-token';
+
 
 
     constructor() {
@@ -65,6 +67,10 @@ export class SessionManagerService {
     checkRoles(role: PERMISSION_ROLE) {
 
         const roles = this.getRoles();
+
+        if (roles === undefined) {
+            return false;
+        }
 
         if (roles.indexOf('ROLE_SUPER_ADMIN') > -1) {
             return true;

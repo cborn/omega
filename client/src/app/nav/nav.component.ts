@@ -14,6 +14,10 @@ export class NavComponent implements OnInit {
   constructor(private navService: NavService) { }
 
   ngOnInit(): void {
-    this.navService.getNavData().subscribe(res => this.applicationData = res);
+    this.loadData();
+  }
+
+  async loadData() {
+    (await this.navService.getNavData()).subscribe(res => this.applicationData = res);
   }
 }

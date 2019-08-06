@@ -4,6 +4,8 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment.prod';
 import {SessionManagerService} from '../session-manager.service';
 import {NotificationService} from '../notification.service';
+import {AuthenticatedHttpClient} from '../authenticated-http-service.service';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 export class LoginResponse {
 
@@ -29,6 +31,7 @@ export class LoginComponent implements OnInit {
     constructor(private router: Router, private http: HttpClient, private sessionManager: SessionManagerService, private notificationService: NotificationService) {
     }
 
+
     username: string;
     password: string;
 
@@ -43,9 +46,12 @@ export class LoginComponent implements OnInit {
         };
 
 
-        this.http.post<LoginResponse>(environment.BASE_URL + 'api/login', loginPackage).subscribe(value => {
+        this.http.post<LoginResponse>(AuthenticatedHttpClient.AUTH_URL, loginPackage).subscribe(value => {
 
             this.sessionManager.setSessionToken(value.access_token);
+
+
+
             this.sessionManager.setExpires(value.expires_in);
             this.sessionManager.setRefreshToken(value.refresh_token);
             this.sessionManager.setRoles(value.roles);

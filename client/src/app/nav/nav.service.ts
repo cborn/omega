@@ -17,9 +17,9 @@ export class NavService {
 
   constructor(private httpClient: AuthenticatedHttpClient) { }
 
-  getNavData(): Observable<any> {
+  async getNavData() {
     if (!this._navData) {
-      this._navData =  this.httpClient.get(AuthenticatedHttpClient.APPLICATION_URL).pipe(publishReplay()).pipe(refCount());
+      this._navData =  (await this.httpClient.get(AuthenticatedHttpClient.APPLICATION_URL)).pipe(publishReplay()).pipe(refCount());
     }
     return this._navData;
   }

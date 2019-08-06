@@ -21,7 +21,7 @@ describe('Service: Nav', () => {
 
   describe('getNavData()', () => {
 
-    it('should get application data and cache it', async(inject([NavService, XHRBackend], (service: NavService, backend: MockBackend) => {
+    it('should get application data and cache it', async(inject([NavService, XHRBackend], async (service: NavService, backend: MockBackend) => {
       let count = 0;
       backend.connections.subscribe((connection: MockConnection) => {
         expect(connection.request.method).toBe(RequestMethod.Get);
@@ -30,10 +30,13 @@ describe('Service: Nav', () => {
         count++;
       });
 
-      service.getNavData().subscribe((data: any) => {
+      const promise = await service.getNavData();
+      promise.subscribe((data: any) => {
         expect(data.expects).toEqual('JSON');
       });
-      service.getNavData().subscribe((data: any) => {
+      const promise2 = await service.getNavData();
+
+      promise2.subscribe((data: any) => {
         expect(data.expects).toEqual('JSON');
       });
 
