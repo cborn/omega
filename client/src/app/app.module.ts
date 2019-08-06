@@ -61,9 +61,14 @@ import {AuthenticatedHttpClient, AuthenticatedHttpClientFactory} from './authent
 import {SessionManagerService} from './session-manager.service';
 import {Router} from '@angular/router';
 import {LoginComponent} from './login/login.component';
-import {AlertDialogComponent, NotificationService} from './notification.service';
+import {AlertDialogComponent, ConfirmDialogComponent, NotificationService} from './notification.service';
 import {UnauthorizedComponent} from './unauthorized/unauthorized.component';
-import {AdminGuard, Guard, GraderGuard, StudentGuard, SuperAdminGuard} from './guards/guard';
+import {AdminGuard, FacultyGuard, GraderGuard, StudentGuard, SuperAdminGuard} from './guards/guard';
+import {CourseIndexComponent} from './course/index/courseIndex.component';
+import {LessonIndexComponent} from './lesson/index/lessonIndex.component';
+import {CourseEditComponent} from './course/course-edit/course-edit.component';
+import {CourseCreateComponent} from './course/course-create/course-create.component';
+import {LessonPageIndexComponent} from './lessonPage/index/lessonPageIndex.component';
 
 // @ts-ignore
 @NgModule({
@@ -97,11 +102,18 @@ import {AdminGuard, Guard, GraderGuard, StudentGuard, SuperAdminGuard} from './g
         DateFormatPipe,
         LoginComponent,
         AlertDialogComponent,
-        UnauthorizedComponent
+        UnauthorizedComponent,
+        CourseIndexComponent,
+        LessonIndexComponent,
+        CourseEditComponent,
+        CourseCreateComponent,
+        ConfirmDialogComponent,
+        LessonPageIndexComponent
     ],
     entryComponents: [
         ClozeDialogComponent,
-        AlertDialogComponent
+        AlertDialogComponent,
+        ConfirmDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -149,8 +161,8 @@ import {AdminGuard, Guard, GraderGuard, StudentGuard, SuperAdminGuard} from './g
             }, deps: [Router, SessionManagerService]
         },
         {
-            provide: Guard, useFactory: (router, sessionManager) => {
-                return new Guard(sessionManager, router);
+            provide: FacultyGuard, useFactory: (router, sessionManager) => {
+                return new FacultyGuard(sessionManager, router);
             }, deps: [Router, SessionManagerService]
         },
         {

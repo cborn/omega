@@ -17,8 +17,13 @@ export class IndexComponent implements OnInit {
   constructor(private navService: NavService, private router: Router) { }
 
   ngOnInit(): void {
+    this.loadData();
+  }
+
+  async loadData() {
     this.serverUrl = environment.BASE_URL;
-    this.navService.getNavData().subscribe(applicationData => {
+    const promise = await this.navService.getNavData();
+    promise.subscribe(applicationData => {
       this.controllers = applicationData.controllers.sort((a: any, b: any) => {
         if (a.name < b.name) {
           return -1;

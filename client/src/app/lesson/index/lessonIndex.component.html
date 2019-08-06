@@ -1,0 +1,45 @@
+<div  class="index">
+
+    <h1 class="centered">Lessons</h1>
+<mat-table class="centered mat-elevation-z8" [dataSource]="dataSource">
+
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef>Lesson Id</mat-header-cell>
+        <mat-cell *matCellDef="let lesson">{{lesson.id}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+        <mat-cell *matCellDef="let lesson">{{lesson.name}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="pages">
+        <mat-header-cell *matHeaderCellDef>Pages</mat-header-cell>
+        <mat-cell *matCellDef="let lesson">
+            <button mat-stroked-button color="secondary" *ngIf="lesson.pages != null && lesson.pages.length > 0" [routerLink]="'/lessonPage/index/' + lesson.id">View {{lesson.pages.length}} Pages</button>
+            <button mat-stroked-button color="secondary" *ngIf="lesson.pages == null || lesson.pages.length == 0" [routerLink]="'/lessonPage/create/' + lesson.id">Add lesson</button>
+
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+        <mat-cell *matCellDef="let lesson">
+
+            <button mat-stroked-button color="accent" [routerLink]="'/lesson/edit/'+lesson.id">Edit</button>&nbsp;
+            <button mat-stroked-button color="warn" (click)="delete(lesson.id)">Delete</button>
+        </mat-cell>
+    </ng-container>
+
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+</mat-table>
+
+    <div class="centered padding-10">
+        <button mat-fab color="primary" routerLink="/lesson/edit/"><i class="material-icons">add</i></button>
+    </div>
+</div>

@@ -21,6 +21,20 @@ $omega-app-theme: mat-light-theme($omega-app-primary, $omega-app-accent, $omega-
 @include angular-material-theme($omega-app-theme);
 
 
+.index {
+  font-family: 'Roboto', sans-serif;
+}
+
+.centered {
+  width: 50%;
+  left: 50%;
+  position: relative;
+  transform: translate(-50%, 0);
+}
+
+.padding-10 {
+  padding: 10px;
+}
 
 
 .mat-grid-tile .mat-figure {
@@ -33,6 +47,7 @@ $omega-app-theme: mat-light-theme($omega-app-primary, $omega-app-accent, $omega-
 //}
 
 body {
+  margin: 0;
   font-family: "gubblebum-blocky", monospace;
   background: #f7f1f1;
 }

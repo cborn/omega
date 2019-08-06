@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {LessonBuilderService} from './lesson-builder.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Question} from '../Model/question';
-import {PERMISSION_ROLE, SessionManagerService} from '../session-manager.service';
 
 @Component({
     selector: 'app-lesson-builder',

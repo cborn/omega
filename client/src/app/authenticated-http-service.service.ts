@@ -39,10 +39,12 @@ export class AuthenticatedHttpClient {
 
     static APPLICATION_URL = environment.BASE_URL + 'application';
 
-    static LESSON_PAGE_URL = environment.BASE_URL + 'lessonPage/';
-    static QUESTION_IMAGE_ADD_URL = environment.BASE_URL + 'question/addImage/';
-    static QUESTION_IMAGE_REMOVE_URL = environment.BASE_URL + 'question/removeImage/';
-    static QUESTION_URL = environment.BASE_URL + 'question/';
+    static LESSON_PAGE_URL = environment.BASE_URL + 'lessonPage';
+    static QUESTION_IMAGE_ADD_URL = environment.BASE_URL + 'question/addImage';
+    static QUESTION_IMAGE_REMOVE_URL = environment.BASE_URL + 'question/removeImage';
+    static QUESTION_URL = environment.BASE_URL + 'question';
+    static COURSE_URL = environment.BASE_URL + 'course';
+    static LESSON_URL = environment.BASE_URL + 'lesson';
 
     helper = new JwtHelperService();
 
@@ -65,8 +67,8 @@ export class AuthenticatedHttpClient {
         if (this.helper.isTokenExpired(token)) {
             const formData = new FormData();
             formData.append('grant_type', 'refresh_token');
-            formData.append('refrsh_token', this.sessionManager.getRefreshToken());
-            this.http.post<LoginResponse>(AuthenticatedHttpClient.REFRESH_AUTH_URL, formData).subscribe(value => {
+            formData.append('refresh_token', this.sessionManager.getRefreshToken());
+            await this.http.post<LoginResponse>(AuthenticatedHttpClient.REFRESH_AUTH_URL, formData).subscribe(async value => {
 
                 this.sessionManager.setSessionToken(value.access_token);
                 this.sessionManager.setExpires(value.expires_in);
@@ -75,6 +77,7 @@ export class AuthenticatedHttpClient {
                 this.sessionManager.setUsername(value.username);
 
                 this.headers = new HttpHeaders().set('Authorization', 'Bearer ' + value.access_token);
+
             });
         } else {
             this.headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);

@@ -7,9 +7,9 @@ class LessonPage {
         dueDate nullable:true
     }
 
-    def name;
+    String name;
 
-    def dueDate;
+    Date dueDate;
 
     static belongsTo = [lesson:Lesson]
 

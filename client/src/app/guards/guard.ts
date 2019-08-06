@@ -42,7 +42,7 @@ export class AdminGuard implements CanActivate {
 }
 
 
-export class Guard implements CanActivate {
+export class FacultyGuard implements CanActivate {
 
     constructor(private sessionManager: SessionManagerService, private router: Router) {
 

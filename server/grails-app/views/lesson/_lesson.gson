@@ -4,4 +4,8 @@ model {
 	Lesson lesson
 }
 
-json g.render(lesson, [resolveTemplate: false])
+json {
+	id lesson.id
+	name lesson.name
+	pages g.render(lesson.pages, [resolveTemplate: false])
+}

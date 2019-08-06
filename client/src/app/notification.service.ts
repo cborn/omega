@@ -19,13 +19,28 @@ export class NotificationService {
     publishAlert(alertText, handler?) {
         const dialogRef = this.dialog.open(AlertDialogComponent, {
             width: '250px',
-            data: { alertText: alertText }
+            data: {alertText: alertText}
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
-            if ( handler != null) {
+           if (handler != null) {
                 handler();
+            }
+        });
+    }
+
+
+    publishConfirmation(alertText, onConfirm?, onNotConfirm?) {
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+            width: '250px',
+            data: {alertText: alertText}
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (onConfirm != null && result) {
+                onConfirm();
+            } else if (onNotConfirm != null) {
+                onNotConfirm();
             }
         });
     }
@@ -41,7 +56,25 @@ export class AlertDialogComponent {
 
     constructor(
         public dialogRef: MatDialogRef<AlertDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: AlertDialogData) {}
+        @Inject(MAT_DIALOG_DATA) public data: AlertDialogData) {
+    }
+
+    dismiss(): void {
+        this.dialogRef.close();
+    }
+
+}
+
+@Component({
+    selector: 'app-alert-dialog',
+    templateUrl: 'dialog-confirm-dialog.html',
+})
+export class ConfirmDialogComponent {
+
+    constructor(
+        public dialogRef: MatDialogRef<AlertDialogComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: AlertDialogData) {
+    }
 
     dismiss(): void {
         this.dialogRef.close();

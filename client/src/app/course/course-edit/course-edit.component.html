@@ -1,0 +1,12 @@
+<br/>
+
+<mat-card class="centered" *ngIf="course">
+    <form>
+        <mat-form-field >
+            <input matInput placeholder="Name" name="name" [(ngModel)]="course.name">
+        </mat-form-field>
+
+        <br/>
+        <button mat-raised-button color="primary" (click)="save()">Save</button>
+    </form>
+</mat-card>

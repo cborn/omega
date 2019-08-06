@@ -1,0 +1,30 @@
+<div  class="index">
+
+    <h1 class="centered">Lesson Pages</h1>
+    <mat-table class="centered mat-elevation-z8" [dataSource]="dataSource">
+
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef>Page ID</mat-header-cell>
+            <mat-cell *matCellDef="let page">{{page.id}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+            <mat-cell *matCellDef="let page">
+                <button mat-stroked-button color="accent" [routerLink]="'/lessonPage/builder/'+page.id">Edit</button>   &nbsp;
+                <button mat-stroked-button color="warn" (click)="delete(page.id)">Delete</button>
+            </mat-cell>
+        </ng-container>
+
+
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+    </mat-table>
+
+    <div class="centered padding-10">
+        <button mat-fab color="primary" (click)="addNewLessonPageForEdit()" routerLink="/lessonPage/builder"><i class="material-icons">add</i></button>
+    </div>
+</div>

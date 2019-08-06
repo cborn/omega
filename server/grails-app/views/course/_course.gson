@@ -4,4 +4,10 @@ model {
 	Course course
 }
 
-json g.render(course, [resolveTemplate: false])
+json {
+	id course.id
+	name course.name
+	lessons  g.render(course.lessons, [resolveTemplate: false])
+	moodle_id course.moodle_master_id
+
+}

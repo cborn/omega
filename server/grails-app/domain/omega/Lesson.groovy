@@ -5,7 +5,7 @@ class Lesson {
     static constraints = {
     }
 
-    def name;
+    String name;
 
     static belongsTo = [course:Course]
 

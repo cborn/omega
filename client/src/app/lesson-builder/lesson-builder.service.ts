@@ -54,7 +54,7 @@ export class LessonBuilderService {
     }
 
     async getLessonToEdit(lessonPageId) {
-        const promise = await this.httpClient.get(AuthenticatedHttpClient.LESSON_PAGE_URL + lessonPageId);
+        const promise = await this.httpClient.get(AuthenticatedHttpClient.LESSON_PAGE_URL + '/' + lessonPageId);
 
         promise.pipe(map(this.filterFromServer)).pipe(tap(x => {
             this.editingLessonPageSubject.next(x as LessonPage);
@@ -66,12 +66,12 @@ export class LessonBuilderService {
 
         const uploadData = new FormData();
         uploadData.append('image', image, 'IGNORED');
-        return this.httpClient.post<Question>(AuthenticatedHttpClient.QUESTION_IMAGE_ADD_URL + question.id, uploadData);
+        return this.httpClient.post<Question>(AuthenticatedHttpClient.QUESTION_IMAGE_ADD_URL + '/' + question.id, uploadData);
 
     }
 
     removeImageToQuestion(question, imageToRemove) {
-        return this.httpClient.delete<Question>(AuthenticatedHttpClient.QUESTION_IMAGE_REMOVE_URL + question.id + '?image=' + imageToRemove);
+        return this.httpClient.delete<Question>(AuthenticatedHttpClient.QUESTION_IMAGE_REMOVE_URL + '/' + question.id + '?image=' + imageToRemove);
     }
 
 
@@ -90,7 +90,7 @@ export class LessonBuilderService {
             lessonPage.questions.splice(ind, 1);
         }
 
-        const promise = await this.httpClient.delete(AuthenticatedHttpClient.QUESTION_URL + question.id);
+        const promise = await this.httpClient.delete(AuthenticatedHttpClient.QUESTION_URL + '/' + question.id);
 
         promise.subscribe(value => {
             this.sync();
@@ -126,7 +126,7 @@ export class LessonBuilderService {
         });
 
 
-        const promise = await this.httpClient.put<Question>(AuthenticatedHttpClient.LESSON_PAGE_URL + lessonPage.id, lessonPage);
+        const promise = await this.httpClient.put<Question>(AuthenticatedHttpClient.LESSON_PAGE_URL + '/' + lessonPage.id, lessonPage);
 
         promise.pipe(map(this.filterFromServer)).pipe(tap(x => {
             console.log(x.questions[2].custom_properties.random);

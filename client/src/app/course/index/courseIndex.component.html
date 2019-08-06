@@ -1,0 +1,42 @@
+<div class="index">
+    <h1 class="centered">Courses</h1>
+<mat-table class="centered mat-elevation-z8" [dataSource]="dataSource">
+
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef>Course Id</mat-header-cell>
+        <mat-cell *matCellDef="let course">{{course.id}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+        <mat-cell *matCellDef="let course">{{course.name}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lessons">
+        <mat-header-cell *matHeaderCellDef>Lessons</mat-header-cell>
+        <mat-cell *matCellDef="let course">
+            <button mat-stroked-button color="secondary" *ngIf="course.lessons != null && course.lessons.length > 0" [routerLink]="'/lesson/index/' + course.id">View {{course.lessons.length}} Lessons</button>
+            <button mat-stroked-button color="secondary" *ngIf="course.lessons == null || course.lessons.length == 0" [routerLink]="'/lesson/create/' + course.id">Add lesson</button>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+        <mat-cell *matCellDef="let course">
+
+            <button mat-stroked-button color="accent" (click)="courseService.editingCourse = course" [routerLink]="'/course/edit/'+course.id">Edit</button>&nbsp;
+            <button mat-stroked-button color="secondary" [routerLink]="'/lesson/create/' + course.id">Add lesson</button>&nbsp;
+            <button mat-stroked-button color="warn" (click)="delete(course.id)">Delete</button>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+</mat-table>
+    <div class="centered padding-10">
+        <button mat-fab color="primary" routerLink="/course/create"><i class="material-icons">add</i></button>
+    </div>
+
+</div>
