@@ -12,6 +12,7 @@ export class ClozeFormatRenderPipe implements PipeTransform {
 
     }
 
+    // The magic is all in this pipe..
     transform(value: any, cloze_prompts?: any, args?: any): any {
 
         let newValue = value;
@@ -44,7 +45,6 @@ export class ClozeFormatRenderPipe implements PipeTransform {
             instancesCount++;
 
         }
-
 
         return this.sanitizer.bypassSecurityTrustHtml(newValue);
 
