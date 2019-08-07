@@ -72,6 +72,7 @@ import {LessonPageIndexComponent} from './lessonPage/index/lessonPageIndex.compo
 import { LessonEditComponent } from './lesson/lesson-edit/lesson-edit.component';
 import { LessonCreateComponent } from './lesson/lesson-create/lesson-create.component';
 import { SaveStatusComponent } from './lessonPage/save-status/save-status.component';
+import {ClozeFormatRenderPipe} from './pipes/cloze-format-render.pipe';
 
 // @ts-ignore
 @NgModule({
@@ -84,6 +85,7 @@ import { SaveStatusComponent } from './lessonPage/save-status/save-status.compon
         SidebarComponent,
         ClozeQuestionComponent,
         ClozeFormatPipe,
+        ClozeFormatRenderPipe,
         ClozeDialogComponent,
         MultipleSelectComponent,
         PositionOrderPipe,

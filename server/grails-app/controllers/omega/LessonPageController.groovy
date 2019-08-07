@@ -15,8 +15,53 @@ class LessonPageController {
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         Lesson lesson = Lesson.get(params.lessonId);
-        respond LessonPage.findAllByLesson(lesson), model:[lessonPageCount: lessonPageService.count()]
+        respond LessonPage.findAllByLesson(lesson).sort {it.pageOrder}, model:[lessonPageCount: lessonPageService.count()]
     }
+
+
+    def moveUp(Long id) {
+        LessonPage lp = LessonPage.get(id);
+        LessonPage lp2 = LessonPage.findByPageOrder(lp.pageOrder + 1);
+
+        Lesson l = lp.lesson;
+        lp.pageOrder++;
+        lp2.pageOrder--;
+
+
+        lp.save()
+        lp2.save()
+
+        LessonPage.withSession {
+            it.flush()
+            it.clear()
+        }
+
+        respond LessonPage.findAllByLesson(l).sort {it.pageOrder}, model:[lessonPageCount: lessonPageService.count()]
+
+    }
+
+
+    def moveDown(Long id) {
+        LessonPage lp = LessonPage.get(id);
+        LessonPage lp2 = LessonPage.findByPageOrder(lp.pageOrder - 1);
+
+        Lesson l = lp.lesson;
+        lp.pageOrder--;
+        lp2.pageOrder++;
+
+
+        lp.save()
+        lp2.save()
+
+        LessonPage.withSession {
+            it.flush()
+            it.clear()
+        }
+
+        respond LessonPage.findAllByLesson(l).sort {it.pageOrder}, model:[lessonPageCount: lessonPageService.count()]
+
+    }
+
 
     def show(Long id) {
         respond lessonPageService.get(id)
@@ -27,6 +72,8 @@ class LessonPageController {
             render status: NOT_FOUND
             return
         }
+
+        lessonPage.pageOrder = lessonPage.lesson.pages.size();
 
         try {
             lessonPageService.save(lessonPage)

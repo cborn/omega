@@ -40,6 +40,10 @@ export class AuthenticatedHttpClient {
     static APPLICATION_URL = environment.BASE_URL + 'application';
 
     static LESSON_PAGE_URL = environment.BASE_URL + 'lessonPage';
+    static LESSON_PAGE_MOVE_UP_URL = environment.BASE_URL + 'lessonPage/moveUp';
+    static LESSON_PAGE_MOVE_DOWN_URL = environment.BASE_URL + 'lessonPage/moveDown';
+
+
     static QUESTION_IMAGE_ADD_URL = environment.BASE_URL + 'question/addImage';
     static QUESTION_IMAGE_REMOVE_URL = environment.BASE_URL + 'question/removeImage';
     static QUESTION_URL = environment.BASE_URL + 'question';

@@ -67,6 +67,7 @@ class BootStrap {
         c.save([failOnError: true, flush: true])
 
         page.setLesson(l);
+        page.setPageOrder(0);
         page.save([failOnError: true, flush: true]);
 
         l.addToPages(page);

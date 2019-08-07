@@ -26,7 +26,10 @@
     <mat-slide-toggle class="sidebar-form-input" (change)="changed()" color="primary" name="description" [(ngModel)]="question.custom_properties.description_enabled">
       Description
     </mat-slide-toggle>
-
+  <mat-form-field class="sidebar-form-input" (change)="changed()">
+    <mat-label>Max Grade points</mat-label>
+    <input matInput [(ngModel)]="question.max_grade" name="selection-limit-exact" class='sidebar-sub-input' type="number"/>
+  </mat-form-field>
 
   <mat-slide-toggle *ngIf="isOfType([QuestionType.DROPDOWN])" (change)="changed()" class="sidebar-form-input" color="primary" name="multi" [(ngModel)]="question.custom_properties.alphabetical">
     Alphabetical
@@ -53,7 +56,7 @@
 
   <mat-form-field class="sidebar-form-input" (change)="changed()" *ngIf="isOfType([QuestionType.MULTI_CHOICE,QuestionType.PICTURE_CHOICE]) && question.custom_properties.multi && question.custom_properties.multi_select_type == 3">
     <mat-label>Max</mat-label>
-    <input matInput (change)="changed()" [(ngModel)]="question.custom_properties.multi_limit_max" name="selection-limit-exact" class='sidebar-sub-input' type="number"/>
+    <input matInput  [(ngModel)]="question.custom_properties.multi_limit_max" name="selection-limit-exact" class='sidebar-sub-input' type="number"/>
   </mat-form-field>
 
 

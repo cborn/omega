@@ -11,11 +11,14 @@ export abstract class IndexComponent<T extends BaseObject> implements OnInit {
 
 
     dataSource = new MatTableDataSource<T>([]);
+    sourceData: T[];
+
     paramName = '';
+
     public paramValue;
 
     protected constructor(private service: BaseService<T>, private n: NotificationService, private r: Router, private rt: ActivatedRoute, paramName?: string) {
-            this.paramName = paramName;
+        this.paramName = paramName;
     }
 
     ngOnInit() {
@@ -24,8 +27,6 @@ export abstract class IndexComponent<T extends BaseObject> implements OnInit {
             if (value.get(this.paramName) != null) {
 
                 this.paramValue = value.get(this.paramName);
-                console.log(this.paramValue);
-
                 this.service.list(value.get(this.paramName), this.paramName);
             } else {
                 this.service.list();
@@ -37,6 +38,7 @@ export abstract class IndexComponent<T extends BaseObject> implements OnInit {
 
         this.service.serviceObservable.subscribe(value => {
             this.dataSource.data = value;
+            this.sourceData = value;
         });
     }
 

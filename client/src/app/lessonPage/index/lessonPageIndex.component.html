@@ -18,6 +18,8 @@
             <mat-cell *matCellDef="let page">
                 <button mat-stroked-button color="accent" [routerLink]="'/lessonPage/builder/'+page.id">Edit</button>   &nbsp;
                 <button mat-stroked-button color="warn" (click)="delete(page.id)">Delete</button>
+                <button mat-icon-button (click)="moveDown(page.id)" *ngIf="page.pageOrder > 0"><mat-icon>arrow_upward</mat-icon></button>
+                <button mat-icon-button (click)="moveUp(page.id)" *ngIf="(page.pageOrder + 1) < sourceData.length"><mat-icon>arrow_downward</mat-icon></button>
             </mat-cell>
         </ng-container>
 

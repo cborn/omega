@@ -14,7 +14,7 @@ export class LessonPageIndexComponent extends IndexComponent<LessonPage> {
 
     displayedColumns = ['id', 'name', 'actions'];
 
-    constructor(private lessonPageService: LessonPageService,  private router: Router, private route: ActivatedRoute, private notificationService: NotificationService) {
+    constructor(private lessonPageService: LessonPageService, private router: Router, private route: ActivatedRoute, private notificationService: NotificationService) {
         super(lessonPageService, notificationService, router, route, 'lessonId');
     }
 
@@ -27,9 +27,18 @@ export class LessonPageIndexComponent extends IndexComponent<LessonPage> {
         console.log(uploadPackage);
 
         this.lessonPageService.insert(uploadPackage, (data) => {
-            console.log(data);
             this.router.navigate(['/lessonPage/builder', data.id]);
         });
     }
+
+
+    moveUp(id) {
+        this.lessonPageService.moveUp(id);
+    }
+
+    moveDown(id) {
+        this.lessonPageService.moveDown(id);
+    }
+
 
 }

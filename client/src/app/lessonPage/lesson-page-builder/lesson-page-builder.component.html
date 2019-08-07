@@ -39,7 +39,7 @@
             </mat-grid-tile>
             <mat-grid-tile [colspan]="2" [rowspan]="1" class="right-panel">
                 <!--// This is the preview panel.-->
-                <div *ngIf="lesson$ | async as lesson">
+                <div *ngIf="lesson$ | async as lesson" style="width: 100%;">
                     <app-lesson-renderer [lesson]="lesson"></app-lesson-renderer>
                 </div>
             </mat-grid-tile>

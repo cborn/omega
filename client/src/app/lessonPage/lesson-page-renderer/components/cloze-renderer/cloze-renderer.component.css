@@ -1,0 +1,24 @@
+.flexi {
+    display: unset;
+    float: left;
+}
+
+
+.flexi > div {
+    width: fit-content;
+}
+
+
+
+
+.flexi  * {
+    display: unset;
+    float: left;
+}
+
+
+.in-cloze-input-position {
+    width: 160px;
+    margin: 10px;
+    transform: translate(0%, -50%);
+}

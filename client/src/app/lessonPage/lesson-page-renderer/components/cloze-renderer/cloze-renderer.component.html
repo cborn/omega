@@ -1,3 +1,13 @@
 <br/>
-<div [innerHTML]="question.custom_properties.cloze_text | clozeFormat : question.custom_properties.cloze_prompts : question">
+<!--<div class="flexi">-->
+    <!--<div *ngFor="let question_part of question.custom_properties.cloze_text.split('@@'); let i = index;">-->
+        <!--<span [innerHTML]="question_part"></span>-->
+        <!--<div *ngIf="!isDropdown(i)"> <input matInput class="classic-input-style in-cloze-input-position"-->
+                                                <!--placeholder="Type Answer here" name="question-text"/></div>-->
+        <!--<div *ngIf="isDropdown(i) && isDropdown(i) != 'NO_INPUT'">dropdown input</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div [innerHTML]="question.custom_properties.cloze_text | clozeFormatRender : question.custom_properties.cloze_prompts : question">
+
 </div>
