@@ -1,6 +1,9 @@
-export class Question {
+import {BaseObject} from '../Blueprints/base-object';
+
+export class Question extends BaseObject {
 
     constructor(type, position) {
+        super();
         this.required = false;
         this.type = type;
         this.custom_properties = {
@@ -11,7 +14,6 @@ export class Question {
 
     position: number;
     description: string;
-    id: number;
     max_grade: number;
     name: string;
     required: boolean;

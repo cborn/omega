@@ -12,7 +12,7 @@ import {LessonPageService} from '../lesson-page.service';
 })
 export class LessonPageIndexComponent extends IndexComponent<LessonPage> {
 
-    displayedColumns = ['id', 'actions'];
+    displayedColumns = ['id', 'name', 'actions'];
 
     constructor(private lessonPageService: LessonPageService, private router: Router, private route: ActivatedRoute, private notificationService: NotificationService) {
         super(lessonPageService, notificationService, router, route, 'lessonId');
@@ -20,7 +20,16 @@ export class LessonPageIndexComponent extends IndexComponent<LessonPage> {
 
 
     addNewLessonPageForEdit() {
-        console.log('Add new page..');
+        const uploadPackage = {
+            lesson: this.paramValue,
+            name: 'Untitled Page'
+        };
+        console.log(uploadPackage);
+
+        this.lessonPageService.insert(uploadPackage, (data) => {
+            console.log(data);
+            this.router.navigate(['/lessonPage/builder', data.id]);
+        });
     }
 
 }

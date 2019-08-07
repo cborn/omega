@@ -37,7 +37,7 @@ class LessonPageController {
         respond lessonPage, [status: CREATED, view:"show"]
     }
 
-    @Secured(['ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_FACULTY'])
+
     def update(LessonPage lessonPage) {
         if (lessonPage == null) {
             render status: NOT_FOUND

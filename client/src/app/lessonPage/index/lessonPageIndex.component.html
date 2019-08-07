@@ -1,11 +1,16 @@
 <div  class="index">
 
     <h1 class="centered">Lesson Pages</h1>
-    <mat-table class="centered mat-elevation-z8" [dataSource]="dataSource">
+    <mat-table class="centered mat-elevation-z8 standard-table-width" [dataSource]="dataSource">
 
         <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef>Page ID</mat-header-cell>
             <mat-cell *matCellDef="let page">{{page.id}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef>Page Name</mat-header-cell>
+            <mat-cell *matCellDef="let page">{{page.name}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="actions">
@@ -25,6 +30,6 @@
     </mat-table>
 
     <div class="centered padding-10">
-        <button mat-fab color="primary" (click)="addNewLessonPageForEdit()" routerLink="/lessonPage/builder"><i class="material-icons">add</i></button>
+        <button mat-fab color="primary" (click)="addNewLessonPageForEdit()"><i class="material-icons">add</i></button>
     </div>
 </div>

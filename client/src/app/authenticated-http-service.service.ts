@@ -97,7 +97,11 @@ export class AuthenticatedHttpClient {
             this.notificationService.publishAlert('We\'re having difficulty connecting to the server. Please check your internet connection or try again in a few minutes.');
         } else {
             if (!mute && errorMsg !== undefined) {
-                this.notificationService.publishAlert(errorMsg.message);
+                if (errorMsg.total != null) {
+                    this.notificationService.publishAlert(errorMsg._embedded.errors[0].message); // Multiple errors so display the first one..
+                } else {
+                    this.notificationService.publishAlert(errorMsg.message);
+                }
             }
             return new Error(JSON.stringify(errorMsg));
         }

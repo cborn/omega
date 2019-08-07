@@ -25,8 +25,12 @@ $omega-app-theme: mat-light-theme($omega-app-primary, $omega-app-accent, $omega-
   font-family: 'Roboto', sans-serif;
 }
 
+.standard-table-width {
+  min-width: 1032px;
+}
+
 .centered {
-  width: 50%;
+  width: fit-content;
   left: 50%;
   position: relative;
   transform: translate(-50%, 0);

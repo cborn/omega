@@ -11,6 +11,7 @@ export abstract class IndexComponent<T extends BaseObject> implements OnInit {
 
     dataSource = new MatTableDataSource<T>([]);
     paramName = '';
+    public paramValue;
 
     protected constructor(private service: BaseService<T>, private n: NotificationService, private r: Router, private rt: ActivatedRoute, paramName?: string) {
             this.paramName = paramName;
@@ -20,6 +21,10 @@ export abstract class IndexComponent<T extends BaseObject> implements OnInit {
         this.rt.paramMap.subscribe(value => {
 
             if (value.get(this.paramName) != null) {
+
+                this.paramValue = value.get(this.paramName);
+                console.log(this.paramValue);
+
                 this.service.list(value.get(this.paramName), this.paramName);
             } else {
                 this.service.list();

@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {IndexComponent} from './index/index.component';
-import {LessonBuilderComponent} from './lesson-builder/lesson-builder.component';
+import {LessonPageBuilderComponent} from './lessonPage/lesson-page-builder/lesson-page-builder.component';
 import {LoginComponent} from './login/login.component';
 import {UnauthorizedComponent} from './unauthorized/unauthorized.component';
 import {FacultyGuard, StudentGuard} from './guards/guard';
@@ -14,7 +14,7 @@ import {LessonPageIndexComponent} from './lessonPage/index/lessonPageIndex.compo
 const routes: Routes = [
     {path: '', redirectTo: 'index', pathMatch: 'full'},
     {path: 'index', component: IndexComponent, canActivate: [StudentGuard]},
-    {path: 'lessonPage/builder/:lessonId', component: LessonBuilderComponent, canActivate: [FacultyGuard]},
+    {path: 'lessonPage/builder/:lessonId', component: LessonPageBuilderComponent, canActivate: [FacultyGuard]},
     {path: 'course/index', component: CourseIndexComponent, canActivate: [StudentGuard]},
     {path: 'course/edit/:courseId', component: CourseEditComponent, canActivate: [StudentGuard]},
     {path: 'course/create', component: CourseCreateComponent, canActivate: [StudentGuard]},
