@@ -6,7 +6,7 @@ import {Question, QuestionType} from '../../../../Model/question';
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit, OnChanges {
+export class SidebarComponent implements OnInit {
 
 
     questionTypes = Question.questionTypeList();
@@ -18,16 +18,14 @@ export class SidebarComponent implements OnInit, OnChanges {
     @Input() question: Question;
 
     @Output() closeSidebar = new EventEmitter();
+    @Output() propertyChanged = new EventEmitter();
+
 
 
     constructor() {
     }
 
     ngOnInit() {
-    }
-
-    ngOnChanges(changes: SimpleChanges): void {
-        console.log(changes);
     }
 
     closeSidebarAction() {
@@ -44,4 +42,9 @@ export class SidebarComponent implements OnInit, OnChanges {
         return options.indexOf(this.question.type) <= -1;
 
     }
+
+    changed() {
+        this.propertyChanged.emit(true);
+    }
+
 }

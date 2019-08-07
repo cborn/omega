@@ -1,0 +1,17 @@
+.icon-holder {
+    display: flex;
+    position: absolute;
+    /* left: 0; */
+    transform: translate(-130%, 10%);
+    padding: 2px;
+    background: white;
+    border-radius: 26px;
+}
+
+.saved{
+    color: #117911;
+}
+
+.unsaved {
+    color: #ff4634;
+}

@@ -1,0 +1,15 @@
+<div *ngIf="isDirty$ | async">
+    <div class="icon-holder unsaved">
+        <i class="material-icons">clear</i>
+    </div>
+    <span>Not Saved</span>
+</div>
+
+<div *ngIf="!(isDirty$ | async)">
+    <div class="icon-holder saved">
+        <i class="material-icons">check</i>
+    </div>
+    <span>Saved</span>
+</div>
+
+

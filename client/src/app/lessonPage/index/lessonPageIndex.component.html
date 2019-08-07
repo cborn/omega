@@ -1,7 +1,7 @@
 <div  class="index">
-
-    <h1 class="centered">Lesson Pages</h1>
-    <mat-table class="centered mat-elevation-z8 standard-table-width" [dataSource]="dataSource">
+    <div class="centered standard-table-width">
+    <h1 class="">Lesson Pages</h1>
+    <mat-table class=" mat-elevation-z8 " style="width: 100%" [dataSource]="dataSource">
 
         <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef>Page ID</mat-header-cell>
@@ -29,7 +29,8 @@
 
     </mat-table>
 
-    <div class="centered padding-10">
+    <div class="padding-10">
         <button mat-fab color="primary" (click)="addNewLessonPageForEdit()"><i class="material-icons">add</i></button>
+    </div>
     </div>
 </div>

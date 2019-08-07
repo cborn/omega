@@ -1,7 +1,9 @@
 <div  class="index">
 
-    <h1 class="centered">Lessons</h1>
-<mat-table class="centered mat-elevation-z8 standard-table-width" [dataSource]="dataSource">
+
+    <div class="centered standard-table-width">
+        <h1>Lessons</h1>
+<mat-table class="centered mat-elevation-z8" style="width: 100%;" [dataSource]="dataSource">
 
     <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef>Lesson Id</mat-header-cell>
@@ -17,8 +19,7 @@
         <mat-header-cell *matHeaderCellDef>Pages</mat-header-cell>
         <mat-cell *matCellDef="let lesson">
             <button mat-stroked-button color="secondary" *ngIf="lesson.pages != null && lesson.pages.length > 0" [routerLink]="'/lessonPage/index/' + lesson.id">View {{lesson.pages.length}} Pages</button>
-            <button mat-stroked-button color="secondary" *ngIf="lesson.pages == null || lesson.pages.length == 0" [routerLink]="'/lessonPage/create/' + lesson.id">Add lesson</button>
-
+            <button mat-stroked-button color="secondary" *ngIf="lesson.pages == null || lesson.pages.length == 0" (click)="addPage(lesson.id)">Add Page</button>
         </mat-cell>
     </ng-container>
 
@@ -39,7 +40,9 @@
 
 </mat-table>
 
-    <div class="centered padding-10">
-        <button mat-fab color="primary" routerLink="/lesson/edit/"><i class="material-icons">add</i></button>
+        <div class="padding-10">
+            <button mat-fab color="primary" [routerLink]="['/lesson/create']" [queryParams]="{'courseId':paramValue}"><i class="material-icons">add</i></button>
+        </div>
     </div>
+
 </div>

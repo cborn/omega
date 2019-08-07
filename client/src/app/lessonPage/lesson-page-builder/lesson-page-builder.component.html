@@ -3,7 +3,7 @@
         <!--// This side panel content will be populated by what ever question is currently selected-->
 
         <app-sidebar [question]="sidebar_question" (closeSidebar)="closeSidebar()"
-                     *ngIf="sidebar_question"></app-sidebar>
+                     *ngIf="sidebar_question" (propertyChanged)="changed()"></app-sidebar>
 
     </mat-sidenav>
     <mat-sidenav-content>
@@ -18,7 +18,7 @@
                                          *ngFor="let question of lesson.questions | positionOrder : 'asc'"
                                          [question]="question" (questionDeleted)="deleteQuestion($event)"
                                          (questionSelected)="openSidebar($event)" [selectedQuestion]="currentQuestion"
-                                         (click)="currentQuestion = question.id"></app-lesson-question>
+                                         (click)="currentQuestion = question.id" (questionChanged)="changed()"></app-lesson-question>
                     <div class="add_new_primary_button">
                         <button mat-fab color="primary" (click)="addNewQuestion()"><i class="material-icons">add</i>
                         </button>

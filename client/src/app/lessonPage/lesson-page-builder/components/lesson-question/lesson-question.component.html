@@ -10,14 +10,14 @@
                 <mat-form-field class="full-width">
                     <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
                               [(ngModel)]="question.name" placeholder="Type question here"
-                              name="question-text"></textarea>
+                              name="question-text" (change)="isChanged()"></textarea>
 
 
                 </mat-form-field>
 
                 <mat-form-field class="full-width" *ngIf="question.custom_properties != null && question.custom_properties.description_enabled">
                     <textarea matInput cdkTextareaAutosize #autosize2="cdkTextareaAutosize" cdkAutosizeMinRows="1"
-                              [(ngModel)]="question.description"
+                              [(ngModel)]="question.description" (change)="isChanged()"
                               placeholder="Write your description here" name="description-text" style="color: #7d7d7d;"></textarea>
                 </mat-form-field>
             </td>

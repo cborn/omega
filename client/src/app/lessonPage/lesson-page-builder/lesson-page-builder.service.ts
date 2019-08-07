@@ -9,7 +9,9 @@ import {Question, QuestionType} from '../../Model/question';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {AuthenticatedHttpClient} from '../../authenticated-http-service.service';
 
-const BOOLEAN_PROPERTIES = ['stack', 'random'];
+const BOOLEAN_PROPERTIES = ['stack', 'random', 'description_enabled', 'multi', 'alphabetical', 'prompt_sync', 'show_labels'];
+const NUMBER_PROPERTIES = ['min', 'max'];
+
 
 @Injectable({
     providedIn: 'root'
@@ -20,11 +22,23 @@ export class LessonPageBuilderService {
     editingLessonPageSubject: BehaviorSubject<LessonPage> = new BehaviorSubject<LessonPage>(new LessonPage());
     editingLessonPage = this.editingLessonPageSubject.asObservable();
 
+    isDirtySubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    isDirty = this.isDirtySubject.asObservable();
+
+
     constructor(private httpClient: AuthenticatedHttpClient) {
+
+        this.isDirty.subscribe(isDirty => {
+            if (isDirty) {
+                this.sync();
+            }
+        });
+
+
     }
 
 
-    filterFromServer(value) {
+    static filterFromServer(value) {
         const modifiedLessonPage = Object.assign({}, value);
 
         for (const q in modifiedLessonPage['questions']) {
@@ -42,8 +56,10 @@ export class LessonPageBuilderService {
 
                     if (question.custom_properties.hasOwnProperty(customPropertiesKey)) {
                         if (BOOLEAN_PROPERTIES.indexOf(customPropertiesKey) > -1) {
-                             question.custom_properties[customPropertiesKey] = (question.custom_properties[customPropertiesKey] === 'true');
+                            question.custom_properties[customPropertiesKey] = (question.custom_properties[customPropertiesKey] === 'true');
                         }
+
+
                     }
 
                 }
@@ -53,11 +69,28 @@ export class LessonPageBuilderService {
         return modifiedLessonPage;
     }
 
+    async refreshCurrentLesson() {
+
+        if(this.editingLessonPageSubject.value != null) {
+            const promise = await this.httpClient.get(AuthenticatedHttpClient.LESSON_PAGE_URL + '/' + this.editingLessonPageSubject.value.id);
+
+            promise.pipe(map(LessonPageBuilderService.filterFromServer)).pipe(tap(x => {
+                this.editingLessonPageSubject.next(x as LessonPage);
+                this.isDirtySubject.next(false);
+
+            })).pipe(publishReplay()).pipe(refCount()).subscribe();
+        }
+
+    }
+
+
     async getLessonToEdit(lessonPageId) {
         const promise = await this.httpClient.get(AuthenticatedHttpClient.LESSON_PAGE_URL + '/' + lessonPageId);
 
-        promise.pipe(map(this.filterFromServer)).pipe(tap(x => {
+        promise.pipe(map(LessonPageBuilderService.filterFromServer)).pipe(tap(x => {
             this.editingLessonPageSubject.next(x as LessonPage);
+            this.isDirtySubject.next(false);
+
         })).pipe(publishReplay()).pipe(refCount()).subscribe();
 
     }
@@ -128,9 +161,9 @@ export class LessonPageBuilderService {
 
         const promise = await this.httpClient.put<Question>(AuthenticatedHttpClient.LESSON_PAGE_URL + '/' + lessonPage.id, lessonPage);
 
-        promise.pipe(map(this.filterFromServer)).pipe(tap(x => {
-            console.log(x.questions[2].custom_properties.random);
+        promise.pipe(map(LessonPageBuilderService.filterFromServer)).pipe(tap(x => {
             this.editingLessonPageSubject.next(x as LessonPage);
+            this.isDirtySubject.next(false);
         })).pipe(publishReplay()).pipe(refCount()).subscribe();
     }
 }

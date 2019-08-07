@@ -5,6 +5,8 @@ export class Lesson extends BaseObject {
 
     name: string;
 
+    course: string;
+
     pages: LessonPage[];
 
 }

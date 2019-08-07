@@ -19,6 +19,8 @@ export class LessonQuestionComponent implements OnInit {
 
   @Output() questionSelected = new EventEmitter();
   @Output() questionDeleted = new EventEmitter();
+  @Output() questionChanged = new EventEmitter();
+
 
   constructor(private _ngZone: NgZone) {
 
@@ -35,6 +37,10 @@ export class LessonQuestionComponent implements OnInit {
           }
           });
 
+  }
+
+  isChanged() {
+    this.questionChanged.emit(true);
   }
 
 

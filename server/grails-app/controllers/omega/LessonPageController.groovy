@@ -14,7 +14,8 @@ class LessonPageController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond lessonPageService.list(params), model:[lessonPageCount: lessonPageService.count()]
+        Lesson lesson = Lesson.get(params.lessonId);
+        respond LessonPage.findAllByLesson(lesson), model:[lessonPageCount: lessonPageService.count()]
     }
 
     def show(Long id) {

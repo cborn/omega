@@ -14,7 +14,7 @@ export class LessonPageIndexComponent extends IndexComponent<LessonPage> {
 
     displayedColumns = ['id', 'name', 'actions'];
 
-    constructor(private lessonPageService: LessonPageService, private router: Router, private route: ActivatedRoute, private notificationService: NotificationService) {
+    constructor(private lessonPageService: LessonPageService,  private router: Router, private route: ActivatedRoute, private notificationService: NotificationService) {
         super(lessonPageService, notificationService, router, route, 'lessonId');
     }
 

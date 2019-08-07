@@ -35,6 +35,19 @@ export class LessonPageBuilderComponent implements OnInit {
             this.lessonBuilderService.getLessonToEdit(value.get('lessonId'));
         });
 
+        this.lesson$.subscribe(value => {
+            // if the lesson has changed and the sidebar is open then we need to re link the sidebar question...
+
+            if (this.sidebar_open) {
+                for (const i in value.questions) {
+                    if (value.questions[i].id === this.sidebar_question.id) {
+                        this.sidebar_question = value.questions[i];
+                    }
+                }
+            }
+
+        });
+
 
     }
 
@@ -46,6 +59,10 @@ export class LessonPageBuilderComponent implements OnInit {
     addNewQuestionWithType(type) {
         this.addQuestionDialogShown = false;
         this.lessonBuilderService.addNewQuestion(type.value);
+    }
+
+    changed() {
+        this.lessonBuilderService.isDirtySubject.next(true);
     }
 
 

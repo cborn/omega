@@ -50,6 +50,7 @@ export class PictureSelectComponent implements OnInit {
             // new image on question...
             this.question = value;
             this.workingCopy = this.question.custom_properties.images;
+            this.lessonBuilderService.refreshCurrentLesson();
         }, error1 => {
             this.imageLoading = false;
         });
@@ -63,6 +64,7 @@ export class PictureSelectComponent implements OnInit {
             // new image on question...
             this.question = value;
             this.workingCopy = this.question.custom_properties.images;
+            this.lessonBuilderService.refreshCurrentLesson();
         });
     }
 

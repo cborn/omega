@@ -69,6 +69,9 @@ import {LessonIndexComponent} from './lesson/index/lessonIndex.component';
 import {CourseEditComponent} from './course/course-edit/course-edit.component';
 import {CourseCreateComponent} from './course/course-create/course-create.component';
 import {LessonPageIndexComponent} from './lessonPage/index/lessonPageIndex.component';
+import { LessonEditComponent } from './lesson/lesson-edit/lesson-edit.component';
+import { LessonCreateComponent } from './lesson/lesson-create/lesson-create.component';
+import { SaveStatusComponent } from './lessonPage/save-status/save-status.component';
 
 // @ts-ignore
 @NgModule({
@@ -108,7 +111,10 @@ import {LessonPageIndexComponent} from './lessonPage/index/lessonPageIndex.compo
         CourseEditComponent,
         CourseCreateComponent,
         ConfirmDialogComponent,
-        LessonPageIndexComponent
+        LessonPageIndexComponent,
+        LessonEditComponent,
+        LessonCreateComponent,
+        SaveStatusComponent
     ],
     entryComponents: [
         ClozeDialogComponent,

@@ -7,5 +7,6 @@ model {
 json {
 	id lesson.id
 	name lesson.name
+	course lesson.course.id
 	pages g.render(lesson.pages, [resolveTemplate: false])
 }
