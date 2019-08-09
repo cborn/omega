@@ -1,0 +1,11 @@
+import omega.Submission
+
+model {
+	Submission submission
+}
+
+json {
+	submission g.render(submission, [resolveTemplate: true,excludes: ['responses']])
+	responses g.render(submission.responses, [resolveTemplate: true])
+
+}

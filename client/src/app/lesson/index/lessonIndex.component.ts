@@ -5,7 +5,7 @@ import {MatTableDataSource} from '@angular/material';
 import {Course} from '../../Model/course';
 import {Lesson} from '../../Model/lesson';
 import {IndexComponent} from '../../Blueprints/index-component';
-import {NotificationService} from '../../notification.service';
+import {NotificationService} from '../../services/notification.service';
 import {LessonPageService} from '../../lessonPage/lesson-page.service';
 
 @Component({

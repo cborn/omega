@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {IndexComponent} from '../../Blueprints/index-component';
-import {NotificationService} from '../../notification.service';
+import {NotificationService} from '../../services/notification.service';
 import {LessonPage} from '../../Model/lesson-page';
 import {LessonPageService} from '../lesson-page.service';
 

@@ -7,7 +7,7 @@ import {LessonPage} from '../../Model/lesson-page';
 import {of} from 'rxjs/internal/observable/of';
 import {Question, QuestionType} from '../../Model/question';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
-import {AuthenticatedHttpClient} from '../../authenticated-http-service.service';
+import {AuthenticatedHttpClient} from '../../services/authenticated-http-service.service';
 
 const BOOLEAN_PROPERTIES = ['stack', 'random', 'description_enabled', 'multi', 'alphabetical', 'prompt_sync', 'show_labels'];
 const NUMBER_PROPERTIES = ['min', 'max'];

@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 import { environment } from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {publishReplay, refCount} from 'rxjs/operators';
-import {AuthenticatedHttpClient} from '../authenticated-http-service.service';
+import {AuthenticatedHttpClient} from '../services/authenticated-http-service.service';
 
 
 

@@ -1,0 +1,8 @@
+import omega.Submission
+
+model {
+	Iterable<Submission> submissionList
+}
+
+json tmpl.submission(submissionList ?: [])
+

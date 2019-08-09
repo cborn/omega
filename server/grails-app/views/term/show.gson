@@ -1,0 +1,7 @@
+import omega.Term
+
+model {
+	Term term
+}
+
+json tmpl.term(term)

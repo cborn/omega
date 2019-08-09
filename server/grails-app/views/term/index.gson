@@ -1,0 +1,8 @@
+import omega.Term
+
+model {
+	Iterable<Term> termList
+}
+
+json tmpl.term(termList ?: [])
+

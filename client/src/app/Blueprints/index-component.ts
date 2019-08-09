@@ -1,4 +1,4 @@
-import {NotificationService} from '../notification.service';
+import {NotificationService} from '../services/notification.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BaseService} from './base-service';
 import {OnInit} from '@angular/core';

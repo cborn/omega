@@ -43,12 +43,14 @@ class BootStrap {
 
         // Create some demo content in here.
 
+
+        Term t1 = new Term(name: "Term 1",current: true).save(flush:true);
+        Term t2 = new Term(name: "Next Term").save(flush:true);
+
         Course c = new Course();
         c.setName("Welsh for beginners");
         c.setMoodle_master_id("1")
-
-
-
+        c.addToTerms(t1);
 
         Lesson l = new Lesson();
         l.setName("1. Vowels");
@@ -126,6 +128,25 @@ class BootStrap {
 
         page.addToQuestions(q3);
         page.save([failOnError: true, flush: true])
+
+
+
+        Submission sub = new Submission(user: studentUser, term: t1, page: page);
+
+        sub.submitted = new Date();
+
+        QuestionResponse q1Resp = new QuestionResponse(questionNumber: 0,value: "true").save(flush:true);
+        QuestionResponse q2Resp = new QuestionResponse(questionNumber: 1,value: "Brifo@@Crio@@Joni bach").save(flush:true);
+        QuestionResponse q3Resp = new QuestionResponse(questionNumber: 2,value: "Mae").save(flush:true);
+
+        sub.addToResponses(q1Resp);
+        sub.addToResponses(q2Resp);
+        sub.addToResponses(q3Resp);
+
+        sub.save(flush:true);
+
+
+
 
 
     }

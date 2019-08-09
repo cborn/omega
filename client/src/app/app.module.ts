@@ -57,11 +57,11 @@ import {DropdownRendererComponent} from './lessonPage/lesson-page-renderer/compo
 import {VoiceRendererComponent} from './lessonPage/lesson-page-renderer/components/voice-renderer/voice-renderer.component';
 import {ClozeRendererComponent} from './lessonPage/lesson-page-renderer/components/cloze-renderer/cloze-renderer.component';
 import {DateFormatPipe} from './pipes/date-format.pipe';
-import {AuthenticatedHttpClient, AuthenticatedHttpClientFactory} from './authenticated-http-service.service';
-import {SessionManagerService} from './session-manager.service';
+import {AuthenticatedHttpClient, AuthenticatedHttpClientFactory} from './services/authenticated-http-service.service';
+import {SessionManagerService} from './services/session-manager.service';
 import {Router} from '@angular/router';
 import {LoginComponent} from './login/login.component';
-import {AlertDialogComponent, ConfirmDialogComponent, NotificationService} from './notification.service';
+import {AlertDialogComponent, ConfirmDialogComponent, NotificationService} from './services/notification.service';
 import {UnauthorizedComponent} from './unauthorized/unauthorized.component';
 import {AdminGuard, FacultyGuard, GraderGuard, StudentGuard, SuperAdminGuard} from './guards/guard';
 import {CourseIndexComponent} from './course/index/courseIndex.component';
@@ -73,6 +73,9 @@ import { LessonEditComponent } from './lesson/lesson-edit/lesson-edit.component'
 import { LessonCreateComponent } from './lesson/lesson-create/lesson-create.component';
 import { SaveStatusComponent } from './lessonPage/save-status/save-status.component';
 import {ClozeFormatRenderPipe} from './pipes/cloze-format-render.pipe';
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { TermIndexComponent } from './term/term-index/term-index.component';
+import { OTPComponentComponent } from './otpcomponent/otpcomponent.component';
 
 // @ts-ignore
 @NgModule({
@@ -116,7 +119,10 @@ import {ClozeFormatRenderPipe} from './pipes/cloze-format-render.pipe';
         LessonPageIndexComponent,
         LessonEditComponent,
         LessonCreateComponent,
-        SaveStatusComponent
+        SaveStatusComponent,
+        DashboardComponent,
+        TermIndexComponent,
+        OTPComponentComponent
     ],
     entryComponents: [
         ClozeDialogComponent,

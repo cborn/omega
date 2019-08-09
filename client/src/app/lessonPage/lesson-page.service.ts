@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BaseService} from '../Blueprints/base-service';
 import {LessonPage} from '../Model/lesson-page';
-import {AuthenticatedHttpClient} from '../authenticated-http-service.service';
+import {AuthenticatedHttpClient} from '../services/authenticated-http-service.service';
 
 @Injectable({
     providedIn: 'root'

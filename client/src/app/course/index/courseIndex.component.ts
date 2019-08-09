@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Course} from '../../Model/course';
-import {AuthenticatedHttpClient} from '../../authenticated-http-service.service';
+import {AuthenticatedHttpClient} from '../../services/authenticated-http-service.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CourseService} from '../course.service';
 import {MatTableDataSource} from '@angular/material';
-import {NotificationService} from '../../notification.service';
+import {NotificationService} from '../../services/notification.service';
 import {IndexComponent} from '../../Blueprints/index-component';
 
 @Component({

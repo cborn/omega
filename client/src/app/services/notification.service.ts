@@ -50,7 +50,7 @@ export class NotificationService {
 
 @Component({
     selector: 'app-alert-dialog',
-    templateUrl: 'dialog-alert-dialog.html',
+    templateUrl: '../dialogs/dialog-alert-dialog.html',
 })
 export class AlertDialogComponent {
 
@@ -67,7 +67,7 @@ export class AlertDialogComponent {
 
 @Component({
     selector: 'app-alert-dialog',
-    templateUrl: 'dialog-confirm-dialog.html',
+    templateUrl: '../dialogs/dialog-confirm-dialog.html',
 })
 export class ConfirmDialogComponent {
 

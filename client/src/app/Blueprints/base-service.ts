@@ -1,4 +1,4 @@
-import {AuthenticatedHttpClient} from '../authenticated-http-service.service';
+import {AuthenticatedHttpClient} from '../services/authenticated-http-service.service';
 import {Course} from '../Model/course';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {BaseObject} from './base-object';

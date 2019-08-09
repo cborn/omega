@@ -1,0 +1,7 @@
+import omega.Submission
+
+model {
+	Submission submission
+}
+
+json tmpl.submission(submission)

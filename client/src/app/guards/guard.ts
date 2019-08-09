@@ -1,6 +1,6 @@
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {Observable} from 'rxjs/internal/Observable';
-import {PERMISSION_ROLE, SessionManagerService} from '../session-manager.service';
+import {PERMISSION_ROLE, SessionManagerService} from '../services/session-manager.service';
 
 
 export class SuperAdminGuard implements CanActivate {

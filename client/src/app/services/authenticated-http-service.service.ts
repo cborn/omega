@@ -1,6 +1,6 @@
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {environment} from '../environments/environment';
+import {environment} from '../../environments/environment';
 import {throwError} from 'rxjs/internal/observable/throwError';
 import {of} from 'rxjs/internal/observable/of';
 import {catchError} from 'rxjs/operators';
@@ -8,7 +8,7 @@ import {SessionManagerService} from './session-manager.service';
 import {Router} from '@angular/router';
 import {NotificationService} from './notification.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {LoginResponse} from './login/login.component';
+import {LoginResponse} from '../login/login.component';
 
 export interface IRequestOptions {
     headers?: HttpHeaders;
@@ -35,6 +35,7 @@ export class AuthenticatedHttpClient {
 
 
     static AUTH_URL = environment.BASE_URL + 'api/login';
+    static LTI_OTP_LOGIN_URL = environment.BASE_URL + 'lti/authenticate';
     static REFRESH_AUTH_URL = environment.BASE_URL + 'oauth/access_token';
 
     static APPLICATION_URL = environment.BASE_URL + 'application';
@@ -49,8 +50,12 @@ export class AuthenticatedHttpClient {
     static QUESTION_URL = environment.BASE_URL + 'question';
     static COURSE_URL = environment.BASE_URL + 'course';
     static LESSON_URL = environment.BASE_URL + 'lesson';
+    static TERM_URL = environment.BASE_URL + 'term';
+
 
     helper = new JwtHelperService();
+
+    public resumeRoute;
 
 
     private headers: HttpHeaders;
@@ -73,15 +78,12 @@ export class AuthenticatedHttpClient {
             formData.append('grant_type', 'refresh_token');
             formData.append('refresh_token', this.sessionManager.getRefreshToken());
             await this.http.post<LoginResponse>(AuthenticatedHttpClient.REFRESH_AUTH_URL, formData).subscribe(async value => {
-
                 this.sessionManager.setSessionToken(value.access_token);
                 this.sessionManager.setExpires(value.expires_in);
                 this.sessionManager.setRefreshToken(value.refresh_token);
                 this.sessionManager.setRoles(value.roles);
                 this.sessionManager.setUsername(value.username);
-
                 this.headers = new HttpHeaders().set('Authorization', 'Bearer ' + value.access_token);
-
             });
         } else {
             this.headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
@@ -95,6 +97,9 @@ export class AuthenticatedHttpClient {
 
         const errorMsg = error.error;
         if (error.status === 401) {
+            if (this.router.url !== '/login') {
+                this.resumeRoute = this.router.url;
+            }
 
             this.router.navigate(['/login']);
         } else if (error.status === 0) {

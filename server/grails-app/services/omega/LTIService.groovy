@@ -10,6 +10,15 @@ import java.security.SecureRandom
 @Transactional
 class LTIService {
 
+
+    enum PASSBACK_ROLES{
+        SUPERADMIN,
+        ADMIN,
+        FACULTY,
+        GRADER,
+        STUDENT
+    }
+
     public static SecureRandom secRan = new SecureRandom()
 
     public static void createMoodleUser (Map parameters) {
@@ -18,19 +27,30 @@ class LTIService {
         String salt = bytes.toString();
         String pw = generateMoodlePassword(parameters.get("lis_person_contact_email_primary"), parameters.get("lis_person_name_full"), salt)
 
-        String usertype = decideUserRole(parameters.get("roles"))
+        def roles = decideUserRole(parameters.get("roles"))
 
+        def user = new User(username: parameters.get("lis_person_contact_email_primary"), password:pw, fromMoodle:true, firstname: parameters.get("lis_person_name_given"), surname: parameters.get("lis_person_name_family"), enabled: 'true', salt: salt).save(failOnError:true)
 
-        if(usertype.equals("student")) {
-            def studentUser = new User(username: parameters.get("lis_person_contact_email_primary"), password:pw, fromMoodle:true, firstName:parameters.get("lis_person_name_given"),surname:parameters.get("lis_person_name_family"), enabled: 'true', salt: salt).save(failOnError:true)
-            UserRole.create studentUser, Role.findByAuthority('ROLE_STUDENT')
-            studentUser.save(flush:true)
+        if(roles.contains(PASSBACK_ROLES.STUDENT)) {
+            UserRole.create user, Role.findByAuthority('ROLE_STUDENT')
         }
-        else if(usertype.equals("faculty")) {
-            def facultyUser = new User(username: parameters.get("lis_person_contact_email_primary"), password:pw, fromMoodle:true, firstName:parameters.get("lis_person_name_given"),surname:parameters.get("lis_person_name_family"), enabled: 'true', salt: salt).save(failOnError:true)
-            UserRole.create facultyUser, Role.findByAuthority('ROLE_FACULTY')
-            facultyUser.save(flush:true)
+        if(roles.contains(PASSBACK_ROLES.FACULTY)) {
+            UserRole.create user, Role.findByAuthority('ROLE_FACULTY');
         }
+        if(roles.contains(PASSBACK_ROLES.GRADER)) {
+            UserRole.create user, Role.findByAuthority('ROLE_GRADER');
+        }
+        if(roles.contains(PASSBACK_ROLES.ADMIN)) {
+            UserRole.create user, Role.findByAuthority('ROLE_ADMIN');
+        }
+
+        UserRole.withSession {
+            it.flush()
+            it.clear()
+        }
+
+        user.save(flush:true)
+
     }
 
     public static String generateMoodlePassword(String email, String name, String salt) {
@@ -40,7 +60,7 @@ class LTIService {
         return hash.toString()
     }
 
-    public static String decideUserRole(String roleListStr) {
+    public static PASSBACK_ROLES[] decideUserRole(String roleListStr) {
 
         String[] roleList = roleListStr.split(",");
         ArrayList<String> SysRole = new ArrayList<String>();
@@ -59,17 +79,31 @@ class LTIService {
             }
         }
 
-        if(ConRole.indexOf("Learner") != -1) {
-            return "student"
+        def roles = [];
+
+
+        if(ConRole.indexOf("Learner") > -1) {
+            roles.push(PASSBACK_ROLES.STUDENT);
         }
-        else if(ConRole.indexOf("Instructor") != -1) {
-            return "faculty"
-        } else if (ConRole.indexOf("Grader") != -1 || ConRole.indexOf("grader") != -1) {
-            return "faculty"
+
+        if(ConRole.indexOf("Instructor") > -1) {
+            roles.push(PASSBACK_ROLES.FACULTY)
         }
-        else {
+
+        if (ConRole.indexOf("Grader") > -1 || ConRole.indexOf("grader") > -1) {
+            roles.push(PASSBACK_ROLES.GRADER)
+        }
+
+        if(SysRole.indexOf("Administrator") > -1) {
+            roles.push(PASSBACK_ROLES.ADMIN)
+        }
+
+
+        if(roles.size() == 0) {
             throw new MissingPropertyException("User Type")
         }
+
+        return roles;
 
     }
 
