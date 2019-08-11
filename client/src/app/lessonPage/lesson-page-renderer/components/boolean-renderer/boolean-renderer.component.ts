@@ -1,22 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {BaseRenderComponent} from '../../../../Blueprints/base-render-component';
 
 @Component({
-  selector: 'app-boolean-renderer',
-  templateUrl: './boolean-renderer.component.html',
-  styleUrls: ['./boolean-renderer.component.css']
+    selector: 'app-boolean-renderer',
+    templateUrl: './boolean-renderer.component.html',
+    styleUrls: ['./boolean-renderer.component.css']
 })
-export class BooleanRendererComponent implements OnInit {
+export class BooleanRendererComponent extends BaseRenderComponent implements OnInit {
 
 
-  value:boolean;
+    value: boolean;
 
-  constructor() { }
+    constructor() {
+        super();
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
-  didSelect(value) {
-    this.value = value;
-  }
+
+
+    didSelect(value) {
+        this.value = value;
+        this.answerDidChange(this.question, this.value);
+    }
+
+    setValue(value) {
+        this.value = value === 'true';
+    }
+
 
 }

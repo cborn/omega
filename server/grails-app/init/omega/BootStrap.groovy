@@ -50,7 +50,6 @@ class BootStrap {
         Course c = new Course();
         c.setName("Welsh for beginners");
         c.setMoodle_master_id("1")
-        c.addToTerms(t1);
 
         Lesson l = new Lesson();
         l.setName("1. Vowels");
@@ -58,6 +57,7 @@ class BootStrap {
         LessonPage page = new LessonPage();
 
         page.setName("(A, E, I)")
+        page.setStatus(LessonPageStatus.PUBLISHED)
         page.setDueDate(new Date());
 
         c.save([failOnError: true, flush: true])
@@ -131,19 +131,14 @@ class BootStrap {
 
 
 
-        Submission sub = new Submission(user: studentUser, term: t1, page: page);
+        Submission sub = new Submission(user: studentUser, term: t1, page: page, drafted: new Date());
+        sub.save(failOnError:true, flush:true);
 
-        sub.submitted = new Date();
+        QuestionResponse q1Resp = new QuestionResponse(question: q,response: "true",submission: sub).save(failOnError:true,flush:true);
+        QuestionResponse q2Resp = new QuestionResponse(question: q2,response: "Brifo@@Crio@@Joni bach",submission: sub).save(failOnError:true,flush:true);
+        QuestionResponse q3Resp = new QuestionResponse(question: q3,response: "Mae",submission: sub).save(failOnError:true,flush:true);
 
-        QuestionResponse q1Resp = new QuestionResponse(questionNumber: 0,value: "true").save(flush:true);
-        QuestionResponse q2Resp = new QuestionResponse(questionNumber: 1,value: "Brifo@@Crio@@Joni bach").save(flush:true);
-        QuestionResponse q3Resp = new QuestionResponse(questionNumber: 2,value: "Mae").save(flush:true);
 
-        sub.addToResponses(q1Resp);
-        sub.addToResponses(q2Resp);
-        sub.addToResponses(q3Resp);
-
-        sub.save(flush:true);
 
 
 

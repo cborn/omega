@@ -14,6 +14,8 @@ import {LessonCreateComponent} from './lesson/lesson-create/lesson-create.compon
 import {LessonEditComponent} from './lesson/lesson-edit/lesson-edit.component';
 import {TermIndexComponent} from './term/term-index/term-index.component';
 import {OTPComponentComponent} from './otpcomponent/otpcomponent.component';
+import {PageSelectionComponent} from './student/page-selection/page-selection.component';
+import {SubmissionComponent} from './student/submission/submission.component';
 
 const routes: Routes = [
     {path: '', redirectTo: 'index', pathMatch: 'full'},
@@ -34,6 +36,12 @@ const routes: Routes = [
     {path: 'lesson/create', component: LessonCreateComponent, canActivate: [FacultyGuard]},
 
     {path: 'admin/dashboard', component: LessonCreateComponent, canActivate: [AdminGuard]},
+
+
+    // Student services.
+
+    {path: 'student/lesson/:lessonId', component: PageSelectionComponent, canActivate: [StudentGuard]},
+    {path: 'student/submission/:submissionId', component: SubmissionComponent, canActivate: [StudentGuard]},
 
 
     {path: 'lessonPage/index/:lessonId', component: LessonPageIndexComponent, canActivate: [StudentGuard]},

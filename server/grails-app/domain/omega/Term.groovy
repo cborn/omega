@@ -9,7 +9,7 @@ class Term {
 
 
     static hasMany = [
-            courses:Course,
+            enrollments:Enrollment,
             submissions:Submission
     ]
 

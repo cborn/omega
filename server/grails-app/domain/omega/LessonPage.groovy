@@ -12,6 +12,8 @@ class LessonPage {
 
     Date dueDate;
 
+    LessonPageStatus status = LessonPageStatus.DRAFT;
+
     static belongsTo = [lesson:Lesson]
 
     static hasMany = [questions:Question]

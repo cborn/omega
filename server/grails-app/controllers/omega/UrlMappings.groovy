@@ -11,11 +11,12 @@ class UrlMappings {
         patch "/$controller/$id(.$format)?"(action:"patch")
 
         post "/question/addImage/$id" (controller:'question', action: 'addImage')
-        delete "/question/removeImage/$id" (controller:'question', action: 'removeImage')
+        delete "/question/remove/$id" (controller:'question', action: 'remove')
         get "/lessonPage/moveUp/$id" (controller:'lessonPage', action: 'moveUp')
         get "/lessonPage/moveDown/$id" (controller:'lessonPage', action: 'moveDown')
         post "/lti/authorize" (controller:'lti', action: 'authorize')
         get "/lti/authenticate" (controller:'lti', action: 'authenticate')
+        post "/submission/addRecording" (controller:'submission',action: 'addRecording')
 
 
 

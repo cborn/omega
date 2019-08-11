@@ -1,15 +1,14 @@
 import {Component, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
 import {Question} from '../../../../Model/question';
+import {BaseRenderComponent} from '../../../../Blueprints/base-render-component';
 
 @Component({
     selector: 'app-scale-renderer',
     templateUrl: './scale-renderer.component.html',
     styleUrls: ['./scale-renderer.component.css']
 })
-export class ScaleRendererComponent implements OnInit, OnDestroy {
+export class ScaleRendererComponent extends BaseRenderComponent implements OnInit, OnDestroy {
 
-
-    @Input() question: Question;
     value;
 
     oldinput = {};
@@ -20,6 +19,7 @@ export class ScaleRendererComponent implements OnInit, OnDestroy {
     interval;
 
     constructor() {
+        super();
     }
 
     ngOnInit() {
@@ -69,6 +69,11 @@ export class ScaleRendererComponent implements OnInit, OnDestroy {
 
 
     didSelect(value) {
+        this.value = value;
+        this.answerDidChange(this.question,this.value);
+    }
+
+    setValue(value) {
         this.value = value;
     }
 

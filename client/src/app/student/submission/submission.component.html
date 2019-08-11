@@ -1,0 +1,5 @@
+<div *ngIf="submission$ | async as submission">
+    <div *ngIf="page$ | async as page">
+        <app-lesson-renderer [lesson]="page" [submission]="submission" (answerChanged)="answerChanged($event)"></app-lesson-renderer>
+    </div>
+</div>

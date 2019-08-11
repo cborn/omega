@@ -51,6 +51,12 @@ export class AuthenticatedHttpClient {
     static COURSE_URL = environment.BASE_URL + 'course';
     static LESSON_URL = environment.BASE_URL + 'lesson';
     static TERM_URL = environment.BASE_URL + 'term';
+    static SUBMISSION_URL = environment.BASE_URL + 'submission';
+
+    static RECORDING_ADD_URL = environment.BASE_URL + 'submission/addRecording';
+
+
+
 
 
     helper = new JwtHelperService();

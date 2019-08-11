@@ -76,6 +76,8 @@ import {ClozeFormatRenderPipe} from './pipes/cloze-format-render.pipe';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { TermIndexComponent } from './term/term-index/term-index.component';
 import { OTPComponentComponent } from './otpcomponent/otpcomponent.component';
+import { PageSelectionComponent } from './student/page-selection/page-selection.component';
+import { SubmissionComponent } from './student/submission/submission.component';
 
 // @ts-ignore
 @NgModule({
@@ -122,7 +124,9 @@ import { OTPComponentComponent } from './otpcomponent/otpcomponent.component';
         SaveStatusComponent,
         DashboardComponent,
         TermIndexComponent,
-        OTPComponentComponent
+        OTPComponentComponent,
+        PageSelectionComponent,
+        SubmissionComponent
     ],
     entryComponents: [
         ClozeDialogComponent,

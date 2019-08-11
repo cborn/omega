@@ -1,8 +1,22 @@
-<div class="recording-parent">
-<div class="recording-item">
-  <div class="Blink"></div>
-  <i class="material-icons">mic</i>
-</div>
+<div class="recording-parent" >
+    <div class="recording-item" *ngIf="!isReal">
+        <div class="Blink"></div>
+        <i class="material-icons">mic</i>
+    </div>
 
+    <button mat-raised-button (click)="initiateRecording()" *ngIf="!recording"> Start Recording </button>
+    <button mat-raised-button (click)="stopRecording()" color="accent" *ngIf="recording"> Stop Recording </button>
+    <div class="clearfix"></div>
+
+    <div class="viz-container" [id]="'container_'+ question.id">
+    <canvas [id]="'canvas_'+question.id" *ngIf="!loading" class="viz" (click)="onCanvasClick($event)" (mousedown)="onCanvasMouseDown($event)">
+    </canvas>
+    </div>
+    <div class="button-holders">
+        <button mat-raised-button (click)="play()" *ngIf="!loading" >Play</button>
+        <button mat-raised-button (click)="stop()" *ngIf="!loading" >Stop</button>
+
+    </div>
+    <mat-spinner *ngIf="loading"></mat-spinner>
 
 </div>

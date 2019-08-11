@@ -1,0 +1,23 @@
+<div *ngIf="pages$ | async as pages">
+    <mat-grid-list cols="6" rowHeight="180px">
+        <mat-grid-tile *ngFor="let page of pages">
+
+            <mat-card class="example-card" *ngIf="page.status == 'PUBLISHED'">
+                <mat-card-header>
+                    <mat-card-title>{{"("+page.pageOrder + ") " + page.name}}</mat-card-title>
+                    <mat-card-subtitle>{{page.questions.length}} Questions</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content *ngIf="page.submissions">
+                    <p *ngIf="page.submissions.length == 0">No submissions</p>
+                    <p *ngIf="page.submissions.length > 0">{{page.submissions.length}} Submissions</p>
+                </mat-card-content>
+                <mat-card-actions >
+                    <button mat-button *ngIf="page.submissions == null || page.submissions.length == 0" (click)="startNewSubmission(page)">START</button>
+                    <button mat-button *ngIf="page.submissions != null && page.submissions.length > 0" (click)="continueSubmission(page.submissions[0].id)">CONTINUE</button>
+                </mat-card-actions>
+            </mat-card>
+
+
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>

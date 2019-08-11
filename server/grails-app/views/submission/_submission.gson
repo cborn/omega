@@ -1,11 +1,34 @@
 import omega.Submission
+import omega.SubmissionStatus
 
 model {
 	Submission submission
 }
 
 json {
-	submission g.render(submission, [resolveTemplate: true,excludes: ['responses']])
+	id submission.id
+	drafted submission.drafted
+
+	submitted submission.submitted
+
+	graded submission.graded
+
+	status submission.status
+
+	grade submission.grade
+
 	responses g.render(submission.responses, [resolveTemplate: true])
+
+	term {
+		id submission.term.id
+	}
+
+	user {
+		id submission.user.id
+	}
+
+	page {
+		id submission.page.id
+	}
 
 }

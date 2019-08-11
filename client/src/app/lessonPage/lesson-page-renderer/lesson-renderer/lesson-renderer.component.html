@@ -8,19 +8,17 @@
     </h3>
     <h6 *ngIf="question.description != null && question.description != ''">{{question.description}}</h6>
 
-    <app-multi-choice-renderer *ngIf="question.type == 0" class="answer-input fit-content" [ngClass]="{'answer-input-flex': !question.custom_properties.stack}"  [question]="question"></app-multi-choice-renderer>
-    <app-short-text-renderer *ngIf="question.type == 1" class="answer-input"></app-short-text-renderer>
-    <app-long-text-renderer *ngIf="question.type == 2" class="answer-input"></app-long-text-renderer>
-<!--    <app-block-text-renderer *ngIf="question.type == 3" class="answer-input"></app-block-text-renderer>-->
-    <app-picture-choice-renderer *ngIf="question.type == 4" class="answer-input" [question]="question"></app-picture-choice-renderer>
-    <app-boolean-renderer *ngIf="question.type == 5" class="answer-input"> </app-boolean-renderer>
-    <app-scale-renderer *ngIf="question.type == 6" class="answer-input" [question]="question"> </app-scale-renderer>
-    <app-date-renderer *ngIf="question.type == 7" class="answer-input" [question]="question"> </app-date-renderer>
-    <app-number-renderer *ngIf="question.type == 8" class="answer-input" [question]="question"> </app-number-renderer>
-    <app-dropdown-renderer *ngIf="question.type == 9" class="answer-input" [question]="question"> </app-dropdown-renderer>
-    <app-voice-renderer *ngIf="question.type == 10" class="answer-input"> </app-voice-renderer>
-    <app-cloze-renderer *ngIf="question.type == 11" [question]="question"> </app-cloze-renderer>
-
-
+    <app-multi-choice-renderer (answerChanged)="answerChanged($event)" *ngIf="question.type == 0" class="answer-input fit-content" [response]="getResponseForQuestion(question)" [ngClass]="{'answer-input-flex': question.custom_properties.stack}"  [question]="question"></app-multi-choice-renderer>
+    <app-short-text-renderer (answerChanged)="answerChanged($event)" *ngIf="question.type == 1" class="answer-input" [question]="question" [response]="getResponseForQuestion(question)"></app-short-text-renderer>
+    <app-long-text-renderer  (answerChanged)="answerChanged($event)" *ngIf="question.type == 2" class="answer-input" [question]="question" [response]="getResponseForQuestion(question)"></app-long-text-renderer>
+<!--    <app-block-text-renderer *ngIf="question.type == 3" class="answer-input" [question]="question" ></app-block-text-renderer>-->
+    <app-picture-choice-renderer  (answerChanged)="answerChanged($event)" *ngIf="question.type == 4" class="answer-input" [question]="question" [response]="getResponseForQuestion(question)"></app-picture-choice-renderer>
+    <app-boolean-renderer  (answerChanged)="answerChanged($event)" *ngIf="question.type == 5" class="answer-input" [question]="question" [response]="getResponseForQuestion(question)"> </app-boolean-renderer>
+    <app-scale-renderer  (answerChanged)="answerChanged($event)" *ngIf="question.type == 6" class="answer-input" [question]="question" [response]="getResponseForQuestion(question)"> </app-scale-renderer>
+    <app-date-renderer  (answerChanged)="answerChanged($event)" *ngIf="question.type == 7" class="answer-input" [question]="question" [response]="getResponseForQuestion(question)"> </app-date-renderer>
+    <app-number-renderer  (answerChanged)="answerChanged($event)" *ngIf="question.type == 8" class="answer-input" [question]="question" [response]="getResponseForQuestion(question)"> </app-number-renderer>
+    <app-dropdown-renderer  (answerChanged)="answerChanged($event)" *ngIf="question.type == 9" class="answer-input" [question]="question" [response]="getResponseForQuestion(question)"> </app-dropdown-renderer>
+    <app-voice-renderer [submission]="submission" [isReal]="!builderView" (answerChanged)="answerChanged($event)" *ngIf="question.type == 10" class="answer-input answer-input-wide" [question]="question" [response]="getResponseForQuestion(question)"> </app-voice-renderer>
+    <app-cloze-renderer  (answerChanged)="answerChanged($event)" *ngIf="question.type == 11" [question]="question" [response]="getResponseForQuestion(question)"> </app-cloze-renderer>
 
 </div>

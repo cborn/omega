@@ -8,7 +8,7 @@ import static org.springframework.http.HttpStatus.*
 class QuestionController {
 
     QuestionService questionService
-    QuestionImageUploaderService questionImageUploaderService
+    AWSUploaderService AWSUploaderService
 
     static responseFormats = ['json', 'xml']
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -33,7 +33,7 @@ class QuestionController {
             return
         }
 
-        questionImageUploaderService.removeImage(params.image);
+        AWSUploaderService.remove(params.image,"images");
 
         ImageProperty p = ImageProperty.findByAwsKey(params.image);
 
@@ -70,7 +70,7 @@ class QuestionController {
             return
         }
 
-        def response = questionImageUploaderService.uploadFeatureImage(params.image);
+        def response = AWSUploaderService.upload(params.image,"images");
 
         ImageProperty im = new ImageProperty();
         im.setAutoPlay(false)

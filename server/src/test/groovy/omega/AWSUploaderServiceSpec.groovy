@@ -3,7 +3,7 @@ package omega
 import grails.testing.services.ServiceUnitTest
 import spock.lang.Specification
 
-class QuestionImageUploaderServiceSpec extends Specification implements ServiceUnitTest<QuestionImageUploaderService>{
+class AWSUploaderServiceSpec extends Specification implements ServiceUnitTest<AWSUploaderService>{
 
     def setup() {
     }

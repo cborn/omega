@@ -3,15 +3,22 @@ package omega
 class QuestionResponse {
 
 
-    String value
+    String response;
 
-    int questionNumber
+    Question question;
 
+    Integer grade;
 
+    QuestionStatus status = QuestionStatus.AWAITING_REVIEW;
 
+    static hasMany = [comments:Comment]
 
+    static belongsTo = [submission:Submission]
 
 
     static constraints = {
+        grade nullable:true
+        response nullable: true
+        status defaultValue: QuestionStatus.AWAITING_REVIEW
     }
 }

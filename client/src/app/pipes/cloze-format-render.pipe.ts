@@ -27,7 +27,7 @@ export class ClozeFormatRenderPipe implements PipeTransform {
             let replacementText = '';
 
             if (prompts.length > 0) {
-                replacementText += '<select class="classic-input-style cloze-input-item">';
+                replacementText += '<select class="classic-input-style cloze-input-item"><option disabled selected>Please select an answer</option>';
                 for (const promptsKey in prompts) {
                     if (prompts.hasOwnProperty(promptsKey)) {
                         replacementText += '<option >' + prompts[promptsKey] + '</option>';

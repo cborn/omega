@@ -1,0 +1,9 @@
+import omega.QuestionResponse
+
+model {
+    QuestionResponse questionResponse
+}
+json {
+	status "OK"
+	message questionResponse.response;
+}

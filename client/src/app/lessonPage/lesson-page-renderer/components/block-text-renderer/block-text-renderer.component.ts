@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-block-text-renderer',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./block-text-renderer.component.css']
 })
 export class BlockTextRendererComponent implements OnInit {
+
+  @Input() question;
 
   constructor() { }
 
