@@ -1,13 +1,15 @@
 import {EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {Question} from '../Model/question';
 import {AnswerChangedEvent} from '../Events/answer-changed-event';
+import {Submission} from '../Model/submission';
+import {SubmissionResponse} from '../Model/submissionResponse';
 
 export abstract class BaseRenderComponent implements OnChanges {
 
     @Output('answerChanged') changedEmitter = new EventEmitter();
     @Input() question: Question;
     @Input()
-    public response;
+    public response: SubmissionResponse;
 
 
     answerDidChange(question: Question, value) {

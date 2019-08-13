@@ -54,6 +54,7 @@ export class AuthenticatedHttpClient {
     static SUBMISSION_URL = environment.BASE_URL + 'submission';
 
     static RECORDING_ADD_URL = environment.BASE_URL + 'submission/addRecording';
+    static COMMENT_RECORDING_ADD_URL = environment.BASE_URL + 'response/addRecording';
 
 
 

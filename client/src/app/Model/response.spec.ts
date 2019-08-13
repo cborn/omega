@@ -1,7 +1,7 @@
-import { Response } from './response';
+import { SubmissionResponse } from './submissionResponse';
 
 describe('Response', () => {
   it('should create an instance', () => {
-    expect(new Response()).toBeTruthy();
+    expect(new SubmissionResponse()).toBeTruthy();
   });
 });

@@ -7,7 +7,7 @@ import {Lesson} from '../../Model/lesson';
 import {map, publishReplay, refCount, tap} from 'rxjs/operators';
 import {LessonPageBuilderService} from '../../lessonPage/lesson-page-builder/lesson-page-builder.service';
 import {AnswerChangedEvent} from '../../Events/answer-changed-event';
-import {Response} from '../../Model/response';
+import {SubmissionResponse} from '../../Model/submissionResponse';
 
 @Injectable({
     providedIn: 'root'
@@ -71,7 +71,7 @@ export class SubmissionService {
 
 
         if (!responseIndex) {
-            const response = new Response();
+            const response = new SubmissionResponse();
             response.question = {
                 id: event.question.id
             };

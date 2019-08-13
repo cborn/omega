@@ -1,22 +1,61 @@
-<div class="recording-parent" >
+<div class="recording-parent">
     <div class="recording-item" *ngIf="!isReal">
         <div class="Blink"></div>
         <i class="material-icons">mic</i>
     </div>
+    <div *ngIf="isReal">
 
-    <button mat-raised-button (click)="initiateRecording()" *ngIf="!recording"> Start Recording </button>
-    <button mat-raised-button (click)="stopRecording()" color="accent" *ngIf="recording"> Stop Recording </button>
-    <div class="clearfix"></div>
+        <button mat-raised-button (click)="initiateRecording()" *ngIf="!recording"> Start Recording</button>
+        <button mat-raised-button (click)="stopRecording()" color="accent" *ngIf="recording"> Stop Recording</button>
+        <div class="clearfix"></div>
 
-    <div class="viz-container" [id]="'container_'+ question.id">
-    <canvas [id]="'canvas_'+question.id" *ngIf="!loading" class="viz" (click)="onCanvasClick($event)" (mousedown)="onCanvasMouseDown($event)">
-    </canvas>
+        <div [id]="'popups_'+question.id" style="position: relative" *ngIf="!loading && canvas != null">
+
+
+            <mat-chip-list  *ngFor="let comment of response.comments" class="comment-bubble">
+                <mat-chip color="primary" [style]="{'left': getCommentLocation(comment.location)}">{{comment.user.firstname + " " +comment.user.surname}}</mat-chip>
+
+            </mat-chip-list>
+
+
+
+            <!--<div class="badge badge-popup with-carat" >:-->
+                <!--<button class="btn btn-danger btn-close-comment" cid="100"><span-->
+                        <!--class="btn-close-comment-interior">×</span></button>-->
+                <!--<br>&nbsp;<div style="z-index:10;">-->
+                    <!--<audio class="audio-controller" controls="">-->
+                        <!--<source src="undefined">-->
+                    <!--</audio>-->
+                <!--</div>-->
+                <!--<button class="btn btn-danger btn-sm btn-delete-comment" cid="100"><span-->
+                        <!--class="glyphicon glyphicon-trash btn-delete-comment-interior"></span></button>-->
+            <!--</div>-->
+
+
+        </div>
+        <div class="viz-container" [id]="'container_'+ question.id" *ngIf="hasRecording">
+
+            <canvas [id]="'canvas_'+question.id" *ngIf="!loading" class="viz" (click)="onCanvasClick($event)"
+                    (mousedown)="onCanvasMouseDown($event)">
+            </canvas>
+
+            <div (click)="addNewComment()" *ngIf="showAddCommentDialog" [style.left.px]="commentPosition.end" [style.top.px]="-125"  class="popup-container">
+                <h5>Add a Comment?</h5>
+            </div>
+
+
+        </div>
+
+        <div class="button-holders" *ngIf="hasRecording">
+            <button mat-raised-button (click)="play()" *ngIf="!loading">Play</button>
+            <button mat-raised-button (click)="stop()" *ngIf="!loading">Stop</button>
+
+        </div>
+
+        <mat-spinner *ngIf="loading"></mat-spinner>
+
+
+
+
     </div>
-    <div class="button-holders">
-        <button mat-raised-button (click)="play()" *ngIf="!loading" >Play</button>
-        <button mat-raised-button (click)="stop()" *ngIf="!loading" >Stop</button>
-
-    </div>
-    <mat-spinner *ngIf="loading"></mat-spinner>
-
 </div>

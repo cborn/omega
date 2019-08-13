@@ -78,6 +78,7 @@ import { TermIndexComponent } from './term/term-index/term-index.component';
 import { OTPComponentComponent } from './otpcomponent/otpcomponent.component';
 import { PageSelectionComponent } from './student/page-selection/page-selection.component';
 import { SubmissionComponent } from './student/submission/submission.component';
+import {CommentAddingDialogComponent} from './dialogs/comment-adding-dialog';
 
 // @ts-ignore
 @NgModule({
@@ -126,12 +127,14 @@ import { SubmissionComponent } from './student/submission/submission.component';
         TermIndexComponent,
         OTPComponentComponent,
         PageSelectionComponent,
-        SubmissionComponent
+        SubmissionComponent,
+        CommentAddingDialogComponent
     ],
     entryComponents: [
         ClozeDialogComponent,
         AlertDialogComponent,
-        ConfirmDialogComponent
+        ConfirmDialogComponent,
+        CommentAddingDialogComponent
     ],
     imports: [
         BrowserModule,

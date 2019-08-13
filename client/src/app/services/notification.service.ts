@@ -66,7 +66,7 @@ export class AlertDialogComponent {
 }
 
 @Component({
-    selector: 'app-alert-dialog',
+    selector: 'app-confirm-dialog',
     templateUrl: '../dialogs/dialog-confirm-dialog.html',
 })
 export class ConfirmDialogComponent {

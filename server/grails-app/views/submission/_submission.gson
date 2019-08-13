@@ -8,25 +8,17 @@ model {
 json {
 	id submission.id
 	drafted submission.drafted
-
 	submitted submission.submitted
-
 	graded submission.graded
-
 	status submission.status
-
 	grade submission.grade
-
-	responses g.render(submission.responses, [resolveTemplate: true])
-
+	responses g.render(submission.responses, [resolveTemplate: true, deep: true])
 	term {
 		id submission.term.id
 	}
-
 	user {
 		id submission.user.id
 	}
-
 	page {
 		id submission.page.id
 	}

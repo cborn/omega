@@ -7,7 +7,9 @@ class Comment {
 
     User user;
 
-    Integer location;
+    Float location;
+
+    Float endLocation;
 
     String voice_clip;
 
@@ -15,6 +17,8 @@ class Comment {
 
     static constraints = {
         location nullable:true
+        endLocation nullable: true
         voice_clip nullable: true
+        comment_text nullable: true
     }
 }
