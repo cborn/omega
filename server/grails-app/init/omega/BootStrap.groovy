@@ -139,11 +139,6 @@ class BootStrap {
         QuestionResponse q3Resp = new QuestionResponse(question: q3,response: "Mae",submission: sub).save(failOnError:true,flush:true);
 
 
-
-
-
-
-
     }
     def destroy = {
     }

@@ -11,6 +11,10 @@ class Question {
         audioFeedback nullable:true
         audioPrompt nullable:true
         videoPrompt nullable:true
+    }
+
+    def beforeDelete() {
+        QuestionResponse.where { question == this }.deleteAll();
 
     }
 

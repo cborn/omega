@@ -61,6 +61,17 @@ body {
   height: 100%;
 }
 
+.mat-form-field {
+  display: unset !important;
+  position: unset;
+  text-align: unset;
+  /* display: inline-block; */
+  /* position: relative; */
+  /* text-align: left; */
+}
+
+
+
 .mat-form-field-label > mat-label {
   position: relative;
   top:4px;

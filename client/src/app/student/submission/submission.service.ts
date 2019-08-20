@@ -49,7 +49,6 @@ export class SubmissionService {
         const promise = await this.http.put<Submission>(AuthenticatedHttpClient.SUBMISSION_URL + '/' + submission.id, submission);
 
         promise.subscribe(submissionResp => {
-            console.log(submissionResp);
             this.submissionSubject.next(submissionResp);
         });
 
@@ -61,7 +60,6 @@ export class SubmissionService {
         let responseIndex: string;
         const submission = this.submissionSubject.value;
         for (const i in submission.responses) {
-            console.log(i);
             if (submission.responses.hasOwnProperty(i)) {
                 if (submission.responses[i].question.id === event.question.id) {
                     responseIndex = i;

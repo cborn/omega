@@ -1,0 +1,13 @@
+import omega.User
+
+model {
+	User user
+}
+
+json {
+    id user.id
+    surname user.surname
+    firstname user.firstname
+    fromMoodle user.fromMoodle
+    username user.username
+}

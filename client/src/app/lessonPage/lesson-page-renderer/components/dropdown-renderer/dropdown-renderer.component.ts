@@ -20,6 +20,11 @@ export class DropdownRendererComponent extends BaseRenderComponent implements On
   ngOnInit() {
   }
 
+  didSelectItem(change) {
+    this.answerDidChange(this.question, change.value);
+  }
+
+
 
   setValue(value) {
     this.value = value;

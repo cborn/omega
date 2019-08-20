@@ -1,4 +1,4 @@
-<mat-form-field style="width: 100%">
+<mat-form-field style="width: 100%" (change)="answerDidChange(question,value)">
   <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
             [(ngModel)]="value"
             placeholder="Type your answer here..." class="input-style-textarea" name="description-text"></textarea>

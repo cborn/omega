@@ -164,7 +164,8 @@ import {CommentAddingDialogComponent} from './dialogs/comment-adding-dialog';
         MatOptionModule,
         MatSelectModule,
         MatListModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatNativeDateModule
     ],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},
         {

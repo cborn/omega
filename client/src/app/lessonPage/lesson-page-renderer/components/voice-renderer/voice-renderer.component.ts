@@ -181,9 +181,9 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
 
         console.log(event);
 
-        // TODO ADD BACK IN if (!this.sessionManager.checkRoles(PERMISSION_ROLE.ROLE_GRADER)) {
-        //     return;
-        // }
+        if (!this.sessionManager.checkRoles(PERMISSION_ROLE.ROLE_GRADER)) {
+            return;
+        }
 
         const coords = this.getCursorPosition(event);
 

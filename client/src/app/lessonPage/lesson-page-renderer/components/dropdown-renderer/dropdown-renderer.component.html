@@ -1,6 +1,6 @@
 <mat-form-field>
   <mat-label class="answer-label">Choose your answer here.</mat-label>
-  <mat-select class="classic-input-style">
+  <mat-select class="classic-input-style" (selectionChange)="didSelectItem($event)" [(ngModel)]="value">
     <mat-option *ngFor="let option of question.custom_properties.options.split('@@')" [value]="option">
       {{option == "" ? "..." : option}}
     </mat-option>

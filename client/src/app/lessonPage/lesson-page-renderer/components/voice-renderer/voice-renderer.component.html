@@ -8,7 +8,6 @@
         <button mat-raised-button (click)="initiateRecording()" *ngIf="!recording"> Start Recording</button>
         <button mat-raised-button (click)="stopRecording()" color="accent" *ngIf="recording"> Stop Recording</button>
         <div class="clearfix"></div>
-
         <div style="position: relative" *ngIf="!loading && canvas != null && response">
             <div *ngFor="let comment of response.comments">
                 <mat-chip-list class="comment-bubble" [ngClass]="{'comment-bubble-open':comment.id === selectedComment,'comment-bubble-closed':comment.id !== selectedComment}"
@@ -22,7 +21,7 @@
 
 
                             <div *ngIf="comment.voice_clip != null">
-                                <audio class="audio-controller" controls="">-->
+                                <audio class="audio-controller" controls="">
                                     <source [src]="getLinkForAudioClip(comment.voice_clip)">
                                 </audio>
                             </div>
