@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output} from '@angular/core';
 import {BaseRenderComponent} from '../../../../Blueprints/base-render-component';
 import * as RecordRTC from 'recordrtc';
 import * as $ from 'jquery';
@@ -8,6 +8,7 @@ import {PERMISSION_ROLE, SessionManagerService} from '../../../../services/sessi
 import {AlertDialogComponent} from '../../../../services/notification.service';
 import {CommentAddingDialogComponent} from '../../../../dialogs/comment-adding-dialog';
 import {MatDialog, MatDialogRef} from '@angular/material';
+import {ResponseComment} from '../../../../Model/response-comment';
 
 
 @Component({
@@ -40,6 +41,7 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
     private heightArray = [];
     private container: any;
     private hasRecording = false;
+    private redrawIsRequired = true;
 
 
     // AUDIO CONTROLS
@@ -47,15 +49,15 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
     private currentSource;
     private audioContext = new AudioContext();
     private currentPlayPos = 0;
+    private oldPlayPos = -1;
     private lastUpdate;
-    private animator = setInterval(() => {
-        this.update();
-    }, 5);
+
+    private animator;
 
 
     // Highlight controls
-    private startHighlight;
-    private endHighlight;
+    private startHighlight = 0;
+    private endHighlight = 0;
     private highlight = false;
     private stopAt = null;
     private repeatAt = null;
@@ -63,9 +65,9 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
 
     // Comment controls
 
-    private currentTrackingComment = -1;
     private showAddCommentDialog = false;
     private commentPosition = {};
+    private selectedComment = -1;
 
 
     loading = false;
@@ -78,6 +80,11 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
 
     ngOnInit() {
 
+        if (this.isReal) {
+            this.animator = setInterval(() => {
+                this.update();
+            }, 33);
+        }
 
     }
 
@@ -132,8 +139,8 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
         const promise = await this.http.post<any>(AuthenticatedHttpClient.RECORDING_ADD_URL + '?submissionId=' + this.submission.id + '&questionId=' + this.question.id, form);
 
         promise.subscribe(value1 => {
-            this.setValue(value1.message);
-
+            this.answerDidChange(this.question, value1.message);
+            // this.setValue(value1.message);
         });
 
     }
@@ -148,6 +155,7 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
 
     setValue(value) {
         this.hasRecording = true;
+        this.showAddCommentDialog = false;
         this.url = VoiceRendererComponent.formatAsAWSUrl(value);
         this.loadVisualisation(this);
     }
@@ -171,6 +179,8 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
 
     onCanvasMouseDown(event) {
 
+        console.log(event);
+
         // TODO ADD BACK IN if (!this.sessionManager.checkRoles(PERMISSION_ROLE.ROLE_GRADER)) {
         //     return;
         // }
@@ -187,11 +197,15 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
 
 
         $(document).on('mousemove', function (e) {
-            that.highLightTo(that.getCursorPosition(e).x);
+            console.log('mouseMoved');
+            that.highLightTo(that.getCursorPosition(e).x, that);
 
         });
+
         $(document).on('mouseup', function (e) {
-            that.openCommentPrompt(that.getCursorPosition(e));
+            if (!that.playing) {
+                that.openCommentPrompt(that.getCursorPosition(e));
+            }
             $(document).off('mousemove');
             $(document).off('mouseup');
         });
@@ -224,18 +238,27 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
+           this.answerDidChange(this.question, result);
         });
 
     }
 
 
-    highLightTo(xPos) {
-        this.highlight = true;
-        this.endHighlight = xPos;
+    highLightTo(xPos, context?) {
+        if (context) {
+            context.redrawIsRequired = true;
+            context.highlight = true;
+            context.endHighlight = xPos;
+        } else {
+            this.redrawIsRequired = true;
+            this.highlight = true;
+            this.endHighlight = xPos;
+        }
+
     }
 
     async loadVisualisation(context) {
+
         try {
 
             context.loading = false;
@@ -262,16 +285,13 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
                     const rawData = audioBuffer.getChannelData(0);
                     const audioSize = rawData.length;
                     const soundStep = audioSize / (context.canvas.width - 24);
-                    context.canvasContext.fillStyle = '#3193bb';
+                    // context.canvasContext.fillStyle = '#3193bb';
                     for (let i = 0; i < context.canvas.width - 24; i++) {
                         const height = Math.round(rawData[Math.round(i * soundStep)] * 20);
                         context.heightArray.push(height);
-                        context.canvasContext.fillRect(i + 12, context.canvas.height / 2 - height, 1, 2 * height + 1);
+                        // context.canvasContext.fillRect(i + 12, context.canvas.height / 2 - height, 1, 2 * height + 1);
                     }
-
-                    context.addCommentsIntoWaveform();
-
-
+                    context.redrawIsRequired = true;
                 });
             };
             xhr.send();
@@ -284,8 +304,15 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
     update() {
         try {
             if (this.playing) {
+                this.showAddCommentDialog = false;
                 this.currentPlayPos = this.currentPlayPos + window.performance.now() - this.lastUpdate;
+                this.redrawIsRequired = true;
             }
+
+            if (this.currentPlayPos !== this.oldPlayPos) {
+                this.redrawIsRequired = true;
+            }
+
             this.lastUpdate = window.performance.now();
             if (this.currentPlayPos > (this.duration * 1000)) {
                 this.playing = false;
@@ -304,170 +331,81 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
                     this.play();
                 }
             }
-            this.canvasContext.fillStyle = '#3193bb';
-            const cursorx = (this.currentPlayPos / (this.duration * 1000)) * (this.canvas.width - 24) + 12;
-            this.canvasContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            for (let i = 0; i < this.canvas.width - 24; i++) {
-                const height = this.heightArray[i];
-                this.canvasContext.fillRect(i + 12, this.canvas.height / 2 - height, 1, 2 * height + 1);
-            }
 
-            this.canvasContext.fillStyle = '#3193bb';
-            this.canvasContext.fillRect(cursorx, 6, 1, this.canvas.height - 12);
+            if (this.redrawIsRequired) {
+                this.oldPlayPos = this.currentPlayPos;
+                this.canvasContext.fillStyle = '#3193bb';
+                const cursorx = (this.currentPlayPos / (this.duration * 1000)) * (this.canvas.width - 24) + 12;
+                this.canvasContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-            // Render the current comment box..
-            if (this.response.comments.length > 0) {
-                for (let i = 0; i < this.response.comments.length; i++) {
-                    if (i !== this.currentTrackingComment) {
-                        break;
-                    }
-
-                    console.log('this is the current comment...');
-
-
-                    const popupId = '#popup-{QOID}-{CID}'.replace('{QOID}', String(this.question.id)).replace('{CID}', String(i));
-                    const curPopUp = $(popupId);
-                    const xLoc = this.getCommentLocation(this.response.comments[i].location);
-                    curPopUp.css({top: 2, left: Math.round(xLoc)});
+                for (let i = 0; i < this.canvas.width - 24; i++) {
+                    const height = this.heightArray[i];
+                    this.canvasContext.fillRect(i + 12, this.canvas.height / 2 - height, 1, 2 * height + 1);
                 }
-            }
 
-            // Render the highlight now.
-            if (this.highlight) {
-                this.canvasContext.fillStyle = 'rgb(0,0,0,0.1)';
-                this.canvasContext.fillRect(this.startHighlight, 0, this.endHighlight - this.startHighlight, this.canvas.height);
+                this.canvasContext.fillStyle = '#3193bb';
+                this.canvasContext.fillRect(cursorx, 6, 1, this.canvas.height - 12);
+
+                // Render the highlight now.
+                if (this.highlight) {
+                    this.canvasContext.fillStyle = 'rgb(0,0,0,0.1)';
+                    this.canvasContext.fillRect(this.startHighlight, 0, this.endHighlight - this.startHighlight, this.canvas.height);
+                }
+                this.redrawIsRequired = false;
             }
 
         } catch (e) {
-
+            this.redrawIsRequired = true;
         }
     }
 
-    addCommentsIntoWaveform() {
 
-        // const popupTemplate = '<div class="badge badge-popup with-carat" small id="popup-{QOID}-{CID}">{AUTHOR}</div>';
-        // let phtml = '';
-        // for (let i = 0; i < this.response.comments.length; i++) {
-        //     const chtml = popupTemplate.replace('{QOID}', String(this.question.id))
-        //         .replace('{CID}', String(i))
-        //         .replace('{AUTHOR}', String(this.response.comments[i]['author']));
-        //     phtml = phtml + chtml;
-        // }
-        // $('#popups_' + this.question.id).html(phtml);
-        // for (let i = 0; i < this.response.comments.length; i++) {
-        //     // magic numbers for comment placement
-        //     // const xLoc = (parseFloat(this.response.comments[i]['time'])/(this.duration*1000))*(this.canvas.width - 24) + (this.canvas.offsetLeft - 55);
-        //     const xLoc = this.getCommentLocation(parseFloat(this.response.comments[i]['time']));
-        //     const popupId = '#popup-{QOID}-{CID}'.replace('{QOID}', String(this.question.id)).replace('{CID}', String(i));
-        //     const curPopUp = $(popupId);
-        //     curPopUp.css({top: 2, left: Math.round(xLoc)});
-        //     curPopUp.css({height: 17});
-        //     curPopUp.data('author', this.response.comments[i]['author']);
-        //     curPopUp.data('message', this.response.comments[i]['data']);
-        //     curPopUp.data('uid', this.response.comments[i]['uid']);
-        //     curPopUp.data('type', this.response.comments[i]['type']);
-        //     curPopUp.data('small', 'true');
-        //     curPopUp.data('highlighting', 'false');
-        //     curPopUp.data('time', this.response.comments[i]['time']);
-        //     curPopUp.data('endTime', this.response.comments[i]['endTime']);
-        //     curPopUp.data('index', i);
-        //     curPopUp.data('id', this.response.comments[i]['id']);
-        //     curPopUp.data('dragging', false);
-        //     curPopUp.on('mouseenter', function () {
-        //         curPopUp.data('highlighting', 'true');
-        //         this.setHighlight($(this).data('time'), $(this).data('endTime'));
-        //     });
-        //     curPopUp.on('mouseout', function () {
-        //         // this.highlight = false;
-        //         curPopUp.data('highlighting', 'false');
-        //     });
-        //     const handleResize = function () {
-        //         if ($(this).data('dragging') === true) {
-        //             return;
-        //         }
-        //         if ($(this).data('small') === 'true') {
-        //             $(this).data('small', 'false');
-        //
-        //             const author = $(this).data('author');
-        //             const message = $(this).data('message');
-        //             const type = $(this).data('type');
-        //             const close = '<button class=\'btn btn-danger btn-close-comment\' cid=\'' + $(this).data('id') +
-        //                 '\'><span class=\'btn-close-comment-interior\'>&times;</span></button>';
-        //             let del = '<button class=\'btn btn-danger btn-sm btn-delete-comment\' cid=\'' + $(this).data('id') +
-        //                 '\'><span class=\'glyphicon glyphicon-trash btn-delete-comment-interior\'></span></button>';
-        //             // keep in imprecise javascript comparison, it is necessary here as one
-        //             // is string and one is int
-        //             if ($(this).data('uid') !== $('#uid-global').val()) {
-        //                 del = '';
-        //             }
-        //             if (type === 'string') {
-        //
-        //                 $(this).css({height: 'auto', width: 200, 'z-index': 1});
-        //                 $(this).html(author + ':' + del + '<br>&nbsp;' + message);
-        //
-        //                 $(this).removeClass('with-carat');
-        //             } else {
-        //                 const audioControls = '<div style=\'z-index:10;\'><audio class=\'audio-controller\' controls><source src=\'{DATA}\'></source></audio></div>'.replace('{DATA}', message);
-        //                 $(this).html(author + ':' + close + '<br>&nbsp;' + audioControls + del);
-        //                 $('.audio-controller').off();
-        //                 $('.audio-controller').on('click', function (evt) {
-        //                     evt.stopPropagation();
-        //                 });
-        //                 $(this).css({height: 'auto', width: 400, 'z-index': 1});
-        //             }
-        //             $('.btn-close-comment').on('click', handleResize);
-        //             $('.btn-delete-comment').on('click', function () {
-        //                 if (confirm('Do you want to delete this comment?')) {
-        //                     this.deleteComment($(this).attr('cid'));
-        //                 }
-        //             });
-        //         } else {
-        //             $(this).data('small', 'true');
-        //             const author = $(this).data('author');
-        //             $(this).html(author);
-        //             $(this).css({height: 17, width: 'auto', 'z-index': 0});
-        //             $(this).addClass('with-carat');
-        //         }
-        //     };
-        //     curPopUp.on('click', handleResize);
-        //     curPopUp.on('mousedown', function () {
-        //         const index = $(this).data('index');
-        //         this.curTimeOut = setTimeout(function () {
-        //             this.addTrackingComment(index);
-        //         }, 200);
-        //         $(document).on('mouseup', function () {
-        //             clearTimeout(this.curTimeOut);
-        //             setTimeout(function () {
-        //                 this.removeTrackingComment();
-        //             }, 50);
-        //         });
-        //     });
-        // }
+    getLinkForAudioClip(clip) {
+        return VoiceRendererComponent.formatAsAWSUrl(clip);
     }
 
+    selectComment(comment: ResponseComment) {
+        console.log('select');
+        this.selectedComment = comment.id;
+        this.setHighlight(comment.location, comment.endLocation);
+    }
+
+    deSelectComment(event) {
+        event.stopPropagation();
+        console.log('deselect');
+        this.selectedComment = -1;
+        this.unsetHighlight();
+
+    }
 
     setHighlight(start, end) {
-        const s = this.getAbsoluteLocation(start);
-        const e = this.getAbsoluteLocation(end);
-        this.startHighlight = s;
-        this.endHighlight = e;
+        this.startHighlight = start;
+        this.endHighlight = end;
         this.highlight = true;
+        this.redrawIsRequired = true;
+    }
+
+    unsetHighlight() {
+        this.startHighlight = 0;
+        this.endHighlight = 0;
+        this.highlight = false;
+        this.redrawIsRequired = true;
     }
 
 
-    getCommentLocation(time) {
-        console.log(time);
+    getCommentLocation(start, end) {
         // 67 comes from width of comment tags to place caret in right location
-        console.log(this.getAbsoluteLocation(time) + (this.canvas.offsetLeft - 67));
-        return this.getAbsoluteLocation(time) + (this.canvas.offsetLeft - 67);
-    }
+        let halfDiff = 0;
+        if (start !== end) {
+            // get the middle of the comment highlight.
 
-    getAbsoluteLocation(time) {
-        return (time / (this.duration * 1000)) * (this.canvas.width - 24) + 12;
-    }
+            halfDiff = (end - start) / 2;
 
-    getRelativeLocation(location) {
-        return location - this.canvas.offsetLeft + 67;
+
+        }
+
+
+        return (end + (this.canvas.offsetLeft - 66)) - halfDiff;
     }
 
 

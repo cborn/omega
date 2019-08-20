@@ -17,6 +17,9 @@ class UrlMappings {
         post "/lti/authorize" (controller:'lti', action: 'authorize')
         get "/lti/authenticate" (controller:'lti', action: 'authenticate')
         post "/submission/addRecording" (controller:'submission',action: 'addRecording')
+        post "/questionResponse/addRecording" (controller:'questionResponse',action: 'addRecording')
+        post "/questionResponse/addTextComment" (controller:'questionResponse',action: 'addTextComment')
+
 
 
 

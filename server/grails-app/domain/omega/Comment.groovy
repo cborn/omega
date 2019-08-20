@@ -7,9 +7,9 @@ class Comment {
 
     User user;
 
-    Float location;
+    Double location;
 
-    Float endLocation;
+    Double endLocation;
 
     String voice_clip;
 

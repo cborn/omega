@@ -1,8 +1,20 @@
 <h1 mat-dialog-title>Add a comment</h1>
 <div mat-dialog-content>
 
+    <mat-select style="margin: 10px" [(ngModel)]="typeSelect" >
+        <mat-option *ngFor="let option of options" [value]="option.id">{{option.name}}</mat-option>
 
+    </mat-select>
 
+    <div *ngIf="typeSelect == 1" style="margin: 15px 0">
+        <button mat-raised-button *ngIf="!recording" color="primary" (click)="initiateRecording()">Record</button>
+        <button mat-raised-button *ngIf="recording" color="accent" (click)="stopRecording()">Stop Recording</button>
+    </div>
+    <div *ngIf="typeSelect == 2" style="margin: 15px 0">
+        <mat-form-field>
+            <input matInput placeholder="Your comment here..." [(ngModel)]="textInput"/>
+        </mat-form-field>
+    </div>
 
 
 </div>

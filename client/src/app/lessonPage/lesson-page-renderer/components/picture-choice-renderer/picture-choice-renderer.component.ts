@@ -11,8 +11,6 @@ export class PictureChoiceRendererComponent extends BaseRenderComponent implemen
 
   value;
 
-
-
   constructor() {
     super();
   }

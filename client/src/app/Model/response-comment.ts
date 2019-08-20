@@ -11,6 +11,7 @@ export class ResponseComment extends BaseObject {
     };
 
     location: number;
+    endLocation: number;
 
     voice_clip: string;
 

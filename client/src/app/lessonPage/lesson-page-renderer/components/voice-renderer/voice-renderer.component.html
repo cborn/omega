@@ -9,41 +9,46 @@
         <button mat-raised-button (click)="stopRecording()" color="accent" *ngIf="recording"> Stop Recording</button>
         <div class="clearfix"></div>
 
-        <div [id]="'popups_'+question.id" style="position: relative" *ngIf="!loading && canvas != null">
+        <div style="position: relative" *ngIf="!loading && canvas != null && response">
+            <div *ngFor="let comment of response.comments">
+                <mat-chip-list class="comment-bubble" [ngClass]="{'comment-bubble-open':comment.id === selectedComment,'comment-bubble-closed':comment.id !== selectedComment}"
+                               [style.left.px]="getCommentLocation(comment.location, comment.endLocation)">
+                    <mat-chip color="primary" class="comment-bubble-item"
+                              (click)="selectComment(comment)">{{comment.user.firstname + " " + comment.user.surname}}
+
+                        <i class="material-icons comment-bubble-close" (click)="deSelectComment($event)"
+                           *ngIf="comment.id === selectedComment">close</i>
+                        <div class="comment-bubble-content" *ngIf="comment.id === selectedComment">
 
 
-            <mat-chip-list  *ngFor="let comment of response.comments" class="comment-bubble">
-                <mat-chip color="primary" [style]="{'left': getCommentLocation(comment.location)}">{{comment.user.firstname + " " +comment.user.surname}}</mat-chip>
+                            <div *ngIf="comment.voice_clip != null">
+                                <audio class="audio-controller" controls="">-->
+                                    <source [src]="getLinkForAudioClip(comment.voice_clip)">
+                                </audio>
+                            </div>
+                            <div *ngIf="comment.comment_text != null">
+                                <p>{{comment.comment_text}}</p>
+                            </div>
+                        </div>
 
-            </mat-chip-list>
+                    </mat-chip>
+                </mat-chip-list>
+            </div>
 
-
-
-            <!--<div class="badge badge-popup with-carat" >:-->
-                <!--<button class="btn btn-danger btn-close-comment" cid="100"><span-->
-                        <!--class="btn-close-comment-interior">×</span></button>-->
-                <!--<br>&nbsp;<div style="z-index:10;">-->
-                    <!--<audio class="audio-controller" controls="">-->
-                        <!--<source src="undefined">-->
-                    <!--</audio>-->
-                <!--</div>-->
-                <!--<button class="btn btn-danger btn-sm btn-delete-comment" cid="100"><span-->
-                        <!--class="glyphicon glyphicon-trash btn-delete-comment-interior"></span></button>-->
-            <!--</div>-->
 
 
         </div>
+
         <div class="viz-container" [id]="'container_'+ question.id" *ngIf="hasRecording">
 
             <canvas [id]="'canvas_'+question.id" *ngIf="!loading" class="viz" (click)="onCanvasClick($event)"
                     (mousedown)="onCanvasMouseDown($event)">
             </canvas>
 
-            <div (click)="addNewComment()" *ngIf="showAddCommentDialog" [style.left.px]="commentPosition.end" [style.top.px]="-125"  class="popup-container">
-                <h5>Add a Comment?</h5>
-            </div>
+        </div>
 
-
+        <div (click)="addNewComment()" *ngIf="showAddCommentDialog" [style.left.px]="getCommentLocation(commentPosition.start,commentPosition.end)" class="popup-container">
+            <h5>Add a Comment?</h5>
         </div>
 
         <div class="button-holders" *ngIf="hasRecording">
@@ -53,8 +58,6 @@
         </div>
 
         <mat-spinner *ngIf="loading"></mat-spinner>
-
-
 
 
     </div>

@@ -1,8 +1,10 @@
 package omega
 
+import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
+@Secured(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_FACULTY', 'ROLE_GRADER', 'ROLE_STUDENT'])
 class QuestionResponseController {
 
     QuestionResponseService questionResponseService
@@ -10,11 +12,35 @@ class QuestionResponseController {
     transient springSecurityService
 
     static responseFormats = ['json', 'xml']
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", addRecording: "POST", addTextComment: "POST"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond questionResponseService.list(params), model:[questionResponseCount: questionResponseService.count()]
+    }
+
+
+    def addTextComment(){
+        QuestionResponse questionResponse = QuestionResponse.get(params.responseId);
+
+        if(!questionResponse) {
+            respond questionResponse, [status: NOT_FOUND]
+        }
+
+        Comment c = new Comment();
+        c.submitted = new Date();
+        c.user = springSecurityService.getCurrentUser();
+        c.comment_text  = params.text_data;
+        c.location = Double.parseDouble(params.start)
+        c.endLocation = Double.parseDouble(params.end)
+        c.save(flush:true)
+
+        questionResponse.addToComments(c);
+
+        questionResponse.save(flush:true);
+
+        respond questionResponse, [status: OK, view:"show"]
+
     }
 
     def addRecording() {
@@ -38,13 +64,15 @@ class QuestionResponseController {
         c.submitted = new Date();
         c.user = springSecurityService.getCurrentUser();
         c.voice_clip  = response.awsKey;
+        c.location = Double.parseDouble(params.start)
+        c.endLocation = Double.parseDouble(params.end)
         c.save(flush:true)
 
         questionResponse.addToComments(c);
 
-        questionResponse.save(failOnError:true,flush:true);
+        questionResponse.save(flush:true);
 
-        respond questionResponse, [status: OK, view:"addRecording"]
+        respond questionResponse, [status: OK, view:"show"]
     }
 
     def show(Long id) {

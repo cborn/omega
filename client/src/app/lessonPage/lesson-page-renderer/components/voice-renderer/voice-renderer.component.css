@@ -23,19 +23,60 @@
    }
 
 
-.comment-bubble {
+.comment-bubble-closed {
     position: absolute;
-    top: 20px;
+    transform: translate(-50%,calc(-5% - 11px));
+}
+.comment-bubble-open {
+    position: absolute;
+    transform: translate(-50%,calc(-75% - 11px));
+}
+
+
+
+
+
+.comment-bubble-item {
+    height: fit-content;
+    display: table;
+}
+
+.comment-bubble:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 11px solid transparent;
+    border-top-color: #e0e0e0;
+    border-bottom: 0;
+    margin-left: -11px;
+    margin-bottom: -11px;
+}
+/* This is the close button in the comment chip */
+.comment-bubble-close {
+    font-size: 16px;
+    margin-left: 7px;
+    position: absolute;
+    right: 5px;
+    border: 1px solid black;
+    border-radius: 10px;
+    top: 5px;
+}
+
+.comment-bubble-content {
+    padding: 15px;
 }
 
 .popup-container {
-    position: relative;
+    z-index: 1;
+    position: absolute;
+    width: -moz-fit-content;
     width: fit-content;
-    transform: translate(-50%, 0);
-    background: #dadada;
-    border: 1px solid rgba(4, 4, 17, 0.73);
+    transform: translate(3px, 12px);
+    background: #e0e0e0;
     border-radius: 54px;
-    /* padding: 0px; */
     padding-left: 8px;
     padding-right: 8px;
     cursor: pointer;
@@ -43,6 +84,20 @@
 
 .popup-container > h5 {
     margin: 5px;
+}
+
+.popup-container:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 11px solid transparent;
+    border-bottom-color: #e0e0e0;
+    border-top: 0;
+    margin-left: -11px;
+    margin-top: -11px;
 }
 
 
@@ -76,7 +131,7 @@ canvas
 
 
 .clearfix {
-    height: 20px;
+    height: 30px;
 }
 
 .recording-item {
