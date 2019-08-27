@@ -1,0 +1,9 @@
+package submission
+model {
+    String stringResponse
+}
+
+json {    
+    message stringResponse
+    error 403
+}

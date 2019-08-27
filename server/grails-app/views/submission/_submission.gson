@@ -22,5 +22,8 @@ json {
 	page {
 		id submission.page.id
 	}
+	lesson {
+		id submission.page.lesson.id
+	}
 
 }

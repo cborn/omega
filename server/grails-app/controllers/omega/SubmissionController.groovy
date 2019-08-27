@@ -27,6 +27,19 @@ class SubmissionController {
         respond submissionService.get(id)
     }
 
+    def complete(Submission submission) {
+
+        // Now we have to validate the submission
+
+        Optional<String> response = submission.verifyCompleteness();
+
+        if(response.isPresent())
+            respond message:response.get(), status: FORBIDDEN
+        else
+            respond submission, view: "show";
+    }
+
+
 
     def addRecording() {
 

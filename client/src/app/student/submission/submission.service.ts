@@ -50,8 +50,24 @@ export class SubmissionService {
 
         promise.subscribe(submissionResp => {
             this.submissionSubject.next(submissionResp);
+            if (callback != null ) {
+                callback();
+            }
         });
 
+
+    }
+
+
+    async submitSubmission(submission, callback?) {
+        const promise = await this.http.post<Submission>(AuthenticatedHttpClient.SUBMISSION_URL + '/complete', submission);
+
+        promise.subscribe(submissionResp => {
+            this.submissionSubject.next(submissionResp);
+            if (callback != null ) {
+                callback();
+            }
+        });
 
     }
 

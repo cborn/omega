@@ -2,6 +2,6 @@
     <div *ngIf="page$ | async as page">
         <app-lesson-renderer [lesson]="page" [submission]="submission" (answerChanged)="answerChanged($event)" class="lesson-renderer"></app-lesson-renderer>
         <div class="full-page-divider"></div>
-        <button mat-raised-button class="submit-button">Submit</button>
+        <button mat-raised-button class="submit-button" (click)="submit(submission)">Submit</button>
     </div>
 </div>

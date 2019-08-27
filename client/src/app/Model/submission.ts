@@ -10,6 +10,7 @@ export class Submission extends BaseObject {
         page: BaseObject;
         term: BaseObject;
         user: BaseObject;
+        lesson: BaseObject;
 
 
 
