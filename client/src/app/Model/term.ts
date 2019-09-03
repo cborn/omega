@@ -8,5 +8,6 @@ export class Term extends BaseObject {
     current: boolean;
     courses: Course[];
     submissions: Submission[];
+    enrollments: any[];
 
 }

@@ -4,7 +4,7 @@ import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
-@Secured(['ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_FACUTLY','ROLE_GRADER','ROLE_STUDENT'])
+@Secured(['ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_FACULTY','ROLE_GRADER','ROLE_STUDENT'])
 class LessonController {
 
     LessonService lessonService

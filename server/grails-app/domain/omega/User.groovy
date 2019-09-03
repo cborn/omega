@@ -55,6 +55,23 @@ class User implements UserDetails, Serializable {
         });
     }
 
+    def isAdmin() {
+        return (this.getAuthorities().find {
+            it.authority == "ROLE_ADMIN"
+        });
+    }
+
+    def isSuperAdmin() {
+        return (this.getAuthorities().find {
+            it.authority == "ROLE_SUPER_ADMIN"
+        });
+    }
+
+    def isAdminOrSuperAdmin() {
+       this.isAdmin() || this.isSuperAdmin();
+    }
+
+
     def isFaculty() {
         return (this.getAuthorities().find {
             it.authority == "ROLE_FACULTY"

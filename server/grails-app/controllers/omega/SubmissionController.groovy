@@ -18,9 +18,26 @@ class SubmissionController {
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         Term term = Term.findByCurrent(true);
+
+        if(params.term != null){
+            term = Term.get(params.term);
+        }
+
         LessonPage page = LessonPage.get(params.lessonPageId);
 
-        respond Submission.findAllByTermAndUserAndPage(term, springSecurityService.getCurrentUser(), page), model: [submissionCount: submissionService.count()]
+        if (page == null) {
+            if (!(springSecurityService.getCurrentUser() as User).isStudent()) {
+                respond Submission.findAllByTerm(term), model: [submissionCount: submissionService.count()]
+            } else {
+                respond Submission.findAllByTermAndUser(term, springSecurityService.getCurrentUser()), model: [submissionCount: submissionService.count()]
+            }
+        } else {
+            if (!(springSecurityService.getCurrentUser() as User).isStudent()) {
+                respond Submission.findAllByTermAndPage(term, page), model: [submissionCount: submissionService.count()]
+            } else {
+                respond Submission.findAllByTermAndUserAndPage(term, springSecurityService.getCurrentUser(), page), model: [submissionCount: submissionService.count()]
+            }
+        }
     }
 
     def show(Long id) {
@@ -33,37 +50,36 @@ class SubmissionController {
 
         Optional<String> response = submission.verifyCompleteness();
 
-        if(response.isPresent())
-            respond message:response.get(), status: FORBIDDEN
+        if (response.isPresent())
+            respond message: response.get(), status: FORBIDDEN
         else
             respond submission, view: "show";
     }
-
 
 
     def addRecording() {
 
         QuestionResponse questionResponse = QuestionResponse.findByQuestionAndSubmission(Question.get(params.questionId), Submission.get(params.submissionId));
 
-        if(!questionResponse) {
+        if (!questionResponse) {
             questionResponse = new QuestionResponse();
             questionResponse.question = Question.get(params.questionId);
             questionResponse.submission = Submission.get(params.submissionId);
         }
 
-        def response = AWSUploaderService.upload(params.audio_data,"audio");
+        def response = AWSUploaderService.upload(params.audio_data, "audio");
 
         AudioProperty audio = new AudioProperty();
         audio.setAutoPlay(false)
         audio.setAwsKey(response.awsKey);
         audio.setAwsUrl(response.s3FileUrl);
-        audio.save(flush:true);
+        audio.save(flush: true);
 
         questionResponse.response = response.awsKey;
 
-        questionResponse.save(failOnError:true,flush:true);
+        questionResponse.save(failOnError: true, flush: true);
 
-        respond questionResponse, [status: OK, view:"addRecording"]
+        respond questionResponse, [status: OK, view: "addRecording"]
     }
 
 

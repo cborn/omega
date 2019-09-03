@@ -5,7 +5,7 @@ import {AuthenticatedHttpClient} from '../../services/authenticated-http-service
 import {Submission} from '../../Model/submission';
 import {Lesson} from '../../Model/lesson';
 import {map, publishReplay, refCount, tap} from 'rxjs/operators';
-import {LessonPageBuilderService} from '../../lessonPage/lesson-page-builder/lesson-page-builder.service';
+import {LessonPageBuilderService} from '../../../faculty/lessonPage/lesson-page-builder/lesson-page-builder.service';
 import {AnswerChangedEvent} from '../../Events/answer-changed-event';
 import {SubmissionResponse} from '../../Model/submissionResponse';
 
@@ -17,6 +17,10 @@ export class SubmissionService {
 
     submissionSubject: BehaviorSubject<Submission> = new BehaviorSubject<Submission>(new Submission());
     submission = this.submissionSubject.asObservable();
+
+
+    allSubmissionsSubject: BehaviorSubject<Submission[]> = new BehaviorSubject<Submission[]>([]);
+    allSubmissions = this.allSubmissionsSubject.asObservable();
 
     pageSubject: BehaviorSubject<LessonPage> = new BehaviorSubject<LessonPage>(new LessonPage());
     page = this.pageSubject.asObservable();
@@ -42,6 +46,17 @@ export class SubmissionService {
 
         });
     }
+
+
+
+    async loadAllSubmissions() {
+        const promise = await this.http.get<Submission[]>(AuthenticatedHttpClient.SUBMISSION_URL);
+
+        promise.subscribe(async submissions => {
+            this.allSubmissionsSubject.next(submissions);
+        });
+    }
+
 
 
     async save(submission, callback?) {

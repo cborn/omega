@@ -6,8 +6,6 @@ class Term {
 
     boolean current;
 
-
-
     static hasMany = [
             enrollments:Enrollment,
             submissions:Submission

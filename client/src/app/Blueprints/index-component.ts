@@ -5,7 +5,7 @@ import {OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material';
 import {Course} from '../Model/course';
 import {BaseObject} from './base-object';
-import {LessonPageService} from '../lessonPage/lesson-page.service';
+import {LessonPageService} from '../../faculty/lessonPage/lesson-page.service';
 
 export abstract class IndexComponent<T extends BaseObject> implements OnInit {
 
@@ -19,27 +19,35 @@ export abstract class IndexComponent<T extends BaseObject> implements OnInit {
 
     protected constructor(private service: BaseService<T>, private n: NotificationService, private r: Router, private rt: ActivatedRoute, paramName?: string) {
         this.paramName = paramName;
+
+        this.n.reloadRequiredObserver.subscribe(value => {
+            if (value) {
+                this.loadData();
+            }
+        });
     }
 
     ngOnInit() {
         this.rt.paramMap.subscribe(value => {
-
             if (value.get(this.paramName) != null) {
-
                 this.paramValue = value.get(this.paramName);
-                this.service.list(value.get(this.paramName), this.paramName);
-            } else {
-                this.service.list();
             }
-
-
+            this.loadData();
         });
-
 
         this.service.serviceObservable.subscribe(value => {
             this.dataSource.data = value;
             this.sourceData = value;
         });
+    }
+
+
+    loadData() {
+        if (this.paramName != null) {
+            this.service.list(this.paramValue, this.paramName);
+        } else {
+            this.service.list();
+        }
     }
 
 

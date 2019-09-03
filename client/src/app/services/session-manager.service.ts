@@ -13,6 +13,8 @@ export class SessionManagerService {
     static ROLES = 'omega-roles-token';
     static EXPIRES = 'omega-expires-token';
 
+    displayTerm;
+
 
 
     constructor() {

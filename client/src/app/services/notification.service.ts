@@ -1,5 +1,6 @@
-import {Component, Inject, Injectable} from '@angular/core';
+import {Component, EventEmitter, Inject, Injectable} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {Observable} from 'rxjs/internal/Observable';
 
 
 export interface AlertDialogData {
@@ -14,6 +15,9 @@ export class NotificationService {
 
     constructor(private dialog: MatDialog) {
     }
+
+    reloadRequiredObserver = new EventEmitter();
+
 
 
     publishAlert(alertText, handler?) {
@@ -43,6 +47,10 @@ export class NotificationService {
                 onNotConfirm();
             }
         });
+    }
+
+    doesRequireReload() {
+        this.reloadRequiredObserver.emit(true);
     }
 
 

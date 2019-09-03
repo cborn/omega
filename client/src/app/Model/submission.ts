@@ -11,6 +11,9 @@ export class Submission extends BaseObject {
         term: BaseObject;
         user: BaseObject;
         lesson: BaseObject;
+        status: string;
+        submitted: Date;
+        drafted: Date;
 
 
 

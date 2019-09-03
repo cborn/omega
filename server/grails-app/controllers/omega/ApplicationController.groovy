@@ -1,6 +1,7 @@
 package omega
 
 import grails.core.GrailsApplication
+import grails.plugin.springsecurity.SpringSecurityService
 import grails.plugin.springsecurity.annotation.Secured
 import grails.plugins.*
 
@@ -9,9 +10,13 @@ class ApplicationController implements PluginManagerAware {
 
     GrailsApplication grailsApplication
     GrailsPluginManager pluginManager
+    SpringSecurityService springSecurityService;
 
     def index() {
-        [grailsApplication: grailsApplication, pluginManager: pluginManager]
+
+        Term currentTerm = Term.findByCurrent(true);
+        User currentUser = springSecurityService.getCurrentUser() as User;
+        [term:currentTerm,user:currentUser ,terms:Term.list() ,isAdminOrSuperAdmin: currentUser != null && currentUser.isAdminOrSuperAdmin()]
     }
 }
 

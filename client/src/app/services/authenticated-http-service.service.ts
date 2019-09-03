@@ -52,14 +52,11 @@ export class AuthenticatedHttpClient {
     static LESSON_URL = environment.BASE_URL + 'lesson';
     static TERM_URL = environment.BASE_URL + 'term';
     static SUBMISSION_URL = environment.BASE_URL + 'submission';
+    static USER_URL = environment.BASE_URL + 'user';
 
     static RECORDING_ADD_URL = environment.BASE_URL + 'submission/addRecording';
     static COMMENT_RECORDING_ADD_URL = environment.BASE_URL + 'questionResponse/addRecording';
     static COMMENT_TEXT_ADD_URL = environment.BASE_URL + 'questionResponse/addTextComment';
-
-
-
-
 
 
     helper = new JwtHelperService();
@@ -137,6 +134,15 @@ export class AuthenticatedHttpClient {
     public async get<T>(endPoint: string, options?: IRequestOptions, disableErrorHandling?: boolean, mute?: boolean) {
 
         await this.refreshSessionToken();
+        if (this.sessionManager.displayTerm != null) {
+            if (endPoint.indexOf('?') > -1) {
+                endPoint += '&';
+            } else {
+                endPoint += '?';
+            }
+
+            endPoint += 'term=' + this.sessionManager.displayTerm;
+        }
 
         return this.http.get<T>(endPoint, Object.assign({}, options, {headers: this.headers}))
             .pipe(catchError(err => disableErrorHandling ? throwError(err) : throwError(this.errorHandler(err, mute))));

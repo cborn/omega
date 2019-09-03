@@ -19,3 +19,18 @@
 .navbar-spacer-small {
     flex: 0.1 1 auto;
 }
+
+.navbar-spacer-micro {
+    flex: 0.05 1 auto;
+}
+
+.term-display {
+    border: 1px solid;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.toolbar-dropdown {
+    font-size: 13px;
+    bottom: -5px;
+}

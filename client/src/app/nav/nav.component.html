@@ -1,15 +1,33 @@
 <!--<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #424649;">-->
-    <!--<h1>Hello</h1>-->
+<!--<h1>Hello</h1>-->
 <!--</nav>-->
 
 
 <mat-toolbar color="primary">
- <mat-toolbar-row>
+    <mat-toolbar-row>
         <span>Language Lessons</span>
-     <span class="navbar-spacer-small"></span>
+        <span class="navbar-spacer-micro"></span>
+        <!--// Term selector-->
+
+        <div *ngIf="applicationData && applicationData.isAdmin" >
+            <!-- Put a dropdown to pick the current term.... -->
+            <mat-form-field class="toolbar-dropdown" >
+                <mat-label>Select an option</mat-label>
+                <mat-select [(value)]="currentTerm" (selectionChange)="didChangeTerm()">
+                    <mat-option *ngFor="let term of applicationData.terms" [value]="term.id">{{term.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div *ngIf="applicationData && !applicationData.isAdmin">
+            <!-- Just show the current term -->
+            <p class="term-display">{{applicationData.term.name}}</p>
+        </div>
+
+        <span class="navbar-spacer-small"></span>
         <app-save-status *ngIf="shouldShowSaveStatus()"></app-save-status>
 
         <span class="navbar-spacer"></span>
-        <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">verified_user</mat-icon>
+        <!--<mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">verified_user</mat-icon>-->
     </mat-toolbar-row>
 </mat-toolbar>

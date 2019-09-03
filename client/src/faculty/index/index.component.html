@@ -1,0 +1,101 @@
+<div id="content" role="main">
+    <section class="container colset-2-its">
+        <h1 style="text-align:center;">Welcome to LL Faculty</h1>
+
+
+        <mat-grid-list cols="3">
+            <mat-grid-tile *ngIf="submissions$ | async as submissions">
+                <mat-card class="simple-card-content">
+                    <mat-card-header>
+                        <mat-card-title>Recent Submissions</mat-card-title>
+                        <mat-card-subtitle>{{submissions.length}} Submissions</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+
+                        <!-- List of top 5 recent submissions -->
+                        <mat-list role="list">
+                            <mat-list-item role="listitem"
+                                           *ngFor="let submission of submissions | slice:0:5">
+                                <mat-icon mat-list-icon>create</mat-icon>
+                                <h4 mat-line>{{submission.user.username}}</h4><span
+                                    class="status-icon status-icon-{{submission.status}}">{{submission.status}}</span>
+                                <p mat-line> {{(submission.status === "DRAFT" ? submission.drafted : submission.submitted) | date}} </p>
+
+
+                            </mat-list-item>
+
+                        </mat-list>
+
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-button>View All Submissions</button>
+                    </mat-card-actions>
+
+
+                </mat-card>
+            </mat-grid-tile>
+
+
+            <mat-grid-tile *ngIf="courses$ | async as courses">
+                <mat-card class="simple-card-content">
+                    <mat-card-header>
+                        <mat-card-title>Courses</mat-card-title>
+                        <mat-card-subtitle>{{courses.length}} Courses</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+
+                        <!-- List of top 5 recent submissions -->
+                        <mat-list role="list">
+                            <mat-list-item role="listitem"
+                                           *ngFor="let course of courses | slice:0:5">
+                                <h4 mat-line>{{course.name}}</h4><span class="status-icon status-icon-plain">{{course.lessons.length + " "}}Lessons</span>
+                                <p mat-line> ({{course.id}}) </p>
+
+
+                            </mat-list-item>
+
+                        </mat-list>
+
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-button routerLink="/course/index">View All Courses</button>
+                    </mat-card-actions>
+
+
+                </mat-card>
+            </mat-grid-tile>
+
+
+            <mat-grid-tile *ngIf="submissions$ | async as submissions">
+                <mat-card class="simple-card-content">
+                    <mat-card-header>
+                        <mat-card-title>Submissions</mat-card-title>
+                        <mat-card-subtitle>{{submissions.length}} Submissions</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+
+                        <!-- List of top 5 recent submissions -->
+                        <mat-list role="list">
+                            <mat-list-item role="listitem"
+                                           *ngFor="let submission of submissions | slice:0:5">
+                                <mat-icon mat-list-icon>create</mat-icon>
+                                <h4 mat-line>{{submission.user.username}}</h4><span
+                                    class="status-icon status-icon-{{submission.status}}">{{submission.status}}</span>
+                                <p mat-line> {{(submission.status === "DRAFT" ? submission.drafted : submission.submitted) | date}} </p>
+
+
+                            </mat-list-item>
+
+                        </mat-list>
+
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-button>View All Submissions</button>
+                    </mat-card-actions>
+
+
+                </mat-card>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </section>
+</div>
