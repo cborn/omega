@@ -1,11 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '../../environments/environment.prod';
-import {SessionManagerService} from '../services/session-manager.service';
+import {PERMISSION_ROLE, SessionManagerService} from '../services/session-manager.service';
 import {NotificationService} from '../services/notification.service';
 import {AuthenticatedHttpClient} from '../services/authenticated-http-service.service';
-import {JwtHelperService} from '@auth0/angular-jwt';
 
 export class LoginResponse {
 
@@ -58,10 +56,15 @@ export class LoginComponent implements OnInit {
 
             if (this.authHttp.resumeRoute !== undefined) {
                 console.log('Resume Route');
-                console.log(this.authHttp.resumeRoute)
+                console.log(this.authHttp.resumeRoute);
                 this.router.navigate([this.authHttp.resumeRoute]);
             } else {
-                this.router.navigate(['/course/index']);
+
+                if (this.sessionManager.checkRoles(PERMISSION_ROLE.ROLE_GRADER)) {
+                    this.router.navigate(['/faculty/index']);
+                } else {
+                    this.router.navigate(['/faculty/index']);
+                }
             }
 
         }, error1 => {

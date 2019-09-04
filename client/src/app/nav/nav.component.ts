@@ -17,6 +17,7 @@ export class NavComponent implements OnInit {
     applicationData: ApplicationData;
     currentTerm: any;
 
+
     constructor(private navService: NavService, private router: Router, private sessionService: SessionManagerService, private notificationService: NotificationService) {
     }
 
@@ -39,7 +40,6 @@ export class NavComponent implements OnInit {
 
     shouldShowSaveStatus() {
         return this.router.url.indexOf('lessonPage/builder') > -1;
-
     }
 }
 

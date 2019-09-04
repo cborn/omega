@@ -21,6 +21,8 @@ export abstract class BaseService<T extends BaseObject> {
         promise.subscribe(value => {
             this.serviceSubject.next(value);
         });
+
+        return promise;
     }
 
     async get(id, handler) {

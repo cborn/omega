@@ -2,45 +2,32 @@ import {Component, OnInit} from '@angular/core';
 import {NavService} from '../nav/nav.service';
 import {Route, Router} from '@angular/router';
 
-import { environment } from '../../environments/environment';
+import {environment} from '../../environments/environment';
+import {PERMISSION_ROLE, SessionManagerService} from '../services/session-manager.service';
 
 @Component({
-  selector: 'app-index',
-  templateUrl: './index.component.html',
-  styleUrls: ['./index.component.css']
+    selector: 'app-index',
+    templateUrl: './index.component.html',
+    styleUrls: ['./index.component.css']
 })
 export class IndexComponent implements OnInit {
 
-  controllers: Array<any>;
-  serverUrl: string;
+    controllers: Array<any>;
+    serverUrl: string;
 
-  constructor(private navService: NavService, private router: Router) { }
+    constructor(private sessionManager: SessionManagerService, private router: Router) {
+    }
 
-  ngOnInit(): void {
-    this.loadData();
-  }
+    ngOnInit(): void {
 
-  async loadData() {
-    this.serverUrl = environment.BASE_URL;
-    const promise = await this.navService.getNavData();
-    promise.subscribe(applicationData => {
-      this.controllers = applicationData.controllers.sort((a: any, b: any) => {
-        if (a.name < b.name) {
-          return -1;
-        } else if (a.name > b.name) {
-          return 1;
+        if (this.sessionManager.checkRoles(PERMISSION_ROLE.ROLE_GRADER)) {
+            this.router.navigate(['/faculty/index']);
         } else {
-          return 0;
+            this.router.navigate(['/faculty/index']);
         }
-      });
-    });
-  }
 
-  hasRoute(controllerName: string): boolean {
-    return this.router.config.some((route: Route) => {
-      if (route.path === controllerName) {
-        return true;
-      }
-    });
-  }
+
+    }
+
+
 }

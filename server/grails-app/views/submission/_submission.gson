@@ -22,9 +22,15 @@ json {
 	}
 	page {
 		id submission.page.id
+		name submission.page.name
 	}
 	lesson {
 		id submission.page.lesson.id
+		name submission.page.lesson.name
+		course {
+			id submission.page.lesson.course.id
+			name submission.page.lesson.course.name
+		}
 	}
 
 }

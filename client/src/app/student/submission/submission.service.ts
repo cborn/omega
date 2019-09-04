@@ -54,7 +54,10 @@ export class SubmissionService {
 
         promise.subscribe(async submissions => {
             this.allSubmissionsSubject.next(submissions);
+
         });
+
+        return promise;
     }
 
 

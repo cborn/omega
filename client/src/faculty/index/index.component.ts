@@ -22,6 +22,20 @@ export class FacultyIndexComponent implements OnInit {
     users$ = this.userService.serviceSubject;
 
 
+    limits = {
+        user: 5,
+        course: 5,
+        submission: 5
+    };
+
+
+    loading = {
+        user: false,
+        course: false,
+        submission: false
+    };
+
+
     ngOnInit(): void {
 
 
@@ -36,9 +50,26 @@ export class FacultyIndexComponent implements OnInit {
 
     async loadData() {
 
-        await this.submissionService.loadAllSubmissions();
-        await this.courseService.list();
-        await this.userService.list();
+        this.loading.submission = true;
+        this.loading.course = true;
+        this.loading.user = true;
+
+        (await this.submissionService.loadAllSubmissions()).subscribe(value => {
+            this.loading.submission = false;
+        });
+
+        (await this.courseService.list()).subscribe(value => {
+            console.log('Courses Loaded');
+            this.loading.course = false;
+        });
+
+        (await this.userService.list()).subscribe(value => {
+            console.log('Users Loaded');
+            this.loading.user = false;
+        });
     }
+
+
+
 
 }
