@@ -1,0 +1,14 @@
+<!--<p>{{question | json}}</p>-->
+<!--<p>{{response | json}}</p>-->
+
+
+<div class="bordered-option" *ngIf="isBordered(question.type)">
+    {{response.response}}
+</div>
+
+<div *ngIf="isCloze()" [innerHTML]="question.custom_properties.cloze_text | clozeFormatRender : question.custom_properties.cloze_prompts: question: true: response">
+</div>
+
+<div *ngIf="isAudio()">
+</div>
+

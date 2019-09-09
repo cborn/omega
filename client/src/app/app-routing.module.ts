@@ -1,23 +1,24 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {IndexComponent} from './index/index.component';
-import {LessonPageBuilderComponent} from '../faculty/lessonPage/lesson-page-builder/lesson-page-builder.component';
+import {LessonPageBuilderComponent} from './faculty/lessonPage/lesson-page-builder/lesson-page-builder.component';
 import {LoginComponent} from './login/login.component';
 import {UnauthorizedComponent} from './unauthorized/unauthorized.component';
 import {AdminGuard, FacultyGuard, StudentGuard} from './guards/guard';
-import {CourseIndexComponent} from '../faculty/course/index/courseIndex.component';
-import {LessonIndexComponent} from '../faculty/lesson/index/lessonIndex.component';
-import {CourseEditComponent} from '../faculty/course/course-edit/course-edit.component';
-import {CourseCreateComponent} from '../faculty/course/course-create/course-create.component';
-import {LessonPageIndexComponent} from '../faculty/lessonPage/index/lessonPageIndex.component';
-import {LessonCreateComponent} from '../faculty/lesson/lesson-create/lesson-create.component';
-import {LessonEditComponent} from '../faculty/lesson/lesson-edit/lesson-edit.component';
+import {CourseIndexComponent} from './faculty/course/index/courseIndex.component';
+import {LessonIndexComponent} from './faculty/lesson/index/lessonIndex.component';
+import {CourseEditComponent} from './faculty/course/course-edit/course-edit.component';
+import {CourseCreateComponent} from './faculty/course/course-create/course-create.component';
+import {LessonPageIndexComponent} from './faculty/lessonPage/index/lessonPageIndex.component';
+import {LessonCreateComponent} from './faculty/lesson/lesson-create/lesson-create.component';
+import {LessonEditComponent} from './faculty/lesson/lesson-edit/lesson-edit.component';
 import {TermIndexComponent} from './term/term-index/term-index.component';
 import {OTPComponentComponent} from './otpcomponent/otpcomponent.component';
 import {PageSelectionComponent} from './student/page-selection/page-selection.component';
 import {SubmissionComponent} from './student/submission/submission.component';
 import {StudentIndexComponent} from './student/index/index.component';
-import {FacultyIndexComponent} from '../faculty/index/index.component';
+import {FacultyIndexComponent} from './faculty/index/index.component';
+import {SubmissionGradeComponent} from './faculty/submission-grade/submission-grade.component';
 
 const routes: Routes = [
     {path: '', redirectTo: 'index', pathMatch: 'full'},
@@ -47,6 +48,7 @@ const routes: Routes = [
 
     // Faculty Services.
     {path: 'faculty/index', component: FacultyIndexComponent, canActivate: [FacultyGuard]},
+    {path: 'faculty/grade/:submissionId', component: SubmissionGradeComponent, canActivate: [FacultyGuard]},
 
 
 

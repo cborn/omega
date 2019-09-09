@@ -16,17 +16,27 @@ export class NotificationService {
     constructor(private dialog: MatDialog) {
     }
 
+    open = false;
+
+
     reloadRequiredObserver = new EventEmitter();
 
 
 
     publishAlert(alertText, handler?) {
+        if (this.open) {
+            return;
+        }
+
         const dialogRef = this.dialog.open(AlertDialogComponent, {
             width: '250px',
             data: {alertText: alertText}
         });
 
+        this.open = true;
+
         dialogRef.afterClosed().subscribe(result => {
+            this.open = false;
            if (handler != null) {
                 handler();
             }
@@ -35,12 +45,18 @@ export class NotificationService {
 
 
     publishConfirmation(alertText, onConfirm?, onNotConfirm?) {
+        if (this.open) {
+            return;
+        }
+
         const dialogRef = this.dialog.open(ConfirmDialogComponent, {
             width: '250px',
             data: {alertText: alertText}
         });
+        this.open = true;
 
         dialogRef.afterClosed().subscribe(result => {
+            this.open = false;
             if (onConfirm != null && result) {
                 onConfirm();
             } else if (onNotConfirm != null) {

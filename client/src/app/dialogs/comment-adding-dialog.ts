@@ -5,7 +5,7 @@ import {Submission} from '../Model/submission';
 import {SubmissionResponse} from '../Model/submissionResponse';
 import {AuthenticatedHttpClient} from '../services/authenticated-http-service.service';
 import * as RecordRTC from 'recordrtc';
-import {VoiceRendererComponent} from '../../faculty/lessonPage/lesson-page-renderer/components/voice-renderer/voice-renderer.component';
+import {VoiceRendererComponent} from '../faculty/lessonPage/lesson-page-renderer/components/voice-renderer/voice-renderer.component';
 
 export interface CommentDialogData {
     position: any;

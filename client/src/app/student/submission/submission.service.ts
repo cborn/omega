@@ -5,7 +5,7 @@ import {AuthenticatedHttpClient} from '../../services/authenticated-http-service
 import {Submission} from '../../Model/submission';
 import {Lesson} from '../../Model/lesson';
 import {map, publishReplay, refCount, tap} from 'rxjs/operators';
-import {LessonPageBuilderService} from '../../../faculty/lessonPage/lesson-page-builder/lesson-page-builder.service';
+import {LessonPageBuilderService} from '../../faculty/lessonPage/lesson-page-builder/lesson-page-builder.service';
 import {AnswerChangedEvent} from '../../Events/answer-changed-event';
 import {SubmissionResponse} from '../../Model/submissionResponse';
 

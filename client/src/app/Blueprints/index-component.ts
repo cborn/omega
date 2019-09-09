@@ -5,7 +5,7 @@ import {OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material';
 import {Course} from '../Model/course';
 import {BaseObject} from './base-object';
-import {LessonPageService} from '../../faculty/lessonPage/lesson-page.service';
+import {LessonPageService} from '../faculty/lessonPage/lesson-page.service';
 
 export abstract class IndexComponent<T extends BaseObject> implements OnInit {
 

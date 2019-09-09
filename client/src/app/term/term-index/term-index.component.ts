@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {IndexComponent} from '../../Blueprints/index-component';
 import {Term} from '../../Model/term';
-import {CourseService} from '../../../faculty/course/course.service';
+import {CourseService} from '../../faculty/course/course.service';
 import {NotificationService} from '../../services/notification.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TermService} from '../term.service';

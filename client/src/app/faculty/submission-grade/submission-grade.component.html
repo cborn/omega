@@ -1,0 +1,24 @@
+<mat-card class="response-card" *ngIf="submission$ | async as submission">
+    <div class="response-card-content">
+    <div class="response-card-header">
+        <h3>{{submission.drafted | date}}</h3>
+    </div>
+    <div class="response-card-body">
+        <div class="response-card-question-item" *ngFor="let response of submission.responses | positionOrder: 'asc'">
+            <div class="response-card-question-item-left">
+            <div class="icon-q-block icon-q-block-{{getQuestionType(response.question.id)}} material-icons"></div>
+            </div>
+            <div class="response-card-question-item-right">
+                <div class="spacer"></div>
+                <span>{{getQuestionName(response.question.id)}}</span>
+                <div class="spacer-medium"></div>
+                <div class="response-card-question-item-answer">
+                    <app-answer-grading-renderer [question]="getQuestion(response.question.id)" [response]="response"></app-answer-grading-renderer>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+</mat-card>

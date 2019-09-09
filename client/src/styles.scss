@@ -284,3 +284,15 @@ body {
   padding-bottom: 0;
 }
 
+.bordered-option {
+  border: 1px solid #3193bb;
+  width: fit-content;
+  padding: 10px;
+  border-radius: 5px;
+  background: #3193bb1a;
+  color: #3193bb;
+}
+
+.cloze.bordered-option {
+  margin: 10px;
+}
