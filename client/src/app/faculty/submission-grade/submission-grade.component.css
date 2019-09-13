@@ -2,10 +2,17 @@
     margin-top: 2%;
     width: 60%;
     left: 20%;
+    margin-bottom: 1%;
 }
 
 .response-card-header {
     border-bottom: 1px solid #d4d4d4;
+}
+
+.response-card-header > span {
+    float: right;
+    position: relative;
+    top: -20px;
 }
 
 .response-card-content {
@@ -55,6 +62,18 @@
     -ms-flex: 1;
     flex: 1;
 }
+
+.submit-button-container {
+    position: absolute;
+    bottom: -50px;
+    left: 1%;
+}
+
+.submit-button {
+    background: #3193bb;
+    color: white;
+}
+
 
 .spacer-small{
     margin-top: 4px;

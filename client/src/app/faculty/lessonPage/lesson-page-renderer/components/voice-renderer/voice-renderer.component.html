@@ -5,8 +5,8 @@
     </div>
     <div *ngIf="isReal">
 
-        <button mat-raised-button (click)="initiateRecording()" *ngIf="!recording"> Start Recording</button>
-        <button mat-raised-button (click)="stopRecording()" color="accent" *ngIf="recording"> Stop Recording</button>
+        <button mat-raised-button (click)="initiateRecording()" *ngIf="!isGrading && !recording"> Start Recording</button>
+        <button mat-raised-button (click)="stopRecording()" color="accent" *ngIf="!isGrading && recording"> Stop Recording</button>
         <div class="clearfix"></div>
         <div style="position: relative" *ngIf="!loading && canvas != null && response">
             <div *ngFor="let comment of response.comments">

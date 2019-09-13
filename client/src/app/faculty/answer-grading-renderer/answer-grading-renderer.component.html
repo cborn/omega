@@ -1,14 +1,52 @@
 <!--<p>{{question | json}}</p>-->
 <!--<p>{{response | json}}</p>-->
 
+<div [ngClass]="{'voice-container':isAudio(), 'container':!isAudio()}">
 
-<div class="bordered-option" *ngIf="isBordered(question.type)">
-    {{response.response}}
+
+    <div class="bordered-option" *ngIf="isBordered()">
+        {{isBoolean() ? response.response == 'true' ? 'Yes' : 'No' : response.response}}
+    </div>
+
+    <div *ngIf="isCloze()" style="line-height: 50px;"
+         [innerHTML]="question.custom_properties.cloze_text | clozeFormatRender : question.custom_properties.cloze_prompts: question: true: response">
+    </div>
+
+    <div *ngIf="isAudio()" style="position: relative;">
+        <app-voice-renderer [isReal]="true" [isGrading]="true" [response]="response"
+                            [question]="question"></app-voice-renderer>
+    </div>
+
+    <div class="bordered-option" *ngIf="isPicture()">
+        <img [src]='response.response | imageUrlFilter'/>
+    </div>
+
+
+    <div *ngIf="isPlainText()">
+        {{response.response}}
+    </div>
+
+    <div *ngIf="!isAudio() && response.comments.length > 0" class="comment-section">
+        <div class="comment" *ngFor="let comment of response.comments">
+            <p>{{comment.comment_text}}</p>
+            <small class="left">{{comment.submitted | date}}</small>
+            <small class="right">{{comment.user.username}}</small>
+
+        </div>
+    </div>
+
+    <div class="grading-section">
+        <div class="grade-input">
+            <div>
+                <input matInput placeholder="grade" class="classic-input-style" type="number" [value]="grade" (change)="gradeChanged($event)" min="0" [max]="response.question.max_grade">
+                <mat-hint>Maximum grade that can be given is {{response.question.max_grade}}</mat-hint>
+            </div>
+        </div>
+
+        <div class="grade-input">
+            <button mat-raised-button (click)="addComment()">Add Comment</button>
+        </div>
+    </div>
+
+
 </div>
-
-<div *ngIf="isCloze()" [innerHTML]="question.custom_properties.cloze_text | clozeFormatRender : question.custom_properties.cloze_prompts: question: true: response">
-</div>
-
-<div *ngIf="isAudio()">
-</div>
-
