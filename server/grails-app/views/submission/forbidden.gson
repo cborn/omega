@@ -1,9 +1,12 @@
 package submission
+
+import omega.ErrorMessage
+
 model {
-    String stringResponse
+    ErrorMessage message
 }
 
 json {    
-    message stringResponse
-    error 403
+    message message.message
+    error message.error
 }

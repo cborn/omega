@@ -8,8 +8,9 @@ import * as RecordRTC from 'recordrtc';
 import {VoiceRendererComponent} from '../faculty/lessonPage/lesson-page-renderer/components/voice-renderer/voice-renderer.component';
 
 export interface CommentDialogData {
-    position: any;
+    position?: any;
     response: SubmissionResponse;
+    textOnly?: boolean;
 }
 
 
@@ -38,6 +39,13 @@ export class CommentAddingDialogComponent {
     constructor(
         public dialogRef: MatDialogRef<CommentAddingDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: CommentDialogData, private http: AuthenticatedHttpClient) {
+
+        if (this.data.textOnly) {
+            this.options = [
+                {'id': 2, 'name': 'Text'}
+            ];
+            this.typeSelect = this.options[0].id;
+        }
     }
 
     async dismiss() {
@@ -46,9 +54,10 @@ export class CommentAddingDialogComponent {
 
             const form = new FormData();
             form.append('text_data', this.textInput);
-            form.append('start', this.data.position.start);
-            form.append('end', this.data.position.end);
-
+            if (this.data.position) {
+                form.append('start', this.data.position.start);
+                form.append('end', this.data.position.end);
+            }
             const promise = await this.http.post<any>(AuthenticatedHttpClient.COMMENT_TEXT_ADD_URL + '?responseId=' + this.data.response.id, form);
             promise.subscribe(value1 => {
                 this.dialogRef.close(value1);

@@ -52,6 +52,10 @@ export class AuthenticatedHttpClient {
     static LESSON_URL = environment.BASE_URL + 'lesson';
     static TERM_URL = environment.BASE_URL + 'term';
     static SUBMISSION_URL = environment.BASE_URL + 'submission';
+    static SUBMISSION_GRADE_URL = environment.BASE_URL + 'submission/grade';
+
+
+    static SUBMISSION_SEEN_URL = environment.BASE_URL + 'submission/seen';
     static USER_URL = environment.BASE_URL + 'user';
 
     static RECORDING_ADD_URL = environment.BASE_URL + 'submission/addRecording';
@@ -115,6 +119,7 @@ export class AuthenticatedHttpClient {
                 if (errorMsg.total != null) {
                     this.notificationService.publishAlert(errorMsg._embedded.errors[0].message); // Multiple errors so display the first one..
                 } else {
+                    console.log(errorMsg)
                     this.notificationService.publishAlert(errorMsg.message);
                 }
             }

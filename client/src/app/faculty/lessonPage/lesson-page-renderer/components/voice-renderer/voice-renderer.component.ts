@@ -23,6 +23,8 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
     }
 
     @Input() isReal = true;
+    @Input() isGrading = false;
+
 
     @Input() submission;
 

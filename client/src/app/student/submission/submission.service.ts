@@ -8,6 +8,7 @@ import {map, publishReplay, refCount, tap} from 'rxjs/operators';
 import {LessonPageBuilderService} from '../../faculty/lessonPage/lesson-page-builder/lesson-page-builder.service';
 import {AnswerChangedEvent} from '../../Events/answer-changed-event';
 import {SubmissionResponse} from '../../Model/submissionResponse';
+import {Question} from '../../Model/question';
 
 @Injectable({
     providedIn: 'root'
@@ -47,6 +48,13 @@ export class SubmissionService {
         });
     }
 
+    async markSubmissionAsSeen(submissionId) {
+        const promise = await this.http.post<Submission>(AuthenticatedHttpClient.SUBMISSION_SEEN_URL + '/' + submissionId, null);
+
+        promise.subscribe(() => {
+        });
+    }
+
 
 
     async loadAllSubmissions() {
@@ -77,6 +85,18 @@ export class SubmissionService {
     }
 
 
+    async grade(submission, callback?) {
+        const promise = await this.http.post<Submission>(AuthenticatedHttpClient.SUBMISSION_GRADE_URL + '/' + submission.id, submission);
+
+        promise.subscribe(submissionResp => {
+            this.submissionSubject.next(submissionResp);
+            if (callback != null ) {
+                callback();
+            }
+        });
+    }
+
+
     async submitSubmission(submission, callback?) {
         const promise = await this.http.post<Submission>(AuthenticatedHttpClient.SUBMISSION_URL + '/complete', submission);
 
@@ -104,9 +124,9 @@ export class SubmissionService {
 
         if (!responseIndex) {
             const response = new SubmissionResponse();
-            response.question = {
-                id: event.question.id
-            };
+            response.question = event.question;
+
+
 
             response.response = event.value;
             submission.responses.push(response);

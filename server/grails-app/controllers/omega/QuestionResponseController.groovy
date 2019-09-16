@@ -31,11 +31,13 @@ class QuestionResponseController {
         c.submitted = new Date();
         c.user = springSecurityService.getCurrentUser();
         c.comment_text  = params.text_data;
-        c.location = Double.parseDouble(params.start)
-        c.endLocation = Double.parseDouble(params.end)
+        c.location = Double.parseDouble(params.start != null ? params.start : "0")
+        c.endLocation = Double.parseDouble(params.end != null ? params.end : "0")
         c.save(flush:true)
 
         questionResponse.addToComments(c);
+
+        questionResponse.setStatus(QuestionStatus.COMMENTS_PENDING);
 
         questionResponse.save(flush:true);
 
@@ -69,6 +71,8 @@ class QuestionResponseController {
         c.save(flush:true)
 
         questionResponse.addToComments(c);
+
+        questionResponse.setStatus(QuestionStatus.COMMENTS_PENDING);
 
         questionResponse.save(flush:true);
 

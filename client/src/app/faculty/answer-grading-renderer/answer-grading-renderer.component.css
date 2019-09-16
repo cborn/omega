@@ -1,0 +1,64 @@
+img {
+    width: 100px;
+    height: auto;
+}
+
+
+.voice-container {
+    width: 67%;
+}
+
+.container {
+    width: 90%;
+}
+
+
+.grade-input {
+    width: fit-content;
+    margin-top: 10px;
+    display: inline-flex;
+    padding-right: 43px;
+    vertical-align: top;
+}
+
+.grading-section {
+    border-top: 1px solid black;
+    margin-top: 25px;
+}
+
+.comment-section {
+    border-top: 1px solid black;
+    margin-top: 15px;
+}
+
+.comment {
+    display: inline-flex;
+    background: #cae1ea !important;
+    color: #3193bb;
+    border-radius: 6px;
+    margin-top: 16px;
+    border: 1px solid #3193bb !important;
+    margin-left: 5px;
+    min-width: 115px;
+    max-width: 300px;
+    width: fit-content;
+    padding: 30px;
+    position: relative;
+}
+
+/*.comment > p {*/
+    /*position: absolute;*/
+/*}*/
+
+.comment > .left {
+    position: absolute;
+    top: 3px;
+    left: 8px;
+}
+
+
+.comment > .right {
+    position: absolute;
+    top: 3px;
+    right: 8px;
+}
