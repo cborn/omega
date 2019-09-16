@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {SubmissionService} from '../../student/submission/submission.service';
 import {SubmissionResponse} from '../../Model/submissionResponse';
 import {Submission} from '../../Model/submission';
+import {NotificationService} from '../../services/notification.service';
 
 @Component({
     selector: 'app-submission-grade',
@@ -15,7 +16,7 @@ export class SubmissionGradeComponent implements OnInit {
     page$ = this.submissionService.page;
 
 
-    constructor(private route: ActivatedRoute, private router: Router, private submissionService: SubmissionService) {
+    constructor(private route: ActivatedRoute, private router: Router, private submissionService: SubmissionService, private notificationService: NotificationService) {
     }
 
     ngOnInit() {
@@ -57,22 +58,42 @@ export class SubmissionGradeComponent implements OnInit {
 
     submit(submission: Submission) {
 
-        let grade = 0;
+        submission.grade = 0;
         for (const response of submission.responses) {
-            grade += response.grade;
+            submission.grade += response.grade;
         }
+
 
         this.submissionService.grade(submission, () => {
             console.log('Graded the assignment');
+
+            this.notificationService.publishAlert('Assignment has been given the grade: ' + submission.grade, () => {
+                this.router.navigate(['/faculty/index']);
+            });
+
         });
 
 
     }
 
-    updateGrade(response, event) {
-        console.log(event);
+    updateGrade(submission: Submission) {
+        console.log('grade updated');
+        console.log(submission);
+        submission.grade = 0;
+        for (const response of submission.responses) {
+            submission.grade += response.grade == null ? 0 : response.grade;
+        }
 
 
+    }
+
+    getMaxGrade() {
+        let grade = 0;
+        for (const question of this.submissionService.pageSubject.value.questions) {
+            grade += question.max_grade;
+        }
+
+        return grade;
     }
 
 

@@ -1,7 +1,7 @@
 <!--<p>{{question | json}}</p>-->
 <!--<p>{{response | json}}</p>-->
 
-<div [ngClass]="{'voice-container':isAudio(), 'container':!isAudio()}">
+<div [ngClass]="{'voice-container':isAudio(), 'container':!isAudio()}" *ngIf="response && question" >
 
 
     <div class="bordered-option" *ngIf="isBordered()">
@@ -38,7 +38,7 @@
     <div class="grading-section">
         <div class="grade-input">
             <div>
-                <input matInput placeholder="grade" class="classic-input-style" type="number" [value]="grade" (change)="gradeChanged($event)" min="0" [max]="response.question.max_grade">
+                <input matInput placeholder="grade" class="classic-input-style" type="number" [(ngModel)]="response.grade" (change)="gradeChanged($event)" min="0" [max]="response.question.max_grade">
                 <mat-hint>Maximum grade that can be given is {{response.question.max_grade}}</mat-hint>
             </div>
         </div>

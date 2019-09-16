@@ -17,7 +17,7 @@
                             <mat-list-item role="listitem" class="clickable-list-item"
                                            *ngFor="let submission of submissions | slice:0:limits.submission" [routerLink]="'/faculty/grade/' + submission.id">
                                 <mat-icon mat-list-icon>create</mat-icon>
-                                <h4 mat-line [style.width.%]="submission.status == 'DRAFT' ? 90 : 84"><span class="special-span-tag-item">{{submission.user.username}}</span> for page <span class="special-span-tag-item">{{submission.page.name}}</span> in lesson <span class="special-span-tag-item">{{submission.lesson.name}}</span> in course <span class="special-span-tag-item">{{submission.lesson.course.name}}</span></h4>
+                                <h4 mat-line [style.width.%]="submission.status == 'DRAFT' ? 86 : 80"><span class="special-span-tag-item">{{submission.user.username}}</span> for page <span class="special-span-tag-item">{{submission.page.name}}</span> in lesson <span class="special-span-tag-item">{{submission.lesson.name}}</span> in course <span class="special-span-tag-item">{{submission.lesson.course.name}}</span></h4>
 
                                 <p mat-line> {{(submission.status === "DRAFT" ? submission.drafted : submission.submitted) | date}} </p>
 

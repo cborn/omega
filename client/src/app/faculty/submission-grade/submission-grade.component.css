@@ -2,7 +2,7 @@
     margin-top: 2%;
     width: 60%;
     left: 20%;
-    margin-bottom: 1%;
+    margin-bottom: 6%;
 }
 
 .response-card-header {
@@ -64,9 +64,11 @@
 }
 
 .submit-button-container {
+    width: 100%;
     position: absolute;
     bottom: -50px;
     left: 1%;
+    display: inline-flex;
 }
 
 .submit-button {

@@ -10,6 +10,7 @@ export class User extends BaseObject {
     firstname: string;
     fromMoodle: boolean;
     username: string;
+    fullName: string;
     accountLocked: boolean;
     password: string;
     enabled: boolean;

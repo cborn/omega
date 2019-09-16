@@ -11,7 +11,7 @@
     <app-multi-choice-renderer (answerChanged)="answerChanged($event)" *ngIf="question.type == 0" class="answer-input fit-content" [response]="getResponseForQuestion(question)" [ngClass]="{'answer-input-flex': question.custom_properties.stack}"  [question]="question"></app-multi-choice-renderer>
     <app-short-text-renderer (answerChanged)="answerChanged($event)" *ngIf="question.type == 1" class="answer-input" [question]="question" [response]="getResponseForQuestion(question)"></app-short-text-renderer>
     <app-long-text-renderer  (answerChanged)="answerChanged($event)" *ngIf="question.type == 2" class="answer-input" [question]="question" [response]="getResponseForQuestion(question)"></app-long-text-renderer>
-<!--    <app-block-text-renderer *ngIf="question.type == 3" class="answer-input" [question]="question" ></app-block-text-renderer>-->
+    <app-block-text-renderer *ngIf="question.type == 3" class="answer-input" [question]="question" ></app-block-text-renderer>
     <app-picture-choice-renderer  (answerChanged)="answerChanged($event)" *ngIf="question.type == 4" class="answer-input" [question]="question" [response]="getResponseForQuestion(question)"></app-picture-choice-renderer>
     <app-boolean-renderer  (answerChanged)="answerChanged($event)" *ngIf="question.type == 5" class="answer-input" [question]="question" [response]="getResponseForQuestion(question)"> </app-boolean-renderer>
     <app-scale-renderer  (answerChanged)="answerChanged($event)" *ngIf="question.type == 6" class="answer-input" [question]="question" [response]="getResponseForQuestion(question)"> </app-scale-renderer>

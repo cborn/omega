@@ -18,7 +18,8 @@ json {
 	}
 	user {
 		id submission.user.id
-		username submission.user.firstname + " " + submission.user.surname
+		username submission.user.username
+		fullName submission.user.firstname + " " + submission.user.surname
 	}
 	page {
 		id submission.page.id

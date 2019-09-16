@@ -15,6 +15,7 @@ export class Submission extends BaseObject {
         status: string;
         submitted: Date;
         drafted: Date;
+        grade: number;
 
 
 

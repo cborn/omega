@@ -15,19 +15,26 @@ export class AnswerGradingRendererComponent implements OnInit {
     @Input() response: SubmissionResponse;
     @Input() question: Question;
 
-    constructor( private dialog: MatDialog) {
+    @Output('gradeChanged')
+    gradeChangedEmitter = new EventEmitter<number>();
+
+    constructor(private dialog: MatDialog) {
     }
 
     ngOnInit() {
     }
 
     gradeChanged(event) {
-        this.response.grade = Number(event.target.value);
+        if (this.response.grade > this.question.max_grade) {
+            this.response.grade = this.question.max_grade;
+        }
+
+        this.gradeChangedEmitter.emit(this.response.grade);
     }
 
 
     isBordered() {
-        return this.question.type === QuestionType.MULTI_CHOICE || this.question.type === QuestionType.DROPDOWN || this.question.type === QuestionType.BOOLEAN;
+        return this.question.type === QuestionType.MULTI_CHOICE || this.question.type === QuestionType.DROPDOWN || this.question.type === QuestionType.BOOLEAN || this.question.type === QuestionType.SCALE;
     }
 
     isPlainText() {
@@ -43,6 +50,7 @@ export class AnswerGradingRendererComponent implements OnInit {
     }
 
     isAudio() {
+
         return this.question.type === QuestionType.VOICE;
     }
 
@@ -62,7 +70,7 @@ export class AnswerGradingRendererComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-           this.response = result;
+            this.response = result;
         });
 
     }

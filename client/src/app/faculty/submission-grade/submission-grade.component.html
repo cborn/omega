@@ -1,8 +1,8 @@
 <div *ngIf="submission$ | async as submission">
-    <mat-card class="response-card" *ngIf="submission != null">
+    <mat-card class="response-card" *ngIf="submission && submission.user">
         <div class="response-card-content">
             <div class="response-card-header">
-                <h3>{{submission.drafted | date}}</h3><span>{{submission.user.username}}</span>
+                <h3>{{submission.drafted | date}}</h3><span>{{submission.user.fullName}}</span>
             </div>
             <div class="response-card-body">
                 <div class="response-card-question-item"
@@ -16,7 +16,7 @@
                         <div class="spacer-medium"></div>
                         <div class="response-card-question-item-answer">
                             <app-answer-grading-renderer [question]="getQuestion(response.question.id)"
-                                                         [response]="response" (gradeChanged)="updateGrade(response,$event)"></app-answer-grading-renderer>
+                                                         [response]="response" (gradeChanged)="updateGrade(submission)"></app-answer-grading-renderer>
                         </div>
                     </div>
                 </div>
@@ -24,6 +24,9 @@
         </div>
         <div class="submit-button-container">
             <button mat-raised-button class="submit-button" (click)="submit(submission)">Submit</button>
+            <label for="grade-input" style="margin-left: 15px;margin-top:10px">Grade: </label>
+            <input id="grade-input" style="margin-left: 15px; width: 10%;" matInput class="classic-input-style" [(ngModel)]="submission.grade" placeholder="Grade">
+            <label for="grade-input" style="margin-left: 15px;margin-top:10px">out of {{getMaxGrade()}} </label>
         </div>
     </mat-card>
 
