@@ -1,7 +1,14 @@
 <div *ngIf="submission$ | async as submission">
     <div *ngIf="page$ | async as page">
         <app-lesson-renderer [lesson]="page" [submission]="submission" (answerChanged)="answerChanged($event)" class="lesson-renderer"></app-lesson-renderer>
-        <div class="full-page-divider"></div>
-        <button mat-raised-button class="submit-button" (click)="submit(submission)">Submit</button>
+        <div class="full-page-divider">
+            <button mat-raised-button class="submit-button" (click)="submit(submission)">Submit</button>
+            <div class="answer-count">
+                <h3>
+                    {{submission.responses.length}}
+                </h3>
+            </div>
+        </div>
+
     </div>
 </div>

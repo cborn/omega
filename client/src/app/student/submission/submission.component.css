@@ -1,28 +1,26 @@
 .full-page-divider {
     border-top: 1px solid #b7b6b6;
     width: 100%;
-    margin: 0;
-    height: 60px;
+    height: 72px;
     position: fixed;
     bottom: 0;
     left: 0;
     background: #fff;
+    margin: 30px 0 0;
 }
 
 .submit-button {
     background: #3193bb;
     color: white;
-    margin-bottom: 10px;
-    margin-left: 25px;
-    position: fixed;
-    bottom: 0;
-    left: 3%;
+    float: left;
+    transform: translate(100%, 50%);
 }
 
 .lesson-renderer {
     width: 100%;
     display: block;
     position: absolute;
+    margin-bottom: 60px;
 }
 
 
