@@ -15,6 +15,15 @@
       window.dispatchEvent(event);
     }
 
+
+    function inputForSubmissionChanged(responseId, promptIndex, value) {
+
+      var event = new CustomEvent("clozeInputChanged",{ detail : {responseId:responseId, promptIndex:promptIndex, value:value} });
+      window.dispatchEvent(event);
+
+
+    }
+
   </script>
 
 </head>

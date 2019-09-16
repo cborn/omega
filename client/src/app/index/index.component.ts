@@ -23,7 +23,7 @@ export class IndexComponent implements OnInit {
         if (this.sessionManager.checkRoles(PERMISSION_ROLE.ROLE_GRADER)) {
             this.router.navigate(['/faculty/index']);
         } else {
-            this.router.navigate(['/faculty/index']);
+            this.router.navigate(['/student/index']);
         }
 
 

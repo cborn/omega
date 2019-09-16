@@ -20,24 +20,34 @@ export class ClozeFormatRenderPipe implements PipeTransform {
         const regex = new RegExp(/@@/g);
         let result;
         let instancesCount = 0;
-        const questionid = question.id;
+        const responseId = (response == null) ? null : response.id;
+
 
         while ((result = regex.exec(value)) !== null) {
             const prompts = JSON.parse(question.custom_properties.cloze_prompts)[instancesCount];
+            let responseValue = '';
+
+            if (response != null) {
+                if (response.response.indexOf('@@') > 0) {
+                    responseValue = response.response.split('@@')[instancesCount];
+                }
+            }
 
             let replacementText = '';
             if (!grading) {
                 if (prompts.length > 0) {
-                    replacementText += '<select class="classic-input-style cloze-input-item"><option disabled selected>Please select an answer</option>';
+                    replacementText += '<select class="classic-input-style cloze-input-item" onchange="inputForSubmissionChanged(' + responseId + ',' + instancesCount + ',this.value)"><option disabled selected>Please select an answer</option>';
                     for (const promptsKey in prompts) {
                         if (prompts.hasOwnProperty(promptsKey)) {
-                            replacementText += '<option >' + prompts[promptsKey] + '</option>';
+                            replacementText += '<option ' + (responseValue === prompts[promptsKey] ? 'selected="true"' : '') + '>' + prompts[promptsKey] + '</option>';
                         }
                     }
                     replacementText += '</select>';
 
                 } else {
-                    replacementText += '<input matInput class="classic-input-style cloze-input-item" placeholder="Type your answer here" />';
+
+
+                    replacementText += '<input matInput class="classic-input-style cloze-input-item" value="' + responseValue + '" placeholder="Type your answer here" onchange="inputForSubmissionChanged(' + responseId + ',' + instancesCount + ',this.value)" />';
                 }
             } else if (grading && response != null) {
                 replacementText += '<span class="bordered-option cloze">' + response.response.split('@@')[instancesCount] + '</span>';

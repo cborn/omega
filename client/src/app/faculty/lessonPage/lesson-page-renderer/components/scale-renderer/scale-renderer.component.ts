@@ -17,7 +17,7 @@ export class ScaleRendererComponent extends BaseRenderComponent implements OnIni
     inputs = [];
 
     interval;
-    
+
     constructor() {
         super();
     }
@@ -40,12 +40,8 @@ export class ScaleRendererComponent extends BaseRenderComponent implements OnIni
         }
 
         this.oldinput = Object.assign({}, this.question.custom_properties);
-
-
-        console.log(this.question.custom_properties.step);
-
+        
         for (let i = parseInt(this.question.custom_properties.start); i <= parseInt(this.question.custom_properties.end); i += parseInt(this.question.custom_properties.step)) {
-            console.log("input - "+i);
             this.inputs.push(i);
         }
 

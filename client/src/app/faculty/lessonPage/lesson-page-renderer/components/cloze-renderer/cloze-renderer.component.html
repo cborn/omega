@@ -8,6 +8,6 @@
     <!--</div>-->
 <!--</div>-->
 
-<div [innerHTML]="question.custom_properties.cloze_text | clozeFormatRender : question.custom_properties.cloze_prompts : question">
+<div [innerHTML]="question.custom_properties.cloze_text | clozeFormatRender : question.custom_properties.cloze_prompts : question : false : response">
 
 </div>

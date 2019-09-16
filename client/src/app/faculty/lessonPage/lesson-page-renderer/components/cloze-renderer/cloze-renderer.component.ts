@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, HostListener, Input, OnInit} from '@angular/core';
 import {Question} from '../../../../../Model/question';
 import {BaseRenderComponent} from '../../../../../Blueprints/base-render-component';
 
@@ -21,15 +21,18 @@ export class ClozeRendererComponent extends BaseRenderComponent implements OnIni
     ngOnInit() {
     }
 
-    isDropdown(index) {
+    @HostListener('window:clozeInputChanged', ['$event'])
+    onInputChanged(event) {
 
-        const prompts = JSON.parse(this.question.custom_properties.cloze_prompts)[index];
+        console.log(event.detail);
+        console.log(this.response);
 
-        if (prompts === undefined) {
-            return 'NO_INPUT';
+        if (this.response.id === event.detail.responseId) {
+            const split = this.response.response.split('@@');
+            split[event.detail.promptIndex] = event.detail.value;
+            this.answerDidChange(this.question, split.join('@@'));
+
         }
-
-        return prompts.length > 0;
 
 
     }

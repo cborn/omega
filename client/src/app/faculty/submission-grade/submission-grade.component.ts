@@ -16,13 +16,16 @@ export class SubmissionGradeComponent implements OnInit {
     page$ = this.submissionService.page;
 
 
+    originalGrade = 0;
+
+
     constructor(private route: ActivatedRoute, private router: Router, private submissionService: SubmissionService, private notificationService: NotificationService) {
     }
 
     ngOnInit() {
-        this.route.paramMap.subscribe(value => {
+        this.route.paramMap.subscribe(async value => {
             if (value.get('submissionId')) {
-                this.submissionService.loadData(value.get('submissionId'));
+                (await this.submissionService.loadData(value.get('submissionId')));
                 this.submissionService.markSubmissionAsSeen(value.get('submissionId'));
             } else {
                 this.router.navigate(['faculty/index']);
@@ -58,14 +61,7 @@ export class SubmissionGradeComponent implements OnInit {
 
     submit(submission: Submission) {
 
-        submission.grade = 0;
-        for (const response of submission.responses) {
-            submission.grade += response.grade;
-        }
-
-
         this.submissionService.grade(submission, () => {
-            console.log('Graded the assignment');
 
             this.notificationService.publishAlert('Assignment has been given the grade: ' + submission.grade, () => {
                 this.router.navigate(['/faculty/index']);
@@ -77,8 +73,7 @@ export class SubmissionGradeComponent implements OnInit {
     }
 
     updateGrade(submission: Submission) {
-        console.log('grade updated');
-        console.log(submission);
+
         submission.grade = 0;
         for (const response of submission.responses) {
             submission.grade += response.grade == null ? 0 : response.grade;
