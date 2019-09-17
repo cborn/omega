@@ -7,7 +7,7 @@
             <mat-grid-tile *ngIf="submissions$ | async as submissions">
                 <mat-card class="simple-card-content">
                     <mat-card-header>
-                        <mat-card-title>Recent Submissions</mat-card-title>
+                        <mat-card-title>Recent Submissions - <a routerLink="/faculty/gradebook">View Gradebook</a></mat-card-title>
                         <mat-card-subtitle>{{submissions.length}} Submissions</mat-card-subtitle>
                     </mat-card-header>
                     <mat-card-content>

@@ -19,6 +19,7 @@ import {SubmissionComponent} from './student/submission/submission.component';
 import {StudentIndexComponent} from './student/index/index.component';
 import {FacultyIndexComponent} from './faculty/index/index.component';
 import {SubmissionGradeComponent} from './faculty/submission-grade/submission-grade.component';
+import {GradebookComponent} from './faculty/gradebook/gradebook.component';
 
 const routes: Routes = [
     {path: '', redirectTo: 'index', pathMatch: 'full'},
@@ -49,6 +50,8 @@ const routes: Routes = [
     // Faculty Services.
     {path: 'faculty/index', component: FacultyIndexComponent, canActivate: [FacultyGuard]},
     {path: 'faculty/grade/:submissionId', component: SubmissionGradeComponent, canActivate: [FacultyGuard]},
+    {path: 'faculty/gradebook/:lessonId', component: GradebookComponent, canActivate: [FacultyGuard]},
+
 
 
 

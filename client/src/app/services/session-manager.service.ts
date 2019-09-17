@@ -70,7 +70,7 @@ export class SessionManagerService {
 
         const roles = this.getRoles();
 
-        if (roles === undefined) {
+        if (!roles) {
             return false;
         }
 

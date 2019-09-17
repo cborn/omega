@@ -67,7 +67,6 @@ export class AuthenticatedHttpClient {
 
     public resumeRoute;
 
-
     private headers: HttpHeaders;
 
 
@@ -81,24 +80,32 @@ export class AuthenticatedHttpClient {
     //  */
     async refreshSessionToken() {
 
-        const token = this.sessionManager.getSessionToken();
 
-        if (this.helper.isTokenExpired(token)) {
-            const formData = new FormData();
-            formData.append('grant_type', 'refresh_token');
-            formData.append('refresh_token', this.sessionManager.getRefreshToken());
-            await this.http.post<LoginResponse>(AuthenticatedHttpClient.REFRESH_AUTH_URL, formData).subscribe(async value => {
-                this.sessionManager.setSessionToken(value.access_token);
-                this.sessionManager.setExpires(value.expires_in);
-                this.sessionManager.setRefreshToken(value.refresh_token);
-                this.sessionManager.setRoles(value.roles);
-                this.sessionManager.setUsername(value.username);
-                this.headers = new HttpHeaders().set('Authorization', 'Bearer ' + value.access_token);
-            });
-        } else {
-            this.headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
-        }
+        return new Promise(resolve => {
+            const token = this.sessionManager.getSessionToken();
 
+            if (this.helper.isTokenExpired(token)) {
+                const formData = new FormData();
+                formData.append('grant_type', 'refresh_token');
+                formData.append('refresh_token', this.sessionManager.getRefreshToken());
+                return this.http.post<LoginResponse>(AuthenticatedHttpClient.REFRESH_AUTH_URL, formData).subscribe(value => {
+                    this.sessionManager.setSessionToken(value.access_token);
+                    this.sessionManager.setExpires(value.expires_in);
+                    this.sessionManager.setRefreshToken(value.refresh_token);
+                    this.sessionManager.setRoles(value.roles);
+                    this.sessionManager.setUsername(value.username);
+                    this.headers = new HttpHeaders().set('Authorization', 'Bearer ' + value.access_token);
+                    resolve();
+
+                }, error1 => {
+                    resolve();
+                });
+
+            } else {
+                this.headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+                resolve();
+            }
+        });
 
     }
 
@@ -119,7 +126,7 @@ export class AuthenticatedHttpClient {
                 if (errorMsg.total != null) {
                     this.notificationService.publishAlert(errorMsg._embedded.errors[0].message); // Multiple errors so display the first one..
                 } else {
-                    console.log(errorMsg)
+                    console.log(errorMsg);
                     this.notificationService.publishAlert(errorMsg.message);
                 }
             }
@@ -139,6 +146,7 @@ export class AuthenticatedHttpClient {
     public async get<T>(endPoint: string, options?: IRequestOptions, disableErrorHandling?: boolean, mute?: boolean) {
 
         await this.refreshSessionToken();
+
         if (this.sessionManager.displayTerm != null) {
             if (endPoint.indexOf('?') > -1) {
                 endPoint += '&';
@@ -151,6 +159,8 @@ export class AuthenticatedHttpClient {
 
         return this.http.get<T>(endPoint, Object.assign({}, options, {headers: this.headers}))
             .pipe(catchError(err => disableErrorHandling ? throwError(err) : throwError(this.errorHandler(err, mute))));
+
+
     }
 
     /**

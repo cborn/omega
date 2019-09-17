@@ -9,12 +9,17 @@ import {BaseRenderComponent} from '../../../../../Blueprints/base-render-compone
 })
 export class ScaleRendererComponent extends BaseRenderComponent implements OnInit, OnDestroy {
 
+
+    MAX_ITEMS = 20;
+
     value;
 
     oldinput = {};
 
 
     inputs = [];
+
+    count = 0;
 
     interval;
 
@@ -39,10 +44,14 @@ export class ScaleRendererComponent extends BaseRenderComponent implements OnIni
             this.question.custom_properties.step = 1;
         }
 
+        this.count = Math.round((parseInt(this.question.custom_properties.end) - parseInt(this.question.custom_properties.start)) / parseInt(this.question.custom_properties.step));
+
+
         this.oldinput = Object.assign({}, this.question.custom_properties);
-        
-        for (let i = parseInt(this.question.custom_properties.start); i <= parseInt(this.question.custom_properties.end); i += parseInt(this.question.custom_properties.step)) {
-            this.inputs.push(i);
+        if (parseInt(this.question.custom_properties.step) > 0 &&  this.count <= this.MAX_ITEMS) {
+            for (let i = parseInt(this.question.custom_properties.start); i <= parseInt(this.question.custom_properties.end); i += parseInt(this.question.custom_properties.step)) {
+                this.inputs.push(i);
+            }
         }
 
         this.interval = setInterval(this.changes, 2000, this);
@@ -60,8 +69,12 @@ export class ScaleRendererComponent extends BaseRenderComponent implements OnIni
         if (x.oldinput.start !== x.question.custom_properties.start || x.oldinput.end !== x.question.custom_properties.end || x.oldinput.step !== x.question.custom_properties.step) {
             x.oldinput = Object.assign({}, x.question.custom_properties);
             x.inputs = [];
-            for (let i = x.question.custom_properties.start; i <= x.question.custom_properties.end; i += x.question.custom_properties.step) {
-                x.inputs.push(i);
+            this.count = Math.round((parseInt(this.question.custom_properties.end) - parseInt(this.question.custom_properties.start)) / parseInt(this.question.custom_properties.step));
+
+            if (parseInt(x.question.custom_properties.step) > 0 &&  this.count < this.MAX_ITEMS) {
+                for (let i = parseInt(x.question.custom_properties.start); i <= parseInt(x.question.custom_properties.end); i += parseInt(x.question.custom_properties.step)) {
+                    x.inputs.push(i);
+                }
             }
         }
     }
@@ -69,7 +82,7 @@ export class ScaleRendererComponent extends BaseRenderComponent implements OnIni
 
     didSelect(value) {
         this.value = value;
-        this.answerDidChange(this.question,this.value);
+        this.answerDidChange(this.question, this.value);
     }
 
     setValue(value) {

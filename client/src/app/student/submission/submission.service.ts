@@ -56,7 +56,6 @@ export class SubmissionService {
     }
 
 
-
     async loadAllSubmissions() {
         const promise = await this.http.get<Submission[]>(AuthenticatedHttpClient.SUBMISSION_URL);
 
@@ -69,14 +68,13 @@ export class SubmissionService {
     }
 
 
-
     async save(submission, callback?) {
 
         const promise = await this.http.put<Submission>(AuthenticatedHttpClient.SUBMISSION_URL + '/' + submission.id, submission);
 
         promise.subscribe(submissionResp => {
             this.submissionSubject.next(submissionResp);
-            if (callback != null ) {
+            if (callback != null) {
                 callback();
             }
         });
@@ -90,7 +88,7 @@ export class SubmissionService {
 
         promise.subscribe(submissionResp => {
             this.submissionSubject.next(submissionResp);
-            if (callback != null ) {
+            if (callback != null) {
                 callback();
             }
         });
@@ -102,8 +100,12 @@ export class SubmissionService {
 
         promise.subscribe(submissionResp => {
             this.submissionSubject.next(submissionResp);
-            if (callback != null ) {
+            if (callback != null) {
                 callback();
+            }
+        }, error1 => {
+            if (callback != null) {
+                callback(error1);
             }
         });
 
@@ -127,13 +129,23 @@ export class SubmissionService {
             response.question = event.question;
 
 
-
             response.response = event.value;
             submission.responses.push(response);
 
         } else {
             submission.responses[responseIndex].response = event.value;
         }
+
+
+        submission.responses.forEach(value => {
+            for (const customPropertiesKey in value.question.custom_properties) {
+                if (value.question.custom_properties.hasOwnProperty(customPropertiesKey)) {
+                    value.question.custom_properties[customPropertiesKey] = value.question.custom_properties[customPropertiesKey] + '';
+                }
+
+            }
+
+        });
 
 
         this.save(submission);

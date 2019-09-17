@@ -1,15 +1,31 @@
-<div *ngIf="isDirty$ | async">
-    <div class="icon-holder unsaved">
-        <i class="material-icons">clear</i>
-    </div>
-    <span>Not Saved</span>
-</div>
+<div class="container" *ngIf="lessonPage$ | async as lessonPage">
+    <div class="section">
+        <div *ngIf="isDirty$ | async">
+            <div class="icon-holder unsaved">
+                <i class="material-icons">clear</i>
+            </div>
+            <span>Not Saved</span>
+        </div>
 
-<div *ngIf="!(isDirty$ | async)">
-    <div class="icon-holder saved">
-        <i class="material-icons">check</i>
+        <div *ngIf="!(isDirty$ | async)">
+            <div class="icon-holder saved">
+                <i class="material-icons">check</i>
+            </div>
+            <span>Saved</span>
+        </div>
     </div>
-    <span>Saved</span>
+    <div class="section">
+     <span class="status-icon status-icon-{{lessonPage.status}}">
+                                    {{lessonPage.status}}
+                                </span>
+    </div>
+    <div class="section">
+        <button mat-raised-button color="accent" (click)="updateStatus(lessonPage)">{{lessonPage.status === "DRAFT" ? "Publish" : "Un Publish"}}</button>
+    </div>
+
+    <div class="section">
+        <input matInput class="classic-input-style-custom" [(ngModel)]="lessonPage.name" (change)="changed()" placeholder="Lesson Page Name">
+    </div>
 </div>
 
 

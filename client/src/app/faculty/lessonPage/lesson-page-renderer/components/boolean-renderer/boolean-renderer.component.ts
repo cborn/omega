@@ -19,7 +19,6 @@ export class BooleanRendererComponent extends BaseRenderComponent implements OnI
     }
 
 
-
     didSelect(value) {
         this.value = value;
         this.answerDidChange(this.question, this.value);

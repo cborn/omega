@@ -1,5 +1,14 @@
-<div class="scale-render">
-  <div *ngFor="let input of inputs" class="scale-input" (click)="didSelect(input)" [style.width.%]="100 / inputs.length" [ngClass]="{'selected' : (value != null && value == input)}">
-    {{input}}
-  </div>
+<div class="scale-render" *ngIf="count <= MAX_ITEMS">
+    <div *ngFor="let input of inputs" class="scale-input" (click)="didSelect(input)"
+         [style.width.%]="100 / inputs.length" [ngClass]="{'selected' : (value != null && value == input)}">
+        {{input}}
+    </div>
+    <div *ngIf="question.custom_properties.show_labels">
+        <label class="label-start">{{question.custom_properties.label_start}}</label>
+        <label class="label-middle">{{question.custom_properties.label_middle}}</label>
+        <label class="label-end">{{question.custom_properties.label_end}}</label>
+    </div>
+</div>
+<div *ngIf="count > MAX_ITEMS">
+    <h1>Too many options.</h1>
 </div>

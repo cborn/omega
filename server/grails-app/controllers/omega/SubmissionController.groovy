@@ -47,14 +47,21 @@ class SubmissionController {
         respond submissionService.get(id)
     }
 
-    def complete(Submission submission) {
+    def complete(Submission sub) {
+
+
+        Submission submission = Submission.get(sub.id);
 
         // Now we have to validate the submission
+        Optional<String> validationResponse = submission.verifyCompleteness();
 
-        Optional<String> response = submission.verifyCompleteness();
-
-        if (response.isPresent())
-            respond message: response.get(), status: FORBIDDEN
+        if (validationResponse.isPresent()) {
+            ErrorMessage message = new ErrorMessage();
+            message.message = validationResponse.get();
+            message.error = 403;
+            response.status = 403;
+            respond message: message, [status: FORBIDDEN, message: message.message]
+        }
         else
             respond submission, view: "show";
     }

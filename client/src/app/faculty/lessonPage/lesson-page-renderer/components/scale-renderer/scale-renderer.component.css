@@ -1,6 +1,7 @@
 .scale-render{
     display: flex;
     width: 100%;
+    position: relative;
 }
 .scale-input {
     border: 1px solid #3193bb;
@@ -30,5 +31,26 @@
     border: 1px solid #3193bb;
     background: #3193bb;
     color: #badbe8;
+}
+
+.label-start {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    transform: translate(-50%, 25px);
+}
+
+.label-middle {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, 25px);
+}
+
+.label-end {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translate(50%, 25px);
 }
 

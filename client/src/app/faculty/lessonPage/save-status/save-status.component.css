@@ -15,3 +15,17 @@
 .unsaved {
     color: #ff4634;
 }
+
+.container {
+    display: flex;
+}
+
+.section {
+    margin-left: 10px;
+}
+
+.classic-input-style-custom {
+    border: 1px solid white !important;
+    padding: 6px !important;
+    border-radius: 5px !important;
+}
