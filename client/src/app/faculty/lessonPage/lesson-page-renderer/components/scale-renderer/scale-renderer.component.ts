@@ -40,7 +40,7 @@ export class ScaleRendererComponent extends BaseRenderComponent implements OnIni
         }
 
         this.oldinput = Object.assign({}, this.question.custom_properties);
-        
+
         for (let i = parseInt(this.question.custom_properties.start); i <= parseInt(this.question.custom_properties.end); i += parseInt(this.question.custom_properties.step)) {
             this.inputs.push(i);
         }
