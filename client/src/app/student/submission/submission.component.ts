@@ -38,10 +38,15 @@ export class SubmissionComponent implements OnInit {
 
     submit(submission: Submission) {
 
-        this.submissionService.submitSubmission(submission, () => {
-            // This has been submitted successfully...
-            this.router.navigate(['student/lesson/', submission.lesson.id]);
+        this.submissionService.submitSubmission(submission, (error?) => {
 
+
+            if (error) {
+                
+            } else {
+                // This has been submitted successfully...
+                this.router.navigate(['student/lesson/', submission.lesson.id]);
+            }
 
         });
 

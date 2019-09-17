@@ -15,16 +15,24 @@ class Submission {
     Integer grade;
 
 
-    Optional<String> verifyCompleteness(){
+    Optional<String> verifyCompleteness() {
 
-        for(Question question : this.page.questions)
-        {
-            QuestionResponse response = QuestionResponse.findByQuestionAndSubmission(question,this);
+        if (this.page == null)
+            return Optional.of("Page data not found");
 
-            if(question.isRequired() && response == null)
-            {
-                return Optional.of("Question ("+question.position+1+") "+question.name+" requires an answer.");
+        for (Question question : this.page.questions) {
+            QuestionResponse response = QuestionResponse.findByQuestionAndSubmission(question, this);
+
+            if (question.isRequired() && (response == null || response.response == null || response.response == "")) {
+                return Optional.of("Question (" + (question.position + 1) + ") " + question.name + " requires an answer.");
             }
+
+            Optional<String> validationResponse = QuestionValidator.validate(response, question);
+
+            if (validationResponse.isPresent()) {
+                return validationResponse;
+            }
+
         }
 
 

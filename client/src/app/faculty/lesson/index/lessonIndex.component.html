@@ -26,7 +26,7 @@
     <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
         <mat-cell *matCellDef="let lesson">
-
+            <button mat-stroked-button color="accent" [routerLink]="'/faculty/gradebook/'+lesson.id">View Grades</button>&nbsp;
             <button mat-stroked-button color="accent" [routerLink]="'/lesson/edit/'+lesson.id">Edit</button>&nbsp;
             <button mat-stroked-button color="warn" (click)="delete(lesson.id)">Delete</button>
         </mat-cell>

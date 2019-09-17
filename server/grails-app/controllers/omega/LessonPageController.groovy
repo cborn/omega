@@ -92,11 +92,18 @@ class LessonPageController {
             return
         }
 
-        try {
-            lessonPageService.save(lessonPage)
-        } catch (ValidationException e) {
-            respond lessonPage.errors, view:'edit'
-            return
+        LessonPage.withNewTransaction {
+            lessonPage.attach();
+
+
+            try {
+                lessonPageService.save(lessonPage)
+            } catch (ValidationException e) {
+                respond lessonPage.errors, view:'edit'
+                return
+            }
+
+
         }
 
         respond lessonPage, [status: OK, view:"show"]

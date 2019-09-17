@@ -83,6 +83,7 @@ import { SubmissionGradeComponent } from './faculty/submission-grade/submission-
 import {StudentIndexComponent} from './student/index/index.component';
 import {FacultyIndexComponent} from './faculty/index/index.component';
 import { AnswerGradingRendererComponent } from './faculty/answer-grading-renderer/answer-grading-renderer.component';
+import { GradebookComponent } from './faculty/gradebook/gradebook.component';
 
 // @ts-ignore
 @NgModule({
@@ -136,7 +137,8 @@ import { AnswerGradingRendererComponent } from './faculty/answer-grading-rendere
         SubmissionGradeComponent,
         StudentIndexComponent,
         FacultyIndexComponent,
-        AnswerGradingRendererComponent
+        AnswerGradingRendererComponent,
+        GradebookComponent
     ],
     entryComponents: [
         ClozeDialogComponent,

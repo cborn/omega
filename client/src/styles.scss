@@ -21,6 +21,11 @@ $omega-app-theme: mat-light-theme($omega-app-primary, $omega-app-accent, $omega-
 @include angular-material-theme($omega-app-theme);
 
 
+a {
+  color: #028fa9;
+}
+
+
 .index {
   font-family: 'Roboto', sans-serif;
 }
@@ -296,3 +301,27 @@ body {
 .cloze.bordered-option {
   margin: 10px;
 }
+
+
+.status-icon {
+  padding: 10px;
+  border-radius: 6px;
+  color: #fff;
+}
+
+.status-icon-plain {
+  border: 1px solid #464646;
+  color: #464646;
+}
+
+
+.status-icon-DRAFT {
+  background-color: #ffa500;
+}
+
+
+.status-icon-SUBMITTED, .status-icon-PUBLISHED  {
+  background-color: #00a525;
+}
+
+

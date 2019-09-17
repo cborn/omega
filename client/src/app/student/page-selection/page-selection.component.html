@@ -4,7 +4,7 @@
 
             <mat-card class="example-card" *ngIf="page.status == 'PUBLISHED'">
                 <mat-card-header>
-                    <mat-card-title>{{"("+page.pageOrder + ") " + page.name}}</mat-card-title>
+                    <mat-card-title>{{"("+ (page.pageOrder + 1) + ") " + page.name}}</mat-card-title>
                     <mat-card-subtitle>{{page.questions.length}} Questions</mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content *ngIf="page.submissions">

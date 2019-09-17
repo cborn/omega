@@ -19,7 +19,7 @@ export class LessonPage extends BaseObject {
     submissions: Submission[];
 
 
-    isPublished() {
+    public isPublished() {
          return this.status === LessonPage.STATUS_PUBLISHED;
     }
 
