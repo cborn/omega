@@ -102,6 +102,33 @@ class QuestionController {
 
     }
 
+    def addPromptRecording(){
+
+        def question = Question.get(params.id);
+
+        if (question == null) {
+            render status: NOT_FOUND
+            return
+        }
+
+        def response = AWSUploaderService.upload(params.audio_data,"audio");
+
+        AudioProperty im = new AudioProperty();
+        im.setAutoPlay(false)
+        im.setAwsKey(response.awsKey);
+        im.setAwsUrl(response.s3FileUrl);
+        im.save(flush:true);
+
+
+        question.audioPrompt = im;
+
+        question.save(flush:true);
+
+        respond question, [status: OK, view:"show"]
+
+
+    }
+
     def save(Question question) {
         if (question == null) {
             render status: NOT_FOUND

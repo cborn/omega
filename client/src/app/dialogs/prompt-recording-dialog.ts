@@ -6,29 +6,18 @@ import {SubmissionResponse} from '../Model/submissionResponse';
 import {AuthenticatedHttpClient} from '../services/authenticated-http-service.service';
 import * as RecordRTC from 'recordrtc';
 import {VoiceRendererComponent} from '../faculty/lessonPage/lesson-page-renderer/components/voice-renderer/voice-renderer.component';
+import {Question} from '../Model/question';
 
-export interface CommentDialogData {
-    position?: any;
-    response: SubmissionResponse;
-    textOnly?: boolean;
-    audioOnly?: boolean;
+export interface PromptRecordingData {
+    question: Question;
 }
 
 
 @Component({
-    selector: 'app-comment-dialog',
-    templateUrl: '../dialogs/dialog-comment-dialog.html',
+    selector: 'app-recording-prompt',
+    templateUrl: '../dialogs/dialog-prompt-recording.html',
 })
-export class CommentAddingDialogComponent {
-
-    public options = [
-        {'id': 1, 'name': 'Recording'},
-        {'id': 2, 'name': 'Text'}
-    ];
-
-    typeSelect = this.options[0].id;
-    textInput;
-
+export class PromptRecordingDialogComponent {
 
     recording = false;
 
@@ -38,40 +27,13 @@ export class CommentAddingDialogComponent {
     private record;
 
     constructor(
-        public dialogRef: MatDialogRef<CommentAddingDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: CommentDialogData, private http: AuthenticatedHttpClient) {
+        public dialogRef: MatDialogRef<PromptRecordingDialogComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: PromptRecordingData, private http: AuthenticatedHttpClient) {
 
-        if (this.data.textOnly) {
-            this.options = [
-                {'id': 2, 'name': 'Text'}
-            ];
-            this.typeSelect = this.options[0].id;
-        } else if (this.data.audioOnly) {
-            this.options = [
-                {'id': 1, 'name': 'Recording'}
-            ];
-            this.typeSelect = this.options[0].id;
-        }
     }
 
     async dismiss() {
 
-        if (this.typeSelect === 2 && this.textInput != null) {
-
-            const form = new FormData();
-            form.append('text_data', this.textInput);
-            if (this.data.position) {
-                form.append('start', this.data.position.start);
-                form.append('end', this.data.position.end);
-            }
-            const promise = await this.http.post<any>(AuthenticatedHttpClient.COMMENT_TEXT_ADD_URL + '?responseId=' + this.data.response.id, form);
-            promise.subscribe(value1 => {
-                this.dialogRef.close(value1);
-
-            });
-        } else {
-
-        }
     }
 
     /**
@@ -125,11 +87,7 @@ export class CommentAddingDialogComponent {
 
         const form = new FormData();
         form.append('audio_data', blob);
-        form.append('start', this.data.position.start);
-        form.append('end', this.data.position.end);
-
-
-        const promise = await this.http.post<any>(AuthenticatedHttpClient.COMMENT_RECORDING_ADD_URL + '?responseId=' + this.data.response.id, form);
+        const promise = await this.http.post<any>(AuthenticatedHttpClient.QUESTION_PROMPT_AUDIO_URL + '/' + this.data.question.id, form);
 
         promise.subscribe(value1 => {
             this.url = VoiceRendererComponent.formatAsAWSUrl(value1);

@@ -26,10 +26,7 @@
     <mat-slide-toggle class="sidebar-form-input" (change)="changed()" color="primary" name="description" [(ngModel)]="question.custom_properties.description_enabled">
       Description
     </mat-slide-toggle>
-  <mat-form-field class="sidebar-form-input" (change)="changed()">
-    <mat-label>Max Grade points</mat-label>
-    <input matInput [(ngModel)]="question.max_grade" name="selection-limit-exact" class='sidebar-sub-input' type="number"/>
-  </mat-form-field>
+
 
   <mat-slide-toggle *ngIf="isOfType([QuestionType.DROPDOWN])" (change)="changed()" class="sidebar-form-input" color="primary" name="multi" [(ngModel)]="question.custom_properties.alphabetical">
     Alphabetical
@@ -86,7 +83,17 @@
     Stack Options
   </mat-slide-toggle>
 
-  <mat-slide-toggle (change)="changed()" *ngIf="isOfType([QuestionType.VOICE])" class="sidebar-form-input" color="primary" name="sync-play" [(ngModel)]="question.custom_properties.prompt_sync">
+  <div class="sidebar-form-input" *ngIf="isOfType([QuestionType.VOICE])">
+    <mat-label>Prompt Audio</mat-label>
+    <button mat-raised-button color="accent" class="sidebar-button" (click)="openPromptRecordingInput()">ADD RECORDING</button>
+    <audio class="audio-controller" style="width: 100%;" controls="">
+      <source [src]="question.prompts?.audioPrompt.url">
+    </audio>
+
+<!--    <input matInput (change)="changed()" [(ngModel)]="question.custom_properties.max_chars" name="selection-max-chars" class='sidebar-sub-input' type="number" />-->
+  </div>
+
+  <mat-slide-toggle (change)="changed()" *ngIf="isOfType([QuestionType.VOICE]) && question.prompts?.audioPrompt" class="sidebar-form-input" color="primary" name="sync-play" [(ngModel)]="question.custom_properties.prompt_sync">
     Play prompt at the same time
   </mat-slide-toggle>
 
@@ -94,8 +101,6 @@
     <mat-label>Length Limit</mat-label>
     <input matInput [(ngModel)]="question.custom_properties.length_limit" name="selection-step-value" class='sidebar-sub-input' type="time" />
   </mat-form-field>
-
-
 
 
 
@@ -152,8 +157,14 @@
       <input matInput [(ngModel)]="question.custom_properties.label_end"  name="selection-label-value-3" class='sidebar-sub-input'/>
     </mat-form-field>
 
+
+
   </div>
 
+  <mat-form-field class="sidebar-form-input" (change)="changed()">
+    <mat-label>Max Grade points</mat-label>
+    <input matInput [(ngModel)]="question.max_grade" name="selection-limit-exact" class='sidebar-sub-input' type="number"/>
+  </mat-form-field>
 
 
 

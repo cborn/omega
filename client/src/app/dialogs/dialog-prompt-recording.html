@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Add a Prompt Recording</h1>
+<div mat-dialog-content>
+
+
+    <div style="margin: 15px 0">
+        <button mat-raised-button *ngIf="!recording" color="primary" (click)="initiateRecording()">Start Recording</button>
+        <button mat-raised-button *ngIf="recording" color="accent" (click)="stopRecording()">Stop Recording</button>
+    </div>
+
+
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="dismiss()">Cancel</button>
+</div>
+

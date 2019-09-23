@@ -1,5 +1,93 @@
 <div id="content" role="main">
-  <section class="container colset-2-its">
-    <h1 style="text-align:center;">Welcome to LL Student</h1>
-  </section>
+    <section class="container colset-2-its">
+        <h1 style="text-align:center;">Welcome to LL - Student Dashboard</h1>
+
+
+        <mat-grid-list cols="2">
+            <mat-grid-tile *ngIf="submissions$ | async as submissions">
+                <mat-card class="simple-card-content">
+                    <mat-card-header>
+                        <mat-card-title>Recent Submissions
+                        </mat-card-title>
+                        <mat-card-subtitle>{{submissions.length}} Submissions</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+
+                        <!-- List of top 5 recent submissions -->
+                        <mat-list role="list" *ngIf="!loading.submission">
+                            <mat-list-item role="listitem" class="clickable-list-item"
+                                           *ngFor="let submission of submissions | slice:0:limits.submission"
+                                           [routerLink]="'/student/submission/' + submission.id">
+                                <mat-icon mat-list-icon>create</mat-icon>
+                                <h4 mat-line [style.width.%]="submission.status == 'DRAFT' ? 86 : 80">
+                                    Page <span class="special-span-tag-item">{{submission.page.name}}</span> in lesson
+                                    <span class="special-span-tag-item"
+                                          [routerLink]="'/student/lesson/'+submission.lesson.id">{{submission.lesson.name}}</span>
+                                    in course
+                                    <span class="special-span-tag-item"
+                                          [routerLink]="'/student/course/'+submission.lesson.course.id">{{submission.lesson.course.name}}</span>
+                                </h4>
+
+                                <p mat-line> {{(submission.status === "DRAFT" ? submission.drafted : submission.submitted) | date}}
+                                    <mat-icon *ngIf="hasComments(submission)" style="margin-left: 10px">comment</mat-icon>
+                                </p>
+
+                                <span class="status-icon status-icon-{{submission.status}}">
+                                    {{submission.status}}
+                                </span>
+
+
+                            </mat-list-item>
+
+                        </mat-list>
+                        <mat-spinner *ngIf="loading.submission"></mat-spinner>
+
+                    </mat-card-content>
+                    <mat-card-actions *ngIf="submissions.length > 5">
+                        <button mat-button
+                                (click)="limits.submission == submissions.length ? limits.submission = 5 : limits.submission = submissions.length">
+                            View All Submissions
+                        </button>
+                    </mat-card-actions>
+
+
+                </mat-card>
+            </mat-grid-tile>
+
+
+            <mat-grid-tile *ngIf="courses$ | async as courses">
+                <mat-card class="simple-card-content">
+                    <mat-card-header>
+                        <mat-card-title>Courses</mat-card-title>
+                        <mat-card-subtitle>{{courses.length}} Courses</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+
+                        <!-- List of top 5 recent submissions -->
+                        <mat-list role="list" *ngIf="!loading.course">
+                            <mat-list-item role="listitem"
+                                           *ngFor="let course of courses | slice: 0 : limits.course">
+                                <h4 mat-line>{{course.name}}</h4><span
+                                    class="status-icon status-icon-plain">{{course.lessons.length + " "}}Lessons</span>
+                                <p mat-line> ({{course.id}}) </p>
+
+
+                            </mat-list-item>
+
+                        </mat-list>
+                        <mat-spinner *ngIf="loading.course"></mat-spinner>
+
+                    </mat-card-content>
+                    <mat-card-actions *ngIf="courses.length > 5">
+                        <button mat-button
+                                (click)="limits.course == courses.length ? limits.course = 5 : limits.course = courses.length">
+                            View All Courses
+                        </button>
+                    </mat-card-actions>
+
+
+                </mat-card>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </section>
 </div>

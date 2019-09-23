@@ -33,6 +33,56 @@ img.angular-logo {
     font-size:8em;
 }
 
+.simple-card-content {
+    width: 90%;
+    margin-left: 2.5%;
+    height: fit-content;
+}
+
+mat-grid-tile {
+    padding-bottom: 5%;
+}
+
+.status-icon {
+    float: right;
+    padding: 10px;
+    border-radius: 6px;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+mat-list-item {
+    border-bottom: 1px solid #e6e6e6;
+    padding: 5px !important;
+}
+
+.clickable-list-item {
+    cursor: pointer;
+    background: #f3f3f3;
+}
+
+mat-list-item:last-child {
+    border-bottom: none;
+}
+
+
+
+mat-spinner {
+    left: calc(50% - 50px);
+}
+
+.special-span-tag-item {
+    background: #3193bb;
+    color: white;
+    border-radius: 3px;
+    padding: 0 5px;
+}
+
+.special-span-tag-item:hover {
+    background: #30b5dc;
+}
+
 @media (max-width: 1200px) {
     .plus {
         font-size: 6em;

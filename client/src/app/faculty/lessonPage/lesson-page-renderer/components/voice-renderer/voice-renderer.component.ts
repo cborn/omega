@@ -118,6 +118,15 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
         const StereoAudioRecorder = RecordRTC.StereoAudioRecorder;
         this.record = new StereoAudioRecorder(stream, options);
         this.record.record();
+
+        if (this.question.prompts.audioPrompt && this.question.custom_properties.prompt_sync) {
+            // Start the prompt audio..
+            const prompt = $('#prompt_' + this.question.id);
+
+            console.log(prompt);
+
+            prompt[0].play();
+        }
     }
 
     /**
@@ -240,7 +249,7 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
         });
 
         dialogRef.afterClosed().subscribe(result => {
-           this.answerDidChange(this.question, result);
+            this.answerDidChange(this.question, result);
         });
 
     }

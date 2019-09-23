@@ -17,6 +17,10 @@ class Submission {
 
     Optional<String> verifyCompleteness() {
 
+        if(status == SubmissionStatus.GRADED) {
+            return Optional.of("This submission has already been Graded.");
+        }
+
         if (this.page == null)
             return Optional.of("Page data not found");
 

@@ -1,1 +1,49 @@
-<p>gradebook works!</p>
+<section class="container">
+
+
+<table *ngIf="users$ | async as users" class="mat-elevation-z8 grading-table">
+
+    <!-- layout table headers and col data -->
+
+    <thead>
+    <tr>
+        <th>Pages <mat-icon>arrow_right_alt</mat-icon></th>
+        <ng-container *ngIf="pages$ | async as pages">
+            <ng-container class="submission">
+                <th class="grading-data" *ngFor="let page of pages | positionOrder : 'asc'" [colSpan]="page.questions.length">{{page.name}}</th>
+            </ng-container>
+        </ng-container>
+        <th rowspan="2" class="grades">Grades</th>
+    </tr>
+    <tr>
+        <th>Students <mat-icon>arrow_downward</mat-icon></th>
+        <ng-container *ngIf="pages$ | async as pages">
+        <ng-container class="submission" *ngFor="let page of pages">
+            <th class="grading-data" *ngFor="let question of page.questions | positionOrder : 'asc'">{{question.position}}</th>
+        </ng-container>
+        </ng-container>
+    </tr>
+
+    </thead>
+
+
+
+
+    <!-- Start of table body. -->
+    <tbody>
+    <tr *ngFor="let user of users">
+        <td>{{user.fullName}}</td>
+        <ng-container *ngIf="pages$ | async as pages">
+            <ng-container class="submission" *ngFor="let page of pages">
+                <ng-container class="question" *ngFor="let question of page.questions | positionOrder : 'asc'">
+                    <td class="grading-data grading-data-{{response.status}}" *ngIf="getResponseForPageAndQuestion(page, question) as response"><mat-icon>{{getIconForStatus(response.status)}}</mat-icon></td>
+                    <td class="grading-data grading-data-NO_SUB" *ngIf="!getResponseForPageAndQuestion(page, question)"><mat-icon>hourglass_empty</mat-icon></td>
+                </ng-container>
+
+            </ng-container>
+        </ng-container>
+        <td>Grade</td>
+    </tr>
+    </tbody>
+</table>
+</section>

@@ -10,4 +10,5 @@ json {
     firstname user.firstname
     fromMoodle user.fromMoodle
     username user.username
+    fullName user.firstname + ' ' + user.surname
 }

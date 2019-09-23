@@ -4,13 +4,23 @@
         <i class="material-icons">mic</i>
     </div>
     <div *ngIf="isReal">
-
-        <button mat-raised-button (click)="initiateRecording()" *ngIf="!isGrading && !recording"> Start Recording</button>
-        <button mat-raised-button (click)="stopRecording()" color="accent" *ngIf="!isGrading && recording"> Stop Recording</button>
+        <audio class="audio-controller" *ngIf="question.prompts?.audioPrompt" [controls]="!question.custom_properties.prompt_sync" [id]="'prompt_'+question.id">
+            <source [src]="question.prompts?.audioPrompt.url">
+        </audio>
+        <div *ngIf="question.custom_properties.prompt_sync && question.prompts?.audioPrompt">
+            <p>Audio prompt will play when recording starts.</p>
+        </div>
+        <br/>
+        <button mat-raised-button (click)="initiateRecording()" *ngIf="!isGrading && !recording"> Start Recording
+        </button>
+        <button mat-raised-button (click)="stopRecording()" color="accent" *ngIf="!isGrading && recording"> Stop
+            Recording
+        </button>
         <div class="clearfix"></div>
         <div style="position: relative" *ngIf="!loading && canvas != null && response">
             <div *ngFor="let comment of response.comments">
-                <mat-chip-list class="comment-bubble" [ngClass]="{'comment-bubble-open':comment.id === selectedComment,'comment-bubble-closed':comment.id !== selectedComment}"
+                <mat-chip-list class="comment-bubble"
+                               [ngClass]="{'comment-bubble-open':comment.id === selectedComment,'comment-bubble-closed':comment.id !== selectedComment}"
                                [style.left.px]="getCommentLocation(comment.location, comment.endLocation)">
                     <mat-chip color="primary" class="comment-bubble-item"
                               (click)="selectComment(comment)">{{comment.user.firstname + " " + comment.user.surname}}
@@ -35,7 +45,6 @@
             </div>
 
 
-
         </div>
 
         <div class="viz-container" [id]="'container_'+ question.id" *ngIf="hasRecording">
@@ -46,7 +55,8 @@
 
         </div>
 
-        <div (click)="addNewComment()" *ngIf="showAddCommentDialog" [style.left.px]="getCommentLocation(commentPosition.start,commentPosition.end)" class="popup-container">
+        <div (click)="addNewComment()" *ngIf="showAddCommentDialog"
+             [style.left.px]="getCommentLocation(commentPosition.start,commentPosition.end)" class="popup-container">
             <h5>Add a Comment?</h5>
         </div>
 

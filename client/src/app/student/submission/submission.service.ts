@@ -56,8 +56,8 @@ export class SubmissionService {
     }
 
 
-    async loadAllSubmissions() {
-        const promise = await this.http.get<Submission[]>(AuthenticatedHttpClient.SUBMISSION_URL);
+    async loadAllSubmissions(lessonId?) {
+        const promise = await this.http.get<Submission[]>(AuthenticatedHttpClient.SUBMISSION_URL + (lessonId ? '?lessonId=' + lessonId : ''));
 
         promise.subscribe(async submissions => {
             this.allSubmissionsSubject.next(submissions);
@@ -133,6 +133,9 @@ export class SubmissionService {
             submission.responses.push(response);
 
         } else {
+            if (submission.responses[responseIndex].status === 'COMMENTS_PENDING') {
+                submission.responses[responseIndex].status  = 'COMMENTS_RESPONDED';
+            }
             submission.responses[responseIndex].response = event.value;
         }
 

@@ -47,3 +47,8 @@
 }
 
 
+.sidebar-button {
+    float: right;
+    transform: translate(-10px, -25%);
+}
+

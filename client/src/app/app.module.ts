@@ -84,6 +84,7 @@ import {StudentIndexComponent} from './student/index/index.component';
 import {FacultyIndexComponent} from './faculty/index/index.component';
 import { AnswerGradingRendererComponent } from './faculty/answer-grading-renderer/answer-grading-renderer.component';
 import { GradebookComponent } from './faculty/gradebook/gradebook.component';
+import {PromptRecordingDialogComponent} from './dialogs/prompt-recording-dialog';
 
 // @ts-ignore
 @NgModule({
@@ -138,13 +139,15 @@ import { GradebookComponent } from './faculty/gradebook/gradebook.component';
         StudentIndexComponent,
         FacultyIndexComponent,
         AnswerGradingRendererComponent,
-        GradebookComponent
+        GradebookComponent,
+        PromptRecordingDialogComponent
     ],
     entryComponents: [
         ClozeDialogComponent,
         AlertDialogComponent,
         ConfirmDialogComponent,
-        CommentAddingDialogComponent
+        CommentAddingDialogComponent,
+        PromptRecordingDialogComponent
     ],
     imports: [
         BrowserModule,

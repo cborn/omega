@@ -5,7 +5,7 @@
 
 <mat-toolbar color="primary">
     <mat-toolbar-row>
-        <span>Language Lessons</span>
+        <span [routerLink]="!applicationData?.isAdmin ? '/student/index' : '/faculty/index'" style="cursor: pointer;">Language Lessons</span>
         <span class="navbar-spacer-micro"></span>
         <!--// Term selector-->
 

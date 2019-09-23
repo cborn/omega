@@ -12,6 +12,8 @@ export class SubmissionResponse extends BaseObject {
 
     grade: number;
 
+    status:any;
+
 
 
 }

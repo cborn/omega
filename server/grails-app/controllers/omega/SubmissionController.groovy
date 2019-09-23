@@ -63,7 +63,13 @@ class SubmissionController {
             respond message: message, [status: FORBIDDEN, message: message.message]
         }
         else
+        {
+            submission.setStatus(SubmissionStatus.SUBMITTED)
+            submission.submitted = new Date();
+            submission.save(flush:true);
             respond submission, view: "show";
+        }
+
     }
 
 
@@ -72,11 +78,14 @@ class SubmissionController {
         QuestionResponse questionResponse = QuestionResponse.findByQuestionAndSubmission(Question.get(params.questionId), Submission.get(params.submissionId));
 
         QuestionResponse.withNewTransaction {
-            questionResponse.attach();
+
             if (!questionResponse) {
                 questionResponse = new QuestionResponse();
                 questionResponse.question = Question.get(params.questionId);
                 questionResponse.submission = Submission.get(params.submissionId);
+            }
+            else {
+                questionResponse.attach();
             }
 
             if (questionResponse.status == QuestionStatus.COMMENTS_PENDING) {

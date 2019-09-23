@@ -1,5 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Question, QuestionType} from '../../../../../Model/question';
+import {CommentAddingDialogComponent} from '../../../../../dialogs/comment-adding-dialog';
+import {MatDialog} from '@angular/material';
+import {PromptRecordingDialogComponent} from '../../../../../dialogs/prompt-recording-dialog';
 
 @Component({
     selector: 'app-sidebar',
@@ -22,7 +25,7 @@ export class SidebarComponent implements OnInit {
 
 
 
-    constructor() {
+    constructor( private dialog: MatDialog) {
     }
 
     ngOnInit() {
@@ -45,6 +48,22 @@ export class SidebarComponent implements OnInit {
 
     changed() {
         this.propertyChanged.emit(true);
+    }
+
+    openPromptRecordingInput() {
+        console.log(this.question);
+
+        const dialogRef = this.dialog.open(PromptRecordingDialogComponent, {
+            width: '250px',
+            data: {
+                question: this.question
+            }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            this.changed();
+        });
+
     }
 
 }

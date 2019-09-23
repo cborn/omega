@@ -46,17 +46,17 @@ class QuestionValidator {
         println "Number validation"
         if(question.custom_properties.containsKey(Question.QuestionPropertyKeys.MAX.key_name))
         {
-            if(Integer.parseInt(questionResponse.response) > (int) question.custom_properties.get(Question.QuestionPropertyKeys.MAX.key_name))
+            if(Integer.parseInt(questionResponse.response) > Integer.parseInt(question.custom_properties.get(Question.QuestionPropertyKeys.MAX.key_name)))
             {
-                return Optional.of("Question (" + (question.position + 1) + ") " + question.name + " value cannot be greater than " + (int) question.custom_properties.get(Question.QuestionPropertyKeys.MAX.key_name))
+                return Optional.of("Question (" + (question.position + 1) + ") " + question.name + " value cannot be greater than " + Integer.parseInt(question.custom_properties.get(Question.QuestionPropertyKeys.MAX.key_name)))
             }
         }
 
         if(question.custom_properties.containsKey(Question.QuestionPropertyKeys.MIN.key_name))
         {
-            if(Integer.parseInt(questionResponse.response) < (int) question.custom_properties.get(Question.QuestionPropertyKeys.MIN.key_name))
+            if(Integer.parseInt(questionResponse.response) < Integer.parseInt(question.custom_properties.get(Question.QuestionPropertyKeys.MIN.key_name)))
             {
-                return Optional.of("Question (" + (question.position + 1) + ") " + question.name + " value cannot be less than " + (int) question.custom_properties.get(Question.QuestionPropertyKeys.MIN.key_name))
+                return Optional.of("Question (" + (question.position + 1) + ") " + question.name + " value cannot be less than " + Integer.parseInt(question.custom_properties.get(Question.QuestionPropertyKeys.MIN.key_name)))
             }
         }
 

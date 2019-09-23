@@ -18,6 +18,10 @@ class Role implements GrantedAuthority, Serializable {
 		authority nullable: false, blank: false, unique: true
 	}
 
+	static getStudentRole() {
+		return Role.findByAuthority("ROLE_STUDENT");
+	}
+
 	static mapping = {
 		cache true
 		table '`role`'

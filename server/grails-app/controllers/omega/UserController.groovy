@@ -2,6 +2,9 @@ package omega
 
 import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
+
+import java.util.stream.Collectors
+
 import static org.springframework.http.HttpStatus.*
 
 @Secured(['ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_FACULTY'])
@@ -14,7 +17,16 @@ class UserController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond userService.list(params), model:[userCount: userService.count()]
+
+        if(params.student) {
+            respond UserRole.findAllByRole(Role.getStudentRole())*.user, model:[userCount: userService.count()]
+        }
+        else
+        {
+            respond userService.list(params), model:[userCount: userService.count()]
+        }
+
+
     }
 
     def show(Long id) {

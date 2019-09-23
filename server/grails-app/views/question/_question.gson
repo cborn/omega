@@ -22,7 +22,11 @@ json {
 			imageFeedback question.imageFeedback
 			videoPrompt question.videoPrompt
 			videoFeedback question.videoFeedback
-			audioPrompt question.audioPrompt
+			audioPrompt {
+				key question.audioPrompt.awsKey
+                autoPlay question.audioPrompt.autoPlay
+                url question.audioPrompt.awsUrl
+			}
 			audioFeedback question.audioFeedback
 		}
 	}

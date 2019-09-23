@@ -18,9 +18,14 @@ export class Question extends BaseObject {
     name: string;
     required: boolean;
     type: QuestionType;
+    prompts: {
+        audioPrompt: {
+            key: string,
+            autoPlay: boolean,
+            url: string
+        }
+    };
     custom_properties: any;
-
-
 
 
     static questionTypeList() {
@@ -39,9 +44,6 @@ export class Question extends BaseObject {
             {name: 'Recording', value: QuestionType.VOICE}];
 
     }
-
-
-
 
 
     static getTypeForString(type) {
@@ -72,7 +74,6 @@ export class Question extends BaseObject {
                 return QuestionType.VOICE;
         }
     }
-
 
 
 }
