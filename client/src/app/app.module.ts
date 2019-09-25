@@ -17,7 +17,7 @@ import {
     MatOptionModule, MatProgressSpinnerModule,
     MatSelectModule,
     MatSidenavModule, MatTabsModule,
-    MatToolbarModule
+    MatToolbarModule, MatTooltipModule
 } from '@angular/material';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTableModule} from '@angular/material/table';
@@ -179,7 +179,8 @@ import {PromptRecordingDialogComponent} from './dialogs/prompt-recording-dialog'
         MatListModule,
         MatProgressSpinnerModule,
         MatNativeDateModule,
-        MatTabsModule
+        MatTabsModule,
+        MatTooltipModule
     ],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},
         {

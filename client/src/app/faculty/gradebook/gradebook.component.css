@@ -60,10 +60,17 @@ th {
     color: white;
 }
 
-
-
-
 .grading-data-NO_SUB {
     background-color: #a7a4a2;
     color: #232323;
+}
+
+
+.grade-input {
+    padding-right: 28px !important;
+    width: 46px;
+}
+
+.grade-input-addon {
+    margin-left: -28px;
 }
