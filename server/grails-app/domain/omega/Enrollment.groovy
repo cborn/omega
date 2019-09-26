@@ -2,8 +2,9 @@ package omega
 
 class Enrollment {
 
+    int grade;
 
-    static hasOne = [course:Course, term:Term, user:User]
+    static hasOne = [lesson:Lesson, term:Term, user:User]
 
     static constraints = {
     }

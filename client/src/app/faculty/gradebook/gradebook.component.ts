@@ -5,6 +5,7 @@ import {ActivatedRoute} from '@angular/router';
 import {SubmissionService} from '../../student/submission/submission.service';
 import {SubmissionResponse} from '../../Model/submissionResponse';
 import {User} from '../../Model/user';
+import {AuthenticatedHttpClient} from '../../services/authenticated-http-service.service';
 
 @Component({
     selector: 'app-gradebook',
@@ -18,8 +19,12 @@ export class GradebookComponent implements OnInit {
     pages$ = this.lessonPageService.serviceObservable;
     lessonId;
 
+    grades = {
 
-    constructor(private userService: UserService, private submissionService: SubmissionService, private lessonPageService: LessonPageService, private rt: ActivatedRoute) {
+    }
+
+
+    constructor(private userService: UserService, private submissionService: SubmissionService, private lessonPageService: LessonPageService, private rt: ActivatedRoute, private http: AuthenticatedHttpClient) {
     }
 
     ngOnInit() {
@@ -52,6 +57,19 @@ export class GradebookComponent implements OnInit {
         return null;
 
     }
+
+    getSubmissionIdForPageAndUser(page, user) {
+        for (const submission of this.submissionService.allSubmissionsSubject.value) {
+            if (submission.page.id === page.id && submission.user.id === user.id) {
+
+                return submission.id;
+
+            }
+        }
+
+        return null;
+    }
+
 
     getMaxPossibleGrade(user: User) {
 
@@ -104,5 +122,26 @@ export class GradebookComponent implements OnInit {
 
         }
     }
+
+    async submitGradeForUserForLesson(user: User) {
+
+        const data = {
+            user: user.id,
+            lesson: this.lessonId,
+            grade: this.grades[user.id]
+        };
+
+        // create or update the enrollment for the user and submission and term.
+        const promise = await this.http.post(AuthenticatedHttpClient.ENROLLMENT_URL, data, {}, false, true);
+
+        promise.subscribe(value => {
+            this.userService.list('true', 'student');
+        });
+
+        return promise;
+
+
+    }
+
 
 }

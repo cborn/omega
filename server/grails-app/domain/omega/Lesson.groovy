@@ -13,7 +13,7 @@ class Lesson {
 
     static belongsTo = [course:Course]
 
-    static hasMany = [pages:LessonPage]
+    static hasMany = [pages:LessonPage, enrollment:Enrollment]
 
 
 

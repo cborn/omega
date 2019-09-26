@@ -12,6 +12,7 @@
             </th>
             <ng-container *ngIf="pages$ | async as pages">
                 <ng-container class="submission" *ngFor="let page of pages | positionOrder : 'asc'">
+                    <th *ngIf="page.pageOrder > 0"><p></p></th>
                     <th class="grading-data" *ngIf="page.questions.length > 0" [colSpan]="page.questions.length">
                         <button mat-raised-button matTooltip="Open Page" style="width: 100%;"
                                 [routerLink]="'/lessonPage/builder/'+page.id">{{page.name}}</button>
@@ -19,15 +20,19 @@
                 </ng-container>
             </ng-container>
             <th rowspan="2" class="grades">Grades</th>
+            <th rowspan="2" class="grades">Actions</th>
+
         </tr>
         <tr>
             <th>Students
                 <mat-icon>arrow_downward</mat-icon>
             </th>
             <ng-container *ngIf="pages$ | async as pages">
-                <ng-container class="submission" *ngFor="let page of pages">
+                <ng-container class="submission" *ngFor="let page of pages | positionOrder : 'asc'">
+                    <th *ngIf="page.pageOrder > 0"><p></p></th>
                     <th class="grading-data"
-                        *ngFor="let question of page.questions | positionOrder : 'asc'">{{question.position}}</th>
+                        *ngFor="let question of page.questions | positionOrder : 'asc'">{{question.position + 1}}</th>
+
                 </ng-container>
             </ng-container>
         </tr>
@@ -40,11 +45,13 @@
         <tr *ngFor="let user of users">
             <td>{{user.fullName}}</td>
             <ng-container *ngIf="pages$ | async as pages">
-                <ng-container class="submission" *ngFor="let page of pages">
+                <ng-container class="submission" *ngFor="let page of pages | positionOrder : 'asc'">
+                    <td *ngIf="page.pageOrder > 0"><p></p></td>
                     <ng-container class="question" *ngFor="let question of page.questions | positionOrder : 'asc'">
                         <td class="grading-data grading-data-{{response.status}}"
                             [matTooltip]="getPrettyStatusName(response.status)"
-                            *ngIf="getResponseForPageAndQuestion(page,user, question) as response">
+                            *ngIf="getResponseForPageAndQuestion(page,user, question) as response"
+                        [routerLink]="'/faculty/grade/'+getSubmissionIdForPageAndUser(page,user)">
                             <mat-icon>{{getIconForStatus(response.status)}}</mat-icon>
                         </td>
                         <td class="grading-data grading-data-NO_SUB" matTooltip="No Response Yet"
@@ -55,7 +62,12 @@
 
                 </ng-container>
             </ng-container>
-            <td><input class="classic-input-style grade-input" type="number" placeholder="grade"/><span class="grade-input-addon">/{{getMaxPossibleGrade(user)}}</span></td>
+            <td><input class="classic-input-style grade-input" type="number" placeholder="grade" [(ngModel)]="grades[user.id]"/><span
+                    class="grade-input-addon">/{{getMaxPossibleGrade(user)}}</span></td>
+            <td>
+                <button mat-raised-button (click)="submitGradeForUserForLesson(user)"> Submit grade</button>
+            </td>
+
         </tr>
         </tbody>
     </table>

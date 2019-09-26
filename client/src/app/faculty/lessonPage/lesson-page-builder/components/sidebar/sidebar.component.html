@@ -86,7 +86,7 @@
   <div class="sidebar-form-input" *ngIf="isOfType([QuestionType.VOICE])">
     <mat-label>Prompt Audio</mat-label>
     <button mat-raised-button color="accent" class="sidebar-button" (click)="openPromptRecordingInput()">ADD RECORDING</button>
-    <audio class="audio-controller" style="width: 100%;" controls="">
+    <audio class="audio-controller" style="width: 100%;" controls="" *ngIf="question.prompts?.audioPrompt">
       <source [src]="question.prompts?.audioPrompt.url">
     </audio>
 

@@ -1,0 +1,7 @@
+import omega.Enrollment
+
+model {
+	Enrollment enrollment
+}
+
+json tmpl.enrollment(enrollment)

@@ -19,6 +19,9 @@ export class NavComponent implements OnInit {
 
 
     constructor(private navService: NavService, private router: Router, private sessionService: SessionManagerService, private notificationService: NotificationService) {
+
+
+
     }
 
     didChangeTerm() {
@@ -35,6 +38,7 @@ export class NavComponent implements OnInit {
         (await this.navService.getNavData()).subscribe(res => {
             this.applicationData = res;
             this.currentTerm = this.applicationData.term.id;
+            this.didChangeTerm();
         });
     }
 

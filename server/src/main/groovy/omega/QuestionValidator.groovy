@@ -69,6 +69,15 @@ class QuestionValidator {
     }
 
     static Optional<String> validateForLongText(Question question, QuestionResponse questionResponse) {
+
+        if(question.custom_properties.containsKey(Question.QuestionPropertyKeys.MAX_CHARS.key_name))
+        {
+            if(questionResponse.response.length() > Integer.parseInt(question.custom_properties.get(Question.QuestionPropertyKeys.MAX_CHARS.key_name)))
+            {
+                return Optional.of("Question (" + (question.position + 1) + ") " + question.name + " cannot have more than " + Integer.parseInt(question.custom_properties.get(Question.QuestionPropertyKeys.MAX_CHARS.key_name)) +" characters")
+            }
+        }
+
         return Optional.empty();
     }
 
@@ -81,6 +90,15 @@ class QuestionValidator {
     }
 
     static Optional<String> validateForShortText(Question question, QuestionResponse questionResponse) {
+
+        if(question.custom_properties.containsKey(Question.QuestionPropertyKeys.MAX_CHARS.key_name))
+        {
+            if(questionResponse.response.length() > Integer.parseInt(question.custom_properties.get(Question.QuestionPropertyKeys.MAX_CHARS.key_name)))
+            {
+                return Optional.of("Question (" + (question.position + 1) + ") " + question.name + " cannot have more than " + Integer.parseInt(question.custom_properties.get(Question.QuestionPropertyKeys.MAX_CHARS.key_name)) +" characters")
+            }
+        }
+
         return Optional.empty();
     }
 
