@@ -118,8 +118,13 @@ environments:
             url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
     production:
         dataSource:
-            dbCreate: none
-            url: jdbc:h2:./prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+            pooled: true
+            jmxExport: true
+            driverClassName: org.postgresql.Driver
+            username: ${LL_DB_USERNAME}
+            password: ${LL_DB_PASSWORD}
+            dbCreate: create-drop
+            url: jdbc:postgresql://${LL_DB_HOSTNAME}:${LL_DB_PORT}/${LL_DB_NAME}
             properties:
                 jmxEnabled: true
                 initialSize: 5
