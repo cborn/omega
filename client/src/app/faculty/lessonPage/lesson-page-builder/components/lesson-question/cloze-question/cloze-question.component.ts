@@ -152,7 +152,7 @@ export class ClozeQuestionComponent implements OnInit {
 @Component({
     selector: 'app-dialog-cloze',
     templateUrl: 'cloze-dialog.html',
-    styleUrls: ['/cloze-dialog.scss'],
+    styleUrls: ['./cloze-dialog.scss'],
 })
 export class ClozeDialogComponent {
 
