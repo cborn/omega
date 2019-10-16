@@ -127,6 +127,7 @@ class SubmissionController {
             return
         }
         submission.graded = new Date();
+        submission.status = SubmissionStatus.GRADED;
 
         if (submission.grade == null) {
             ErrorMessage message = new ErrorMessage();

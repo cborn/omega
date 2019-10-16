@@ -134,7 +134,7 @@ export class AuthenticatedHttpClient {
             }
             return new Error(JSON.stringify(errorMsg));
         }
-    };
+    }
 
 
     /**
