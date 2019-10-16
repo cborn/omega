@@ -52,6 +52,7 @@ export class AuthenticatedHttpClient {
     static QUESTION_URL = environment.BASE_URL + 'question';
     static COURSE_URL = environment.BASE_URL + 'course';
     static LESSON_URL = environment.BASE_URL + 'lesson';
+    static ENROLLMENT_URL = environment.BASE_URL + 'enrollment';
     static TERM_URL = environment.BASE_URL + 'term';
     static SUBMISSION_URL = environment.BASE_URL + 'submission';
     static SUBMISSION_GRADE_URL = environment.BASE_URL + 'submission/grade';
@@ -171,10 +172,19 @@ export class AuthenticatedHttpClient {
      * @param {Object} params body of the request.
      * @param {IRequestOptions} options options of the request like headers, body, etc.
      * @param {boolean} mute to stop errors from being printed to the screen.
+     * @param injectTerm wether to add in the current term into the object.
      * @returns {Observable<T>}
      */
-    public async post<T>(endPoint: string, params: Object, options?: IRequestOptions, mute?: boolean) {
+    public async post<T>(endPoint: string, params: Object, options?: IRequestOptions, mute?: boolean, injectTerm?: boolean) {
         await this.refreshSessionToken();
+
+        if (injectTerm) {
+            console.log(this.sessionManager.displayTerm);
+            if (this.sessionManager.displayTerm != null) {
+                params['term'] = this.sessionManager.displayTerm;
+            }
+        }
+
         return this.http.post<T>(endPoint, params, Object.assign({}, options, {headers: this.headers}))
             .pipe(catchError(err => throwError(this.errorHandler(err, mute))));
     }

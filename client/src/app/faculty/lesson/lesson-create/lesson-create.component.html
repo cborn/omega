@@ -2,12 +2,16 @@
 
 <mat-card class="centered">
     <form>
-        <mat-form-field >
+        <mat-form-field>
             <input matInput placeholder="Name" name="name" [(ngModel)]="lesson.name">
         </mat-form-field>
 
-        <mat-form-field >
-            <input matInput placeholder="Name" name="name" [(ngModel)]="lesson.due">
+        <mat-form-field>
+
+            <input [matDatepicker]="myDatepicker" matInput placeholder="Due Date" name="due" [(ngModel)]="lesson.due">
+            <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+            <mat-datepicker #myDatepicker></mat-datepicker>
+
         </mat-form-field>
 
         <!--<mat-form-field>-->

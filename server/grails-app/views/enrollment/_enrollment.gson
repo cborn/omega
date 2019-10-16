@@ -1,0 +1,7 @@
+import omega.Enrollment
+
+model {
+	Enrollment enrollment
+}
+
+json g.render(enrollment, [resolveTemplate: false])

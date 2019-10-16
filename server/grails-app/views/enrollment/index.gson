@@ -1,0 +1,8 @@
+import omega.Enrollment
+
+model {
+	Iterable<Enrollment> enrollmentList
+}
+
+json tmpl.enrollment(enrollmentList ?: [])
+
