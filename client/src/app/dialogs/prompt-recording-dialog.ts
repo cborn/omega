@@ -10,6 +10,7 @@ import {Question} from '../Model/question';
 
 export interface PromptRecordingData {
     question: Question;
+    isFeedback: boolean;
 }
 
 
@@ -87,7 +88,7 @@ export class PromptRecordingDialogComponent {
 
         const form = new FormData();
         form.append('audio_data', blob);
-        const promise = await this.http.post<any>(AuthenticatedHttpClient.QUESTION_PROMPT_AUDIO_URL + '/' + this.data.question.id, form);
+        const promise = await this.http.post<any>((this.data.isFeedback ? AuthenticatedHttpClient.QUESTION_FEEDBACK_AUDIO_URL : AuthenticatedHttpClient.QUESTION_PROMPT_AUDIO_URL) + '/' + this.data.question.id, form);
 
         promise.subscribe(value1 => {
             this.url = VoiceRendererComponent.formatAsAWSUrl(value1);

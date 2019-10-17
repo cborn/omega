@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
 
 
         this.http.post<LoginResponse>(AuthenticatedHttpClient.AUTH_URL, loginPackage).subscribe(value => {
+
             this.showSpinner = false;
             this.sessionManager.setSessionToken(value.access_token);
             this.sessionManager.setExpires(value.expires_in);
@@ -54,9 +55,9 @@ export class LoginComponent implements OnInit {
             this.sessionManager.setRoles(value.roles);
             this.sessionManager.setUsername(value.username);
 
-            if (this.authHttp.resumeRoute !== undefined) {
-                console.log('Resume Route');
-                console.log(this.authHttp.resumeRoute);
+            this.notificationService.didLoginObserver.emit(true);
+
+            if (this.authHttp.resumeRoute !== undefined && this.authHttp.resumeRoute.indexOf('unauthorized') === -1) {
                 this.router.navigate([this.authHttp.resumeRoute]);
             } else {
 

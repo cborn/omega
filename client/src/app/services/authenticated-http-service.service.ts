@@ -48,6 +48,8 @@ export class AuthenticatedHttpClient {
     static QUESTION_IMAGE_ADD_URL = environment.BASE_URL + 'question/addImage';
     static QUESTION_IMAGE_REMOVE_URL = environment.BASE_URL + 'question/removeImage';
     static QUESTION_PROMPT_AUDIO_URL = environment.BASE_URL + 'question/promptRecording';
+    static QUESTION_FEEDBACK_AUDIO_URL = environment.BASE_URL + 'question/feedbackRecording';
+
 
     static QUESTION_URL = environment.BASE_URL + 'question';
     static COURSE_URL = environment.BASE_URL + 'course';
@@ -135,7 +137,7 @@ export class AuthenticatedHttpClient {
             }
             return new Error(JSON.stringify(errorMsg));
         }
-    }
+    };
 
 
     /**
@@ -147,7 +149,6 @@ export class AuthenticatedHttpClient {
      * @returns {Observable<T>}
      */
     public async get<T>(endPoint: string, options?: IRequestOptions, disableErrorHandling?: boolean, mute?: boolean) {
-
         await this.refreshSessionToken();
 
         if (this.sessionManager.displayTerm != null) {

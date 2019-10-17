@@ -24,8 +24,7 @@ export class SidebarComponent implements OnInit {
     @Output() propertyChanged = new EventEmitter();
 
 
-
-    constructor( private dialog: MatDialog) {
+    constructor(private dialog: MatDialog) {
     }
 
     ngOnInit() {
@@ -50,13 +49,12 @@ export class SidebarComponent implements OnInit {
         this.propertyChanged.emit(true);
     }
 
-    openPromptRecordingInput() {
-        console.log(this.question);
-
+    openRecordingInput(isFeedback: boolean) {
         const dialogRef = this.dialog.open(PromptRecordingDialogComponent, {
             width: '250px',
             data: {
-                question: this.question
+                question: this.question,
+                isFeedback: isFeedback
             }
         });
 
@@ -65,5 +63,6 @@ export class SidebarComponent implements OnInit {
         });
 
     }
+
 
 }

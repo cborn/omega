@@ -12,6 +12,8 @@ class UrlMappings {
 
         post "/question/addImage/$id" (controller:'question', action: 'addImage')
         post "/question/promptRecording/$id" (controller:'question', action: ' addPromptRecording')
+        post "/question/feedbackRecording/$id" (controller:'question', action: ' addFeedbackRecording')
+
 
         delete "/question/remove/$id" (controller:'question', action: 'remove')
         get "/lessonPage/moveUp/$id" (controller:'lessonPage', action: 'moveUp')

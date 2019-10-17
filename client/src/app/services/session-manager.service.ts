@@ -41,6 +41,15 @@ export class SessionManagerService {
         return localStorage.getItem(SessionManagerService.EXPIRES);
     }
 
+    logout() {
+        localStorage.removeItem(SessionManagerService.ACCESS_TOKEN);
+        localStorage.removeItem(SessionManagerService.EXPIRES);
+        localStorage.removeItem(SessionManagerService.ROLES);
+        localStorage.removeItem(SessionManagerService.USERNAME);
+        localStorage.removeItem(SessionManagerService.REFRESH_TOKEN);
+
+    }
+
 
     setSessionToken(token) {
         return localStorage.setItem(SessionManagerService.ACCESS_TOKEN, token);

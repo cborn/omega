@@ -32,6 +32,11 @@ export class NavComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadData();
+        this.notificationService.didLoginObserver.subscribe( res => {
+            this.navService._navData = null;
+            this.loadData();
+
+        });
     }
 
     async loadData() {
@@ -45,6 +50,15 @@ export class NavComponent implements OnInit {
     shouldShowSaveStatus() {
         return this.router.url.indexOf('lessonPage/builder') > -1;
     }
+
+    logout() {
+        this.sessionService.logout();
+        this.applicationData = null;
+        this.currentTerm = null;
+        this.router.navigate(['/login']);
+
+    }
+
 }
 
 class ApplicationData {

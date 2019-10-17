@@ -20,6 +20,8 @@ export class NotificationService {
 
 
     reloadRequiredObserver = new EventEmitter();
+    didLoginObserver = new EventEmitter();
+
 
 
 

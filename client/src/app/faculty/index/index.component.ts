@@ -44,11 +44,13 @@ export class FacultyIndexComponent implements OnInit {
                 this.loadData();
             }
         });
-
-        this.loadData();
     }
 
     async loadData() {
+
+        if(this.loading.submission && this.loading.course && this.loading.user)
+            return;
+
 
         this.loading.submission = true;
         this.loading.course = true;
@@ -68,9 +70,6 @@ export class FacultyIndexComponent implements OnInit {
             this.loading.user = false;
         });
     }
-
-
-
 
 
 

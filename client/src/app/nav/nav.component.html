@@ -9,9 +9,9 @@
         <span class="navbar-spacer-micro"></span>
         <!--// Term selector-->
 
-        <div *ngIf="applicationData && applicationData.isAdmin" >
+        <div *ngIf="applicationData && applicationData.isAdmin">
             <!-- Put a dropdown to pick the current term.... -->
-            <mat-form-field class="toolbar-dropdown" >
+            <mat-form-field class="toolbar-dropdown">
                 <mat-label>Select an option</mat-label>
                 <mat-select [(value)]="currentTerm" (selectionChange)="didChangeTerm()">
                     <mat-option *ngFor="let term of applicationData.terms" [value]="term.id">{{term.name}}</mat-option>
@@ -28,6 +28,23 @@
         <app-save-status *ngIf="shouldShowSaveStatus()"></app-save-status>
 
         <span class="navbar-spacer"></span>
-        <!--<mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">verified_user</mat-icon>-->
+
+        <button *ngIf="applicationData" [matMenuTriggerFor]="menu" mat-icon-button aria-hidden="false" aria-label="User icon">
+            <mat-icon >person</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="logout()">
+                <mat-icon>exit_to_app</mat-icon>
+                <span>Logout</span>
+            </button>
+<!--            <button mat-menu-item disabled>-->
+<!--                <mat-icon>voicemail</mat-icon>-->
+<!--                <span>Check voice mail</span>-->
+<!--            </button>-->
+<!--            <button mat-menu-item>-->
+<!--                <mat-icon>notifications_off</mat-icon>-->
+<!--                <span>Disable alerts</span>-->
+<!--            </button>-->
+        </mat-menu>
     </mat-toolbar-row>
 </mat-toolbar>

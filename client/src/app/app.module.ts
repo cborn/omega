@@ -13,7 +13,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
     MatButtonModule,
     MatGridList,
-    MatGridListModule, MatListModule, MatNativeDateModule,
+    MatGridListModule, MatListModule, MatMenuModule, MatNativeDateModule,
     MatOptionModule, MatProgressSpinnerModule,
     MatSelectModule,
     MatSidenavModule, MatTabsModule,
@@ -180,7 +180,8 @@ import {PromptRecordingDialogComponent} from './dialogs/prompt-recording-dialog'
         MatProgressSpinnerModule,
         MatNativeDateModule,
         MatTabsModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatMenuModule
     ],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},
         {

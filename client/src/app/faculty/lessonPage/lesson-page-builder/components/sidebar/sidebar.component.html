@@ -85,17 +85,26 @@
 
   <div class="sidebar-form-input" *ngIf="isOfType([QuestionType.VOICE])">
     <mat-label>Prompt Audio</mat-label>
-    <button mat-raised-button color="accent" class="sidebar-button" (click)="openPromptRecordingInput()">ADD RECORDING</button>
+    <button mat-raised-button color="accent" class="sidebar-button" (click)="openRecordingInput(false)">ADD RECORDING</button>
     <audio class="audio-controller" style="width: 100%;" controls="" *ngIf="question.prompts?.audioPrompt">
       <source [src]="question.prompts?.audioPrompt.url">
     </audio>
 
-<!--    <input matInput (change)="changed()" [(ngModel)]="question.custom_properties.max_chars" name="selection-max-chars" class='sidebar-sub-input' type="number" />-->
-  </div>
+ </div>
 
   <mat-slide-toggle (change)="changed()" *ngIf="isOfType([QuestionType.VOICE]) && question.prompts?.audioPrompt" class="sidebar-form-input" color="primary" name="sync-play" [(ngModel)]="question.custom_properties.prompt_sync">
     Play prompt at the same time
   </mat-slide-toggle>
+
+
+  <div class="sidebar-form-input">
+    <mat-label>Follow up Audio</mat-label>
+    <button mat-raised-button color="accent" class="sidebar-button" (click)="openRecordingInput(true)">ADD RECORDING</button>
+    <audio class="audio-controller" style="width: 100%;" controls="" *ngIf="question.prompts?.audioFeedback">
+      <source [src]="question.prompts?.audioFeedback.url">
+    </audio>
+
+  </div>
 
   <mat-form-field (change)="changed()" class="sidebar-form-input" *ngIf="isOfType([QuestionType.VOICE])">
     <mat-label>Length Limit</mat-label>

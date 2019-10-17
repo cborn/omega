@@ -24,6 +24,10 @@ export class Question extends BaseObject {
             autoPlay: boolean,
             url: string
         }
+        audioFeedback: {
+            key: string,
+            url: string
+        }
     };
     custom_properties: any;
 
