@@ -16,7 +16,6 @@ export class SessionManagerService {
     displayTerm;
 
 
-
     constructor() {
     }
 
@@ -95,7 +94,7 @@ export class SessionManagerService {
             case PERMISSION_ROLE.ROLE_GRADER:
                 return roles.indexOf('ROLE_GRADER') > -1 || roles.indexOf('ROLE_FACULTY') > -1 || roles.indexOf('ROLE_ADMIN') > -1;
             case PERMISSION_ROLE.ROLE_STUDENT:
-                return roles.length > 0; // have we got any role? if we have then let us in because they can see this page no matter what.
+                return roles.indexOf('ROLE_STUDENT') > -1; // have we got any role? if we have then let us in because they can see this page no matter what.
             default :
                 return false;
 
