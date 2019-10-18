@@ -50,6 +50,7 @@ export class FacultyGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
+        console.log(this.sessionManager.checkRoles(PERMISSION_ROLE.ROLE_FACULTY));
         if (!this.sessionManager.checkRoles(PERMISSION_ROLE.ROLE_FACULTY)) {
             this.router.navigate(['/unauthorized']);
             return false;

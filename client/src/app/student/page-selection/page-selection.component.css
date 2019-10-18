@@ -2,3 +2,25 @@
     margin: 10px;
     width: 100%;
 }
+
+.status-marker {
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.not-started-marker {
+    background: red;
+
+}
+
+.in-progress-marker {
+    background: #ffa71d;
+}
+
+
+.done-marker {
+    background: #02b523;
+}

@@ -11,6 +11,7 @@ model {
     Term term;
     User user;
     boolean isAdminOrSuperAdmin
+    boolean isStudent
 }
 
 json {
@@ -18,4 +19,6 @@ json {
         term  g.render(term, [resolveTemplate: false])
         user  g.render(user, [resolveTemplate: false])
         isAdmin isAdminOrSuperAdmin
+        isStudent isStudent
+
 }

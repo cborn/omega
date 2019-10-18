@@ -16,8 +16,9 @@
     <ng-container matColumnDef="lessons">
         <mat-header-cell *matHeaderCellDef>Lessons</mat-header-cell>
         <mat-cell *matCellDef="let course">
-            <button mat-stroked-button color="secondary" *ngIf="course.lessons != null && course.lessons.length > 0" [routerLink]="'/lesson/index/' + course.id">View {{course.lessons.length}} Lessons</button>
-            <button mat-stroked-button color="secondary" *ngIf="course.lessons == null || course.lessons.length == 0" [routerLink]="'/lesson/create/' + course.id">Add lesson</button>
+            <button mat-stroked-button color="secondary" *ngIf="course.lessons != null && course.lessons.length > 0" [routerLink]="isStudent ? ('/student/course/'+course.id) : ('/lesson/index/' + course.id)">View {{course.lessons.length}} Lessons</button>
+            <button mat-stroked-button color="secondary" *ngIf="(course.lessons == null || course.lessons.length == 0) && !isStudent" [routerLink]="'/lesson/create/' + course.id">Add lesson</button>
+            <button mat-stroked-button color="secondary" *ngIf="(course.lessons == null || course.lessons.length == 0) && isStudent">No lessons</button>
         </mat-cell>
     </ng-container>
 
@@ -36,7 +37,7 @@
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 
 </mat-table>
-    <div class="padding-10">
+    <div class="padding-10" *ngIf="!isStudent">
         <button mat-fab color="primary" routerLink="/course/create"><i class="material-icons">add</i></button>
     </div>
     </div>

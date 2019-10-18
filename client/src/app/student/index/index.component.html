@@ -29,7 +29,8 @@
                                 </h4>
 
                                 <p mat-line> {{(submission.status === "DRAFT" ? submission.drafted : submission.submitted) | date}}
-                                    <mat-icon *ngIf="hasComments(submission)" style="margin-left: 10px">comment</mat-icon>
+                                    <mat-icon *ngIf="hasComments(submission)" style="margin-left: 10px">comment
+                                    </mat-icon>
                                 </p>
 
                                 <span class="status-icon status-icon-{{submission.status}}">
@@ -65,10 +66,11 @@
 
                         <!-- List of top 5 recent submissions -->
                         <mat-list role="list" *ngIf="!loading.course">
-                            <mat-list-item role="listitem"
-                                           *ngFor="let course of courses | slice: 0 : limits.course">
-                                <h4 mat-line>{{course.name}}</h4><span
-                                    class="status-icon status-icon-plain">{{course.lessons.length + " "}}Lessons</span>
+                            <mat-list-item role="listitem" *ngFor="let course of courses | slice: 0 : limits.course">
+                                <h4 mat-line [routerLink]="'/student/course/'+course.id">{{course.name}}</h4>
+                                <span class="status-icon status-icon-plain"
+                                      [routerLink]="'/student/course/'+course.id">{{course.lessons.length + " "}}
+                                    Lessons</span>
                                 <p mat-line> ({{course.id}}) </p>
 
 
@@ -78,9 +80,8 @@
                         <mat-spinner *ngIf="loading.course"></mat-spinner>
 
                     </mat-card-content>
-                    <mat-card-actions *ngIf="courses.length > 5">
-                        <button mat-button
-                                (click)="limits.course == courses.length ? limits.course = 5 : limits.course = courses.length">
+                    <mat-card-actions>
+                        <button mat-button color="accent" routerLink="/student/course">
                             View All Courses
                         </button>
                     </mat-card-actions>

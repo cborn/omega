@@ -34,7 +34,7 @@ export class PromptRecordingDialogComponent {
     }
 
     async dismiss() {
-
+        this.dialogRef.close();
     }
 
     /**
@@ -66,6 +66,8 @@ export class PromptRecordingDialogComponent {
         this.record = new StereoAudioRecorder(stream, options);
         this.record.record();
     }
+
+
 
 
     errorCallback(error) {

@@ -16,7 +16,7 @@ class ApplicationController implements PluginManagerAware {
 
         Term currentTerm = Term.findByCurrent(true);
         User currentUser = springSecurityService.getCurrentUser() as User;
-        [term:currentTerm,user:currentUser ,terms:Term.list() ,isAdminOrSuperAdmin: currentUser != null && currentUser.isAdminOrSuperAdmin()]
+        [term:currentTerm,user:currentUser ,terms:Term.list() ,isStudent: currentUser != null && currentUser.isStudent(),isAdminOrSuperAdmin: currentUser != null && currentUser.isAdminOrSuperAdmin()]
     }
 }
 

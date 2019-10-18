@@ -3,34 +3,38 @@ package omega
 class QuestionValidator {
 
     static Optional<String> validate(QuestionResponse response, Question question) {
-        switch (question.type) {
-            case QuestionType.BOOLEAN:
-                return validateForBoolean(response.question, response);
-            case QuestionType.BLOCK_TEXT:
-                return Optional.empty()
-            case QuestionType.CLOZE:
-                return validateForCloze(response.question, response);
-            case QuestionType.DATE:
-                return validateForDate(response.question, response);
-            case QuestionType.DROPDOWN:
-                return validateForDropdown(response.question, response);
-            case QuestionType.LONG_TEXT:
-                return validateForLongText(response.question, response);
-            case QuestionType.MULTI_CHOICE:
-                return validateForMultiChoice(response.question, response);
-            case QuestionType.NUMBER:
-                return validateForNumber(response.question, response);
-            case QuestionType.PICTURE_CHOICE:
-                return validateForPictureChoice(response.question, response);
-            case QuestionType.SCALE:
-                return validateForScale(response.question, response);
-            case QuestionType.SHORT_TEXT:
-                return validateForShortText(response.question, response);
-            case QuestionType.VOICE:
-                return validateForVoice(response.question, response);
-            default:
-                return Optional.empty();
+        if(response != null) {
+            switch (question.type) {
+                case QuestionType.BOOLEAN:
+                    return validateForBoolean(response.question, response);
+                case QuestionType.BLOCK_TEXT:
+                    return Optional.empty()
+                case QuestionType.CLOZE:
+                    return validateForCloze(response.question, response);
+                case QuestionType.DATE:
+                    return validateForDate(response.question, response);
+                case QuestionType.DROPDOWN:
+                    return validateForDropdown(response.question, response);
+                case QuestionType.LONG_TEXT:
+                    return validateForLongText(response.question, response);
+                case QuestionType.MULTI_CHOICE:
+                    return validateForMultiChoice(response.question, response);
+                case QuestionType.NUMBER:
+                    return validateForNumber(response.question, response);
+                case QuestionType.PICTURE_CHOICE:
+                    return validateForPictureChoice(response.question, response);
+                case QuestionType.SCALE:
+                    return validateForScale(response.question, response);
+                case QuestionType.SHORT_TEXT:
+                    return validateForShortText(response.question, response);
+                case QuestionType.VOICE:
+                    return validateForVoice(response.question, response);
+                default:
+                    return Optional.empty();
+            }
         }
+
+        return Optional.empty();
     }
 
     static Optional<String> validateForScale(Question question, QuestionResponse questionResponse) {

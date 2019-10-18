@@ -91,3 +91,7 @@
     top: 3px;
     right: 8px;
 }
+
+.keep-format {
+    white-space: pre-wrap;
+}

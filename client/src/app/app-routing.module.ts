@@ -20,6 +20,7 @@ import {StudentIndexComponent} from './student/index/index.component';
 import {FacultyIndexComponent} from './faculty/index/index.component';
 import {SubmissionGradeComponent} from './faculty/submission-grade/submission-grade.component';
 import {GradebookComponent} from './faculty/gradebook/gradebook.component';
+import {CourseSelectionComponent} from './student/course-selection/course-selection.component';
 
 const routes: Routes = [
     {path: '', redirectTo: 'index', pathMatch: 'full'},
@@ -45,6 +46,10 @@ const routes: Routes = [
     // Student services.
     {path: 'student/index', component: StudentIndexComponent, canActivate: [StudentGuard]},
     {path: 'student/lesson/:lessonId', component: PageSelectionComponent, canActivate: [StudentGuard]},
+    {path: 'student/course/:courseId', component: CourseSelectionComponent, canActivate: [StudentGuard]},
+    {path: 'student/course', component: CourseIndexComponent, canActivate: [StudentGuard]},
+
+
     {path: 'student/submission/:submissionId', component: SubmissionComponent, canActivate: [StudentGuard]},
 
     // Faculty Services.
@@ -55,7 +60,7 @@ const routes: Routes = [
 
 
 
-    {path: 'lessonPage/index/:lessonId', component: LessonPageIndexComponent, canActivate: [StudentGuard]},
+    {path: 'lessonPage/index/:lessonId', component: LessonPageIndexComponent, canActivate: [FacultyGuard]},
     // {path: 'lessonPage/edit/:lessonPageId', component: CourseEditComponent, canActivate: [StudentGuard]},
     // {path: 'lessonPage/create', component: CourseCreateComponent, canActivate: [StudentGuard]},
 

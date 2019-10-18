@@ -3,10 +3,10 @@
     <h3>
         <b *ngIf="question.type !== 3">({{question.position + 1}})</b>
         <b *ngIf="question.type === 3" style="font-size: 47px;font-family: cursive;">&quot;</b>
-        <span [innerHTML]="question.name == null || question.name == '' ? '...' : question.name"></span>
+        <span class="keep-format" [innerHTML]="question.name == null || question.name == '' ? '...' : question.name"></span>
         <i class="required" *ngIf="question.required">*</i>
     </h3>
-    <h6 *ngIf="question.description != null && question.description != ''">{{question.description}}</h6>
+    <h6 *ngIf="question.description != null && question.description != ''" class="keep-format">{{question.description}}</h6>
 
     <app-multi-choice-renderer (answerChanged)="answerChanged($event)" *ngIf="question.type == 0" class="answer-input fit-content" [response]="getResponseForQuestion(question)" [ngClass]="{'answer-input-flex': question.custom_properties.stack}"  [question]="question"></app-multi-choice-renderer>
     <app-short-text-renderer (answerChanged)="answerChanged($event)" *ngIf="question.type == 1" class="answer-input" [question]="question" [response]="getResponseForQuestion(question)"></app-short-text-renderer>

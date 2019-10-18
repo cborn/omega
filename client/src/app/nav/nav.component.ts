@@ -66,5 +66,6 @@ class ApplicationData {
     terms: Term[];
     user: User;
     isAdmin: boolean;
+    isStudent:boolean;
 }
 

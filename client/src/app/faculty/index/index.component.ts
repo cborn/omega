@@ -44,6 +44,8 @@ export class FacultyIndexComponent implements OnInit {
                 this.loadData();
             }
         });
+
+        this.loadData();
     }
 
     async loadData() {

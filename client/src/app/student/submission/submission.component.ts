@@ -4,6 +4,7 @@ import {SubmissionService} from './submission.service';
 import {AnswerChangedEvent} from '../../Events/answer-changed-event';
 import {Submission} from '../../Model/submission';
 import {LessonPage} from '../../Model/lesson-page';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'app-submission',
@@ -16,7 +17,7 @@ export class SubmissionComponent implements OnInit {
     page$ = this.submissionService.page;
 
 
-    constructor(private route: ActivatedRoute, private router: Router, private submissionService: SubmissionService) {
+    constructor(private route: ActivatedRoute, private router: Router, private submissionService: SubmissionService, private _location: Location) {
     }
 
     ngOnInit() {
@@ -43,7 +44,8 @@ export class SubmissionComponent implements OnInit {
 
             } else {
                 // This has been submitted successfully...
-                this.router.navigate(['student/lesson/', submission.lesson.id]);
+                this._location.back();
+                // this.router.navigate(['student/lesson/', submission.lesson.id]);
             }
 
         });

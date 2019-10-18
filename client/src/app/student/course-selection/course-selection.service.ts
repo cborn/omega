@@ -7,7 +7,7 @@ import {Submission} from '../../Model/submission';
 @Injectable({
     providedIn: 'root'
 })
-export class PageSelectionService {
+export class CourseSelectionService {
 
     pagesSubject: BehaviorSubject<LessonPage[]> = new BehaviorSubject<LessonPage[]>([]);
     pages = this.pagesSubject.asObservable();
@@ -16,7 +16,7 @@ export class PageSelectionService {
     }
 
 
-    async loadData(lessonId, handler?) {
+    async loadData(lessonId) {
         const promise = await this.http.get<LessonPage[]>(AuthenticatedHttpClient.LESSON_PAGE_URL + '?lessonId=' + lessonId);
 
         promise.subscribe(async pages => {
@@ -29,10 +29,6 @@ export class PageSelectionService {
             });
 
             this.pagesSubject.next(pages);
-
-            if (handler) {
-                handler(pages);
-            }
 
 
         });

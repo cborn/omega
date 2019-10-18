@@ -1,0 +1,9 @@
+<div *ngIf="course" style="padding: 10px;">
+    <h1>Course: {{course.name}}</h1>
+    <div *ngFor="let lesson of course.lessons">
+
+        <app-page-selection [lesson]="lesson"></app-page-selection>
+
+
+    </div>
+</div>

@@ -1,4 +1,8 @@
-<div *ngIf="pages$ | async as pages">
+<ng-container *ngIf="!isComponent">
+<div *ngIf="pages$ | async as pages" style="padding: 10px;">
+    <h2 *ngIf="lesson">Lesson: {{lesson.name}}</h2>
+    <h5 *ngIf="lesson?.due">Due On: {{lesson.due | date}}</h5>
+
     <mat-grid-list cols="6" rowHeight="180px">
         <mat-grid-tile *ngFor="let page of pages">
 
@@ -20,4 +24,47 @@
 
         </mat-grid-tile>
     </mat-grid-list>
+
 </div>
+</ng-container>
+<ng-container *ngIf="isComponent && hasLessons()">
+    <div style="padding: 10px;">
+
+        <h2 *ngIf="lesson">Lesson: {{lesson.name}}</h2>
+        <h5 *ngIf="lesson?.due">Due On: {{lesson.due | date}}</h5>
+
+        <mat-grid-list cols="6" rowHeight="180px" >
+            <mat-grid-tile *ngFor="let page of pages">
+
+
+                <mat-card class="example-card" *ngIf="page.status == 'PUBLISHED'">
+
+                    <mat-card-header>
+                        <div class="not-started-marker status-marker" *ngIf="page.submissions == null || page.submissions.length == 0"></div>
+                        <div class="in-progress-marker status-marker" *ngIf="(page.submissions != null && page.submissions.length > 0) && !hasCompletedPage(page)"></div>
+                        <div class="done-marker status-marker" *ngIf="(page.submissions != null && page.submissions.length > 0) && hasCompletedPage(page)"></div>
+
+
+                        <mat-card-title>{{"("+ (page.pageOrder + 1) + ") " + page.name}}</mat-card-title>
+                        <mat-card-subtitle>{{page.questions.length}} Questions</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content *ngIf="page.submissions">
+                        <p *ngIf="page.submissions.length == 0">No submissions</p>
+                        <p *ngIf="page.submissions.length > 0">{{page.submissions[0].status.substring(0,1) + page.submissions[0].status.substring(1,page.submissions[0].status.length).toLocaleLowerCase()}}</p>
+                    </mat-card-content>
+                    <mat-card-actions >
+                        <button mat-button *ngIf="page.submissions == null || page.submissions.length == 0" (click)="startNewSubmission(page)">START</button>
+                        <button mat-button *ngIf="page.submissions != null && page.submissions.length > 0 && !hasCompletedPage(page)" (click)="continueSubmission(page.submissions[0].id)">CONTINUE</button>
+                    </mat-card-actions>
+
+
+                </mat-card>
+
+
+            </mat-grid-tile>
+        </mat-grid-list>
+
+
+
+    </div>
+</ng-container>
