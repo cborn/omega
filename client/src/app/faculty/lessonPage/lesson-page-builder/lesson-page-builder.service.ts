@@ -71,7 +71,7 @@ export class LessonPageBuilderService {
 
     async refreshCurrentLesson() {
 
-        if(this.editingLessonPageSubject.value != null) {
+        if (this.editingLessonPageSubject.value != null) {
             const promise = await this.httpClient.get(AuthenticatedHttpClient.LESSON_PAGE_URL + '/' + this.editingLessonPageSubject.value.id);
 
             promise.pipe(map(LessonPageBuilderService.filterFromServer)).pipe(tap(x => {
@@ -162,8 +162,24 @@ export class LessonPageBuilderService {
         const promise = await this.httpClient.put<Question>(AuthenticatedHttpClient.LESSON_PAGE_URL + '/' + lessonPage.id, lessonPage);
 
         promise.pipe(map(LessonPageBuilderService.filterFromServer)).pipe(tap(x => {
-            this.editingLessonPageSubject.next(x as LessonPage);
+
+            this.syncValues(x);
+            // this.editingLessonPageSubject.next(x as LessonPage);
             this.isDirtySubject.next(false);
         })).pipe(publishReplay()).pipe(refCount()).subscribe();
+    }
+
+
+    async syncValues(newData) {
+        for (const i in this.editingLessonPageSubject.value.questions) {
+            const question = this.editingLessonPageSubject.value.questions[i];
+            for (const j in newData.questions) {
+                const newQuestion = newData.questions[j];
+                if (newQuestion.id === question.id) {
+                    question.custom_properties = newQuestion.custom_properties;
+                }
+
+            }
+        }
     }
 }

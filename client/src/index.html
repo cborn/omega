@@ -14,6 +14,12 @@
       window.dispatchEvent(event);
     }
 
+    function openRubyEditPrompt(rubyIndex,questionId) {
+      var event = new CustomEvent("openRubyEditPrompt",{ detail : {index:rubyIndex, questionId: questionId} });
+      window.dispatchEvent(event);
+    }
+
+
 
     function inputForSubmissionChanged(responseId, promptIndex, value) {
 

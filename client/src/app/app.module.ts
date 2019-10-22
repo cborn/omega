@@ -86,6 +86,8 @@ import { AnswerGradingRendererComponent } from './faculty/answer-grading-rendere
 import { GradebookComponent } from './faculty/gradebook/gradebook.component';
 import {PromptRecordingDialogComponent} from './dialogs/prompt-recording-dialog';
 import {CourseSelectionComponent} from './student/course-selection/course-selection.component';
+import {RubyProcessorPipe} from './pipes/ruby-processor.pipe';
+import {RubyPromptEditDialogComponent} from './dialogs/ruby-edit-dialog';
 
 // @ts-ignore
 @NgModule({
@@ -142,14 +144,17 @@ import {CourseSelectionComponent} from './student/course-selection/course-select
         AnswerGradingRendererComponent,
         GradebookComponent,
         PromptRecordingDialogComponent,
-        CourseSelectionComponent
+        CourseSelectionComponent,
+        RubyProcessorPipe,
+        RubyPromptEditDialogComponent
     ],
     entryComponents: [
         ClozeDialogComponent,
         AlertDialogComponent,
         ConfirmDialogComponent,
         CommentAddingDialogComponent,
-        PromptRecordingDialogComponent
+        PromptRecordingDialogComponent,
+        RubyPromptEditDialogComponent
     ],
     imports: [
         BrowserModule,

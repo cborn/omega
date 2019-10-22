@@ -7,13 +7,19 @@
                 <div [classList]="'icon-q-block icon-q-block-'+question.type + ' material-icons'" (click)="toggleSidebar()"></div>
             </td>
             <td>
-                <mat-form-field class="full-width">
-                    <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
-                              [(ngModel)]="question.name" placeholder="Type question here"
-                              name="question-text" (change)="isChanged()"></textarea>
+                <div class="full-width">
+                    <!--<textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"-->
+                              <!--[(ngModel)]="question.name" placeholder="Type question here"-->
+                              <!--name="question-text" (change)="isChanged()"></textarea>-->
+
+                    <div contenteditable="true" class="content-editable-block" #field (input)="nameChanged(field,$event)" [innerHTML]="question.name | rubyProcessor: question.id">
+
+                    </div>
 
 
-                </mat-form-field>
+
+
+                </div>
 
                 <mat-form-field class="full-width" *ngIf="question.custom_properties != null && question.custom_properties.description_enabled">
                     <textarea matInput cdkTextareaAutosize #autosize2="cdkTextareaAutosize" cdkAutosizeMinRows="1"

@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>Edit Ruby Text</h1>
+<div mat-dialog-content>
+
+
+    <mat-form-field>
+        <input matInput placeholder="Ruby Body" [(ngModel)]="rubyBody"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Ruby Explanation" [(ngModel)]="rubyDetail"/>
+    </mat-form-field>
+
+
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="dismiss()">Save</button>
+</div>
+
