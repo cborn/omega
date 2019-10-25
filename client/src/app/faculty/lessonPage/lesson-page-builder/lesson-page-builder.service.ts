@@ -9,7 +9,7 @@ import {Question, QuestionType} from '../../../Model/question';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {AuthenticatedHttpClient} from '../../../services/authenticated-http-service.service';
 
-const BOOLEAN_PROPERTIES = ['stack', 'random', 'description_enabled', 'multi', 'alphabetical', 'prompt_sync', 'show_labels'];
+const BOOLEAN_PROPERTIES = ['stack', 'random', 'description_enabled', 'multi', 'alphabetical', 'prompt_sync', 'show_labels', 'rtl_text'];
 const NUMBER_PROPERTIES = ['min', 'max'];
 
 
@@ -173,12 +173,36 @@ export class LessonPageBuilderService {
     async syncValues(newData) {
         for (const i in this.editingLessonPageSubject.value.questions) {
             const question = this.editingLessonPageSubject.value.questions[i];
+
+            if (question.id === undefined) {
+                // console.log('New question detected - searching for ID');
+                for (const j in newData.questions) {
+                    const question2 = newData.questions[j];
+                    let found = false;
+                    for (const k in this.editingLessonPageSubject.value.questions) {
+                        const newQuestion = this.editingLessonPageSubject.value.questions[k];
+                        // console.log('checking ' + question2.id + ' > ' + newQuestion.id);
+                        if (newQuestion.id === question2.id) {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (!found) {
+                        // console.log('New Question must be ' + question2.id);
+                        question.id = question2.id;
+                        break;
+                    }
+                }
+            }
+
+
             for (const j in newData.questions) {
                 const newQuestion = newData.questions[j];
                 if (newQuestion.id === question.id) {
                     question.custom_properties = newQuestion.custom_properties;
+                    question.prompts = newQuestion.prompts;
                 }
-
             }
         }
     }

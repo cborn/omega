@@ -48,6 +48,8 @@ export class AuthenticatedHttpClient {
     static QUESTION_IMAGE_ADD_URL = environment.BASE_URL + 'question/addImage';
     static QUESTION_IMAGE_REMOVE_URL = environment.BASE_URL + 'question/removeImage';
     static QUESTION_PROMPT_AUDIO_URL = environment.BASE_URL + 'question/promptRecording';
+    static ADD_PROMPT_IMAGE_TO_QUESTION = environment.BASE_URL + 'question/promptImage';
+
     static QUESTION_FEEDBACK_AUDIO_URL = environment.BASE_URL + 'question/feedbackRecording';
 
 

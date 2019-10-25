@@ -18,7 +18,7 @@
                                          *ngFor="let question of lesson.questions | positionOrder : 'asc'"
                                          [question]="question" (questionDeleted)="deleteQuestion($event)"
                                          (questionSelected)="openSidebar($event)" [selectedQuestion]="currentQuestion"
-                                         (click)="currentQuestion = question.id" (questionChanged)="changed()"></app-lesson-question>
+                                         (click)="currentQuestion = question.id;sidebar_question = question" (questionChanged)="changed()"></app-lesson-question>
                     <div class="add_new_primary_button">
                         <button mat-fab color="primary" (click)="addNewQuestion()"><i class="material-icons">add</i>
                         </button>

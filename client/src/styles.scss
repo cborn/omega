@@ -330,6 +330,13 @@ body {
 }
 
 
+*[ng-reflect-router-link] {
+  cursor: pointer;
+}
+
+.rtl {
+  text-align: right;
+}
 
 
 

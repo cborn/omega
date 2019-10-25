@@ -95,3 +95,9 @@
 .keep-format {
     white-space: pre-wrap;
 }
+
+.image-prompt {
+    width: 15%;
+    border: 1px solid #3193bb;
+    border-radius: 5px;
+}

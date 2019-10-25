@@ -103,6 +103,33 @@ class QuestionController {
     }
 
 
+    def addPromptImage(){
+
+        def question = Question.get(params.id);
+
+        if (question == null) {
+            render status: NOT_FOUND
+            return
+        }
+
+        def response = AWSUploaderService.upload(params.image,"images");
+
+        ImageProperty im = new ImageProperty();
+        im.setAutoPlay(false)
+        im.setAwsKey(response.awsKey);
+        im.setAwsUrl(response.s3FileUrl);
+        im.save(flush:true);
+
+        question.imagePrompt = im;
+
+        question.save(flush:true);
+
+        respond question, [status: OK, view:"show"]
+
+
+    }
+
+
 
 
     def addPromptRecording(){

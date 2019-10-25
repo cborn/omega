@@ -1,6 +1,6 @@
 <ul>
   <li *ngFor="let option of workingCopy?.split('@@'); let index = index" class="option-list">
-    <input class="list-input" [(ngModel)]="option" (ngModelChange)="itsChanged($event,index)"
+    <input class="list-input" dir="auto" [(ngModel)]="option" (ngModelChange)="itsChanged($event,index)"
            (keydown.enter)="newLine(index)" (keydown.backspace)="delete(option,index)"/>
   </li>
 </ul>

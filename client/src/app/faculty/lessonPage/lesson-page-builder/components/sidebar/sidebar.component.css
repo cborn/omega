@@ -52,3 +52,95 @@
     transform: translate(-10px, -25%);
 }
 
+.image-add > img {
+    width: 65%;
+    margin-left: 13%;
+    background: #ffffff;
+    border: 1px solid #2196F3;
+    border-radius: 6px;
+}
+
+.remove-image {
+    margin-left: 13%;
+    transform: translate(-50%,67%);
+}
+
+
+
+.image-loading {
+    width: 65%;
+    height: 150px;
+    background: #ffffff;
+    border: 1px solid #2196F3;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 13%;
+    margin-top: 17px;
+}
+
+.tile--css_animations__demo2 {
+position: relative;
+top: 50%;
+transform: translate(0, -50%);
+}
+
+.tile--css_animations__demo2 div {
+border-radius: 50%;
+position: absolute;
+top: 50%;
+left: 75%;
+width: 100%;
+}
+.tile--css_animations__demo2 div:nth-of-type(odd) {
+background: #2196F3;
+}
+.tile--css_animations__demo2 div:nth-of-type(even) {
+background: white;
+border: 2px solid #2196F3;
+}
+.tile--css_animations__demo2 div:nth-of-type(3) {
+height: 10px;
+width: 10px;
+margin-top: -5px;
+margin-left: -5px;
+-webkit-animation: slide 1s ease-in-out infinite;
+animation: slide 1s ease-in-out infinite;
+}
+.tile--css_animations__demo2 div:nth-of-type(2) {
+height: 20px;
+width: 20px;
+margin-top: -12px;
+margin-left: -12px;
+-webkit-animation: slide 1s -2.7s ease-in-out infinite;
+animation: slide 1s -2.7s ease-in-out infinite;
+}
+.tile--css_animations__demo2 div:nth-of-type(1) {
+height: 40px;
+width: 40px;
+margin-top: -20px;
+margin-left: -20px;
+-webkit-animation: slide 1s -2.4s ease-in-out infinite;
+animation: slide 1s -2.4s ease-in-out infinite;
+}
+@keyframes slide {
+0% {
+    left: 75%
+}
+50% {
+    left: 25%;
+}
+100% {
+    left: 75%;
+}
+}
+@-webkit-keyframes slide {
+0% {
+    left: 75%
+}
+50% {
+    left: 25%;
+}
+100% {
+    left: 75%;
+}
+}

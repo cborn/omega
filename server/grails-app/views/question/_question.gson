@@ -18,7 +18,6 @@ json {
 
 	if (question.hasFeedback()) {
 		prompts {
-			imagePrompt question.imagePrompt
 			imageFeedback question.imageFeedback
 			videoPrompt question.videoPrompt
 			videoFeedback question.videoFeedback
@@ -33,6 +32,12 @@ json {
 				audioFeedback {
 					key question.audioFeedback.awsKey
 					url question.audioFeedback.awsUrl
+				}
+			}
+			if(question.imagePrompt) {
+				imagePrompt {
+					key question.imagePrompt.awsKey
+					url question.imagePrompt.awsUrl
 				}
 			}
 		}

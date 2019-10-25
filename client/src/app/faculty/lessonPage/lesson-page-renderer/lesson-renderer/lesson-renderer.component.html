@@ -1,12 +1,16 @@
-<div *ngFor="let question of lesson.questions | positionOrder:'asc'" class="question">
+<div *ngFor="let question of lesson.questions | positionOrder:'asc'" class="question" [ngClass]="{ 'rtl':question.custom_properties.rtl_text}">
+
+
+    <img [src]="question.prompts?.imagePrompt.url" class="image-prompt" />
 
     <h3>
-        <b *ngIf="question.type !== 3">({{question.position + 1}})</b>
+        <b *ngIf="question.type !== 3 && !question.custom_properties.rtl_text" >({{question.position + 1}})</b>
         <b *ngIf="question.type === 3" style="font-size: 47px;font-family: cursive;">&quot;</b>
-        <span class="keep-format" [innerHTML]="question.name == null || question.name == '' ? '...' : question.name"></span>
+        <span class="keep-format" dir="auto" [innerHTML]="question.name == null || question.name == '' ? '...' : question.name"></span>
+        <b *ngIf="question.type !== 3 && question.custom_properties.rtl_text" >({{question.position + 1}})</b>
         <i class="required" *ngIf="question.required">*</i>
     </h3>
-    <h6 *ngIf="question.description != null && question.description != ''" class="keep-format">{{question.description}}</h6>
+    <h6 *ngIf="question.description != null && question.description != ''" dir="auto" class="keep-format">{{question.description}}</h6>
 
     <app-multi-choice-renderer (answerChanged)="answerChanged($event)" *ngIf="question.type == 0" class="answer-input fit-content" [response]="getResponseForQuestion(question)" [ngClass]="{'answer-input-flex': question.custom_properties.stack}"  [question]="question"></app-multi-choice-renderer>
     <app-short-text-renderer (answerChanged)="answerChanged($event)" *ngIf="question.type == 1" class="answer-input" [question]="question" [response]="getResponseForQuestion(question)"></app-short-text-renderer>

@@ -50,6 +50,12 @@ class Question {
         return imagePrompt != null || imageFeedback != null || videoPrompt != null || videoFeedback != null || audioPrompt != null || audioFeedback != null;
     }
 
+    static mapping = {
+        name type: "text"
+        description type: "text"
+    }
+
+
     static final enum QuestionPropertyKeys {
 
 
@@ -66,7 +72,7 @@ class Question {
         STACK("stack"), // Stack them ontop of eachother
 
         MAX_CHARS("max_chars"),
-
+        RTL_TEXT("rtl_text"),
 
 
         MIN("min"), // min number value

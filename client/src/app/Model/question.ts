@@ -27,6 +27,10 @@ export class Question extends BaseObject {
         audioFeedback: {
             key: string,
             url: string
+        },
+        imagePrompt: {
+            key: string,
+            url: string
         }
     };
     custom_properties: any;

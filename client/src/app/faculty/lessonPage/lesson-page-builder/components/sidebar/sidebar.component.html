@@ -27,6 +27,10 @@
       Description
     </mat-slide-toggle>
 
+  <mat-slide-toggle class="sidebar-form-input"  (change)="changed()" color="primary" [(ngModel)]="question.custom_properties.rtl_text" name="rtl">
+    RTL Text
+  </mat-slide-toggle>
+
 
   <mat-slide-toggle *ngIf="isOfType([QuestionType.DROPDOWN])" (change)="changed()" class="sidebar-form-input" color="primary" name="multi" [(ngModel)]="question.custom_properties.alphabetical">
     Alphabetical
@@ -82,6 +86,26 @@
   <mat-slide-toggle (change)="changed()" *ngIf="isOfType([QuestionType.MULTI_CHOICE])" class="sidebar-form-input" color="primary" name="stack" [(ngModel)]="question.custom_properties.stack">
     Stack Options
   </mat-slide-toggle>
+
+  <div class="sidebar-form-input">
+    <mat-label>Prompt Image</mat-label>
+    <button mat-raised-button color="accent" class="sidebar-button" (click)="fileInput.click()">ADD IMAGE</button>
+    <input type="file" style="display: none;" (change)="attachImagePrompt($event,fileInput)" #fileInput>
+    <div *ngIf="question.prompts?.imagePrompt && !loadingPromptImage" class="image-add">
+      <i  class="material-icons warn remove-image" (click)="removeImagePrompt()">delete</i>
+      <img [src]="question.prompts?.imagePrompt.url" />
+    </div>
+
+    <div class="image-loading" *ngIf="loadingPromptImage">
+      <div class="tile--css_animations__demo2">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+
+  </div>
+
 
   <div class="sidebar-form-input" *ngIf="isOfType([QuestionType.VOICE])">
     <mat-label>Prompt Audio</mat-label>
@@ -172,7 +196,7 @@
 
   <mat-form-field class="sidebar-form-input" (change)="changed()">
     <mat-label>Max Grade points</mat-label>
-    <input matInput [(ngModel)]="question.max_grade" name="selection-limit-exact" class='sidebar-sub-input' type="number"/>
+    <input matInput style="width: fit-content;" [(ngModel)]="question.max_grade" name="selection-limit-exact" class='sidebar-sub-input' type="number"/>
   </mat-form-field>
 
 

@@ -52,6 +52,7 @@ export class LessonQuestionComponent implements OnInit {
     }
 
 
+
     nameChanged(field, event) {
        this.questionNameChanged.next(event.target.innerHTML);
     }
