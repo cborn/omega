@@ -136,13 +136,13 @@ class BootStrap {
         } else {
             // Not Development Channel
             // Enter production code here
-            def admin = Role.findByAuthority('ROLE_ADMIN')
+            def superAdminRole = Role.findByAuthority('ROLE_SUPER_ADMIN')
 
 
-            if(admin == null)
+            if(superAdminRole == null)
             {
-                Role superAdminRole = new Role(authority: "ROLE_SUPER_ADMIN").save(flush: true);
-                admin = new Role(authority: "ROLE_ADMIN").save(flush: true);
+                superAdminRole = new Role(authority: "ROLE_SUPER_ADMIN").save(flush: true);
+                Role admin = new Role(authority: "ROLE_ADMIN").save(flush: true);
                 Role faculty = new Role(authority: "ROLE_FACULTY").save(flush: true);
                 Role grader = new Role(authority: "ROLE_GRADER").save(flush: true);
                 Role student = new Role(authority: "ROLE_STUDENT").save(flush: true);
