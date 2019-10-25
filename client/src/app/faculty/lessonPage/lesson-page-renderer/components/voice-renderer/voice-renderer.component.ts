@@ -75,8 +75,8 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
     loading = false;
 
 
-    static formatAsAWSUrl(value) {
-        return 'https://s3-eu-central-1.amazonaws.com/omegadev/audio/' + value;
+    static formatAsAWSUrl(value, bucket) {
+        return 'https://s3-eu-central-1.amazonaws.com/' + bucket + '/audio/' + value;
     }
 
 
@@ -167,7 +167,7 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
     setValue(value) {
         this.hasRecording = true;
         this.showAddCommentDialog = false;
-        this.url = VoiceRendererComponent.formatAsAWSUrl(value);
+        this.url = VoiceRendererComponent.formatAsAWSUrl(value, this.sessionManager.bucket);
         this.loadVisualisation(this);
     }
 
@@ -372,7 +372,7 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
 
 
     getLinkForAudioClip(clip) {
-        return VoiceRendererComponent.formatAsAWSUrl(clip);
+        return VoiceRendererComponent.formatAsAWSUrl(clip, this.sessionManager.bucket);
     }
 
     selectComment(comment: ResponseComment) {

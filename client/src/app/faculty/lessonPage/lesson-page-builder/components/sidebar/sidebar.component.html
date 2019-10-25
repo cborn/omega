@@ -1,206 +1,248 @@
 <mat-toolbar>
-  <mat-toolbar-row>
-    <span>Question Settings</span>
-    <span class="example-spacer"></span>
-    <mat-icon aria-hidden="false" class="sidebar-close-icon" aria-label="Close the sidebar" (click)="closeSidebarAction()">close</mat-icon>
-  </mat-toolbar-row>
+    <mat-toolbar-row>
+        <span>Question Settings</span>
+        <span class="example-spacer"></span>
+        <mat-icon aria-hidden="false" class="sidebar-close-icon" aria-label="Close the sidebar"
+                  (click)="closeSidebarAction()">close
+        </mat-icon>
+    </mat-toolbar-row>
 
 
 </mat-toolbar>
 
 <form class="sidebar-form">
-<mat-form-field class="sidebar-form-input" >
-  <mat-label>Question Type</mat-label>
-  <mat-select [(ngModel)]="question.type" name="type-select" (ngModelChange)="changed()">
-    <mat-option *ngFor="let type of questionTypes" [value]="type.value">
-      {{type.name}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
-<br/>
-
-  <mat-slide-toggle class="sidebar-form-input"  (change)="changed()" color="primary" *ngIf="isNotOfType([QuestionType.BLOCK_TEXT])" [(ngModel)]="question.required" name="required">
-    Required
-  </mat-slide-toggle>
-
-    <mat-slide-toggle class="sidebar-form-input" (change)="changed()" color="primary" name="description" [(ngModel)]="question.custom_properties.description_enabled">
-      Description
-    </mat-slide-toggle>
-
-  <mat-slide-toggle class="sidebar-form-input"  (change)="changed()" color="primary" [(ngModel)]="question.custom_properties.rtl_text" name="rtl">
-    RTL Text
-  </mat-slide-toggle>
-
-
-  <mat-slide-toggle *ngIf="isOfType([QuestionType.DROPDOWN])" (change)="changed()" class="sidebar-form-input" color="primary" name="multi" [(ngModel)]="question.custom_properties.alphabetical">
-    Alphabetical
-  </mat-slide-toggle>
-
-  <mat-slide-toggle *ngIf="isOfType([QuestionType.MULTI_CHOICE,QuestionType.PICTURE_CHOICE])" (change)="changed()" class="sidebar-form-input" color="primary" name="multi" [(ngModel)]="question.custom_properties.multi">
-    Multiple selection
-  </mat-slide-toggle>
-
-  <mat-form-field class="sidebar-form-input" (change)="changed()" *ngIf="isOfType([QuestionType.MULTI_CHOICE,QuestionType.PICTURE_CHOICE]) && question.custom_properties.multi">
-    <mat-label>Selection Limits</mat-label>
-    <mat-select [(ngModel)]="question.custom_properties.multi_select_type" name="selection-limit">
-      <mat-option value="1">
-        Unlimited
-      </mat-option>
-      <mat-option value="2">
-        Range
-      </mat-option>
-      <mat-option value="3">
-        Exact Number
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field class="sidebar-form-input" (change)="changed()" *ngIf="isOfType([QuestionType.MULTI_CHOICE,QuestionType.PICTURE_CHOICE]) && question.custom_properties.multi && question.custom_properties.multi_select_type == 3">
-    <mat-label>Max</mat-label>
-    <input matInput  [(ngModel)]="question.custom_properties.multi_limit_max" name="selection-limit-exact" class='sidebar-sub-input' type="number"/>
-  </mat-form-field>
-
-
-  <mat-form-field class="sidebar-form-input" *ngIf="isOfType([QuestionType.LONG_TEXT,QuestionType.SHORT_TEXT])">
-    <mat-label>Max Chars</mat-label>
-    <input matInput (change)="changed()" [(ngModel)]="question.custom_properties.max_chars" name="selection-max-chars" class='sidebar-sub-input' type="number" />
-  </mat-form-field>
-
-
-  <mat-form-field class="sidebar-form-input" *ngIf="isOfType([QuestionType.MULTI_CHOICE,QuestionType.PICTURE_CHOICE]) && question.custom_properties.multi && question.custom_properties.multi_select_type == 2">
-    <mat-label>Min</mat-label>
-    <input matInput (change)="changed()" [(ngModel)]="question.custom_properties.multi_limit_min" name="selection-limit-range-min" class='sidebar-sub-input' type="number"/> <span style="padding: 10px;line-height: 30px;">-</span>
-  </mat-form-field>
-
-
-  <mat-form-field class="sidebar-form-input-right" *ngIf="isOfType([QuestionType.MULTI_CHOICE,QuestionType.PICTURE_CHOICE]) && question.custom_properties.multi && question.custom_properties.multi_select_type == 2">
-    <mat-label>Max</mat-label>
-  <input matInput (change)="changed()" [(ngModel)]="question.custom_properties.multi_limit_max" name="selection-limit-range-max" class='sidebar-sub-input' type="number"/>
-  </mat-form-field>
-
-
-  <mat-slide-toggle (change)="changed()" *ngIf="isOfType([QuestionType.MULTI_CHOICE,QuestionType.PICTURE_CHOICE])" class="sidebar-form-input" color="primary" name="random" [(ngModel)]="question.custom_properties.random">
-    Randomize
-  </mat-slide-toggle>
-
-  <mat-slide-toggle (change)="changed()" *ngIf="isOfType([QuestionType.MULTI_CHOICE])" class="sidebar-form-input" color="primary" name="stack" [(ngModel)]="question.custom_properties.stack">
-    Stack Options
-  </mat-slide-toggle>
-
-  <div class="sidebar-form-input">
-    <mat-label>Prompt Image</mat-label>
-    <button mat-raised-button color="accent" class="sidebar-button" (click)="fileInput.click()">ADD IMAGE</button>
-    <input type="file" style="display: none;" (change)="attachImagePrompt($event,fileInput)" #fileInput>
-    <div *ngIf="question.prompts?.imagePrompt && !loadingPromptImage" class="image-add">
-      <i  class="material-icons warn remove-image" (click)="removeImagePrompt()">delete</i>
-      <img [src]="question.prompts?.imagePrompt.url" />
-    </div>
-
-    <div class="image-loading" *ngIf="loadingPromptImage">
-      <div class="tile--css_animations__demo2">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-    </div>
-
-  </div>
-
-
-  <div class="sidebar-form-input" *ngIf="isOfType([QuestionType.VOICE])">
-    <mat-label>Prompt Audio</mat-label>
-    <button mat-raised-button color="accent" class="sidebar-button" (click)="openRecordingInput(false)">ADD RECORDING</button>
-    <audio class="audio-controller" style="width: 100%;" controls="" *ngIf="question.prompts?.audioPrompt">
-      <source [src]="question.prompts?.audioPrompt.url">
-    </audio>
-
- </div>
-
-  <mat-slide-toggle (change)="changed()" *ngIf="isOfType([QuestionType.VOICE]) && question.prompts?.audioPrompt" class="sidebar-form-input" color="primary" name="sync-play" [(ngModel)]="question.custom_properties.prompt_sync">
-    Play prompt at the same time
-  </mat-slide-toggle>
-
-
-  <div class="sidebar-form-input">
-    <mat-label>Follow up Audio</mat-label>
-    <button mat-raised-button color="accent" class="sidebar-button" (click)="openRecordingInput(true)">ADD RECORDING</button>
-    <audio class="audio-controller" style="width: 100%;" controls="" *ngIf="question.prompts?.audioFeedback">
-      <source [src]="question.prompts?.audioFeedback.url">
-    </audio>
-
-  </div>
-
-  <mat-form-field (change)="changed()" class="sidebar-form-input" *ngIf="isOfType([QuestionType.VOICE])">
-    <mat-label>Length Limit</mat-label>
-    <input matInput [(ngModel)]="question.custom_properties.length_limit" name="selection-step-value" class='sidebar-sub-input' type="time" />
-  </mat-form-field>
-
-
-
-  <mat-form-field (change)="changed()" class="sidebar-form-input" *ngIf="isOfType([QuestionType.DATE])">
-    <mat-label>Date Format (YYYY-MM-DD)</mat-label>
-    <input matInput [(ngModel)]="question.custom_properties.format" name="selection-date-format" class='sidebar-sub-input input-extra-long' type="text"/>
-  </mat-form-field>
-
-  <mat-form-field (change)="changed()" class="sidebar-form-input" *ngIf="isOfType([QuestionType.NUMBER])">
-    <mat-label>Min</mat-label>
-    <input matInput [(ngModel)]="question.custom_properties.min" name="selection-min-value" class='sidebar-sub-input' type="number" />
-  </mat-form-field>
-
-  <mat-form-field (change)="changed()" class="sidebar-form-input" *ngIf="isOfType([QuestionType.NUMBER])">
-    <mat-label>Max</mat-label>
-    <input matInput [(ngModel)]="question.custom_properties.max" name="selection-max-value" class='sidebar-sub-input' type="number" />
-  </mat-form-field>
-
-
-  <mat-form-field (change)="changed()" class="sidebar-form-input" *ngIf="isOfType([QuestionType.SCALE])">
-  <mat-label>Start</mat-label>
-  <input matInput [(ngModel)]="question.custom_properties.start" name="selection-start-value" class='sidebar-sub-input' type="number" />
-  </mat-form-field>
-
-  <mat-form-field (change)="changed()" class="sidebar-form-input" *ngIf="isOfType([QuestionType.SCALE])">
-    <mat-label>End</mat-label>
-    <input matInput [(ngModel)]="question.custom_properties.end" name="selection-end-value" class='sidebar-sub-input' type="number" />
-  </mat-form-field>
-
-  <mat-form-field (change)="changed()" class="sidebar-form-input" *ngIf="isOfType([QuestionType.SCALE])">
-    <mat-label>Step</mat-label>
-    <input matInput [(ngModel)]="question.custom_properties.step" name="selection-step-value" class='sidebar-sub-input' type="number" />
-  </mat-form-field>
-
-  <div class="sidebar-form-input-group" *ngIf="isOfType([QuestionType.SCALE])">
-
-    <mat-slide-toggle (change)="changed()" color="primary" name="random" [(ngModel)]="question.custom_properties.show_labels">
-      Show Labels
-    </mat-slide-toggle>
+    <mat-form-field class="sidebar-form-input">
+        <mat-label>Question Type</mat-label>
+        <mat-select [(ngModel)]="question.type" name="type-select" (ngModelChange)="changed()">
+            <mat-option *ngFor="let type of questionTypes" [value]="type.value">
+                {{type.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
     <br/>
 
-    <mat-form-field (change)="changed()" *ngIf="question.custom_properties.show_labels">
-      <mat-label>Left</mat-label>
-      <input matInput  [(ngModel)]="question.custom_properties.label_start"  name="selection-label-value-1" class='sidebar-sub-input'/>
+    <mat-slide-toggle class="sidebar-form-input" (change)="changed()" color="primary"
+                      *ngIf="isNotOfType([QuestionType.BLOCK_TEXT])" [(ngModel)]="question.required" name="required">
+        Required
+    </mat-slide-toggle>
+
+    <mat-slide-toggle class="sidebar-form-input" (change)="changed()" color="primary" name="description"
+                      [(ngModel)]="question.custom_properties.description_enabled">
+        Description
+    </mat-slide-toggle>
+
+    <mat-slide-toggle class="sidebar-form-input" (change)="changed()" color="primary"
+                      [(ngModel)]="question.custom_properties.rtl_text" name="rtl">
+        RTL Text
+    </mat-slide-toggle>
+
+
+    <mat-slide-toggle *ngIf="isOfType([QuestionType.DROPDOWN])" (change)="changed()" class="sidebar-form-input"
+                      color="primary" name="multi" [(ngModel)]="question.custom_properties.alphabetical">
+        Alphabetical
+    </mat-slide-toggle>
+
+    <mat-slide-toggle *ngIf="isOfType([QuestionType.MULTI_CHOICE,QuestionType.PICTURE_CHOICE])" (change)="changed()"
+                      class="sidebar-form-input" color="primary" name="multi"
+                      [(ngModel)]="question.custom_properties.multi">
+        Multiple selection
+    </mat-slide-toggle>
+
+    <mat-form-field class="sidebar-form-input" (change)="changed()"
+                    *ngIf="isOfType([QuestionType.MULTI_CHOICE,QuestionType.PICTURE_CHOICE]) && question.custom_properties.multi">
+        <mat-label>Selection Limits</mat-label>
+        <mat-select [(ngModel)]="question.custom_properties.multi_select_type" name="selection-limit">
+            <mat-option value="1">
+                Unlimited
+            </mat-option>
+            <mat-option value="2">
+                Range
+            </mat-option>
+            <mat-option value="3">
+                Exact Number
+            </mat-option>
+        </mat-select>
     </mat-form-field>
 
-    <mat-form-field (change)="changed()" *ngIf="question.custom_properties.show_labels">
-      <mat-label>Center</mat-label>
-      <input matInput [(ngModel)]="question.custom_properties.label_middle"  name="selection-label-value-2" class='sidebar-sub-input'/>
-    </mat-form-field>
-
-    <mat-form-field (change)="changed()" *ngIf="question.custom_properties.show_labels">
-      <mat-label>Right</mat-label>
-      <input matInput [(ngModel)]="question.custom_properties.label_end"  name="selection-label-value-3" class='sidebar-sub-input'/>
+    <mat-form-field class="sidebar-form-input" (change)="changed()"
+                    *ngIf="isOfType([QuestionType.MULTI_CHOICE,QuestionType.PICTURE_CHOICE]) && question.custom_properties.multi && question.custom_properties.multi_select_type == 3">
+        <mat-label>Max</mat-label>
+        <input matInput [(ngModel)]="question.custom_properties.multi_limit_max" name="selection-limit-exact"
+               class='sidebar-sub-input' type="number"/>
     </mat-form-field>
 
 
-
-  </div>
-
-  <mat-form-field class="sidebar-form-input" (change)="changed()">
-    <mat-label>Max Grade points</mat-label>
-    <input matInput style="width: fit-content;" [(ngModel)]="question.max_grade" name="selection-limit-exact" class='sidebar-sub-input' type="number"/>
-  </mat-form-field>
+    <mat-form-field class="sidebar-form-input" *ngIf="isOfType([QuestionType.LONG_TEXT,QuestionType.SHORT_TEXT])">
+        <mat-label>Max Chars</mat-label>
+        <input matInput (change)="changed()" [(ngModel)]="question.custom_properties.max_chars"
+               name="selection-max-chars" class='sidebar-sub-input' type="number"/>
+    </mat-form-field>
 
 
+    <mat-form-field class="sidebar-form-input"
+                    *ngIf="isOfType([QuestionType.MULTI_CHOICE,QuestionType.PICTURE_CHOICE]) && question.custom_properties.multi && question.custom_properties.multi_select_type == 2">
+        <mat-label>Min</mat-label>
+        <input matInput (change)="changed()" [(ngModel)]="question.custom_properties.multi_limit_min"
+               name="selection-limit-range-min" class='sidebar-sub-input' type="number"/> <span
+            style="padding: 10px;line-height: 30px;">-</span>
+    </mat-form-field>
 
+
+    <mat-form-field class="sidebar-form-input-right"
+                    *ngIf="isOfType([QuestionType.MULTI_CHOICE,QuestionType.PICTURE_CHOICE]) && question.custom_properties.multi && question.custom_properties.multi_select_type == 2">
+        <mat-label>Max</mat-label>
+        <input matInput (change)="changed()" [(ngModel)]="question.custom_properties.multi_limit_max"
+               name="selection-limit-range-max" class='sidebar-sub-input' type="number"/>
+    </mat-form-field>
+
+
+    <mat-slide-toggle (change)="changed()" *ngIf="isOfType([QuestionType.MULTI_CHOICE,QuestionType.PICTURE_CHOICE])"
+                      class="sidebar-form-input" color="primary" name="random"
+                      [(ngModel)]="question.custom_properties.random">
+        Randomize
+    </mat-slide-toggle>
+
+    <mat-slide-toggle (change)="changed()" *ngIf="isOfType([QuestionType.MULTI_CHOICE])" class="sidebar-form-input"
+                      color="primary" name="stack" [(ngModel)]="question.custom_properties.stack">
+        Stack Options
+    </mat-slide-toggle>
+
+    <div class="sidebar-form-input">
+        <mat-label>Prompt Image</mat-label>
+        <button mat-raised-button color="accent" class="sidebar-button" (click)="fileInput.click()">ADD IMAGE</button>
+        <input type="file" style="display: none;" (change)="attachImagePrompt($event,fileInput)" #fileInput>
+        <div *ngIf="question.prompts?.imagePrompt && !loadingPromptImage" class="image-add">
+            <i class="material-icons warn remove-image" (click)="removeImagePrompt()">delete</i>
+            <img [src]="question.prompts?.imagePrompt.url"/>
+        </div>
+
+        <div class="image-loading" *ngIf="loadingPromptImage">
+            <div class="tile--css_animations__demo2">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="sidebar-form-input" *ngIf="isOfType([QuestionType.VOICE])">
+        <mat-label>Prompt Audio</mat-label>
+        <button mat-raised-button color="accent" class="sidebar-button" (click)="openRecordingInput(false)">ADD
+            RECORDING
+        </button>
+        <div class="remove-button-container"  *ngIf="question.prompts?.audioPrompt">
+            <button mat-raised-button color="warn"
+                    (click)="deletePromptRecording()">REMOVE
+            </button>
+        </div>
+        <audio class="audio-controller" style="width: 100%;" controls="" *ngIf="question.prompts?.audioPrompt">
+            <source [src]="question.prompts?.audioPrompt.url">
+        </audio>
+
+    </div>
+
+    <mat-slide-toggle (change)="changed()" *ngIf="isOfType([QuestionType.VOICE]) && question.prompts?.audioPrompt"
+                      class="sidebar-form-input" color="primary" name="sync-play"
+                      [(ngModel)]="question.custom_properties.prompt_sync">
+        Play prompt at the same time
+    </mat-slide-toggle>
+
+
+    <div class="sidebar-form-input">
+        <mat-label>Follow up Audio</mat-label>
+        <button mat-raised-button color="accent" class="sidebar-button" (click)="openRecordingInput(true)">ADD
+            RECORDING
+        </button>
+        <div class="remove-button-container" *ngIf="question.prompts?.audioFeedback">
+            <button mat-raised-button color="warn"
+                    (click)="deleteFeedbackRecording()">REMOVE
+            </button>
+        </div>
+
+        <audio class="audio-controller" style="width: 100%;" controls="" *ngIf="question.prompts?.audioFeedback">
+            <source [src]="question.prompts?.audioFeedback.url">
+        </audio>
+
+    </div>
+
+    <!--  <mat-form-field (change)="changed()" class="sidebar-form-input" *ngIf="isOfType([QuestionType.VOICE])">-->
+    <!--    <mat-label>Length Limit</mat-label>-->
+    <!--    <input matInput [(ngModel)]="question.custom_properties.length_limit" name="selection-step-value" class='sidebar-sub-input' type="time" />-->
+    <!--  </mat-form-field>-->
+
+
+    <!--  <mat-form-field (change)="changed()" class="sidebar-form-input" *ngIf="isOfType([QuestionType.DATE])">-->
+    <!--    <mat-label>Date Format (YYYY-MM-DD)</mat-label>-->
+    <!--    <input matInput [(ngModel)]="question.custom_properties.format" name="selection-date-format" class='sidebar-sub-input input-extra-long' type="text"/>-->
+    <!--  </mat-form-field>-->
+
+    <mat-form-field (change)="changed()" class="sidebar-form-input" *ngIf="isOfType([QuestionType.NUMBER])">
+        <mat-label>Min</mat-label>
+        <input matInput [(ngModel)]="question.custom_properties.min" name="selection-min-value"
+               class='sidebar-sub-input' type="number"/>
+    </mat-form-field>
+
+    <mat-form-field (change)="changed()" class="sidebar-form-input" *ngIf="isOfType([QuestionType.NUMBER])">
+        <mat-label>Max</mat-label>
+        <input matInput [(ngModel)]="question.custom_properties.max" name="selection-max-value"
+               class='sidebar-sub-input' type="number"/>
+    </mat-form-field>
+
+
+    <mat-form-field (change)="changed()" class="sidebar-form-input" *ngIf="isOfType([QuestionType.SCALE])">
+        <mat-label>Start</mat-label>
+        <input matInput [(ngModel)]="question.custom_properties.start" name="selection-start-value"
+               class='sidebar-sub-input' type="number"/>
+    </mat-form-field>
+
+    <mat-form-field (change)="changed()" class="sidebar-form-input" *ngIf="isOfType([QuestionType.SCALE])">
+        <mat-label>End</mat-label>
+        <input matInput [(ngModel)]="question.custom_properties.end" name="selection-end-value"
+               class='sidebar-sub-input' type="number"/>
+    </mat-form-field>
+
+    <mat-form-field (change)="changed()" class="sidebar-form-input" *ngIf="isOfType([QuestionType.SCALE])">
+        <mat-label>Step</mat-label>
+        <input matInput [(ngModel)]="question.custom_properties.step" name="selection-step-value"
+               class='sidebar-sub-input' type="number"/>
+    </mat-form-field>
+
+    <div class="sidebar-form-input-group" *ngIf="isOfType([QuestionType.SCALE])">
+
+        <mat-slide-toggle (change)="changed()" color="primary" name="random"
+                          [(ngModel)]="question.custom_properties.show_labels">
+            Show Labels
+        </mat-slide-toggle>
+        <br/>
+
+        <mat-form-field (change)="changed()" *ngIf="question.custom_properties.show_labels">
+            <mat-label>Left</mat-label>
+            <input matInput [(ngModel)]="question.custom_properties.label_start" name="selection-label-value-1"
+                   class='sidebar-sub-input'/>
+        </mat-form-field>
+
+        <mat-form-field (change)="changed()" *ngIf="question.custom_properties.show_labels">
+            <mat-label>Center</mat-label>
+            <input matInput [(ngModel)]="question.custom_properties.label_middle" name="selection-label-value-2"
+                   class='sidebar-sub-input'/>
+        </mat-form-field>
+
+        <mat-form-field (change)="changed()" *ngIf="question.custom_properties.show_labels">
+            <mat-label>Right</mat-label>
+            <input matInput [(ngModel)]="question.custom_properties.label_end" name="selection-label-value-3"
+                   class='sidebar-sub-input'/>
+        </mat-form-field>
+
+
+    </div>
+
+    <mat-form-field class="sidebar-form-input" (change)="changed()">
+        <mat-label>Max Grade points</mat-label>
+        <input matInput style="width: fit-content;" [(ngModel)]="question.max_grade" name="selection-limit-exact"
+               class='sidebar-sub-input' type="number"/>
+    </mat-form-field>
 
 
 </form>

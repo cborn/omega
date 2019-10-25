@@ -1,7 +1,7 @@
 <div *ngFor="let question of lesson.questions | positionOrder:'asc'" class="question" [ngClass]="{ 'rtl':question.custom_properties.rtl_text}">
 
 
-    <img [src]="question.prompts?.imagePrompt.url" class="image-prompt" />
+    <img *ngIf="question.prompts?.imagePrompt" [src]="question.prompts?.imagePrompt.url" class="image-prompt" />
 
     <h3>
         <b *ngIf="question.type !== 3 && !question.custom_properties.rtl_text" >({{question.position + 1}})</b>

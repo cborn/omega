@@ -72,6 +72,36 @@ export class SidebarComponent implements OnInit {
 
     }
 
+    async deletePromptRecording() {
+        const promise = await this.http.delete<Question>(AuthenticatedHttpClient.QUESTION_PROMPT_AUDIO_URL + '/' + this.question.id);
+
+        promise.subscribe(value => {
+            this.changed();
+        }, error1 => {
+            console.log('ERROR');
+        });
+    }
+
+    async deleteFeedbackRecording() {
+        const promise = await this.http.delete<Question>(AuthenticatedHttpClient.QUESTION_FEEDBACK_AUDIO_URL + '/' + this.question.id);
+
+        promise.subscribe(value => {
+            this.changed();
+        }, error1 => {
+            console.log('ERROR');
+        });
+    }
+
+
+    async removeImagePrompt() {
+        const promise = await this.http.delete<Question>(AuthenticatedHttpClient.REMOVE_PROMPT_IMAGE_FROM_QUESTION + '/' + this.question.id);
+
+        promise.subscribe(value => {
+            this.changed();
+        }, error1 => {
+            console.log('ERROR');
+        });
+    }
 
     async attachImagePrompt(event) {
 

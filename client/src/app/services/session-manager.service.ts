@@ -14,6 +14,7 @@ export class SessionManagerService {
     static EXPIRES = 'omega-expires-token';
 
     displayTerm;
+    bucket;
 
 
     constructor() {

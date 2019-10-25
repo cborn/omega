@@ -27,6 +27,7 @@ export class NavComponent implements OnInit {
     didChangeTerm() {
         this.notificationService.doesRequireReload();
         this.sessionService.displayTerm = this.currentTerm;
+
     }
 
 
@@ -43,6 +44,7 @@ export class NavComponent implements OnInit {
         (await this.navService.getNavData()).subscribe(res => {
             this.applicationData = res;
             this.currentTerm = this.applicationData.term.id;
+            this.sessionService.bucket = this.applicationData.bucket;
             this.didChangeTerm();
         });
     }
@@ -66,6 +68,7 @@ class ApplicationData {
     terms: Term[];
     user: User;
     isAdmin: boolean;
-    isStudent:boolean;
+    isStudent: boolean;
+    bucket: string;
 }
 

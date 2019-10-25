@@ -7,6 +7,7 @@ import {AuthenticatedHttpClient} from '../services/authenticated-http-service.se
 import * as RecordRTC from 'recordrtc';
 import {VoiceRendererComponent} from '../faculty/lessonPage/lesson-page-renderer/components/voice-renderer/voice-renderer.component';
 import {Question} from '../Model/question';
+import {SessionManagerService} from '../services/session-manager.service';
 
 export interface PromptRecordingData {
     question: Question;
@@ -21,6 +22,15 @@ export interface PromptRecordingData {
 export class PromptRecordingDialogComponent {
 
     recording = false;
+    loading = false;
+
+    public options = [
+        {'id': 1, 'name': 'Recording'},
+        {'id': 2, 'name': 'Upload'}
+    ];
+
+    typeSelect = this.options[0].id;
+
 
     private url;
 
@@ -29,7 +39,7 @@ export class PromptRecordingDialogComponent {
 
     constructor(
         public dialogRef: MatDialogRef<PromptRecordingDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: PromptRecordingData, private http: AuthenticatedHttpClient) {
+        @Inject(MAT_DIALOG_DATA) public data: PromptRecordingData, private http: AuthenticatedHttpClient,  private sessionManager: SessionManagerService) {
 
     }
 
@@ -74,6 +84,29 @@ export class PromptRecordingDialogComponent {
 
     }
 
+
+   async uploadRecording(event) {
+
+        const file = event.target.files[0];
+
+        this.loading = true;
+        const uploadData = new FormData();
+        uploadData.append('audio_data', file, 'IGNORED');
+        const promise = await this.http.post<Question>((this.data.isFeedback ? AuthenticatedHttpClient.QUESTION_FEEDBACK_AUDIO_URL : AuthenticatedHttpClient.QUESTION_PROMPT_AUDIO_URL)  + '/' + this.data.question.id, uploadData);
+
+        promise.subscribe(value => {
+            this.loading = false;
+            console.log('changed image prompt');
+
+            this.url = VoiceRendererComponent.formatAsAWSUrl(value, this.sessionManager.bucket);
+            this.dialogRef.close(value);
+        }, error1 => {
+            this.loading = false;
+            console.log('ERROR');
+        });
+    }
+
+
     /**
      * Stop recording.
      */
@@ -88,12 +121,14 @@ export class PromptRecordingDialogComponent {
      */
     async processRecording(blob) {
 
+        this.loading = true;
         const form = new FormData();
         form.append('audio_data', blob);
         const promise = await this.http.post<any>((this.data.isFeedback ? AuthenticatedHttpClient.QUESTION_FEEDBACK_AUDIO_URL : AuthenticatedHttpClient.QUESTION_PROMPT_AUDIO_URL) + '/' + this.data.question.id, form);
 
         promise.subscribe(value1 => {
-            this.url = VoiceRendererComponent.formatAsAWSUrl(value1);
+            this.loading = false;
+            this.url = VoiceRendererComponent.formatAsAWSUrl(value1, this.sessionManager.bucket);
             this.dialogRef.close(value1);
         });
 

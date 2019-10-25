@@ -14,9 +14,15 @@ class ApplicationController implements PluginManagerAware {
 
     def index() {
 
+        String bucket = System.getenv("LL_AWS_BUCKET_NAME");
+
+        if(!bucket)
+            bucket = "omegadev"
+
+
         Term currentTerm = Term.findByCurrent(true);
         User currentUser = springSecurityService.getCurrentUser() as User;
-        [term:currentTerm,user:currentUser ,terms:Term.list() ,isStudent: currentUser != null && currentUser.isStudent(),isAdminOrSuperAdmin: currentUser != null && currentUser.isAdminOrSuperAdmin()]
+        [term:currentTerm,user:currentUser ,terms:Term.list() ,isStudent: currentUser != null && currentUser.isStudent(),isAdminOrSuperAdmin: currentUser != null && currentUser.isAdminOrSuperAdmin(),bucket: bucket]
     }
 }
 

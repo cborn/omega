@@ -75,7 +75,6 @@ grails:
             secretKey: ${LL_AWS_SECRET_KEY}
             s3:
                 region: eu-central-1
-                bucket: omegadev
 ---
 hibernate:
     cache:

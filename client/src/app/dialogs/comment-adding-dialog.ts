@@ -6,6 +6,7 @@ import {SubmissionResponse} from '../Model/submissionResponse';
 import {AuthenticatedHttpClient} from '../services/authenticated-http-service.service';
 import * as RecordRTC from 'recordrtc';
 import {VoiceRendererComponent} from '../faculty/lessonPage/lesson-page-renderer/components/voice-renderer/voice-renderer.component';
+import {SessionManagerService} from '../services/session-manager.service';
 
 export interface CommentDialogData {
     position?: any;
@@ -39,7 +40,7 @@ export class CommentAddingDialogComponent {
 
     constructor(
         public dialogRef: MatDialogRef<CommentAddingDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: CommentDialogData, private http: AuthenticatedHttpClient) {
+        @Inject(MAT_DIALOG_DATA) public data: CommentDialogData, private http: AuthenticatedHttpClient, private sessionManager: SessionManagerService) {
 
         if (this.data.textOnly) {
             this.options = [
@@ -132,7 +133,7 @@ export class CommentAddingDialogComponent {
         const promise = await this.http.post<any>(AuthenticatedHttpClient.COMMENT_RECORDING_ADD_URL + '?responseId=' + this.data.response.id, form);
 
         promise.subscribe(value1 => {
-            this.url = VoiceRendererComponent.formatAsAWSUrl(value1);
+            this.url = VoiceRendererComponent.formatAsAWSUrl(value1, this.sessionManager.bucket);
             this.dialogRef.close(value1);
         });
 

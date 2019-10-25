@@ -65,6 +65,19 @@
     transform: translate(-50%,67%);
 }
 
+.remove-button-container {
+    padding: 10px;
+    float: right;
+    width: 100%;
+    position: relative;
+    height: 37px;
+}
+
+.remove-button-container > button {
+    right: 10px;
+    position: absolute;
+}
+
 
 
 .image-loading {

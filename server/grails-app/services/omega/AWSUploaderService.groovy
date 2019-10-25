@@ -12,15 +12,20 @@ class AWSUploaderService {
 
     def upload(MultipartFile req, String prefix) {
 
-        if(!amazonS3Service.listBucketNames().contains("omegadev"))
+        String bucket = System.getenv("LL_AWS_BUCKET_NAME");
+
+        if(!bucket)
+            bucket = "omegadev"
+
+        if(!amazonS3Service.listBucketNames().contains(bucket))
         {
-            amazonS3Service.createBucket("omegadev");
+            amazonS3Service.createBucket(bucket);
         }
 
         String AWS_key = UUID.randomUUID();
 
         String path = "${prefix}/${AWS_key}"
-        String s3FileUrl = amazonS3Service.storeMultipartFile("omegadev",path,req);
+        String s3FileUrl = amazonS3Service.storeMultipartFile(bucket,path,req);
 
         return [awsKey:AWS_key,s3FileUrl:s3FileUrl];
 

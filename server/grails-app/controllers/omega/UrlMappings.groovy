@@ -12,9 +12,11 @@ class UrlMappings {
 
         post "/question/addImage/$id" (controller:'question', action: 'addImage')
         post "/question/promptRecording/$id" (controller:'question', action: ' addPromptRecording')
+        delete "/question/promptRecording/$id" (controller:'question', action: ' removePromptRecording')
         post "/question/promptImage/$id" (controller:'question', action: ' addPromptImage')
+        delete "/question/promptImage/$id" (controller:'question', action: ' removePromptImage')
         post "/question/feedbackRecording/$id" (controller:'question', action: ' addFeedbackRecording')
-
+        delete "/question/feedbackRecording/$id" (controller:'question', action: ' removeFeedbackRecording')
 
         delete "/question/remove/$id" (controller:'question', action: 'remove')
         get "/lessonPage/moveUp/$id" (controller:'lessonPage', action: 'moveUp')
@@ -27,9 +29,6 @@ class UrlMappings {
         post "/submission/grade/$id" (controller:'submission',action: 'grade')
         post "/questionResponse/addRecording" (controller:'questionResponse',action: 'addRecording')
         post "/questionResponse/addTextComment" (controller:'questionResponse',action: 'addTextComment')
-
-
-
 
 
 

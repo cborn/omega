@@ -1,15 +1,35 @@
-<h1 mat-dialog-title>Add a Prompt Recording</h1>
-<div mat-dialog-content>
+<div *ngIf="!loading">
+    <h1 mat-dialog-title>Add a Prompt Recording</h1>
+    <div mat-dialog-content>
 
 
-    <div style="margin: 15px 0">
-        <button mat-raised-button *ngIf="!recording" color="primary" (click)="initiateRecording()">Start Recording</button>
-        <button mat-raised-button *ngIf="recording" color="accent" (click)="stopRecording()">Stop Recording</button>
+        <mat-select style="margin: 10px" [(ngModel)]="typeSelect">
+            <mat-option *ngFor="let option of options" [value]="option.id">{{option.name}}</mat-option>
+
+        </mat-select>
+        <div *ngIf="typeSelect == 1" style="margin: 15px 0">
+            <div style="margin: 15px 0">
+                <button mat-raised-button *ngIf="!recording" color="primary" (click)="initiateRecording()">Start
+                    Recording
+                </button>
+                <button mat-raised-button *ngIf="recording" color="accent" (click)="stopRecording()">Stop Recording
+                </button>
+            </div>
+        </div>
+
+        <div *ngIf="typeSelect == 2" style="margin: 15px 0">
+
+            <input type="file" (change)="uploadRecording($event)"/>
+
+        </div>
+
+
     </div>
-
-
+    <div mat-dialog-actions>
+        <button mat-button (click)="dismiss()">Cancel</button>
+    </div>
 </div>
-<div mat-dialog-actions>
-    <button mat-button (click)="dismiss()">Cancel</button>
+<div *ngIf="loading">
+    <h3>Uploading</h3>
+    <mat-spinner></mat-spinner>
 </div>
-
