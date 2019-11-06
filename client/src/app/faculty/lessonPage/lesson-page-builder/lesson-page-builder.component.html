@@ -18,7 +18,8 @@
                                          *ngFor="let question of lesson.questions | positionOrder : 'asc'"
                                          [question]="question" (questionDeleted)="deleteQuestion($event)"
                                          (questionSelected)="openSidebar($event)" [selectedQuestion]="currentQuestion"
-                                         (click)="currentQuestion = question.id;sidebar_question = question" (questionChanged)="changed()"></app-lesson-question>
+                                         (click)="currentQuestion = question.id;sidebar_question = question"
+                                         (questionChanged)="changed()"></app-lesson-question>
                     <div class="add_new_primary_button">
                         <button mat-fab color="primary" (click)="addNewQuestion()"><i class="material-icons">add</i>
                         </button>
@@ -33,6 +34,29 @@
                             </mat-list>
                         </div>
                     </div>
+                </div>
+
+
+                <i class="material-icons explainer" (mouseenter)="explainerContentDisplayed = true" (mouseleave)="explainerContentDisplayed = false">help</i>
+                <div class="explainer_content" *ngIf="explainerContentDisplayed">
+                   <span>Keybboard Shortcuts</span>
+
+                    <div>
+                        <table class="explainer_content_table">
+                            <tbody>
+                            <tr>
+                                <td><span>@RB</span></td>
+                                <td width="150px"><p>Add Ruby text into the title or description of the question.</p></td>
+                            </tr>
+                            <tr>
+                                <td><span>@@</span></td>
+                                <td width="150px"><p>Add a cloze prompt into a cloze question.</p></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
                 </div>
 
 

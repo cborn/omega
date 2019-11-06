@@ -23,6 +23,55 @@
 
 }
 
+.explainer {
+  bottom: 12px;
+  position: fixed;
+  right: calc(50% + 11px);
+  padding: 10px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px, rgba(0, 0, 0, 0.06) 0px 2px 12px;
+  border-radius: 10px;
+  color: #7a7a7a;
+}
+
+
+.explainer:hover {
+  color: #1b1b1b;
+}
+
+
+.explainer_content {
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px, rgba(0, 0, 0, 0.06) 0px 2px 12px;
+  position: fixed;
+  right: calc(50% + 65px);
+  border-radius: 10px;
+  bottom: 12px;
+  width: 313px;
+  padding: 10px;
+  background-color: white;
+}
+
+.explainer_content_table {
+  width: 100%;
+}
+
+.explainer_content_table > tbody > tr > td {
+  padding: 10px;
+}
+
+
+.explainer_content_table > tbody > tr > td:first-child {
+  text-align: right;
+}
+
+.explainer_content_table > tbody > tr > td:first-child > span {
+
+  border: 1px solid grey;
+  background-color: lightgrey;
+  padding: 3px 10px;
+  border-radius: 3px;
+
+}
+
 
 .add_new_primary_button {
   position: relative;

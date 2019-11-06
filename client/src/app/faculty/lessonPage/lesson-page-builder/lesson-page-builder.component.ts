@@ -15,6 +15,8 @@ export class LessonPageBuilderComponent implements OnInit {
     sidebar_open = false;
     sidebar_question: Question;
 
+    explainerContentDisplayed = false;
+
     currentQuestion = -1;
 
     addQuestionDialogShown = false;
