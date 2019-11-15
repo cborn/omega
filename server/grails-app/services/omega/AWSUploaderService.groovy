@@ -17,10 +17,10 @@ class AWSUploaderService {
         if(!bucket)
             bucket = "omegadev"
 
-        if(!amazonS3Service.listBucketNames().contains(bucket))
-        {
-            amazonS3Service.createBucket(bucket);
-        }
+//        if(!amazonS3Service.listBucketNames().contains(bucket))
+//        {
+//            amazonS3Service.createBucket(bucket);
+//        }
 
         String AWS_key = UUID.randomUUID();
 

@@ -38,7 +38,6 @@ export class LessonQuestionComponent implements OnInit {
     selection: Selection;
 
 
-
     constructor(private _ngZone: NgZone, public dialog: MatDialog) {
     }
 
@@ -70,21 +69,19 @@ export class LessonQuestionComponent implements OnInit {
     }
 
 
-
     checkTextSelection(event) {
 
         this.selection = window.getSelection();
 
-        if (this.selection.baseOffset !== this.selection.extentOffset) {
+        if (this.selection['baseOffset'] !== this.selection['extentOffset']) {
             this.text_selection.emit({shown: true, id: this.question.id});
 
-            if(this.clickStartPosition < event.clientX) {
+            if (this.clickStartPosition < event.clientX) {
                 // We're going from right to left.
 
                 const deltaX = (event.clientX - this.clickStartPosition) / 2;
                 this.formatter_position_x = (this.clickStartPosition + deltaX) - 53;
-            }
-            else {
+            } else {
                 const deltaX = (this.clickStartPosition - event.clientX) / 2;
                 this.formatter_position_x = (event.clientX + deltaX) - 53;
             }
