@@ -3,10 +3,11 @@
 
     <img *ngIf="question.prompts?.imagePrompt" [src]="question.prompts?.imagePrompt.url" class="image-prompt" />
 
-    <h3>
+    <h3 dir="auto">
         <b *ngIf="question.type !== 3 && !question.custom_properties.rtl_text" >({{question.position + 1}})</b>
-        <b *ngIf="question.type === 3" style="font-size: 47px;font-family: cursive;">&quot;</b>
+        <b *ngIf="question.type === 3 && !question.custom_properties.rtl_text" style="font-size: 47px;font-family: cursive;">&quot;</b>
         <span class="keep-format" dir="auto" [innerHTML]="question.name == null || question.name == '' ? '...' : question.name"></span>
+        <b *ngIf="question.type === 3 && question.custom_properties.rtl_text" style="font-size: 47px;font-family: cursive;">&quot;</b>
         <b *ngIf="question.type !== 3 && question.custom_properties.rtl_text" >({{question.position + 1}})</b>
         <i class="required" *ngIf="question.required">*</i>
     </h3>
