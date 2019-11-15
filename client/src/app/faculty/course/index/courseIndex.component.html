@@ -17,7 +17,7 @@
         <mat-header-cell *matHeaderCellDef>Lessons</mat-header-cell>
         <mat-cell *matCellDef="let course">
             <button mat-stroked-button color="secondary" *ngIf="course.lessons != null && course.lessons.length > 0" [routerLink]="isStudent ? ('/student/course/'+course.id) : ('/lesson/index/' + course.id)">View {{course.lessons.length}} Lessons</button>
-            <button mat-stroked-button color="secondary" *ngIf="(course.lessons == null || course.lessons.length == 0) && !isStudent" [routerLink]="'/lesson/create/' + course.id">Add lesson</button>
+            <button mat-stroked-button color="secondary" *ngIf="(course.lessons == null || course.lessons.length == 0) && !isStudent"[routerLink]="['/lesson/create']"  [queryParams]="{'courseId':course.id}">Add lesson</button>
             <button mat-stroked-button color="secondary" *ngIf="(course.lessons == null || course.lessons.length == 0) && isStudent">No lessons</button>
         </mat-cell>
     </ng-container>

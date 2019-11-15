@@ -75,7 +75,7 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
     loading = false;
 
 
-    static formatAsAWSUrl(value, bucket) {
+    static  formatAsAWSUrl(value, bucket) {
         return 'https://s3-eu-central-1.amazonaws.com/' + bucket + '/audio/' + value;
     }
 

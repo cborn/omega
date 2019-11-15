@@ -110,7 +110,7 @@
     <div class="sidebar-form-input">
         <mat-label>Prompt Image</mat-label>
         <button mat-raised-button color="accent" class="sidebar-button" (click)="fileInput.click()">ADD IMAGE</button>
-        <input type="file" style="display: none;" (change)="attachImagePrompt($event,fileInput)" #fileInput>
+        <input type="file" style="display: none;" (change)="attachImagePrompt($event)" #fileInput>
         <div *ngIf="question.prompts?.imagePrompt && !loadingPromptImage" class="image-add">
             <i class="material-icons warn remove-image" (click)="removeImagePrompt()">delete</i>
             <img [src]="question.prompts?.imagePrompt.url"/>
