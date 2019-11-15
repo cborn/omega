@@ -14,7 +14,23 @@
     background-color: rgb(250,250,250);
 }
 
+.formatter {
+    background: white;
+    position: fixed;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px, rgba(0, 0, 0, 0.06) 0px 2px 12px;
+    border-radius: 10px;
+}
 
+.formatter-button {
+     padding: 10px 15px;
+    border-radius: 5px;
+ }
+
+.formatter-button:hover {
+    background-color: #ededed;
+    cursor: pointer;
+}
 
 .full-width {
     width: 100%;

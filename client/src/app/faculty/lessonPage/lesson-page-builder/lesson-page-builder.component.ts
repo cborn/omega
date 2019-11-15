@@ -27,6 +27,12 @@ export class LessonPageBuilderComponent implements OnInit {
     lesson$ = this.lessonBuilderService.editingLessonPage;
 
 
+    selectedTextQuestion = -1;
+    selectionShown = false;
+
+
+
+
     constructor(private lessonBuilderService: LessonPageBuilderService, private router: Router, private route: ActivatedRoute) {
 
     }
@@ -80,6 +86,11 @@ export class LessonPageBuilderComponent implements OnInit {
         this.sidebar_question = null;
         this.sidebar_open = false;
 
+    }
+
+    text_selection(event) {
+       this.selectedTextQuestion = event.id;
+       this.selectionShown = event.shown;
     }
 
 

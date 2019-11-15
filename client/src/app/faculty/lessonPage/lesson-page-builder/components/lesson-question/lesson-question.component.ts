@@ -20,14 +20,23 @@ export class LessonQuestionComponent implements OnInit {
     @Input() question: Question;
 
     @Input() selectedQuestion: number;
+    @Input() formatter_displayed: boolean;
+
 
     @Output() questionSelected = new EventEmitter();
     @Output() questionDeleted = new EventEmitter();
     @Output() questionChanged = new EventEmitter();
-
+    @Output() text_selection = new EventEmitter();
     cachedNameSelection;
 
     questionNameChanged = new Subject<string>();
+
+    clickStartPosition: number;
+    formatter_position_x: number;
+    formatter_position_y: number;
+
+    selection: Selection;
+
 
 
     constructor(private _ngZone: NgZone, public dialog: MatDialog) {
@@ -51,10 +60,47 @@ export class LessonQuestionComponent implements OnInit {
         }
     }
 
+    markStartPosition(event) {
+        this.clickStartPosition = event.clientX;
+    }
+
+
+    emboldenText() {
+
+    }
+
+
+
+    checkTextSelection(event) {
+
+        this.selection = window.getSelection();
+
+        if (this.selection.baseOffset !== this.selection.extentOffset) {
+            this.text_selection.emit({shown: true, id: this.question.id});
+
+            if(this.clickStartPosition < event.clientX) {
+                // We're going from right to left.
+
+                const deltaX = (event.clientX - this.clickStartPosition) / 2;
+                this.formatter_position_x = (this.clickStartPosition + deltaX) - 53;
+            }
+            else {
+                const deltaX = (this.clickStartPosition - event.clientX) / 2;
+                this.formatter_position_x = (event.clientX + deltaX) - 53;
+            }
+
+            this.formatter_position_y = event.clientY - 80;
+
+        } else {
+            this.text_selection.emit({shown: false, id: this.question.id});
+        }
+
+
+    }
 
 
     nameChanged(field, event) {
-       this.questionNameChanged.next(event.target.innerHTML);
+        this.questionNameChanged.next(event.target.innerHTML);
     }
 
     getRubyEnclosedText(newText: string) {
@@ -124,7 +170,6 @@ export class LessonQuestionComponent implements OnInit {
         this.question.name = this.getRubyEnclosedText(newText);
 
         this.isChanged();
-
 
 
     }

@@ -19,7 +19,7 @@
                                          [question]="question" (questionDeleted)="deleteQuestion($event)"
                                          (questionSelected)="openSidebar($event)" [selectedQuestion]="currentQuestion"
                                          (click)="currentQuestion = question.id;sidebar_question = question"
-                                         (questionChanged)="changed()"></app-lesson-question>
+                                         (questionChanged)="changed()" (text_selection)="text_selection($event)" [formatter_displayed]="selectedTextQuestion == question.id ? selectionShown : false"></app-lesson-question>
                     <div class="add_new_primary_button">
                         <button mat-fab color="primary" (click)="addNewQuestion()"><i class="material-icons">add</i>
                         </button>
@@ -39,7 +39,7 @@
 
                 <i class="material-icons explainer" (mouseenter)="explainerContentDisplayed = true" (mouseleave)="explainerContentDisplayed = false">help</i>
                 <div class="explainer_content" *ngIf="explainerContentDisplayed">
-                   <span>Keybboard Shortcuts</span>
+                   <span>Keyboard Shortcuts</span>
 
                     <div>
                         <table class="explainer_content_table">
@@ -58,6 +58,7 @@
 
 
                 </div>
+
 
 
             </mat-grid-tile>
