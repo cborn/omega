@@ -16,7 +16,7 @@ class Course {
     String moodle_master_id;
 
     static hasMany = [lessons:Lesson, enrollments:Enrollment, owners:User]
-    static belongsTo = [Term]
+    static belongsTo = [term:Term]
 
 
 

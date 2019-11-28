@@ -15,6 +15,9 @@ export class SessionManagerService {
 
     displayTerm;
     bucket;
+    region;
+
+    adminSite;
 
 
     constructor() {

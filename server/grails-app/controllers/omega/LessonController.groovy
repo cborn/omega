@@ -8,6 +8,7 @@ import static org.springframework.http.HttpStatus.*
 class LessonController {
 
     LessonService lessonService
+    def springSecurityService
 
     static responseFormats = ['json', 'xml']
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]

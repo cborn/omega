@@ -1,0 +1,7 @@
+import omega.Site
+
+model {
+	Site site
+}
+
+json g.render(site, [resolveTemplate: false])

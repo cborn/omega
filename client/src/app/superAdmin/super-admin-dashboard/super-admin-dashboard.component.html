@@ -1,0 +1,35 @@
+
+    <div style="padding: 10px;">
+        <h2>Sites</h2>
+
+        <mat-grid-list cols="6" rowHeight="180px">
+            <mat-grid-tile *ngFor="let site of sites">
+
+                <mat-card style="height: fit-content">
+                    <mat-card-header>
+                        <mat-card-title>{{site.name}}</mat-card-title>
+
+                    </mat-card-header>
+
+                    <mat-card-actions style="text-align: center;">
+                        <button mat-button  (click)="edit(site)">EDIT</button>
+                        <button mat-button (click)="select(site)">SELECT</button>
+                    </mat-card-actions>
+                </mat-card>
+
+
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-card style="height: fit-content" routerLink="/superAdmin/site/create">
+                    <mat-card-header style="padding: 0; text-align: center;">
+                        <mat-card-title>Add Site</mat-card-title>
+                        <mat-card-subtitle><mat-icon>add</mat-icon></mat-card-subtitle>
+
+                    </mat-card-header>
+
+
+                </mat-card>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+    </div>

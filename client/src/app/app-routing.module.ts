@@ -4,7 +4,7 @@ import {IndexComponent} from './index/index.component';
 import {LessonPageBuilderComponent} from './faculty/lessonPage/lesson-page-builder/lesson-page-builder.component';
 import {LoginComponent} from './login/login.component';
 import {UnauthorizedComponent} from './unauthorized/unauthorized.component';
-import {AdminGuard, FacultyGuard, StudentGuard} from './guards/guard';
+import {AdminGuard, FacultyGuard, StudentGuard, SuperAdminGuard} from './guards/guard';
 import {CourseIndexComponent} from './faculty/course/index/courseIndex.component';
 import {LessonIndexComponent} from './faculty/lesson/index/lessonIndex.component';
 import {CourseEditComponent} from './faculty/course/course-edit/course-edit.component';
@@ -21,6 +21,9 @@ import {FacultyIndexComponent} from './faculty/index/index.component';
 import {SubmissionGradeComponent} from './faculty/submission-grade/submission-grade.component';
 import {GradebookComponent} from './faculty/gradebook/gradebook.component';
 import {CourseSelectionComponent} from './student/course-selection/course-selection.component';
+import {SuperAdminDashboardComponent} from './superAdmin/super-admin-dashboard/super-admin-dashboard.component';
+import {SuperAdminSiteCreateComponent} from './superAdmin/super-admin-site-create/super-admin-site-create.component';
+import {SuperAdminSiteEditComponent} from './superAdmin/super-admin-site-edit/super-admin-site-edit.component';
 
 const routes: Routes = [
     {path: '', redirectTo: 'index', pathMatch: 'full'},
@@ -56,6 +59,14 @@ const routes: Routes = [
     {path: 'faculty/index', component: FacultyIndexComponent, canActivate: [FacultyGuard]},
     {path: 'faculty/grade/:submissionId', component: SubmissionGradeComponent, canActivate: [FacultyGuard]},
     {path: 'faculty/gradebook/:lessonId', component: GradebookComponent, canActivate: [FacultyGuard]},
+
+
+    // SuperAdmin
+    {path: 'superAdmin/dashboard', component: SuperAdminDashboardComponent, canActivate: [SuperAdminGuard]},
+
+    {path: 'superAdmin/site/create', component: SuperAdminSiteCreateComponent, canActivate: [SuperAdminGuard]},
+    {path: 'superAdmin/site/edit/:id', component: SuperAdminSiteEditComponent, canActivate: [SuperAdminGuard]},
+
 
 
 

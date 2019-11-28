@@ -88,6 +88,9 @@ import {PromptRecordingDialogComponent} from './dialogs/prompt-recording-dialog'
 import {CourseSelectionComponent} from './student/course-selection/course-selection.component';
 import {RubyProcessorPipe} from './pipes/ruby-processor.pipe';
 import {RubyPromptEditDialogComponent} from './dialogs/ruby-edit-dialog';
+import { SuperAdminDashboardComponent } from './superAdmin/super-admin-dashboard/super-admin-dashboard.component';
+import { SuperAdminSiteCreateComponent } from './superAdmin/super-admin-site-create/super-admin-site-create.component';
+import { SuperAdminSiteEditComponent } from './superAdmin/super-admin-site-edit/super-admin-site-edit.component';
 
 // @ts-ignore
 @NgModule({
@@ -146,7 +149,10 @@ import {RubyPromptEditDialogComponent} from './dialogs/ruby-edit-dialog';
         PromptRecordingDialogComponent,
         CourseSelectionComponent,
         RubyProcessorPipe,
-        RubyPromptEditDialogComponent
+        RubyPromptEditDialogComponent,
+        SuperAdminDashboardComponent,
+        SuperAdminSiteCreateComponent,
+        SuperAdminSiteEditComponent
     ],
     entryComponents: [
         ClozeDialogComponent,

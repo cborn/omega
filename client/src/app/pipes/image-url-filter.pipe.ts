@@ -12,7 +12,7 @@ export class ImageUrlFilterPipe implements PipeTransform {
 
 
     transform(value: any, args?: any): any {
-        return 'https://s3-eu-central-1.amazonaws.com/' + this.sessionManager.bucket + '/images/' + value;
+        return 'https://s3-' + this.sessionManager.region + '.amazonaws.com/' + this.sessionManager.bucket + '/images/' + value;
     }
 
 }

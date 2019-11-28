@@ -8,9 +8,11 @@ class Term {
 
     static hasMany = [
             enrollments:Enrollment,
-            submissions:Submission
-    ]
+            submissions:Submission,
+            courses:Course
+        ]
 
+    static belongsTo = [site:Site]
 
 
     static constraints = {

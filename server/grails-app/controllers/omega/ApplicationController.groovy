@@ -5,6 +5,8 @@ import grails.plugin.springsecurity.SpringSecurityService
 import grails.plugin.springsecurity.annotation.Secured
 import grails.plugins.*
 
+import static org.springframework.http.HttpStatus.NOT_FOUND
+
 @Secured(['ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_FACULTY','ROLE_GRADER','ROLE_STUDENT'])
 class ApplicationController implements PluginManagerAware {
 
@@ -14,15 +16,27 @@ class ApplicationController implements PluginManagerAware {
 
     def index() {
 
-        String bucket = System.getenv("LL_AWS_BUCKET_NAME");
+        User user = springSecurityService.currentUser as User;
+        def siteId = request.getHeader('x-admin-site');
+        Site site = user.site ? user.site : Site.get(siteId);
+
+        User currentUser = springSecurityService.getCurrentUser() as User;
+        Term currentTerm = Term.findByCurrentAndSite(true,site);
+
+        String bucket = site?.awsBucketName;
+        String region = site?.awsBucketRegion;
 
         if(!bucket)
             bucket = "omegadev"
 
+        if(!region)
+            region = "eu-central-1"
 
-        Term currentTerm = Term.findByCurrent(true);
-        User currentUser = springSecurityService.getCurrentUser() as User;
-        [term:currentTerm,user:currentUser ,terms:Term.list() ,isStudent: currentUser != null && currentUser.isStudent(),isAdminOrSuperAdmin: currentUser != null && currentUser.isAdminOrSuperAdmin(),bucket: bucket]
+
+
+
+
+        [term:currentTerm,user:currentUser ,terms:Term.findAllBySite(site) ,isSuperAdmin: currentUser != null && currentUser.isSuperAdmin(),isStudent: currentUser != null && currentUser.isStudent(),isAdminOrSuperAdmin: currentUser != null && currentUser.isAdminOrSuperAdmin(),bucket: bucket, region:region]
     }
 }
 

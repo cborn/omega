@@ -11,21 +11,25 @@ class BootStrap {
             // insert Development environment specific code here
 
 
+            Site carletonSite = new Site(name: "Carleton College",awsAccessKey: System.getenv("LL_AWS_ACCESS_KEY_ID"),awsSecretKey: System.getenv("LL_AWS_SECRET_KEY"),awsBucketName: System.getenv("LL_AWS_BUCKET_NAME"),awsBucketRegion: System.getenv("LL_AWS_BUCKET_REGION"),moodleKey: "my-secret",moodleUrl: "http://localhost").save(failOnError:true, flush:true);
+
             Role superAdminRole = new Role(authority: "ROLE_SUPER_ADMIN").save(flush: true);
             Role admin = new Role(authority: "ROLE_ADMIN").save(flush: true);
             Role faculty = new Role(authority: "ROLE_FACULTY").save(flush: true);
             Role grader = new Role(authority: "ROLE_GRADER").save(flush: true);
             Role student = new Role(authority: "ROLE_STUDENT").save(flush: true);
 
-            def testUser = new User(username: 'admin', password: 'test', firstname: "Administrator", surname: "User").save(failOnError: true)
-
-            def studentUser = new User(username: 'student', password: 'test', firstname: "Student", surname: "User").save(failOnError: true)
-            def facultyUser = new User(username: 'faculty', password: 'test', firstname: "Faculty", surname: "User").save(failOnError: true)
-            def graderUser = new User(username: 'grader', password: 'test', firstname: "Grader", surname: "User").save(failOnError: true)
-            def FacultyGraderUser = new User(username: 'facultyGrader', password: 'test', firstname: "Faculty Grader", surname: "User").save(failOnError: true)
+            def testUser = new User(username: 'superAdmin', password: 'test', firstname: "Administrator", surname: "User").save(failOnError: true)
+            def adminUser = new User(username: 'admin', password: 'test', firstname: "Administrator", surname: "User",site: carletonSite).save(failOnError: true)
+            def studentUser = new User(username: 'student', password: 'test', firstname: "Student", surname: "User",site: carletonSite).save(failOnError: true)
+            def facultyUser = new User(username: 'faculty', password: 'test', firstname: "Faculty", surname: "User",site: carletonSite).save(failOnError: true)
+            def graderUser = new User(username: 'grader', password: 'test', firstname: "Grader", surname: "User",site: carletonSite).save(failOnError: true)
+            def FacultyGraderUser = new User(username: 'facultyGrader', password: 'test', firstname: "Faculty Grader", surname: "User",site: carletonSite).save(failOnError: true)
 
 
             UserRole.create testUser, superAdminRole
+            UserRole.create adminUser, admin
+
             UserRole.create studentUser, student
             UserRole.create facultyUser, faculty
             UserRole.create graderUser, grader
@@ -38,15 +42,15 @@ class BootStrap {
                 it.clear()
             }
 
-            assert User.count() == 5
+            assert User.count() == 6
             assert Role.count() == 5
-            assert UserRole.count() == 6
+            assert UserRole.count() == 7
 
             // Create some demo content in here.
 
 
-            Term t1 = new Term(name: "Term 1", current: true).save(flush: true);
-            Term t2 = new Term(name: "Next Term").save(flush: true);
+            Term t1 = new Term(name: "Term 1", current: true,site: carletonSite).save(failOnError: true, flush: true);
+            Term t2 = new Term(name: "Next Term",site: carletonSite).save(flush: true);
 
             Course c = new Course();
             c.setName("Welsh for beginners");
@@ -61,8 +65,8 @@ class BootStrap {
             page.setStatus(LessonPageStatus.PUBLISHED)
             page.setDueDate(new Date());
 
+            c.setTerm(t1);
             c.save([failOnError: true, flush: true])
-
 
             l.setCourse(c);
             l.save([failOnError: true, flush: true]);

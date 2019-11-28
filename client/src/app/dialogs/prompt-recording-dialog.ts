@@ -98,7 +98,7 @@ export class PromptRecordingDialogComponent {
             this.loading = false;
             console.log('changed image prompt');
 
-            this.url = VoiceRendererComponent.formatAsAWSUrl(value, this.sessionManager.bucket);
+            this.url = VoiceRendererComponent.formatAsAWSUrl(value, this.sessionManager.bucket,this.sessionManager.region);
             this.dialogRef.close(value);
         }, error1 => {
             this.loading = false;
@@ -128,7 +128,7 @@ export class PromptRecordingDialogComponent {
 
         promise.subscribe(value1 => {
             this.loading = false;
-            this.url = VoiceRendererComponent.formatAsAWSUrl(value1, this.sessionManager.bucket);
+            this.url = VoiceRendererComponent.formatAsAWSUrl(value1, this.sessionManager.bucket, this.sessionManager.region);
             this.dialogRef.close(value1);
         });
 

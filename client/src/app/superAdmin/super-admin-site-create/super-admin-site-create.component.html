@@ -1,0 +1,44 @@
+<br/>
+
+<mat-card class="centered">
+    <form>
+        <mat-form-field >
+            <input matInput placeholder="Name" name="name" [(ngModel)]="site.name">
+        </mat-form-field>
+
+        <mat-form-field >
+            <input matInput placeholder="AWS Access Key" name="accessKey" [(ngModel)]="site.awsAccessKey">
+        </mat-form-field>
+
+        <mat-form-field >
+            <input matInput placeholder="AWS Secret Key" name="secretKey" [(ngModel)]="site.awsSecretKey">
+        </mat-form-field>
+
+        <mat-form-field >
+            <input matInput placeholder="AWS Bucket Name" name="bucketName" [(ngModel)]="site.awsBucketName">
+        </mat-form-field>
+
+        <mat-form-field >
+            <mat-select name="bucketRegion" [(ngModel)]="site.awsBucketRegion">
+                <mat-option disabled value="none">AWS Bucket Region</mat-option>
+                <mat-option *ngFor="let region of regions" [value]="region.value">{{region.name}}</mat-option>
+
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field >
+            <input matInput placeholder="Moodle URL" name="name" [(ngModel)]="site.moodleUrl">
+        </mat-form-field>
+
+
+        <mat-form-field >
+            <input matInput placeholder="Moodle Key" name="name" [(ngModel)]="site.moodleKey">
+        </mat-form-field>
+
+        <!--<mat-form-field>-->
+        <!--<textarea matInput"></textarea>-->
+        <!--</mat-form-field>-->
+        <br/>
+        <button mat-raised-button color="primary" (click)="create()">Create</button>
+    </form>
+</mat-card>

@@ -4,61 +4,53 @@ import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
+@Secured(['ROLE_SUPER_ADMIN'])
+class SiteController {
 
-@Secured(['ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_FACULTY','ROLE_GRADER','ROLE_STUDENT'])
-class CourseController {
-
-    CourseService courseService
+    SiteService siteService
 
     static responseFormats = ['json', 'xml']
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        def term = Term.get(params.term);
-
-        if(term == null) {
-            render status: NOT_FOUND
-            return
-        }
-
-        respond Course.findAllByTerm(term), model:[courseCount: courseService.count()]
+        respond siteService.list(params), model:[siteCount: siteService.count()]
     }
 
     def show(Long id) {
-        respond courseService.get(id)
+        respond siteService.get(id)
     }
 
-    def save(Course course) {
-        if (course == null) {
+    def save(Site site) {
+        if (site == null) {
             render status: NOT_FOUND
             return
         }
 
         try {
-            courseService.save(course)
+            siteService.save(site)
         } catch (ValidationException e) {
-            respond course.errors, view:'create'
+            respond site.errors, view:'create'
             return
         }
 
-        respond course, [status: CREATED, view:"show"]
+        respond site, [status: CREATED, view:"show"]
     }
 
-    def update(Course course) {
-        if (course == null) {
+    def update(Site site) {
+        if (site == null) {
             render status: NOT_FOUND
             return
         }
 
         try {
-            courseService.save(course)
+            siteService.save(site)
         } catch (ValidationException e) {
-            respond course.errors, view:'edit'
+            respond site.errors, view:'edit'
             return
         }
 
-        respond course, [status: OK, view:"show"]
+        respond site, [status: OK, view:"show"]
     }
 
     def delete(Long id) {
@@ -67,7 +59,7 @@ class CourseController {
             return
         }
 
-        courseService.delete(id)
+        siteService.delete(id)
 
         render status: NO_CONTENT
     }

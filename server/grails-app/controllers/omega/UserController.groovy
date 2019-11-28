@@ -11,6 +11,7 @@ import static org.springframework.http.HttpStatus.*
 class UserController {
 
     UserService userService
+    def springSecurityService
 
     static responseFormats = ['json', 'xml']
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -18,12 +19,16 @@ class UserController {
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
 
+        User user = springSecurityService.currentUser as User;
+        def siteId = request.getHeader('x-admin-site');
+        Site site = user.site ? user.site : Site.get(siteId);
+
         if(params.student) {
-            respond UserRole.findAllByRole(Role.getStudentRole())*.user, model:[userCount: userService.count()]
+            respond UserRole.findAllByRole(Role.getStudentRole())*.user.findAll {it.site.id == site.id}, model:[userCount: userService.count()]
         }
         else
         {
-            respond userService.list(params), model:[userCount: userService.count()]
+            respond User.findAllBySite(site), model:[userCount: userService.count()]
         }
 
 

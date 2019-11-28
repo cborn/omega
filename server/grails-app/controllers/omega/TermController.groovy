@@ -1,5 +1,6 @@
 package omega
 
+import grails.plugin.springsecurity.SpringSecurityService
 import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
@@ -8,13 +9,24 @@ import static org.springframework.http.HttpStatus.*
 class TermController {
 
     TermService termService
+    SpringSecurityService springSecurityService;
 
     static responseFormats = ['json', 'xml']
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond termService.list(params), model:[termCount: termService.count()]
+        User user = springSecurityService.currentUser as User;
+        def siteId = request.getHeader('x-admin-site');
+        Site site = user.site ? user.site : Site.get(siteId);
+
+        if(site == null)
+        {
+            render status: NOT_FOUND
+            return
+        }
+
+        respond Term.findAllBySite(site), model:[termCount: termService.count()]
     }
 
     def show(Long id) {

@@ -10,17 +10,21 @@ model {
     Iterable<Term> terms
     Term term;
     User user;
+    boolean isSuperAdmin
     boolean isAdminOrSuperAdmin
     boolean isStudent
     String bucket;
+    String region
 }
 
 json {
         terms  g.render(terms ?: [], [resolveTemplate: false])
         term  g.render(term, [resolveTemplate: false])
         user  g.render(user, [resolveTemplate: false])
+        isSuperAdmin isSuperAdmin
         isAdmin isAdminOrSuperAdmin
         isStudent isStudent
         bucket bucket
+        region region
 
 }

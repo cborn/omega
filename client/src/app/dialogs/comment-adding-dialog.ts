@@ -133,7 +133,7 @@ export class CommentAddingDialogComponent {
         const promise = await this.http.post<any>(AuthenticatedHttpClient.COMMENT_RECORDING_ADD_URL + '?responseId=' + this.data.response.id, form);
 
         promise.subscribe(value1 => {
-            this.url = VoiceRendererComponent.formatAsAWSUrl(value1, this.sessionManager.bucket);
+            this.url = VoiceRendererComponent.formatAsAWSUrl(value1, this.sessionManager.bucket, this.sessionManager.region);
             this.dialogRef.close(value1);
         });
 

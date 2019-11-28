@@ -15,11 +15,11 @@ import {NotificationService} from '../services/notification.service';
 export class NavComponent implements OnInit {
 
     applicationData: ApplicationData;
+
     currentTerm: any;
 
 
     constructor(private navService: NavService, private router: Router, private sessionService: SessionManagerService, private notificationService: NotificationService) {
-
 
 
     }
@@ -33,7 +33,7 @@ export class NavComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadData();
-        this.notificationService.didLoginObserver.subscribe( res => {
+        this.notificationService.didLoginObserver.subscribe(res => {
             this.navService._navData = null;
             this.loadData();
 
@@ -43,9 +43,16 @@ export class NavComponent implements OnInit {
     async loadData() {
         (await this.navService.getNavData()).subscribe(res => {
             this.applicationData = res;
-            this.currentTerm = this.applicationData.term.id;
-            this.sessionService.bucket = this.applicationData.bucket;
-            this.didChangeTerm();
+            if (this.applicationData.term == null && this.applicationData.isSuperAdmin) {
+                this.router.navigate(['superAdmin/dashboard']);
+            }
+            else {
+                this.currentTerm = this.applicationData.term.id;
+                this.sessionService.bucket = this.applicationData.bucket;
+                this.sessionService.region = this.applicationData.region;
+
+                this.didChangeTerm();
+            }
         });
     }
 
@@ -67,8 +74,10 @@ class ApplicationData {
     term: Term;
     terms: Term[];
     user: User;
+    isSuperAdmin: boolean;
     isAdmin: boolean;
     isStudent: boolean;
     bucket: string;
+    region: string;
 }
 

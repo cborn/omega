@@ -24,6 +24,8 @@ class User implements UserDetails, Serializable {
     boolean accountLocked
     boolean passwordExpired
 
+    Site site;
+
     Set<Role> getAuthorities() {
         (UserRole.findAllByUser(this) as List<UserRole>)*.role as Set<Role>
     }
@@ -86,6 +88,7 @@ class User implements UserDetails, Serializable {
         username nullable: false, blank: false, unique: true
         salt nullable: true
         otp nullable: true
+        site nullable: true
     }
 
     static mapping = {

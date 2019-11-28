@@ -52,7 +52,6 @@ export class AuthenticatedHttpClient {
     static REMOVE_PROMPT_IMAGE_FROM_QUESTION = environment.BASE_URL + 'question/promptImage';
 
 
-
     static QUESTION_FEEDBACK_AUDIO_URL = environment.BASE_URL + 'question/feedbackRecording';
 
 
@@ -67,6 +66,8 @@ export class AuthenticatedHttpClient {
 
     static SUBMISSION_SEEN_URL = environment.BASE_URL + 'submission/seen';
     static USER_URL = environment.BASE_URL + 'user';
+    static SITE_URL = environment.BASE_URL + 'site';
+
 
     static RECORDING_ADD_URL = environment.BASE_URL + 'submission/addRecording';
     static COMMENT_RECORDING_ADD_URL = environment.BASE_URL + 'questionResponse/addRecording';
@@ -105,6 +106,9 @@ export class AuthenticatedHttpClient {
                     this.sessionManager.setRoles(value.roles);
                     this.sessionManager.setUsername(value.username);
                     this.headers = new HttpHeaders().set('Authorization', 'Bearer ' + value.access_token);
+                    if (this.sessionManager.adminSite !== undefined) {
+                        this.headers = this.headers.append('x-admin-site', this.sessionManager.adminSite.id);
+                    }
                     resolve();
 
                 }, error1 => {
@@ -113,6 +117,10 @@ export class AuthenticatedHttpClient {
 
             } else {
                 this.headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+                console.log(this.sessionManager.adminSite);
+                if (this.sessionManager.adminSite !== undefined) {
+                    this.headers = this.headers.append('x-admin-site', this.sessionManager.adminSite.id);
+                }
                 resolve();
             }
         });

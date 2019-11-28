@@ -9,7 +9,9 @@
         <span class="navbar-spacer-micro"></span>
         <!--// Term selector-->
 
-        <div *ngIf="applicationData && applicationData.isAdmin">
+        <button mat-raised-button *ngIf="applicationData?.isSuperAdmin" routerLink="/superAdmin/dashboard" style="margin-right: 20px;">Back to Site Selection</button>
+
+        <div *ngIf="applicationData && applicationData.isAdmin && applicationData.terms.length > 0">
             <!-- Put a dropdown to pick the current term.... -->
             <mat-form-field class="toolbar-dropdown">
                 <mat-label>Select an option</mat-label>
