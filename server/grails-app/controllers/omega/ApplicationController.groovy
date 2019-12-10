@@ -36,7 +36,7 @@ class ApplicationController implements PluginManagerAware {
 
 
 
-        [term:currentTerm,user:currentUser ,terms:Term.findAllBySite(site) ,isSuperAdmin: currentUser != null && currentUser.isSuperAdmin(),isStudent: currentUser != null && currentUser.isStudent(),isAdminOrSuperAdmin: currentUser != null && currentUser.isAdminOrSuperAdmin(),bucket: bucket, region:region]
+        [term:currentTerm,user:currentUser ,terms:Term.findAllBySite(site) ,site: site,isSuperAdmin: currentUser != null && currentUser.isSuperAdmin(),isStudent: currentUser != null && currentUser.isStudent(),isAdminOrSuperAdmin: currentUser != null && currentUser.isAdminOrSuperAdmin(),bucket: bucket, region:region]
     }
 }
 

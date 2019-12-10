@@ -1,6 +1,7 @@
 import grails.core.*
 import grails.util.*
 import grails.plugins.*
+import omega.Site
 import omega.Submission
 import omega.Term
 import omega.User
@@ -9,6 +10,7 @@ import org.grails.core.artefact.*
 model {
     Iterable<Term> terms
     Term term;
+    Site site;
     User user;
     boolean isSuperAdmin
     boolean isAdminOrSuperAdmin
@@ -21,6 +23,7 @@ json {
         terms  g.render(terms ?: [], [resolveTemplate: false])
         term  g.render(term, [resolveTemplate: false])
         user  g.render(user, [resolveTemplate: false])
+        site g.render(site, [resolveTemplate: false])
         isSuperAdmin isSuperAdmin
         isAdmin isAdminOrSuperAdmin
         isStudent isStudent

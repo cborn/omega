@@ -12,4 +12,8 @@ export class SiteService extends BaseService<Site> {
     constructor(private h: AuthenticatedHttpClient) {
         super(h, AuthenticatedHttpClient.SITE_URL);
     }
+
+    getClassName() {
+        return 'Site';
+    }
 }

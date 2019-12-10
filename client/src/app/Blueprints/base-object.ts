@@ -1,4 +1,4 @@
-export class BaseObject {
+export abstract class BaseObject {
 
     id: number;
 

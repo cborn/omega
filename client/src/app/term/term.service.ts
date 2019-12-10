@@ -11,4 +11,8 @@ export class TermService extends BaseService<Term> {
   constructor(private http: AuthenticatedHttpClient) {
     super(http, AuthenticatedHttpClient.TERM_URL);
   }
+
+  getClassName() {
+    return 'Term';
+  }
 }

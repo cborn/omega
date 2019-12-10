@@ -39,6 +39,24 @@ class TermController {
             return
         }
 
+        User user = springSecurityService.currentUser as User;
+        def siteId = request.getHeader('x-admin-site');
+        Site site = user.site ? user.site : Site.get(siteId);
+
+
+        if(site == null) {
+            render status: NOT_FOUND
+            return
+        }
+        else {
+            term.site = site
+
+            if(Term.countBySite(site) == 0) {
+                term.current = true;
+            }
+        }
+
+
         try {
             termService.save(term)
         } catch (ValidationException e) {

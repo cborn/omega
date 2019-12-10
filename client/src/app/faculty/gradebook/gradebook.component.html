@@ -51,7 +51,7 @@
                         <td class="grading-data grading-data-{{response.status}}"
                             [matTooltip]="getPrettyStatusName(response.status)"
                             *ngIf="getResponseForPageAndQuestion(page,user, question) as response"
-                        [routerLink]="'/faculty/grade/'+getSubmissionIdForPageAndUser(page,user)">
+                            [routerLink]="'/faculty/grade/'+getSubmissionIdForPageAndUser(page,user)">
                             <mat-icon>{{getIconForStatus(response.status)}}</mat-icon>
                         </td>
                         <td class="grading-data grading-data-NO_SUB" matTooltip="No Response Yet"
@@ -62,8 +62,14 @@
 
                 </ng-container>
             </ng-container>
-            <td><input class="classic-input-style grade-input" type="number" placeholder="grade" [(ngModel)]="grades[user.id]"/><span
-                    class="grade-input-addon">/{{getMaxPossibleGrade(user)}}</span></td>
+            <td>
+                <div class="classic-input-style" style="background: white;padding: 1px 3px 1px 1px !important;width: fit-content;">
+                    <input class="grade-input" type="number" placeholder="grade"/>
+                    <span class="grade-input-addon">/{{getMaxPossibleGrade(user)}}</span>
+                </div>
+            </td>
+
+
             <td>
                 <button mat-raised-button (click)="submitGradeForUserForLesson(user)"> Submit grade</button>
             </td>

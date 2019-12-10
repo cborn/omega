@@ -4,9 +4,9 @@
     <h5 *ngIf="lesson?.due">Due On: {{lesson.due | date}}</h5>
 
     <mat-grid-list cols="6" rowHeight="180px">
-        <mat-grid-tile *ngFor="let page of pages">
-
-            <mat-card class="example-card" *ngIf="page.status == 'PUBLISHED'">
+        <ng-container *ngFor="let page of pages">
+        <mat-grid-tile *ngIf="page.status == 'PUBLISHED'">
+            <mat-card class="example-card" >
                 <mat-card-header>
                     <mat-card-title>{{"("+ (page.pageOrder + 1) + ") " + page.name}}</mat-card-title>
                     <mat-card-subtitle>{{page.questions.length}} Questions</mat-card-subtitle>
@@ -23,6 +23,7 @@
 
 
         </mat-grid-tile>
+        </ng-container>
     </mat-grid-list>
 
 </div>
@@ -34,10 +35,11 @@
         <h5 *ngIf="lesson?.due">Due On: {{lesson.due | date}}</h5>
 
         <mat-grid-list cols="6" rowHeight="180px" >
-            <mat-grid-tile *ngFor="let page of pages">
+            <ng-container *ngFor="let page of pages">
+            <mat-grid-tile  *ngIf="page.status == 'PUBLISHED'">
 
 
-                <mat-card class="example-card" *ngIf="page.status == 'PUBLISHED'">
+                <mat-card class="example-card">
 
                     <mat-card-header>
                         <div class="not-started-marker status-marker" *ngIf="page.submissions == null || page.submissions.length == 0"></div>
@@ -62,6 +64,7 @@
 
 
             </mat-grid-tile>
+            </ng-container>
         </mat-grid-list>
 
 

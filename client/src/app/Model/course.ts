@@ -1,9 +1,8 @@
 import {Lesson} from './lesson';
 import {Term} from './term';
+import {BaseObject} from '../Blueprints/base-object';
 
-export class Course {
-
-    id: number;
+export class Course extends BaseObject {
 
     name: string;
 
@@ -12,6 +11,5 @@ export class Course {
     lessons: Lesson[];
 
     term: Term;
-
 
 }

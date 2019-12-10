@@ -9,7 +9,7 @@ import {AuthenticatedHttpClient} from '../../services/authenticated-http-service
 export class LessonPageService extends BaseService<LessonPage> {
 
     constructor(private http: AuthenticatedHttpClient) {
-        super(http, AuthenticatedHttpClient.LESSON_PAGE_URL);
+        super(http, AuthenticatedHttpClient.LESSON_PAGE_URL, true);
     }
 
 
@@ -31,5 +31,9 @@ export class LessonPageService extends BaseService<LessonPage> {
 
     }
 
+
+    getClassName() {
+        return 'Page';
+    }
 
 }

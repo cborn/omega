@@ -2,6 +2,8 @@ package omega
 
 import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
+import org.springframework.dao.DataIntegrityViolationException
+
 import static org.springframework.http.HttpStatus.*
 
 @Secured(['ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_FACULTY','ROLE_GRADER','ROLE_STUDENT'])
@@ -62,7 +64,12 @@ class LessonController {
             return
         }
 
-        lessonService.delete(id)
+        try {
+            lessonService.delete(id)
+        } catch (DataIntegrityViolationException e) {
+            respond e.message, status: NOT_MODIFIED, view:'delete'
+            return
+        }
 
         render status: NO_CONTENT
     }

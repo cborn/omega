@@ -70,10 +70,7 @@ th {
 
 
 .grade-input {
-    width: 60%;
-    padding-right: 28px !important;
+    padding: 10px 0 10px 10px;
+    border: none;
 }
 
-.grade-input-addon {
-    margin-left: -28px;
-}

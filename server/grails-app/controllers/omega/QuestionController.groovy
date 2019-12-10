@@ -273,6 +273,22 @@ class QuestionController {
             return
         }
 
+        Question question = Question.get(id);
+
+        // reorder the questions now that this one has been deleted.
+
+        def allQuestionsInGroup = Question.findByPage(question.page);
+
+        for (Question loopQuestion : allQuestionsInGroup) {
+            if (loopQuestion.position > question.position) {
+                loopQuestion.position--
+                println loopQuestion.position;
+                loopQuestion.save(flush: true)
+            }
+        }
+
+
+
         questionService.delete(id)
 
         render status: NO_CONTENT

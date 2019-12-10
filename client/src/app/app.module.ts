@@ -91,6 +91,7 @@ import {RubyPromptEditDialogComponent} from './dialogs/ruby-edit-dialog';
 import { SuperAdminDashboardComponent } from './superAdmin/super-admin-dashboard/super-admin-dashboard.component';
 import { SuperAdminSiteCreateComponent } from './superAdmin/super-admin-site-create/super-admin-site-create.component';
 import { SuperAdminSiteEditComponent } from './superAdmin/super-admin-site-edit/super-admin-site-edit.component';
+import {TermCreateComponent} from './term/term-create/course-create.component';
 
 // @ts-ignore
 @NgModule({
@@ -152,7 +153,8 @@ import { SuperAdminSiteEditComponent } from './superAdmin/super-admin-site-edit/
         RubyPromptEditDialogComponent,
         SuperAdminDashboardComponent,
         SuperAdminSiteCreateComponent,
-        SuperAdminSiteEditComponent
+        SuperAdminSiteEditComponent,
+        TermCreateComponent
     ],
     entryComponents: [
         ClozeDialogComponent,

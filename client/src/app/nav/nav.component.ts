@@ -6,6 +6,7 @@ import {Term} from '../Model/term';
 import {User} from '../Model/user';
 import {SessionManagerService} from '../services/session-manager.service';
 import {NotificationService} from '../services/notification.service';
+import {Site} from '../Model/site';
 
 @Component({
     selector: 'app-navigation',
@@ -43,10 +44,11 @@ export class NavComponent implements OnInit {
     async loadData() {
         (await this.navService.getNavData()).subscribe(res => {
             this.applicationData = res;
-            if (this.applicationData.term == null && this.applicationData.isSuperAdmin) {
+            if (this.applicationData.term == null && this.applicationData.site == null && this.applicationData.isSuperAdmin) {
                 this.router.navigate(['superAdmin/dashboard']);
-            }
-            else {
+            } else if (this.applicationData.term == null && this.applicationData.site != null && this.applicationData.isSuperAdmin) {
+                this.router.navigate(['term/create']);
+            } else {
                 this.currentTerm = this.applicationData.term.id;
                 this.sessionService.bucket = this.applicationData.bucket;
                 this.sessionService.region = this.applicationData.region;
@@ -73,6 +75,7 @@ export class NavComponent implements OnInit {
 class ApplicationData {
     term: Term;
     terms: Term[];
+    site: Site;
     user: User;
     isSuperAdmin: boolean;
     isAdmin: boolean;

@@ -11,4 +11,8 @@ export class UserService extends BaseService<User> {
     constructor(private h: AuthenticatedHttpClient) {
         super(h, AuthenticatedHttpClient.USER_URL);
     }
+
+    getClassName() {
+        return 'User';
+    }
 }

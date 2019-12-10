@@ -119,9 +119,17 @@ export class LessonPageBuilderService {
             }
         });
 
+
+        for (const i in lessonPage.questions) {
+            if (lessonPage.questions[i].position > lessonPage.questions[ind].position) {
+                lessonPage.questions[i].position--;
+            }
+        }
+
         if (ind > -1) {
             lessonPage.questions.splice(ind, 1);
         }
+
 
         const promise = await this.httpClient.delete(AuthenticatedHttpClient.QUESTION_URL + '/' + question.id);
 

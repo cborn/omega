@@ -106,7 +106,7 @@ export class AuthenticatedHttpClient {
                     this.sessionManager.setRoles(value.roles);
                     this.sessionManager.setUsername(value.username);
                     this.headers = new HttpHeaders().set('Authorization', 'Bearer ' + value.access_token);
-                    if (this.sessionManager.adminSite !== undefined) {
+                    if (this.sessionManager.adminSite !== undefined && this.sessionManager.adminSite !== null) {
                         this.headers = this.headers.append('x-admin-site', this.sessionManager.adminSite.id);
                     }
                     resolve();
@@ -117,8 +117,7 @@ export class AuthenticatedHttpClient {
 
             } else {
                 this.headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
-                console.log(this.sessionManager.adminSite);
-                if (this.sessionManager.adminSite !== undefined) {
+                if (this.sessionManager.adminSite !== undefined && this.sessionManager.adminSite !== null) {
                     this.headers = this.headers.append('x-admin-site', this.sessionManager.adminSite.id);
                 }
                 resolve();
@@ -161,7 +160,7 @@ export class AuthenticatedHttpClient {
      * @param {boolean} mute to stop errors from being printed to the screen.
      * @returns {Observable<T>}
      */
-    public async get<T>(endPoint: string, options?: IRequestOptions, disableErrorHandling?: boolean, mute?: boolean) {
+    public async get<T>(endPoint: string, options?: IRequestOptions, disableErrorHandling?: boolean, mute?: boolean, needsTerm?: boolean) {
         await this.refreshSessionToken();
 
         if (this.sessionManager.displayTerm != null) {
@@ -172,6 +171,8 @@ export class AuthenticatedHttpClient {
             }
 
             endPoint += 'term=' + this.sessionManager.displayTerm;
+        } else if (needsTerm) {
+            return of<any>({ignore: true});
         }
 
         return this.http.get<T>(endPoint, Object.assign({}, options, {headers: this.headers}))
@@ -193,7 +194,6 @@ export class AuthenticatedHttpClient {
         await this.refreshSessionToken();
 
         if (injectTerm) {
-            console.log(this.sessionManager.displayTerm);
             if (this.sessionManager.displayTerm != null) {
                 params['term'] = this.sessionManager.displayTerm;
             }

@@ -29,7 +29,7 @@ export class PromptRecordingDialogComponent {
         {'id': 2, 'name': 'Upload'}
     ];
 
-    typeSelect = this.options[0].id;
+    typeSelect = this.options[1].id;
 
 
     private url;

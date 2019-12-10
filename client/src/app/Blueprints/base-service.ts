@@ -2,33 +2,44 @@ import {AuthenticatedHttpClient} from '../services/authenticated-http-service.se
 import {Course} from '../Model/course';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {BaseObject} from './base-object';
+import {error} from 'selenium-webdriver';
 
 export abstract class BaseService<T extends BaseObject> {
 
     URL: string;
 
+    needsTerm = false;
 
-    constructor(private httpClient: AuthenticatedHttpClient, url: string) {
+
+    constructor(private httpClient: AuthenticatedHttpClient, url: string, needsTerm?: boolean) {
         this.URL = url;
+        this.needsTerm = needsTerm;
     }
 
     serviceSubject: BehaviorSubject<T[]> = new BehaviorSubject<T[]>([]);
     serviceObservable = this.serviceSubject.asObservable();
 
     async list(param?, paramName?) {
-        const promise = await this.httpClient.get<T[]>(this.URL + (param != null ? ('?' + paramName + '=' + param) : ''));
+        const promise = await this.httpClient.get<T[]>(this.URL + (param != null ? ('?' + paramName + '=' + param) : ''), null, false, false, this.needsTerm);
 
         promise.subscribe(value => {
+            if (value.ignore) {
+                return;
+            }
             this.serviceSubject.next(value);
+        }, error2 => {
+
         });
 
         return promise;
     }
 
     async get(id, handler) {
-        const promise = await this.httpClient.get(this.URL + '/' + id);
-
+        const promise = await this.httpClient.get(this.URL + '/' + id, null, false, false, true);
         promise.subscribe(value => {
+            if (value.ignore) {
+                return;
+            }
             handler(value);
         });
     }
@@ -98,6 +109,8 @@ export abstract class BaseService<T extends BaseObject> {
         });
 
     }
+
+    abstract getClassName();
 
 
 }

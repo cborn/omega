@@ -19,9 +19,7 @@ export class GradebookComponent implements OnInit {
     pages$ = this.lessonPageService.serviceObservable;
     lessonId;
 
-    grades = {
-
-    }
+    grades = {};
 
 
     constructor(private userService: UserService, private submissionService: SubmissionService, private lessonPageService: LessonPageService, private rt: ActivatedRoute, private http: AuthenticatedHttpClient) {
@@ -74,17 +72,29 @@ export class GradebookComponent implements OnInit {
     getMaxPossibleGrade(user: User) {
 
         let maxGrade = 0;
+        console.log('Start grade calc - ');
 
-        for (const submission of this.submissionService.allSubmissionsSubject.value) {
-            if (submission.user.id === user.id) {
-                for (const subResponse of submission.responses) {
 
-                    maxGrade += subResponse.question.max_grade;
-
-                }
+        for(const lessonPage of this.lessonPageService.serviceSubject.value) {
+            for(const question of lessonPage.questions) {
+                maxGrade += question.max_grade;
             }
         }
 
+
+
+        // for (const submission of this.submissionService.allSubmissionsSubject.value) {
+        //     if (submission.user.id === user.id) {
+        //         for (const subResponse of submission.responses) {
+        //             console.log(subResponse.question.name + ' - ' + subResponse.question.max_grade);
+        //
+        //             maxGrade += subResponse.question.max_grade;
+        //
+        //         }
+        //     }
+        // }
+
+        console.log('Max Grade - ' + maxGrade);
         return maxGrade;
 
     }

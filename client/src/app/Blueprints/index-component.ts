@@ -52,7 +52,7 @@ export abstract class IndexComponent<T extends BaseObject> implements OnInit {
 
 
     delete(id) {
-        this.n.publishConfirmation('Are you sure you want to delete this course?', () => {
+        this.n.publishConfirmation('Are you sure you want to delete this ' + this.service.getClassName() + '?', () => {
             this.service.delete(id);
         });
     }

@@ -11,8 +11,11 @@ import {BaseService} from '../../Blueprints/base-service';
 export class CourseService extends BaseService<Course> {
 
     constructor(private http: AuthenticatedHttpClient) {
-        super(http, AuthenticatedHttpClient.COURSE_URL);
+        super(http, AuthenticatedHttpClient.COURSE_URL, true);
     }
 
+    getClassName() {
+        return 'Course';
+    }
 
 }

@@ -10,6 +10,7 @@ export class Question extends BaseObject {
             cloze_text: ''
         };
         this.position = position;
+        this.max_grade = 1;
     }
 
     position: number;
