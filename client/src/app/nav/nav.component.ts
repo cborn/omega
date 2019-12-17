@@ -34,7 +34,7 @@ export class NavComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadData();
-        this.notificationService.didLoginObserver.subscribe(res => {
+        this.notificationService.didLoginObserver.subscribe(() => {
             this.navService._navData = null;
             this.loadData();
 
@@ -42,6 +42,13 @@ export class NavComponent implements OnInit {
     }
 
     async loadData() {
+
+        this.notificationService.reloadRequiredObserver.subscribe(() => {
+            if (this.sessionService.adminSite == null) {
+                this.applicationData = null;
+            }
+        });
+
         (await this.navService.getNavData()).subscribe(res => {
             this.applicationData = res;
             if (this.applicationData.term == null && this.applicationData.site == null && this.applicationData.isSuperAdmin) {

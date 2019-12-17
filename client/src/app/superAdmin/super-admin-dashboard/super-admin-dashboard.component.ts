@@ -24,6 +24,7 @@ export class SuperAdminDashboardComponent implements OnInit {
     loadSites() {
         this.sessionController.displayTerm = null;
         this.sessionController.adminSite = null;
+        this.notificationService.doesRequireReload();
         this.siteService.list();
         this.siteService.serviceObservable.subscribe(value => {
             this.sites = value;

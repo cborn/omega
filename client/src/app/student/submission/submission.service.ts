@@ -124,7 +124,7 @@ export class SubmissionService {
         }
 
 
-        if (!responseIndex) {
+        if (!responseIndex && !event.shouldReloadFromWeb) {
             const response = new SubmissionResponse();
             response.question = event.question;
 
@@ -132,7 +132,7 @@ export class SubmissionService {
             response.response = event.value;
             submission.responses.push(response);
 
-        } else {
+        } else if (responseIndex) {
             if (submission.responses[responseIndex].status === 'COMMENTS_PENDING') {
                 submission.responses[responseIndex].status  = 'COMMENTS_RESPONDED';
             }

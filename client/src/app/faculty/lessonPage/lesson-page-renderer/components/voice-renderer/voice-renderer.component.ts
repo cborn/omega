@@ -119,11 +119,9 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
         this.record = new StereoAudioRecorder(stream, options);
         this.record.record();
 
-        if (this.question.prompts.audioPrompt && this.question.custom_properties.prompt_sync) {
+        if (this.question.prompts != null && this.question.prompts.audioPrompt && this.question.custom_properties.prompt_sync) {
             // Start the prompt audio..
             const prompt = $('#prompt_' + this.question.id);
-
-            console.log(prompt);
 
             prompt[0].play();
         }
@@ -150,7 +148,7 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
         const promise = await this.http.post<any>(AuthenticatedHttpClient.RECORDING_ADD_URL + '?submissionId=' + this.submission.id + '&questionId=' + this.question.id, form);
 
         promise.subscribe(value1 => {
-            this.answerDidChange(this.question, value1.message);
+            this.answerDidChange(this.question, value1.message,true);
             // this.setValue(value1.message);
         });
 

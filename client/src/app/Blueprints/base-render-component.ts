@@ -12,11 +12,12 @@ export abstract class BaseRenderComponent implements OnChanges {
     public response: SubmissionResponse;
 
 
-    answerDidChange(question: Question, value) {
+    answerDidChange(question: Question, value, reloadFromWeb?) {
 
         const changedEvent = new AnswerChangedEvent();
         changedEvent.question = question;
         changedEvent.value = value;
+        changedEvent.shouldReloadFromWeb = reloadFromWeb;
 
         this.changedEmitter.emit(changedEvent);
     }

@@ -80,9 +80,8 @@ class SubmissionController {
         QuestionResponse.withNewTransaction {
 
             if (!questionResponse) {
-                questionResponse = new QuestionResponse();
-                questionResponse.question = Question.get(params.questionId);
-                questionResponse.submission = Submission.get(params.submissionId);
+                questionResponse = new QuestionResponse(question: Question.get(params.questionId),submission: Submission.get(params.submissionId));
+
             }
             else {
                 questionResponse.attach();
