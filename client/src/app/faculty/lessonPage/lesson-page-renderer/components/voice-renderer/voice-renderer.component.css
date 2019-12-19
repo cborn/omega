@@ -7,6 +7,7 @@
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
+    position: relative;
 }
 
 .viz
@@ -23,17 +24,17 @@
    }
 
 
-.comment-bubble-closed {
+.comment-bubble {
     position: absolute;
-    bottom: 63%;
+    width: fit-content;
+    transform: translate(-50%, -13px);
+}
+.comment-bubble-closed {
     z-index: 5;
-    transform: translate(-50%, -11px);
 }
 .comment-bubble-open {
-    position: absolute;
-    bottom: 63%;
     z-index: 10;
-    transform: translate(-50%, -11px);
+    transform: translate(-50%, calc(-78% - 13px));
 }
 
 .comment-bubble-open-header {
