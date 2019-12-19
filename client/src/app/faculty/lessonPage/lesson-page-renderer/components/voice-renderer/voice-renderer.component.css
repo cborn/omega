@@ -25,11 +25,22 @@
 
 .comment-bubble-closed {
     position: absolute;
-    transform: translate(-50%,calc(-5% - 11px));
+    bottom: 63%;
+    z-index: 5;
+    transform: translate(-50%, -11px);
 }
 .comment-bubble-open {
     position: absolute;
-    transform: translate(-50%,calc(-75% - 11px));
+    bottom: 63%;
+    z-index: 10;
+    transform: translate(-50%, -11px);
+}
+
+.comment-bubble-open-header {
+    margin: 0 16px 0 0;
+}
+.comment-bubble-closed-header{
+    margin: 0;
 }
 
 
@@ -74,7 +85,7 @@
     position: absolute;
     width: -moz-fit-content;
     width: fit-content;
-    transform: translate(3px, 12px);
+    transform: translate(-50%, 12px);
     background: #e0e0e0;
     border-radius: 54px;
     padding-left: 8px;

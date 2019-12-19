@@ -44,7 +44,7 @@ export class NavComponent implements OnInit {
     async loadData() {
 
         this.notificationService.reloadRequiredObserver.subscribe(() => {
-            if (this.sessionService.adminSite == null) {
+            if (this.applicationData.isSuperAdmin && this.sessionService.adminSite == null) {
                 this.applicationData = null;
             }
         });

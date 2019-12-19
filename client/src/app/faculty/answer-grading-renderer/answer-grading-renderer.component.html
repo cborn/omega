@@ -14,7 +14,7 @@
 
     <div *ngIf="isAudio()" style="position: relative;">
         <app-voice-renderer [isReal]="true" [isGrading]="true" [response]="response"
-                            [question]="question"></app-voice-renderer>
+                            [question]="question" (answerChanged)="voiceQuestionChanged($event)"></app-voice-renderer>
     </div>
 
     <div class="bordered-option" *ngIf="isPicture()">
@@ -43,7 +43,7 @@
             </div>
         </div>
 
-        <div class="grade-input">
+        <div class="grade-input" *ngIf="!isAudio()">
             <button mat-raised-button (click)="addComment()">Add Comment</button>
         </div>
     </div>

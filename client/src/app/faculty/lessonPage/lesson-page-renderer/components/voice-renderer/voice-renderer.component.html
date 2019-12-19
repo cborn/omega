@@ -17,13 +17,15 @@
             Recording
         </button>
         <div class="clearfix"></div>
-        <div style="position: relative" *ngIf="!loading && canvas != null && response">
+
+        <div *ngIf="!loading && canvas != null && response">
             <div *ngFor="let comment of response.comments">
                 <mat-chip-list class="comment-bubble"
                                [ngClass]="{'comment-bubble-open':comment.id === selectedComment,'comment-bubble-closed':comment.id !== selectedComment}"
                                [style.left.px]="getCommentLocation(comment.location, comment.endLocation)">
                     <mat-chip color="primary" class="comment-bubble-item"
-                              (click)="selectComment(comment)">{{comment.user.firstname + " " + comment.user.surname}}
+                              (click)="selectComment(comment)">
+                        <p [ngClass]="{'comment-bubble-ope-header':comment.id === selectedComment,'comment-bubble-closed-header':comment.id !== selectedComment}" >{{comment.user.firstname + " " + comment.user.surname}}</p>
 
                         <i class="material-icons comment-bubble-close" (click)="deSelectComment($event)"
                            *ngIf="comment.id === selectedComment">close</i>

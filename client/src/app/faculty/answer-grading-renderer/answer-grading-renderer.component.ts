@@ -3,6 +3,7 @@ import {SubmissionResponse} from '../../Model/submissionResponse';
 import {Question, QuestionType} from '../../Model/question';
 import {CommentAddingDialogComponent} from '../../dialogs/comment-adding-dialog';
 import {MatDialog} from '@angular/material';
+import {AnswerChangedEvent} from '../../Events/answer-changed-event';
 
 @Component({
     selector: 'app-answer-grading-renderer',
@@ -27,6 +28,10 @@ export class AnswerGradingRendererComponent implements OnInit {
     gradeChanged(event) {
         if (this.response.grade > this.question.max_grade) {
             this.response.grade = this.question.max_grade;
+        }
+
+        if (this.response.grade < 0) {
+            this.response.grade = 0;
         }
 
         this.gradeChangedEmitter.emit(this.response.grade);
@@ -56,6 +61,10 @@ export class AnswerGradingRendererComponent implements OnInit {
 
     isPicture() {
         return this.question.type === QuestionType.PICTURE_CHOICE;
+    }
+
+    voiceQuestionChanged(event: AnswerChangedEvent) {
+        this.response = event.value;
     }
 
 

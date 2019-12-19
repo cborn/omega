@@ -127,6 +127,19 @@ class BootStrap {
             q3.save([failOnError: true, flush: true])
 
 
+
+            def q4 = new Question();
+
+            q4.setName("Sing Calon Lân.")
+            q4.setPosition(3);
+            q4.setType(QuestionType.VOICE);
+            q4.setMax_grade(1);
+            q4.setPage(page);
+
+            q4.save([failOnError: true, flush: true])
+
+
+
             page.addToQuestions(q3);
             page.save([failOnError: true, flush: true])
 

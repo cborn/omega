@@ -377,6 +377,7 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
         console.log('select');
         this.selectedComment = comment.id;
         this.setHighlight(comment.location, comment.endLocation);
+        this.showAddCommentDialog = false;
     }
 
     deSelectComment(event) {
@@ -384,6 +385,7 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
         console.log('deselect');
         this.selectedComment = -1;
         this.unsetHighlight();
+        this.showAddCommentDialog = false;
 
     }
 
@@ -407,14 +409,10 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
         let halfDiff = 0;
         if (start !== end) {
             // get the middle of the comment highlight.
-
             halfDiff = (end - start) / 2;
-
-
         }
 
-
-        return (end + (this.canvas.offsetLeft - 66)) - halfDiff;
+        return (end + (this.canvas.offsetLeft)) - halfDiff;
     }
 
 
