@@ -58,6 +58,8 @@ export class RubyPromptEditDialogComponent {
 
         }
 
+        return '';
+
 
     }
 

@@ -10,7 +10,7 @@ class EnrollmentController {
     EnrollmentService enrollmentService
 
     static responseFormats = ['json', 'xml']
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", grades: "GET"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -19,6 +19,15 @@ class EnrollmentController {
 
     def show(Long id) {
         respond enrollmentService.get(id)
+    }
+
+
+    def grades() {
+
+        def enrollment = Enrollment.findAllByTermAndLesson(Term.get(params.term),Lesson.get(params.id));
+
+        respond enrollment;
+
     }
 
     def save() {

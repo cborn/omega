@@ -61,7 +61,6 @@ export class NavComponent implements OnInit {
                 this.currentTerm = this.applicationData.term.id;
                 this.sessionService.bucket = this.applicationData.bucket;
                 this.sessionService.region = this.applicationData.region;
-
                 this.didChangeTerm();
             }
         });

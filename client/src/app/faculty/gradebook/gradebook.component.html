@@ -64,7 +64,7 @@
             </ng-container>
             <td>
                 <div class="classic-input-style" style="background: white;padding: 1px 3px 1px 1px !important;width: fit-content;">
-                    <input class="grade-input" type="number" placeholder="grade"/>
+                    <input class="grade-input" type="number" placeholder="grade" [(ngModel)]="grades[user.id]"/>
                     <span class="grade-input-addon">/{{getMaxPossibleGrade(user)}}</span>
                 </div>
             </td>

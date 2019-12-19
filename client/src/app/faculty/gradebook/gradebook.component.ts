@@ -6,6 +6,7 @@ import {SubmissionService} from '../../student/submission/submission.service';
 import {SubmissionResponse} from '../../Model/submissionResponse';
 import {User} from '../../Model/user';
 import {AuthenticatedHttpClient} from '../../services/authenticated-http-service.service';
+import {NotificationService} from '../../services/notification.service';
 
 @Component({
     selector: 'app-gradebook',
@@ -22,7 +23,7 @@ export class GradebookComponent implements OnInit {
     grades = {};
 
 
-    constructor(private userService: UserService, private submissionService: SubmissionService, private lessonPageService: LessonPageService, private rt: ActivatedRoute, private http: AuthenticatedHttpClient) {
+    constructor(private userService: UserService, private submissionService: SubmissionService, private notificationService: NotificationService, private lessonPageService: LessonPageService, private rt: ActivatedRoute, private http: AuthenticatedHttpClient) {
     }
 
     ngOnInit() {
@@ -32,12 +33,36 @@ export class GradebookComponent implements OnInit {
             }
             this.loadData();
         });
+
+
+        this.notificationService.reloadRequiredObserver.subscribe(() => {
+            this.loadData();
+        });
+
     }
 
     loadData() {
         this.userService.list('true', 'student');
         this.submissionService.loadAllSubmissions(this.lessonId);
         this.lessonPageService.list(this.lessonId, 'lessonId');
+
+        this.loadGrades();
+    }
+
+
+    async loadGrades() {
+        const promise = await this.http.get(AuthenticatedHttpClient.ENROLLMENT_GRADES_URL + this.lessonId, {}, false, true, true);
+
+        promise.subscribe(value => {
+
+            if(value.hasOwnProperty("ignore"))
+                return;
+
+            for (const i in value) {
+                this.grades[value[i].user.id] = value[i].grade;
+            }
+
+        });
     }
 
     getResponseForPageAndQuestion(page, user, question) {
@@ -72,29 +97,14 @@ export class GradebookComponent implements OnInit {
     getMaxPossibleGrade(user: User) {
 
         let maxGrade = 0;
-        console.log('Start grade calc - ');
 
 
-        for(const lessonPage of this.lessonPageService.serviceSubject.value) {
-            for(const question of lessonPage.questions) {
+        for (const lessonPage of this.lessonPageService.serviceSubject.value) {
+            for (const question of lessonPage.questions) {
                 maxGrade += question.max_grade;
             }
         }
 
-
-
-        // for (const submission of this.submissionService.allSubmissionsSubject.value) {
-        //     if (submission.user.id === user.id) {
-        //         for (const subResponse of submission.responses) {
-        //             console.log(subResponse.question.name + ' - ' + subResponse.question.max_grade);
-        //
-        //             maxGrade += subResponse.question.max_grade;
-        //
-        //         }
-        //     }
-        // }
-
-        console.log('Max Grade - ' + maxGrade);
         return maxGrade;
 
     }
@@ -146,6 +156,7 @@ export class GradebookComponent implements OnInit {
 
         promise.subscribe(value => {
             this.userService.list('true', 'student');
+            this.notificationService.publishAlert('Updated grades');
         });
 
         return promise;

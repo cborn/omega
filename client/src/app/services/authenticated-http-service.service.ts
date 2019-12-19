@@ -59,6 +59,7 @@ export class AuthenticatedHttpClient {
     static COURSE_URL = environment.BASE_URL + 'course';
     static LESSON_URL = environment.BASE_URL + 'lesson';
     static ENROLLMENT_URL = environment.BASE_URL + 'enrollment';
+    static ENROLLMENT_GRADES_URL =  environment.BASE_URL + 'enrollment/grades/';
     static TERM_URL = environment.BASE_URL + 'term';
     static SUBMISSION_URL = environment.BASE_URL + 'submission';
     static SUBMISSION_GRADE_URL = environment.BASE_URL + 'submission/grade';

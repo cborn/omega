@@ -22,6 +22,8 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
         super();
     }
 
+    static audioContext = new AudioContext();
+
     @Input() isReal = true;
     @Input() isGrading = false;
 
@@ -49,7 +51,7 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
     // AUDIO CONTROLS
     private playing = false;
     private currentSource;
-    private audioContext = new AudioContext();
+
     private currentPlayPos = 0;
     private oldPlayPos = -1;
     private lastUpdate;
@@ -288,7 +290,7 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
             xhr.responseType = 'arraybuffer';
             xhr.onload = () => {
                 /* The files arraybuffer is available at xhr.response */
-                context.audioContext.decodeAudioData(xhr.response, (audioBuffer) => {
+                VoiceRendererComponent.audioContext.decodeAudioData(xhr.response, (audioBuffer) => {
                     context.audioBuffer = audioBuffer;
                     context.duration = audioBuffer.duration;
                     const rawData = audioBuffer.getChannelData(0);
@@ -427,9 +429,9 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
             return;
         }
         this.playing = true;
-        this.currentSource = this.audioContext.createBufferSource();
+        this.currentSource = VoiceRendererComponent.audioContext.createBufferSource();
         this.currentSource.buffer = this.audioBuffer;
-        this.currentSource.connect(this.audioContext.destination);
+        this.currentSource.connect(VoiceRendererComponent.audioContext.destination);
         this.currentSource.start(0, this.currentPlayPos / 1000);
     }
 
