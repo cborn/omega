@@ -7,6 +7,14 @@
     background-color: #db4800;
 }
 
+.version {
+    top: 33px;
+    position: absolute;
+    left: 18px;
+    font-size: 10px;
+    color: #c7c7c7;
+}
+
 .grails-icon img {
     height: 27px;
     background-image: url("../../images/grails-cupsonly-logo-white.svg");

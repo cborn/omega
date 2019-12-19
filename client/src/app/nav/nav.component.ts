@@ -7,6 +7,7 @@ import {User} from '../Model/user';
 import {SessionManagerService} from '../services/session-manager.service';
 import {NotificationService} from '../services/notification.service';
 import {Site} from '../Model/site';
+import { version } from '../../../package.json';
 
 @Component({
     selector: 'app-navigation',
@@ -19,6 +20,7 @@ export class NavComponent implements OnInit {
 
     currentTerm: any;
 
+    public version: string = version;
 
     constructor(private navService: NavService, private router: Router, private sessionService: SessionManagerService, private notificationService: NotificationService) {
 
