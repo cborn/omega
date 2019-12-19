@@ -31,6 +31,8 @@ export class CommentAddingDialogComponent {
     textInput;
 
 
+    loading = false;
+
     recording = false;
 
     private url;
@@ -116,6 +118,7 @@ export class CommentAddingDialogComponent {
     stopRecording() {
         this.recording = false;
         this.record.stop(this.processRecording.bind(this));
+
     }
 
     /**
@@ -123,6 +126,7 @@ export class CommentAddingDialogComponent {
      * @param  {any} blob Blog
      */
     async processRecording(blob) {
+        this.loading = true;
 
         const form = new FormData();
         form.append('audio_data', blob);
@@ -133,8 +137,11 @@ export class CommentAddingDialogComponent {
         const promise = await this.http.post<any>(AuthenticatedHttpClient.COMMENT_RECORDING_ADD_URL + '?responseId=' + this.data.response.id, form);
 
         promise.subscribe(value1 => {
+            this.loading = false;
             this.url = VoiceRendererComponent.formatAsAWSUrl(value1, this.sessionManager.bucket, this.sessionManager.region);
             this.dialogRef.close(value1);
+        },error1 => {
+            this.loading = false;
         });
 
     }
