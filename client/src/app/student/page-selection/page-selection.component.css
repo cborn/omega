@@ -1,6 +1,21 @@
+mat-grid-tile {
+    overflow: visible;
+}
+
+mat-card-header {
+    width: 100%;
+}
+
 .example-card {
     margin: 10px;
     width: 100%;
+}
+
+.single-line {
+    white-space: nowrap;
+    width: 90%;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .status-marker {

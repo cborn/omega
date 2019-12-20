@@ -1,6 +1,8 @@
 import {Component, HostListener, Inject, Input, OnInit} from '@angular/core';
 import {Question} from '../../../../../../Model/question';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {Subject} from 'rxjs/internal/Subject';
+import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 
 export interface DialogData {
     question: Question;
@@ -22,6 +24,9 @@ export class ClozeQuestionComponent implements OnInit {
     cachedSelection;
 
 
+    questionSubject = new Subject<string>();
+
+
     constructor(public dialog: MatDialog) {
     }
 
@@ -32,6 +37,12 @@ export class ClozeQuestionComponent implements OnInit {
                 cloze_text: ''
             };
         }
+
+        this.questionSubject.pipe(debounceTime(3000)).pipe(distinctUntilChanged())
+            .subscribe((value) => {
+                // if the user is in the middle of typing an accent dont update the field.
+                this.changedQuestionText(value);
+            });
     }
 
 
@@ -50,6 +61,11 @@ export class ClozeQuestionComponent implements OnInit {
 
     updateQuestionText(field, event) {
 
+        this.questionSubject.next(event.target.innerHTML);
+
+    }
+
+    changedQuestionText(value) {
         let childIndex = -1;
         for (let i = 0; i < getSelection().anchorNode.parentNode.childNodes.length; i++) {
 
@@ -65,7 +81,7 @@ export class ClozeQuestionComponent implements OnInit {
          */
 
 
-        const newText = event.target.innerHTML;
+        const newText = value;
 
         let replacementText = newText;
         const regex = new RegExp(/<div contenteditable=\"false\"[\s\b\w\S]*?<\/div>/mg);
@@ -143,8 +159,6 @@ export class ClozeQuestionComponent implements OnInit {
 
 
         }, 20);
-
-
     }
 
 }

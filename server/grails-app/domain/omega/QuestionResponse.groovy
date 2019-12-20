@@ -21,4 +21,8 @@ class QuestionResponse {
         response nullable: true
         status defaultValue: QuestionStatus.AWAITING_REVIEW
     }
+
+    static mapping = {
+        response type: 'text'
+    }
 }

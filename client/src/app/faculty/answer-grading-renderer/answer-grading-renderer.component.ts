@@ -79,7 +79,9 @@ export class AnswerGradingRendererComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            this.response = result;
+            if (result != undefined) {
+                this.response = result;
+            }
         });
 
     }
