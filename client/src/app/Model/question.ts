@@ -2,7 +2,7 @@ import {BaseObject} from '../Blueprints/base-object';
 
 export class Question extends BaseObject {
 
-    constructor(type, position) {
+    constructor(type, position, name?) {
         super();
         this.required = false;
         this.type = type;
@@ -11,6 +11,13 @@ export class Question extends BaseObject {
         };
         this.position = position;
         this.max_grade = 1;
+
+        if (name) {
+            this.name = name;
+        } else {
+            this.name = 'Question ' + (this.position + 1);
+        }
+
     }
 
     position: number;

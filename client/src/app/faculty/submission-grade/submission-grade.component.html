@@ -12,7 +12,7 @@
                     </div>
                     <div class="response-card-question-item-right">
                         <div class="spacer-small"></div>
-                        <span>{{getQuestionName(response.question.id)}}</span>
+                        <span [innerHTML]="getQuestionName(response.question.id)"></span>
                         <div class="spacer-medium"></div>
                         <div class="response-card-question-item-answer">
                             <app-answer-grading-renderer [question]="getQuestion(response.question.id)"

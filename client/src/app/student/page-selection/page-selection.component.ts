@@ -109,6 +109,32 @@ export class PageSelectionComponent implements OnInit {
         return hasCompleted;
     }
 
+    hasGradedPage(value) {
+        let hasGraded = false;
+
+        if (this.isComponent) {
+            if (value.submissions) {
+                value.submissions.forEach(value1 => {
+                    if (value1.status === 'GRADED') {
+                        hasGraded = true;
+                    }
+                });
+            }
+        } else {
+
+            if (value.submissions) {
+                value.submissions.forEach(value1 => {
+                    if (value1.status !== 'GRADED') {
+                        hasGraded = true;
+                    }
+                });
+            }
+        }
+
+
+        return hasGraded;
+    }
+
 
     continueSubmission(submissionId) {
         this.router.navigate(['/student/submission', submissionId]);

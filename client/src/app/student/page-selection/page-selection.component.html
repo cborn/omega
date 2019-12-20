@@ -44,7 +44,9 @@
                     <mat-card-header>
                         <div class="not-started-marker status-marker" *ngIf="page.submissions == null || page.submissions.length == 0"></div>
                         <div class="in-progress-marker status-marker" *ngIf="(page.submissions != null && page.submissions.length > 0) && !hasCompletedPage(page)"></div>
-                        <div class="done-marker status-marker" *ngIf="(page.submissions != null && page.submissions.length > 0) && hasCompletedPage(page)"></div>
+                        <div class="done-marker status-marker" *ngIf="(page.submissions != null && page.submissions.length > 0) && hasCompletedPage(page) && !hasGradedPage(page)"></div>
+                        <div class="graded-marker status-marker" *ngIf="(page.submissions != null && page.submissions.length > 0) && hasCompletedPage(page) && hasGradedPage(page)"></div>
+
 
 
                         <mat-card-title>{{"("+ (page.pageOrder + 1) + ") " + page.name}}</mat-card-title>
@@ -52,11 +54,14 @@
                     </mat-card-header>
                     <mat-card-content *ngIf="page.submissions">
                         <p *ngIf="page.submissions.length == 0">No submissions</p>
-                        <p *ngIf="page.submissions.length > 0">{{page.submissions[0].status.substring(0,1) + page.submissions[0].status.substring(1,page.submissions[0].status.length).toLocaleLowerCase()}}</p>
+                        <p *ngIf="page.submissions.length > 0 && !hasGradedPage(page)">{{page.submissions[0].status.substring(0,1) + page.submissions[0].status.substring(1,page.submissions[0].status.length).toLocaleLowerCase()}} <span *ngIf="hasGradedPage(page)">- {{page.submissions[0].grade}}</span></p>
+                        <p *ngIf="page.submissions.length > 0 && hasGradedPage(page)">You recieved the grade <b>{{page.submissions[0].grade}}</b></p>
                     </mat-card-content>
                     <mat-card-actions >
                         <button mat-button *ngIf="page.submissions == null || page.submissions.length == 0" (click)="startNewSubmission(page)">START</button>
                         <button mat-button *ngIf="page.submissions != null && page.submissions.length > 0 && !hasCompletedPage(page)" (click)="continueSubmission(page.submissions[0].id)">CONTINUE</button>
+                        <button mat-button *ngIf="page.submissions != null && page.submissions.length > 0 && hasCompletedPage(page)" (click)="continueSubmission(page.submissions[0].id)">VIEW SUBMISSION</button>
+
                     </mat-card-actions>
 
 

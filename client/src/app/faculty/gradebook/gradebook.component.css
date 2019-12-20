@@ -1,23 +1,55 @@
 .container {
-    width: 100%;
+    width: calc(100% - 20px);
+    left: 10px;
     position: relative;
+    display: block;
+    overflow-x: auto;
+    margin-top: 3%;
+    border-radius: 5px;
+}
+
+.center-container {
+
 }
 
 
 .grading-table {
-    width: fit-content;
-    left: 50%;
-    transform: translate(-50%, 0);
-    position: absolute;
+    width: 98%;
+    /*left: 50%;*/
+    /*transform: translate(-50%, 0);*/
+    /*position: absolute;*/
     top: 20px;
     padding: 23px;
     text-align: left;
     white-space: nowrap;
 }
 
-th.grades:last-child {
+.left-table-column {
+    left: 0;
+    position: sticky;
+    background: #f7f1f1;
+    z-index: 5;
+}
+
+th:first-child {
+    width: 80px;
+}
+
+th.grades, td.grades {
+    position: sticky;
+    right: 0;
+    background: #f7f1f1;
+    z-index: 5;
+}
+
+th.grades:last-child{
     text-align: right;
-    padding: 30px 0px 30px 60px;
+    padding: 30px 10px 30px 60px;
+}
+
+td.grades:last-child {
+    text-align: right;
+    padding: 0 10px 0 60px;
 }
 
 td:last-child {

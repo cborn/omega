@@ -19,15 +19,21 @@ export class ClozeRendererComponent extends BaseRenderComponent implements OnIni
     }
 
     ngOnInit() {
+        console.log(this.response);
+        if (this.response === undefined) {
+            this.answerDidChange(this.question, '');
+        }
+
     }
 
     @HostListener('window:clozeInputChanged', ['$event'])
     onInputChanged(event) {
 
-        console.log(event.detail);
-        console.log(this.response);
-
         if (this.response.id === event.detail.responseId) {
+
+            if(this.response.response == null) {
+                this.response.response = '';
+            }
             const split = this.response.response.split('@@');
             split[event.detail.promptIndex] = event.detail.value;
             this.answerDidChange(this.question, split.join('@@'));

@@ -33,7 +33,7 @@
         </audio>
     </div>
 
-    <div *ngIf="question.type != 10 &&  getResponseForQuestion(question) != null && getResponseForQuestion(question).comments.length > 0" class="comment-section">
+    <div *ngIf="question.type != 10 &&  getResponseForQuestion(question) != null && getResponseForQuestion(question).comments?.length > 0" class="comment-section">
         <div class="comment" *ngFor="let comment of getResponseForQuestion(question).comments">
             <p>{{comment.comment_text}}</p>
             <small class="left">{{comment.submitted | date}}</small>

@@ -7,11 +7,23 @@ import {MatDialog} from '@angular/material';
 import {RubyPromptEditDialogComponent} from '../../../../../dialogs/ruby-edit-dialog';
 import {Subject} from 'rxjs/internal/Subject';
 
+export class QuestionChangedEvent {
+
+    constructor(text, field) {
+        this.text = text;
+        this.field = field;
+    }
+
+    text: string;
+    field: any;
+}
+
 @Component({
     selector: 'app-lesson-question',
     templateUrl: './lesson-question.component.html',
     styleUrls: ['./lesson-question.component.css']
 })
+
 export class LessonQuestionComponent implements OnInit {
 
     // @ViewChild('autosize', {static: false}) autosize: CdkTextareaAutosize;
@@ -29,7 +41,7 @@ export class LessonQuestionComponent implements OnInit {
     @Output() text_selection = new EventEmitter();
     cachedNameSelection;
 
-    questionNameChanged = new Subject<string>();
+    questionNameChanged = new Subject<QuestionChangedEvent>();
 
     clickStartPosition: number;
     formatter_position_x: number;
@@ -97,7 +109,8 @@ export class LessonQuestionComponent implements OnInit {
 
 
     nameChanged(field, event) {
-        this.questionNameChanged.next(event.target.innerHTML);
+        const questionEvent = new QuestionChangedEvent(event.target.innerHTML, field);
+        this.questionNameChanged.next(questionEvent);
     }
 
     getRubyEnclosedText(newText: string) {
@@ -174,10 +187,10 @@ export class LessonQuestionComponent implements OnInit {
 
     ngOnInit() {
 
-        this.questionNameChanged.pipe(debounceTime(1000)).pipe(distinctUntilChanged())
+        this.questionNameChanged.pipe(debounceTime(3000)).pipe(distinctUntilChanged())
             .subscribe((value) => {
-                this.updateQuestionName(value);
-
+                // if the user is in the middle of typing an accent dont update the field.
+                this.updateQuestionName(value.text);
             });
 
 

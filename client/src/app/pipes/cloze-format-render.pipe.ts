@@ -27,9 +27,11 @@ export class ClozeFormatRenderPipe implements PipeTransform {
             const prompts = JSON.parse(question.custom_properties.cloze_prompts)[instancesCount];
             let responseValue = '';
 
-            if (response != null) {
-                if (response.response.indexOf('@@') > 0) {
+            if (response != null && response.response != null) {
+                if (response.response.indexOf('@@') > -1) {
                     responseValue = response.response.split('@@')[instancesCount];
+                } else if(instancesCount === 0) {
+                    responseValue = response.response;
                 }
             }
 
@@ -45,8 +47,6 @@ export class ClozeFormatRenderPipe implements PipeTransform {
                     replacementText += '</select>';
 
                 } else {
-
-
                     replacementText += '<input matInput class="classic-input-style cloze-input-item" value="' + responseValue + '" placeholder="Type your answer here" onchange="inputForSubmissionChanged(' + responseId + ',' + instancesCount + ',this.value)" />';
                 }
             } else if (grading && response != null) {

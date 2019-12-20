@@ -30,6 +30,10 @@ export class MultipleSelectComponent implements OnInit {
     }
 
     itsChanged(event, index) {
+        if (this.question.custom_properties.options === undefined) {
+            this.question.custom_properties.options = '';
+        }
+
         const input = this.question.custom_properties.options.split('@@');
         if (event === '') {
             input.splice(index, 1);
@@ -44,15 +48,23 @@ export class MultipleSelectComponent implements OnInit {
     }
 
     newLine(index) {
+        if (this.question.custom_properties.options === undefined) {
+            this.question.custom_properties.options = '';
+        }
         const input = this.question.custom_properties.options.split('@@');
 
-        input.splice(index + 1, 0, '');
+        input.splice(index + 1, 0, 'Option' + (input.length + 1));
+
         this.workingCopy = input.join('@@');
 
         this.question.custom_properties.options = input.join('@@');
     }
 
     delete(content, index) {
+        if (this.question.custom_properties.options === undefined) {
+            this.question.custom_properties.options = '';
+        }
+
         const input = this.question.custom_properties.options.split('@@');
         if (content === '') {
             input.splice(index, 1);
