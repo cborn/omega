@@ -11,7 +11,7 @@
         <b *ngIf="question.type !== 3 && question.custom_properties.rtl_text" >({{question.position + 1}})</b>
         <i class="required" *ngIf="question.required">*</i>
     </h3>
-    <h6 *ngIf="question.description != null && question.description != ''" dir="auto" class="keep-format">{{question.description}}</h6>
+    <h6 *ngIf="question.custom_properties != null && question.custom_properties.description_enabled" dir="auto" class="keep-format">{{question.description}}</h6>
 
     <app-multi-choice-renderer (answerChanged)="answerChanged($event)" *ngIf="question.type == 0" class="answer-input fit-content" [response]="getResponseForQuestion(question)" [ngClass]="{'answer-input-flex': question.custom_properties.stack}"  [question]="question"></app-multi-choice-renderer>
     <app-short-text-renderer (answerChanged)="answerChanged($event)" *ngIf="question.type == 1" class="answer-input" [question]="question" [response]="getResponseForQuestion(question)"></app-short-text-renderer>

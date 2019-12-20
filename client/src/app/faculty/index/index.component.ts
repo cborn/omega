@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {NavService} from '../../nav/nav.service';
-import {Route, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {SubmissionService} from '../../student/submission/submission.service';
 import {CourseService} from '../course/course.service';
 import {NotificationService} from '../../services/notification.service';
 import {UserService} from '../../services/user.service';
+import {PERMISSION_ROLE, SessionManagerService} from '../../services/session-manager.service';
 
 @Component({
     selector: 'app-faculty-index',
@@ -13,7 +14,7 @@ import {UserService} from '../../services/user.service';
 })
 export class FacultyIndexComponent implements OnInit {
 
-    constructor(private navService: NavService, private router: Router, private submissionService: SubmissionService, private courseService: CourseService, private notificationService: NotificationService, private userService: UserService) {
+    constructor(private navService: NavService, private sessionManagerService: SessionManagerService, private router: Router, private submissionService: SubmissionService, private courseService: CourseService, private notificationService: NotificationService, private userService: UserService) {
     }
 
 
@@ -67,10 +68,17 @@ export class FacultyIndexComponent implements OnInit {
             this.loading.course = false;
         });
 
-        (await this.userService.list()).subscribe(value => {
-            console.log('Users Loaded');
-            this.loading.user = false;
-        });
+
+        if(this.isFaculty()) {
+            (await this.userService.list()).subscribe(value => {
+                console.log('Users Loaded');
+                this.loading.user = false;
+            });
+        }
+    }
+
+    isFaculty() {
+        return this.sessionManagerService.checkRoles(PERMISSION_ROLE.ROLE_FACULTY)
     }
 
 

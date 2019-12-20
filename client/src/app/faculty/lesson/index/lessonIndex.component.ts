@@ -7,6 +7,7 @@ import {Lesson} from '../../../Model/lesson';
 import {IndexComponent} from '../../../Blueprints/index-component';
 import {NotificationService} from '../../../services/notification.service';
 import {LessonPageService} from '../../lessonPage/lesson-page.service';
+import {PERMISSION_ROLE, SessionManagerService} from '../../../services/session-manager.service';
 
 @Component({
     selector: 'app-lesson-index',
@@ -17,7 +18,7 @@ export class LessonIndexComponent extends IndexComponent<Lesson> {
 
     displayedColumns = ['id', 'name', 'pages', 'actions'];
 
-    constructor(private lessonService: LessonService,  private lessonPageService: LessonPageService,  private router: Router, private route: ActivatedRoute, private notificationService: NotificationService) {
+    constructor(private lessonService: LessonService, private sessionManager: SessionManagerService, private lessonPageService: LessonPageService, private router: Router, private route: ActivatedRoute, private notificationService: NotificationService) {
         super(lessonService, notificationService, router, route, 'courseId');
     }
 
@@ -34,6 +35,9 @@ export class LessonIndexComponent extends IndexComponent<Lesson> {
         });
     }
 
+    isFaculty() {
+        return this.sessionManager.checkRoles(PERMISSION_ROLE.ROLE_FACULTY);
+    }
 
 
 }

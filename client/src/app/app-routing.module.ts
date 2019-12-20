@@ -4,7 +4,7 @@ import {IndexComponent} from './index/index.component';
 import {LessonPageBuilderComponent} from './faculty/lessonPage/lesson-page-builder/lesson-page-builder.component';
 import {LoginComponent} from './login/login.component';
 import {UnauthorizedComponent} from './unauthorized/unauthorized.component';
-import {AdminGuard, FacultyGuard, StudentGuard, SuperAdminGuard} from './guards/guard';
+import {AdminGuard, FacultyGuard, GraderGuard, StudentGuard, SuperAdminGuard} from './guards/guard';
 import {CourseIndexComponent} from './faculty/course/index/courseIndex.component';
 import {LessonIndexComponent} from './faculty/lesson/index/lessonIndex.component';
 import {CourseEditComponent} from './faculty/course/course-edit/course-edit.component';
@@ -40,7 +40,7 @@ const routes: Routes = [
     {path: 'course/edit/:courseId', component: CourseEditComponent, canActivate: [FacultyGuard]},
     {path: 'course/create', component: CourseCreateComponent, canActivate: [FacultyGuard]},
 
-    {path: 'lesson/index/:courseId', component: LessonIndexComponent, canActivate: [FacultyGuard]},
+    {path: 'lesson/index/:courseId', component: LessonIndexComponent, canActivate: [GraderGuard]},
     {path: 'lesson/edit/:lessonId', component: LessonEditComponent, canActivate: [FacultyGuard]},
     {path: 'lesson/create', component: LessonCreateComponent, canActivate: [FacultyGuard]},
 
@@ -57,9 +57,9 @@ const routes: Routes = [
     {path: 'student/submission/:submissionId', component: SubmissionComponent, canActivate: [StudentGuard]},
 
     // Faculty Services.
-    {path: 'faculty/index', component: FacultyIndexComponent, canActivate: [FacultyGuard]},
-    {path: 'faculty/grade/:submissionId', component: SubmissionGradeComponent, canActivate: [FacultyGuard]},
-    {path: 'faculty/gradebook/:lessonId', component: GradebookComponent, canActivate: [FacultyGuard]},
+    {path: 'faculty/index', component: FacultyIndexComponent, canActivate: [GraderGuard]},
+    {path: 'faculty/grade/:submissionId', component: SubmissionGradeComponent, canActivate: [GraderGuard]},
+    {path: 'faculty/gradebook/:lessonId', component: GradebookComponent, canActivate: [GraderGuard]},
 
 
     // SuperAdmin

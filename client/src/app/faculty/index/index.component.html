@@ -3,7 +3,7 @@
         <h1 style="text-align:center;">Welcome to LL Faculty</h1>
 
 
-        <mat-grid-list cols="3">
+        <mat-grid-list [cols]="isFaculty() ? 3 : 2">
             <mat-grid-tile *ngIf="submissions$ | async as submissions">
                 <mat-card class="simple-card-content">
                     <mat-card-header>
@@ -79,7 +79,7 @@
             </mat-grid-tile>
 
 
-            <mat-grid-tile *ngIf="users$ | async as users">
+            <mat-grid-tile *ngIf="isFaculty() && users$ | async as users">
                 <mat-card class="simple-card-content">
                     <mat-card-header>
                         <mat-card-title>Users</mat-card-title>
