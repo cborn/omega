@@ -1,2 +1,2 @@
-<div class="option-item" [ngClass]="{'selected':(value != null && value)}" (click)="didSelect(true)">Yes<i class="material-icons check-icon" *ngIf="value != null && value">checkmark</i></div>
-<div class="option-item" [ngClass]="{'selected':(value != null && !value)}" (click)="didSelect(false)">No<i class="material-icons check-icon" *ngIf="value != null && !value">checkmark</i></div>
+<div class="option-item" [ngClass]="{'selected':(value != null && value)}" (click)="didSelect(true)">Yes<i class="material-icons check-icon" [ngClass]="{'rtl':(question.custom_properties.rtl_text)}" *ngIf="value != null && value">checkmark</i></div>
+<div class="option-item" [ngClass]="{'selected':(value != null && !value)}" (click)="didSelect(false)">No<i class="material-icons check-icon" [ngClass]="{'rtl':(question.custom_properties.rtl_text)}" *ngIf="value != null && !value">checkmark</i></div>

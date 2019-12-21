@@ -32,6 +32,9 @@ class UrlMappings {
         post "/questionResponse/addRecording" (controller:'questionResponse',action: 'addRecording')
         post "/questionResponse/addTextComment" (controller:'questionResponse',action: 'addTextComment')
 
+        get "/audioAnalysis/getPitch"(controller: "audioAnalysis", action:"getPitchForRecording")
+
+
 
 
         "/"(controller: 'application', action:'index')

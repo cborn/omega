@@ -35,22 +35,30 @@
 
 .label-start {
     position: absolute;
-    left: 0;
-    bottom: 0;
+    left: 4px;
+    top: 38px;
+    max-width: 97px;
+    word-break: break-all;
     transform: translate(-50%, 25px);
+
+
 }
 
 .label-middle {
     position: absolute;
     left: 50%;
-    bottom: 0;
+    top: 38px;
+    max-width: 97px;
+    word-break: break-all;
     transform: translate(-50%, 25px);
 }
 
 .label-end {
     position: absolute;
     right: 0;
-    bottom: 0;
+    top: 38px;
+    max-width: 97px;
+    word-break: break-all;
     transform: translate(50%, 25px);
 }
 

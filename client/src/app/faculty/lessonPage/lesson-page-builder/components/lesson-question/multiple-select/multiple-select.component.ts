@@ -1,5 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Question} from '../../../../../../Model/question';
+import {Subject} from 'rxjs/internal/Subject';
+import {pipe} from 'rxjs/internal-compatibility';
+import {debounce, debounceTime, distinctUntilChanged} from 'rxjs/operators';
 
 @Component({
     selector: 'app-multiple-select',
@@ -11,9 +14,13 @@ export class MultipleSelectComponent implements OnInit {
 
     @Input() question: Question;
 
+    @Output() questionChanged = new EventEmitter();
+
+    questionChangedSubject = new Subject<string>();
+
     changedIndex = -1;
 
-    workingCopy;
+    workingCopy = [];
 
     constructor() {
     }
@@ -24,53 +31,44 @@ export class MultipleSelectComponent implements OnInit {
             this.question.custom_properties.options = '';
         }
 
-        this.workingCopy = this.question.custom_properties.options;
+        this.question.custom_properties.options.split('@@').forEach(item => {
+            this.workingCopy.push({value: item});
+        });
 
-
+        this.questionChangedSubject.pipe(debounceTime(1000)).pipe(distinctUntilChanged()).subscribe(value => {
+            this.questionChanged.emit(true);
+        });
     }
 
     itsChanged(event, index) {
-        if (this.question.custom_properties.options === undefined) {
-            this.question.custom_properties.options = '';
-        }
-
-        const input = this.question.custom_properties.options.split('@@');
-        if (event === '') {
-            input.splice(index, 1);
-            this.question.custom_properties.options = input.join('@@');
-        } else {
-            input[index] = event;
-        }
-        this.question.custom_properties.options = input.join('@@');
-        // this.workingCopy = input.join('@@');
-
-
+        this.triggerSave();
     }
 
     newLine(index) {
-        if (this.question.custom_properties.options === undefined) {
-            this.question.custom_properties.options = '';
-        }
-        const input = this.question.custom_properties.options.split('@@');
-
-        input.splice(index + 1, 0, 'Option' + (input.length + 1));
-
-        this.workingCopy = input.join('@@');
-
-        this.question.custom_properties.options = input.join('@@');
+        this.workingCopy.splice(index + 1, 0, {value: 'Option' + (this.workingCopy.length + 1)});
+        // we need to move the cursor to the line below.
+        this.triggerSave();
     }
 
     delete(content, index) {
-        if (this.question.custom_properties.options === undefined) {
-            this.question.custom_properties.options = '';
+        if (content.value === '') {
+            this.workingCopy.splice(index, 1);
+            // We need to move the cursor to the line above .
         }
 
-        const input = this.question.custom_properties.options.split('@@');
-        if (content === '') {
-            input.splice(index, 1);
-            this.question.custom_properties.options = input.join('@@');
-        }
-        this.question.custom_properties.options = input.join('@@');
-        this.workingCopy = input.join('@@');
+        this.triggerSave();
     }
+
+
+    triggerSave() {
+        this.question.custom_properties.options = this.workingCopy.map(item => {
+            return item.value;
+        }).join('@@');
+
+
+        this.questionChangedSubject.next(this.question.custom_properties.options);
+
+
+    }
+
 }

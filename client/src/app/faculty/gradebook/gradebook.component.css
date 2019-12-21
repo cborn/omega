@@ -1,7 +1,8 @@
 .container {
     width: fit-content;
     max-width: calc(100% - 20px);
-    left: 10px;
+    left: 50%;
+    transform: translate(-50%, 0);
     position: relative;
     display: block;
     overflow-x: auto;

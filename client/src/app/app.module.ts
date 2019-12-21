@@ -92,6 +92,8 @@ import { SuperAdminDashboardComponent } from './superAdmin/super-admin-dashboard
 import { SuperAdminSiteCreateComponent } from './superAdmin/super-admin-site-create/super-admin-site-create.component';
 import { SuperAdminSiteEditComponent } from './superAdmin/super-admin-site-edit/super-admin-site-edit.component';
 import {TermCreateComponent} from './term/term-create/course-create.component';
+import { CommentOrderPipe } from './pipes/comment-order.pipe';
+import { RandomOrderPipe } from './pipes/random-order.pipe';
 
 // @ts-ignore
 @NgModule({
@@ -154,7 +156,9 @@ import {TermCreateComponent} from './term/term-create/course-create.component';
         SuperAdminDashboardComponent,
         SuperAdminSiteCreateComponent,
         SuperAdminSiteEditComponent,
-        TermCreateComponent
+        TermCreateComponent,
+        CommentOrderPipe,
+        RandomOrderPipe
     ],
     entryComponents: [
         ClozeDialogComponent,

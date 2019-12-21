@@ -31,6 +31,16 @@ class AWSUploaderService {
 
     }
 
+    def download(String key) {
+
+        String bucket = System.getenv("LL_AWS_BUCKET_NAME");
+
+        File file = amazonS3Service.getFile(bucket,'audio/'+key,File.createTempFile(key,'').getAbsolutePath())
+
+        return file;
+
+    }
+
     boolean remove(String path,String prefix) {
         boolean result = amazonS3Service.deleteFile("${prefix}/${path}");
         if (!result) {
