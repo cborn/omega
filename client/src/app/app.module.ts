@@ -94,6 +94,7 @@ import { SuperAdminSiteEditComponent } from './superAdmin/super-admin-site-edit/
 import {TermCreateComponent} from './term/term-create/course-create.component';
 import { CommentOrderPipe } from './pipes/comment-order.pipe';
 import { RandomOrderPipe } from './pipes/random-order.pipe';
+import { PitchRenderComponent } from './faculty/lessonPage/lesson-page-renderer/components/voice-renderer/pitch-render/pitch-render.component';
 
 // @ts-ignore
 @NgModule({
@@ -158,7 +159,8 @@ import { RandomOrderPipe } from './pipes/random-order.pipe';
         SuperAdminSiteEditComponent,
         TermCreateComponent,
         CommentOrderPipe,
-        RandomOrderPipe
+        RandomOrderPipe,
+        PitchRenderComponent
     ],
     entryComponents: [
         ClozeDialogComponent,

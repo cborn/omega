@@ -42,58 +42,7 @@
         Alphabetical
     </mat-slide-toggle>
 
-<!--    <mat-slide-toggle *ngIf="isOfType([QuestionType.MULTI_CHOICE,QuestionType.PICTURE_CHOICE])" (change)="changed()"-->
-<!--                      class="sidebar-form-input" color="primary" name="multi"-->
-<!--                      [(ngModel)]="question.custom_properties.multi">-->
-<!--        Multiple selection-->
-<!--    </mat-slide-toggle>-->
-
-<!--    <mat-form-field class="sidebar-form-input" (change)="changed()"-->
-<!--                    *ngIf="isOfType([QuestionType.MULTI_CHOICE,QuestionType.PICTURE_CHOICE]) && question.custom_properties.multi">-->
-<!--        <mat-label>Selection Limits</mat-label>-->
-<!--        <mat-select [(ngModel)]="question.custom_properties.multi_select_type" name="selection-limit">-->
-<!--            <mat-option value="1">-->
-<!--                Unlimited-->
-<!--            </mat-option>-->
-<!--            <mat-option value="2">-->
-<!--                Range-->
-<!--            </mat-option>-->
-<!--            <mat-option value="3">-->
-<!--                Exact Number-->
-<!--            </mat-option>-->
-<!--        </mat-select>-->
-<!--    </mat-form-field>-->
-
-<!--    <mat-form-field class="sidebar-form-input" (change)="changed()"-->
-<!--                    *ngIf="isOfType([QuestionType.MULTI_CHOICE,QuestionType.PICTURE_CHOICE]) && question.custom_properties.multi && question.custom_properties.multi_select_type == 3">-->
-<!--        <mat-label>Max</mat-label>-->
-<!--        <input matInput [(ngModel)]="question.custom_properties.multi_limit_max" name="selection-limit-exact"-->
-<!--               class='sidebar-sub-input' type="number"/>-->
-<!--    </mat-form-field>-->
-
-
-<!--    <mat-form-field class="sidebar-form-input" *ngIf="isOfType([QuestionType.LONG_TEXT,QuestionType.SHORT_TEXT])">-->
-<!--        <mat-label>Max Chars</mat-label>-->
-<!--        <input matInput (change)="changed()" [(ngModel)]="question.custom_properties.max_chars"-->
-<!--               name="selection-max-chars" class='sidebar-sub-input' type="number"/>-->
-<!--    </mat-form-field>-->
-
-
-<!--    <mat-form-field class="sidebar-form-input"-->
-<!--                    *ngIf="isOfType([QuestionType.MULTI_CHOICE,QuestionType.PICTURE_CHOICE]) && question.custom_properties.multi && question.custom_properties.multi_select_type == 2">-->
-<!--        <mat-label>Min</mat-label>-->
-<!--        <input matInput (change)="changed()" [(ngModel)]="question.custom_properties.multi_limit_min"-->
-<!--               name="selection-limit-range-min" class='sidebar-sub-input' type="number"/> <span-->
-<!--            style="padding: 10px;line-height: 30px;">-</span>-->
-<!--    </mat-form-field>-->
-
-
-<!--    <mat-form-field class="sidebar-form-input-right"-->
-<!--                    *ngIf="isOfType([QuestionType.MULTI_CHOICE,QuestionType.PICTURE_CHOICE]) && question.custom_properties.multi && question.custom_properties.multi_select_type == 2">-->
-<!--        <mat-label>Max</mat-label>-->
-<!--        <input matInput (change)="changed()" [(ngModel)]="question.custom_properties.multi_limit_max"-->
-<!--               name="selection-limit-range-max" class='sidebar-sub-input' type="number"/>-->
-<!--    </mat-form-field>-->
+<!--  -->
 
 
     <mat-slide-toggle (change)="changed()" *ngIf="isOfType([QuestionType.MULTI_CHOICE,QuestionType.PICTURE_CHOICE])"

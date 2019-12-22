@@ -36,6 +36,7 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
     private recording = false;
     // Url of Blob
     private url;
+    private rawValue;
     private error;
 
     private audioBuffer;
@@ -167,6 +168,7 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
     setValue(value) {
         this.hasRecording = true;
         this.showAddCommentDialog = false;
+        this.rawValue = value;
         this.url = VoiceRendererComponent.formatAsAWSUrl(value, this.sessionManager.bucket, this.sessionManager.region);
         this.loadVisualisation(this);
     }

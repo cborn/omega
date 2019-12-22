@@ -4,7 +4,7 @@ import audioanalysis.PraatPitchDetection
 import grails.plugin.springsecurity.annotation.Secured
 import grails.converters.*
 
-@Secured(['ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_FACULTY','ROLE_GRADER'])
+@Secured(['ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_FACULTY','ROLE_GRADER', 'ROLE_STUDENT'])
 class AudioAnalysisController {
 	static responseFormats = ['json', 'xml']
 
@@ -14,7 +14,9 @@ class AudioAnalysisController {
 
         def pitchDetection = AudioAnalysis.findByFilepath(params.key);
 
+
         if(pitchDetection != null) {
+
             JSON.use('deep') {
                 render pitchDetection as JSON
             }

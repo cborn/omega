@@ -26,4 +26,5 @@ class PitchAnnotation {
      */
     double intensity;
 
+
 }

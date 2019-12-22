@@ -4,6 +4,8 @@
         <i class="material-icons">mic</i>
     </div>
     <div *ngIf="isReal">
+
+
         <audio class="audio-controller" *ngIf="question.prompts?.audioPrompt" [controls]="!question.custom_properties.prompt_sync" [id]="'prompt_'+question.id">
             <source [src]="question.prompts?.audioPrompt.url">
         </audio>
@@ -48,6 +50,8 @@
 
 
         </div>
+
+        <app-pitch-render *ngIf="hasRecording && duration != undefined"  [recordingId]="rawValue" [duration]="duration"></app-pitch-render>
 
         <div class="viz-container" [id]="'container_'+ question.id" *ngIf="hasRecording">
 

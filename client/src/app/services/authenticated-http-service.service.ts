@@ -74,6 +74,10 @@ export class AuthenticatedHttpClient {
     static COMMENT_RECORDING_ADD_URL = environment.BASE_URL + 'questionResponse/addRecording';
     static COMMENT_TEXT_ADD_URL = environment.BASE_URL + 'questionResponse/addTextComment';
 
+    static GET_PITCH = environment.BASE_URL + 'audioAnalysis/getPitch';
+
+
+
 
     helper = new JwtHelperService();
 
