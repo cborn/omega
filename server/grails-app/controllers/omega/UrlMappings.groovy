@@ -11,6 +11,7 @@ class UrlMappings {
         patch "/$controller/$id(.$format)?"(action:"patch")
 
         post "/question/addImage/$id" (controller:'question', action: 'addImage')
+        delete "/question/removeImage/$id" (controller:'question', action: 'removeImage')
         post "/question/promptRecording/$id" (controller:'question', action: ' addPromptRecording')
         delete "/question/promptRecording/$id" (controller:'question', action: ' removePromptRecording')
         post "/question/promptImage/$id" (controller:'question', action: ' addPromptImage')

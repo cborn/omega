@@ -33,7 +33,6 @@ export class AuthenticatedHttpClient {
     // ERRORS
     static ACTIVATION_REQUIRED_ERROR = 'ER1001';
 
-
     static AUTH_URL = environment.BASE_URL + 'api/login';
     static LTI_OTP_LOGIN_URL = environment.BASE_URL + 'lti/authenticate';
     static REFRESH_AUTH_URL = environment.BASE_URL + 'oauth/access_token';
