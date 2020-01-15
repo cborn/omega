@@ -66,7 +66,7 @@ const routes: Routes = [
     {path: 'superAdmin/dashboard', component: SuperAdminDashboardComponent, canActivate: [SuperAdminGuard]},
 
     {path: 'superAdmin/site/create', component: SuperAdminSiteCreateComponent, canActivate: [SuperAdminGuard]},
-    {path: 'superAdmin/site/edit/:id', component: SuperAdminSiteEditComponent, canActivate: [SuperAdminGuard]},
+    {path: 'superAdmin/site/edit/:siteId', component: SuperAdminSiteEditComponent, canActivate: [SuperAdminGuard]},
 
 
 

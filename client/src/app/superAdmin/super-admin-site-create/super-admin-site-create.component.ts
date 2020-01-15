@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Course} from '../../Model/course';
 import {CourseService} from '../../faculty/course/course.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Route, Router} from '@angular/router';
 import {SessionManagerService} from '../../services/session-manager.service';
 import {SiteService} from '../../services/site.service';
 import {Site} from '../../Model/site';
@@ -106,6 +106,9 @@ export class SuperAdminSiteCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+
+
+
   }
 
   create() {

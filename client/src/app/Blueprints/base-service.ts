@@ -34,8 +34,8 @@ export abstract class BaseService<T extends BaseObject> {
         return promise;
     }
 
-    async get(id, handler) {
-        const promise = await this.httpClient.get(this.URL + '/' + id, null, false, false, true);
+    async get(id, handler, needsTerm?) {
+        const promise = await this.httpClient.get(this.URL + '/' + id, null, false, false, needsTerm === undefined ? true : needsTerm);
         promise.subscribe(value => {
             if (value.ignore) {
                 return;

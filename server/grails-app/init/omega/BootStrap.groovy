@@ -11,7 +11,7 @@ class BootStrap {
             // insert Development environment specific code here
 
 
-            Site carletonSite = new Site(name: "Carleton College",awsAccessKey: System.getenv("LL_AWS_ACCESS_KEY_ID"),awsSecretKey: System.getenv("LL_AWS_SECRET_KEY"),awsBucketName: System.getenv("LL_AWS_BUCKET_NAME"),awsBucketRegion: System.getenv("LL_AWS_BUCKET_REGION"),moodleKey: "my-secret",moodleUrl: "http://localhost").save(failOnError:true, flush:true);
+            Site carletonSite = new Site(name: "Carleton College",awsAccessKey: System.getenv("LL_AWS_ACCESS_KEY_ID"),awsSecretKey: System.getenv("LL_AWS_SECRET_KEY"),awsBucketName: System.getenv("LL_AWS_BUCKET_NAME"),awsBucketRegion: System.getenv("LL_AWS_BUCKET_REGION"),moodleKey: "my-secret",moodleUrl: "https://moodle-staging.its.carleton.edu/").save(failOnError:true, flush:true);
 
             Role superAdminRole = new Role(authority: "ROLE_SUPER_ADMIN").save(flush: true);
             Role admin = new Role(authority: "ROLE_ADMIN").save(flush: true);

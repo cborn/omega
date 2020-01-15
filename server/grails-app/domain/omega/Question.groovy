@@ -107,11 +107,7 @@ class Question {
         }
 
     }
-
-
-
 }
-
 
 enum QuestionType {
 
@@ -127,6 +123,5 @@ enum QuestionType {
     DROPDOWN,
     VOICE,
     CLOZE
-
 
 }

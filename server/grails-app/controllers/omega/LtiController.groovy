@@ -29,6 +29,7 @@ class LtiController {
     TokenGenerator tokenGenerator
 
     def authenticate() {
+
         if (params.key != null) {
             User userToLogin = User.findByOtpIsNotNullAndOtp(params.key);
             if (userToLogin != null) {
@@ -51,7 +52,6 @@ class LtiController {
             render status: HttpStatus.FORBIDDEN
         }
 
-
     }
 
 
@@ -65,12 +65,21 @@ class LtiController {
             }
         }
 
+
+        // firstly lets get the site..
+
+        Site site = Site.findByMoodleUrlIlike("%"+fullMap.get("tool_consumer_instance_guid")+"%")
+        if(!site) {
+            render "Could not find the site associated to this moodle instance. Please make sure a site with the moodle url : " + fullMap.get("tool_consumer_instance_guid") + " exists."
+            return;
+        }
+
         log.debug("Getting the current term");
-        Term currentTerm = Term.findByCurrent(true);
+        Term currentTerm = Term.findByCurrentAndSite(true,site);
 
 
         log.debug("Generating OAuth Signature")
-        String sig = LTIService.generateOAuthSignature("POST", request.getRequestURL().toString(), "my-secret", fullMap)
+        String sig = LTIService.generateOAuthSignature("POST", request.getRequestURL().toString(), site.getMoodleKey(), fullMap)
         log.debug("OAuth Signature generated - " + sig)
         if (sig == params.oauth_signature) {
 
@@ -80,7 +89,7 @@ class LtiController {
             if (User.findByUsername(params.lis_person_contact_email_primary) == null) {
                 log.debug("failed to find an existing user for the email - " + params.lis_person_contact_email_primary)
                 log.debug("creating a new user from moodle.");
-                LTIService.createMoodleUser(fullMap)
+                LTIService.createMoodleUser(site,fullMap)
             }
 
             // Get the user to login and log them in..
