@@ -50,7 +50,7 @@ export class ClozeQuestionComponent implements OnInit {
     onOpenPrompt(event) {
         // Run your service call here
 
-        if(event.detail.questionId === this.question.id) {
+        if (event.detail.questionId === this.question.id) {
             const dialogRef = this.dialog.open(ClozeDialogComponent, {
                 height: '400px',
                 width: '600px',
@@ -92,7 +92,7 @@ export class ClozeQuestionComponent implements OnInit {
         let result2;
         const copyIndices = [];
         while ((result2 = regex2.exec(newText)) !== null) {
-            copyIndices.push(parseInt(result2[0].substring(11, result2[0].indexOf(",")))); // Work out the existing indicies that remain.
+            copyIndices.push(parseInt(result2[0].substring(11, result2[0].indexOf(',')))); // Work out the existing indicies that remain.
         }
 
 
@@ -124,6 +124,9 @@ export class ClozeQuestionComponent implements OnInit {
 
         if (newInsertTextPosition > -1 && !foundPosition) {
             foundPosition = true;
+            if (this.question.custom_properties.cloze_prompts === undefined) {
+                this.question.custom_properties.cloze_prompts = '[]';
+            }
             const prompts = JSON.parse(this.question.custom_properties.cloze_prompts);
             prompts.push([]);
             this.question.custom_properties.cloze_prompts = JSON.stringify(prompts);

@@ -91,7 +91,7 @@ import {RubyPromptEditDialogComponent} from './dialogs/ruby-edit-dialog';
 import { SuperAdminDashboardComponent } from './superAdmin/super-admin-dashboard/super-admin-dashboard.component';
 import { SuperAdminSiteCreateComponent } from './superAdmin/super-admin-site-create/super-admin-site-create.component';
 import { SuperAdminSiteEditComponent } from './superAdmin/super-admin-site-edit/super-admin-site-edit.component';
-import {TermCreateComponent} from './term/term-create/course-create.component';
+import {TermCreateComponent} from './term/term-create/term-create.component';
 import { CommentOrderPipe } from './pipes/comment-order.pipe';
 import { RandomOrderPipe } from './pipes/random-order.pipe';
 import { PitchRenderComponent } from './faculty/lessonPage/lesson-page-renderer/components/voice-renderer/pitch-render/pitch-render.component';

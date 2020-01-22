@@ -6,9 +6,10 @@
             <input matInput placeholder="Name" name="name" [(ngModel)]="course.name">
         </mat-form-field>
 
-        <!--<mat-form-field>-->
-        <!--<textarea matInput"></textarea>-->
-        <!--</mat-form-field>-->
+        <mat-form-field >
+            <input matInput placeholder="Moodle Id" name="moodle_master_id" [(ngModel)]="course.moodle_master_id">
+        </mat-form-field>
+
         <br/>
         <button mat-raised-button color="primary" (click)="create()">Create</button>
     </form>

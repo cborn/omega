@@ -8,6 +8,6 @@ json {
 	id course.id
 	name course.name
 	lessons  g.render(course.lessons, [resolveTemplate: false])
-	moodle_id course.moodle_master_id
+	moodle_master_id course.moodle_master_id
 
 }

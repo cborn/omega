@@ -102,45 +102,27 @@ class LtiController {
             String url = "/course/index";
 
             if (fullMap.get("lis_course_section_sourcedid")) {
-                Course course = Course.findBySyllabusId(fullMap.get("lis_course_section_sourcedid"));
+                Course course = Course.findByMoodle_master_id(fullMap.get("lis_course_section_sourcedid"));
                 if (course) {
                     log.debug("Found the course")
                     if (toLogin.isStudent()) {
-//
-//                        // TODO Work out if the student is currently enrolled onto the course.
-//                        // TODO Otherwise enroll the student onto the course.
-//
-                        // See if this student is  currently enrolled onto this course for this term.
-
-                        Enrollment enrollment = Enrollment.findByTermAndCourseAndUser(currentTerm, course, toLogin);
-
-                        if (!enrollment) {
-                            // TODO we need to enroll the student before we do anything..
-                            enrollment = new Enrollment(term: currentTerm, course: course, user: toLogin).save(failOnError: true, flush: true);
-                        }
 
                         if (fullMap.get("custom_direct_link_id")) {
-                            Lesson lesson = Lesson.get(Long.parseLong(fullMap.get("custom_direct_link_id")))
+                            LessonPage lesson = LessonPage.get(Long.parseLong(fullMap.get("custom_direct_link_id")))
                             if (lesson) {
-
+                                
                                 // TODO respond url seems to be something important so work out what this is...
                                 log.debug("Contents of lis_outcome_service_url - " + fullMap.get("lis_outcome_service_url"));
                                 log.debug("contents of lis_result_sourcedid - " + fullMap.get("lis_result_sourcedid"))
-//                                    LessonResult result = lesson.results.find { it.student.id == toLogin.student.id }
-//                                    if (result) {
-//                                        result.respondUrl = fullMap.get("lis_outcome_service_url")
-//                                        result.sourcedid = fullMap.get("lis_result_sourcedid")
-//                                        result.save(flush: true)
-//                                    } else {
-//                                        LessonResult addResult = new LessonResult(student: toLogin.student, score: 0, maxScore: 0)
-//                                        addResult.respondUrl = fullMap.get("lis_outcome_service_url")
-//                                        addResult.sourcedid = fullMap.get("lis_result_sourcedid")
-//                                        lesson.addToResults(addResult)
-//                                        lesson.save(flush: true)
-//                                    }
-//                                    redirect(controller: "lesson", action: "viewLesson", params: [courseId: course.id, lessonId: fullMap.get("custom_direct_link_id")])
+                                Submission submission = Submission.findByUserAndPageAndTerm(toLogin,lesson,currentTerm);
+                                if(!submission)
+                                    submission = new Submission(page: lesson,user: toLogin,term: currentTerm,drafted: new Date()).save(flush:true);
+
+                                url = "/student/submission/" + submission.id;
+
+
                             } else {
-                                url = "/course/show/" + course.id;
+                                url = "/lesson/index/" + course.id;
                             }
                         } else {
 //                                Student student = toLogin.student
@@ -152,7 +134,7 @@ class LtiController {
 //                                    course.save(flush: true, failOnError: true)
 //                                }
 //                                redirect(controller: "course", action: "show", params: [courseId: course.id])
-                            url = "/course/show/" + course.id;
+                            url = "/lesson/index/" + course.id;
                         }
 
 
@@ -169,9 +151,9 @@ class LtiController {
                         }
 
                         if (fullMap.get("custom_direct_link_id")) {
-                            url = "lesson/show/" + fullMap.get("custom_direct_link_id");
+                            url = "lessonPage/builder/" + fullMap.get("custom_direct_link_id");
                         } else {
-                            url = "/course/show/" + course.id;
+                            url = "/lesson/index/" + course.id;
                         }
 
                     }
@@ -182,11 +164,12 @@ class LtiController {
                         course = new Course(name: fullMap.get("context_title"),
                                 syllabusId: fullMap.get("lis_course_section_sourcedid"))
                         course.addToOwners(toLogin)
+                        course.term = currentTerm;
                         course.save(flush: true, failOnError: true)
 
                         log.debug(course.toString());
 
-                        url = "/course/show/" + course.id;
+                        url = "/lesson/index/" + course.id;
                     } else {
                         url = "/student/index";
                     }

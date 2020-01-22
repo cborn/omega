@@ -1,8 +1,7 @@
 <div  class="index">
-
-
     <div class="centered standard-table-width">
-        <h1>Lessons</h1>
+        <h1 style="margin-bottom: 0;">Lessons</h1>
+        <h6 style="margin-top:0;"><a [routerLink]="'/course/edit/'+paramValue">Edit Course</a></h6>
 <mat-table class="centered mat-elevation-z8" style="width: 100%;" [dataSource]="dataSource">
 
     <ng-container matColumnDef="id">

@@ -24,7 +24,7 @@ import {CourseSelectionComponent} from './student/course-selection/course-select
 import {SuperAdminDashboardComponent} from './superAdmin/super-admin-dashboard/super-admin-dashboard.component';
 import {SuperAdminSiteCreateComponent} from './superAdmin/super-admin-site-create/super-admin-site-create.component';
 import {SuperAdminSiteEditComponent} from './superAdmin/super-admin-site-edit/super-admin-site-edit.component';
-import {TermCreateComponent} from './term/term-create/course-create.component';
+import {TermCreateComponent} from './term/term-create/term-create.component';
 
 const routes: Routes = [
     {path: '', redirectTo: 'index', pathMatch: 'full'},

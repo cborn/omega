@@ -56,8 +56,11 @@
                         <mat-list role="list" *ngIf="!loading.course">
                             <mat-list-item role="listitem"
                                            *ngFor="let course of courses | slice:0:limits.course" [routerLink]="'/lesson/index/'+course.id">
-                                <h4 mat-line>{{course.name}}</h4><span
+                                <h4 mat-line>{{course.name}}</h4>
+
+                                <span
                                     class="status-icon status-icon-plain">{{course.lessons.length + " "}}Lessons</span>
+
                                 <p mat-line> ({{course.id}}) </p>
 
 
