@@ -43,6 +43,10 @@
     </mat-slide-toggle>
 
 <!--  -->
+    <mat-slide-toggle (change)="changed()" *ngIf="isOfType([QuestionType.VOICE])" class="sidebar-form-input"
+                      color="primary" name="show_pitch_viz" [(ngModel)]="question.custom_properties.show_pitch_viz">
+        Show Pitch Visualization
+    </mat-slide-toggle>
 
 
     <mat-slide-toggle (change)="changed()" *ngIf="isOfType([QuestionType.MULTI_CHOICE,QuestionType.PICTURE_CHOICE])"

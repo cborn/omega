@@ -51,7 +51,7 @@
 
         </div>
 
-        <app-pitch-render *ngIf="hasRecording && duration != undefined"  [recordingId]="rawValue" [duration]="duration"></app-pitch-render>
+        <app-pitch-render *ngIf="hasRecording && duration != undefined && question.custom_properties.show_pitch_viz"  [recordingId]="rawValue" [duration]="duration"></app-pitch-render>
 
         <div class="viz-container" [id]="'container_'+ question.id" *ngIf="hasRecording">
 

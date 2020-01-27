@@ -97,8 +97,9 @@ class Question {
         PROMPT_SYNC("prompt_sync"), // play the prompt when the student start recording
 
         CLOZE_TEXT("cloze_text"), // This is a string which contains the @@ character where an input is required
-        CLOZE_PROMPTS("cloze_prompts"); // This is an array of arrays which contains number of prompts e.g. [[],["Bird","Fox","Hare"],[]] - here if the array is empty this means the user should type the answer in the space.
+        CLOZE_PROMPTS("cloze_prompts"), // This is an array of arrays which contains number of prompts e.g. [[],["Bird","Fox","Hare"],[]] - here if the array is empty this means the user should type the answer in the space.
 
+        SHOW_PITCH("show_pitch_viz");
 
         String key_name;
 
