@@ -178,9 +178,9 @@ class LtiController {
                 url = "/student/index";
             }
 
+            String baseUrl = System.getenv("LL_APPLICATION_URL");
 
-
-            redirect(url: "http://localhost:4200/#/otp?key=" + toLogin.getOtp() + "&resumeRoute=" + url);
+            redirect(url: baseUrl+"/#/otp?key=" + toLogin.getOtp() + "&resumeRoute=" + url);
 
 
         } else {
