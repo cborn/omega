@@ -35,7 +35,7 @@ export class RubyPromptEditDialogComponent {
         this.question = data.question;
         this.rubyEditIndex = data.index;
 
-        const rubyText = this.getRubyText();
+        const rubyText = this.getRubyText()
 
         this.rubyBody = rubyText.replace(/<(\/)?ruby>/gm, '').replace(/<rt>(.)*<\/rt>/gm, '').trim();
         this.rubyDetail = rubyText.substring(rubyText.indexOf('<rt>') + 4, rubyText.indexOf('</rt>')).trim();
