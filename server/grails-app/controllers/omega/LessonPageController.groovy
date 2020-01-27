@@ -21,9 +21,9 @@ class LessonPageController {
 
     def moveUp(Long id) {
         LessonPage lp = LessonPage.get(id);
-        LessonPage lp2 = LessonPage.findByPageOrder(lp.pageOrder + 1);
-
         Lesson l = lp.lesson;
+        LessonPage lp2 = LessonPage.findByPageOrderAndLesson(lp.pageOrder + 1,l);
+
         lp.pageOrder++;
         lp2.pageOrder--;
 
@@ -43,9 +43,10 @@ class LessonPageController {
 
     def moveDown(Long id) {
         LessonPage lp = LessonPage.get(id);
-        LessonPage lp2 = LessonPage.findByPageOrder(lp.pageOrder - 1);
-
         Lesson l = lp.lesson;
+        LessonPage lp2 = LessonPage.findByPageOrderAndLesson(lp.pageOrder - 1,l);
+
+
         lp.pageOrder--;
         lp2.pageOrder++;
 
