@@ -15,8 +15,10 @@ class ApplicationController implements PluginManagerAware {
     SpringSecurityService springSecurityService;
 
     def index() {
-
         User user = springSecurityService.currentUser as User;
+        if(user == null){
+            render status: 401;
+        }
         def siteId = request.getHeader('x-admin-site');
         Site site = user.site ? user.site : Site.get(siteId);
 

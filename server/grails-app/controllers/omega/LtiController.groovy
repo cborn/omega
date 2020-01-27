@@ -151,7 +151,13 @@ class LtiController {
                         }
 
                         if (fullMap.get("custom_direct_link_id")) {
-                            url = "lessonPage/builder/" + fullMap.get("custom_direct_link_id");
+                            LessonPage lesson = LessonPage.get(Long.parseLong(fullMap.get("custom_direct_link_id")))
+                            if (lesson) {
+                                url = "lessonPage/builder/" + fullMap.get("custom_direct_link_id");
+                            }
+                            else {
+                                url = "/lesson/index/" + course.id
+                            }
                         } else {
                             url = "/lesson/index/" + course.id;
                         }
@@ -162,7 +168,7 @@ class LtiController {
                         log.debug("Course Not Found - Creating a new course");
 
                         course = new Course(name: fullMap.get("context_title"),
-                                syllabusId: fullMap.get("lis_course_section_sourcedid"))
+                                moodle_master_id: fullMap.get("lis_course_section_sourcedid"))
                         course.addToOwners(toLogin)
                         course.term = currentTerm;
                         course.save(flush: true, failOnError: true)

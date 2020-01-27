@@ -6,10 +6,7 @@ class Course {
 
     static constraints = {
         moodle_master_id nullable: true;
-        syllabusId nullable: true;
     }
-
-    String syllabusId;
 
     String name;
 
