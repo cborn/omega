@@ -86,7 +86,6 @@ export class PitchRenderComponent implements OnInit, OnChanges {
             }
             context.canvasContext.stroke();
         }
-        console.log('Drew pitch annotations.');
     };
 
     ngOnChanges(changes: SimpleChanges): void {

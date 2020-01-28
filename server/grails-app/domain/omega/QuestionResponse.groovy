@@ -3,13 +3,13 @@ package omega
 class QuestionResponse {
 
 
-    String response;
+    String response
 
-    Question question;
+    Question question
 
-    Integer grade;
+    Integer grade
 
-    QuestionStatus status = QuestionStatus.AWAITING_REVIEW;
+    QuestionStatus status = QuestionStatus.AWAITING_REVIEW
 
     static hasMany = [comments:Comment]
 

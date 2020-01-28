@@ -14,18 +14,18 @@ class LessonPageController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        Lesson lesson = Lesson.get(params.lessonId);
+        Lesson lesson = Lesson.get(params.lessonId)
         respond LessonPage.findAllByLesson(lesson).sort {it.pageOrder}, model:[lessonPageCount: lessonPageService.count()]
     }
 
 
     def moveUp(Long id) {
-        LessonPage lp = LessonPage.get(id);
-        Lesson l = lp.lesson;
-        LessonPage lp2 = LessonPage.findByPageOrderAndLesson(lp.pageOrder + 1,l);
+        LessonPage lp = LessonPage.get(id)
+        Lesson l = lp.lesson
+        LessonPage lp2 = LessonPage.findByPageOrderAndLesson(lp.pageOrder + 1,l)
 
-        lp.pageOrder++;
-        lp2.pageOrder--;
+        lp.pageOrder++
+        lp2.pageOrder--
 
 
         lp.save()
@@ -42,13 +42,13 @@ class LessonPageController {
 
 
     def moveDown(Long id) {
-        LessonPage lp = LessonPage.get(id);
-        Lesson l = lp.lesson;
-        LessonPage lp2 = LessonPage.findByPageOrderAndLesson(lp.pageOrder - 1,l);
+        LessonPage lp = LessonPage.get(id)
+        Lesson l = lp.lesson
+        LessonPage lp2 = LessonPage.findByPageOrderAndLesson(lp.pageOrder - 1,l)
 
 
-        lp.pageOrder--;
-        lp2.pageOrder++;
+        lp.pageOrder--
+        lp2.pageOrder++
 
 
         lp.save()
@@ -74,7 +74,7 @@ class LessonPageController {
             return
         }
 
-        lessonPage.pageOrder = lessonPage.lesson.pages.size();
+        lessonPage.pageOrder = lessonPage.lesson.pages.size()
 
         try {
             lessonPageService.save(lessonPage)
@@ -94,7 +94,7 @@ class LessonPageController {
         }
 
         LessonPage.withNewTransaction {
-            lessonPage.attach();
+            lessonPage.attach()
 
 
             try {

@@ -24,7 +24,6 @@ export class LessonPageIndexComponent extends IndexComponent<LessonPage> {
             lesson: this.paramValue,
             name: 'Untitled Page'
         };
-        console.log(uploadPackage);
 
         this.lessonPageService.insert(uploadPackage, (data) => {
             this.router.navigate(['/lessonPage/builder', data.id]);

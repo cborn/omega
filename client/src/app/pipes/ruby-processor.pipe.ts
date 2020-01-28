@@ -30,7 +30,6 @@ export class RubyProcessorPipe implements PipeTransform {
             const replacementText = '<ruby>Ruby Text<rt>Click to edit</rt></ruby>';
             newValue = newValue.replace(regex2, replacementText);
             changed = true
-            console.log("Ruby Tect Changed - " + newValue);
 
         }
 
@@ -43,10 +42,8 @@ export class RubyProcessorPipe implements PipeTransform {
             replacementText += result[0].replace(/<(\/)?ruby>/gm, '').replace('<rt>', '(').replace('</rt>', ')');
             replacementText += '</div>';
 
-            console.log("Results - "+result[0]);
             newValue = newValue.replace(result[0], replacementText);
             index++;
-            console.log("replaced text - "+newValue);
 
         }
 

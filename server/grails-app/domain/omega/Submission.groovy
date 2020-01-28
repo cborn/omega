@@ -4,43 +4,43 @@ import javax.xml.ws.Response
 
 class Submission {
 
-    Date drafted;
+    Date drafted
 
-    Date submitted;
+    Date submitted
 
-    Date graded;
+    Date graded
 
-    SubmissionStatus status = SubmissionStatus.DRAFT;
+    SubmissionStatus status = SubmissionStatus.DRAFT
 
-    Integer grade;
+    Integer grade
 
 
     Optional<String> verifyCompleteness() {
 
         if(status == SubmissionStatus.GRADED) {
-            return Optional.of("This submission has already been Graded.");
+            return Optional.of("This submission has already been Graded.")
         }
 
         if (this.page == null)
-            return Optional.of("Page data not found");
+            return Optional.of("Page data not found")
 
         for (Question question : this.page.questions) {
-            QuestionResponse response = QuestionResponse.findByQuestionAndSubmission(question, this);
+            QuestionResponse response = QuestionResponse.findByQuestionAndSubmission(question, this)
 
             if (question.isRequired() && (response == null || response.response == null || response.response == "")) {
-                return Optional.of("Question (" + (question.position + 1) + ") " + question.name + " requires an answer.");
+                return Optional.of("Question (" + (question.position + 1) + ") " + question.name + " requires an answer.")
             }
 
-            Optional<String> validationResponse = QuestionValidator.validate(response, question);
+            Optional<String> validationResponse = QuestionValidator.validate(response, question)
 
             if (validationResponse.isPresent()) {
-                return validationResponse;
+                return validationResponse
             }
 
         }
 
 
-        return Optional.empty();
+        return Optional.empty()
     }
 
 

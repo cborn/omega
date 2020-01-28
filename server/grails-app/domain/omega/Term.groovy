@@ -2,9 +2,9 @@ package omega
 
 class Term {
 
-    String name;
+    String name
 
-    boolean current;
+    boolean current
 
     static hasMany = [
             enrollments:Enrollment,

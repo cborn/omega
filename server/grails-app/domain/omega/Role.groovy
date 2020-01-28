@@ -19,7 +19,7 @@ class Role implements GrantedAuthority, Serializable {
 	}
 
 	static getStudentRole() {
-		return Role.findByAuthority("ROLE_STUDENT");
+		return Role.findByAuthority("ROLE_STUDENT")
 	}
 
 	static mapping = {

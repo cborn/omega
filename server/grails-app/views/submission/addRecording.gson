@@ -5,5 +5,5 @@ model {
 }
 json {
 	status "OK"
-	message questionResponse.response;
+	message questionResponse.response
 }

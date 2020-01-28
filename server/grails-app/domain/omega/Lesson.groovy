@@ -4,12 +4,12 @@ class Lesson {
 
     static constraints = {
 
-        due nullable: true;
+        due nullable: true
     }
 
-    Date due;
+    Date due
 
-    String name;
+    String name
 
     static belongsTo = [course:Course]
 

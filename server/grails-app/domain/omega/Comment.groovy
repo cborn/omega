@@ -3,17 +3,17 @@ package omega
 class Comment {
 
 
-    String comment_text;
+    String comment_text
 
-    User user;
+    User user
 
-    Double location;
+    Double location
 
-    Double endLocation;
+    Double endLocation
 
-    String voice_clip;
+    String voice_clip
 
-    Date submitted;
+    Date submitted
 
     static constraints = {
         location nullable:true

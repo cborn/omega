@@ -14,40 +14,40 @@ class Question {
     }
 
     def beforeDelete() {
-        QuestionResponse.where { question == this }.deleteAll();
+        QuestionResponse.where { question == this }.deleteAll()
 
     }
 
     static belongsTo = [page:LessonPage]
 
-    QuestionType type;
+    QuestionType type
 
-    int position;
+    int position
 
-    boolean required = false;
+    boolean required = false
 
-    String description;
+    String description
 
-    String name;
+    String name
 
-    ImageProperty imagePrompt;
+    ImageProperty imagePrompt
 
-    ImageProperty imageFeedback;
+    ImageProperty imageFeedback
 
-    VideoProperty videoPrompt;
+    VideoProperty videoPrompt
 
-    VideoProperty videoFeedback;
+    VideoProperty videoFeedback
 
-    AudioProperty audioPrompt;
+    AudioProperty audioPrompt
 
-    AudioProperty audioFeedback;
+    AudioProperty audioFeedback
 
-    int max_grade;
+    int max_grade
 
     Map<QuestionPropertyKeys,Object> custom_properties
 
     def hasFeedback(){
-        return imagePrompt != null || imageFeedback != null || videoPrompt != null || videoFeedback != null || audioPrompt != null || audioFeedback != null;
+        return imagePrompt != null || imageFeedback != null || videoPrompt != null || videoFeedback != null || audioPrompt != null || audioFeedback != null
     }
 
     static mapping = {
@@ -101,10 +101,10 @@ class Question {
 
         SHOW_PITCH("show_pitch_viz");
 
-        String key_name;
+        String key_name
 
         QuestionPropertyKeys(String key) {
-            this.key_name = key;
+            this.key_name = key
         }
 
     }

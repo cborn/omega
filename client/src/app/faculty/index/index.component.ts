@@ -64,14 +64,12 @@ export class FacultyIndexComponent implements OnInit {
         });
 
         (await this.courseService.list()).subscribe(value => {
-            console.log('Courses Loaded');
             this.loading.course = false;
         });
 
 
         if(this.isFaculty()) {
             (await this.userService.list()).subscribe(value => {
-                console.log('Users Loaded');
                 this.loading.user = false;
             });
         }

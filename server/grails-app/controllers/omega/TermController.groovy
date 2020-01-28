@@ -9,16 +9,16 @@ import static org.springframework.http.HttpStatus.*
 class TermController {
 
     TermService termService
-    SpringSecurityService springSecurityService;
+    SpringSecurityService springSecurityService
 
     static responseFormats = ['json', 'xml']
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        User user = springSecurityService.currentUser as User;
-        def siteId = request.getHeader('x-admin-site');
-        Site site = user.site ? user.site : Site.get(siteId);
+        User user = springSecurityService.currentUser as User
+        def siteId = request.getHeader('x-admin-site')
+        Site site = user.site ? user.site : Site.get(siteId)
 
         if(site == null)
         {
@@ -39,9 +39,9 @@ class TermController {
             return
         }
 
-        User user = springSecurityService.currentUser as User;
-        def siteId = request.getHeader('x-admin-site');
-        Site site = user.site ? user.site : Site.get(siteId);
+        User user = springSecurityService.currentUser as User
+        def siteId = request.getHeader('x-admin-site')
+        Site site = user.site ? user.site : Site.get(siteId)
 
 
         if(site == null) {
@@ -52,7 +52,7 @@ class TermController {
             term.site = site
 
             if(Term.countBySite(site) == 0) {
-                term.current = true;
+                term.current = true
             }
         }
 

@@ -12,21 +12,21 @@ class ApplicationController implements PluginManagerAware {
 
     GrailsApplication grailsApplication
     GrailsPluginManager pluginManager
-    SpringSecurityService springSecurityService;
+    SpringSecurityService springSecurityService
 
     def index() {
-        User user = springSecurityService.currentUser as User;
+        User user = springSecurityService.currentUser as User
         if(user == null){
-            render status: 401;
+            render status: 401
         }
-        def siteId = request.getHeader('x-admin-site');
-        Site site = user.site ? user.site : Site.get(siteId);
+        def siteId = request.getHeader('x-admin-site')
+        Site site = user.site ? user.site : Site.get(siteId)
 
-        User currentUser = springSecurityService.getCurrentUser() as User;
-        Term currentTerm = Term.findByCurrentAndSite(true,site);
+        User currentUser = springSecurityService.getCurrentUser() as User
+        Term currentTerm = Term.findByCurrentAndSite(true,site)
 
-        String bucket = site?.awsBucketName;
-        String region = site?.awsBucketRegion;
+        String bucket = site?.awsBucketName
+        String region = site?.awsBucketRegion
 
         if(!bucket)
             bucket = "omegadev"

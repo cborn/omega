@@ -24,38 +24,38 @@ class QuestionController {
 
     def removeImage() {
 
-        println(params);
-
-        def question = Question.get(params.id);
+        def question = Question.get(params.id)
 
         if (question == null) {
             render status: NOT_FOUND
             return
         }
-
-        AWSUploaderService.remove(params.image, "images");
-
-        ImageProperty p = ImageProperty.findByAwsKey(params.image);
-
-        p.delete(flush: true);
+        Site site = question.page.lesson.course.term.site;
 
 
-        String images = question.custom_properties.get(Question.QuestionPropertyKeys.IMAGES.key_name);
+        AWSUploaderService.remove(params.image, "images",site)
+
+        ImageProperty p = ImageProperty.findByAwsKey(params.image)
+
+        p.delete(flush: true)
+
+
+        String images = question.custom_properties.get(Question.QuestionPropertyKeys.IMAGES.key_name)
 
         if (images != null) {
             if (images.contains("@@")) {
-                def imagesArray = images.split("@@").toList();
+                def imagesArray = images.split("@@").toList()
 
-                imagesArray.remove(p.awsKey);
+                imagesArray.remove(p.awsKey)
 
-                question.custom_properties.put(Question.QuestionPropertyKeys.IMAGES.key_name, imagesArray.join("@@"));
+                question.custom_properties.put(Question.QuestionPropertyKeys.IMAGES.key_name, imagesArray.join("@@"))
             } else {
-                question.custom_properties.put(Question.QuestionPropertyKeys.IMAGES.key_name, images.replace(p.awsKey, ""));
+                question.custom_properties.put(Question.QuestionPropertyKeys.IMAGES.key_name, images.replace(p.awsKey, ""))
             }
         }
 
 
-        question.save(flush: true);
+        question.save(flush: true)
 
         respond question, [status: OK, view: "show"]
 
@@ -63,38 +63,42 @@ class QuestionController {
 
     def addImage() {
 
-        def question = Question.get(params.id);
+        def question = Question.get(params.id)
 
         if (question == null) {
             render status: NOT_FOUND
             return
         }
 
-        def response = AWSUploaderService.upload(params.image, "images");
 
-        ImageProperty im = new ImageProperty();
+        Site site = question.page.lesson.course.term.site;
+
+        def response = AWSUploaderService.upload(params.image, "images",site)
+
+        ImageProperty im = new ImageProperty()
         im.setAutoPlay(false)
-        im.setAwsKey(response.awsKey);
-        im.setAwsUrl(response.s3FileUrl);
-        im.save(flush: true);
+        im.setAwsKey(response.awsKey)
+        im.setAwsUrl(response.s3FileUrl)
+        im.setSite(site);
+        im.save(flush: true)
 
 
-        String images = question.custom_properties.get(Question.QuestionPropertyKeys.IMAGES.key_name);
+        String images = question.custom_properties.get(Question.QuestionPropertyKeys.IMAGES.key_name)
 
         if (images != null && images.length() > 0) {
             if (images.contains("@@")) {
-                def imagesArray = images.split("@@").toList();
+                def imagesArray = images.split("@@").toList()
 
-                imagesArray.add(im.awsKey.toString());
+                imagesArray.add(im.awsKey.toString())
 
-                question.custom_properties.put(Question.QuestionPropertyKeys.IMAGES.key_name, imagesArray.join("@@"));
+                question.custom_properties.put(Question.QuestionPropertyKeys.IMAGES.key_name, imagesArray.join("@@"))
             } else {
-                question.custom_properties.put(Question.QuestionPropertyKeys.IMAGES.key_name, (images + "@@" + im.awsKey));
+                question.custom_properties.put(Question.QuestionPropertyKeys.IMAGES.key_name, (images + "@@" + im.awsKey))
             }
         } else {
-            question.custom_properties.put(Question.QuestionPropertyKeys.IMAGES.key_name, im.awsKey.toString());
+            question.custom_properties.put(Question.QuestionPropertyKeys.IMAGES.key_name, im.awsKey.toString())
         }
-        question.save(flush: true);
+        question.save(flush: true)
 
         respond question, [status: OK, view: "show"]
 
@@ -104,24 +108,28 @@ class QuestionController {
 
     def addPromptImage() {
 
-        def question = Question.get(params.id);
+        def question = Question.get(params.id)
 
         if (question == null) {
             render status: NOT_FOUND
             return
         }
 
-        def response = AWSUploaderService.upload(params.image, "images");
 
-        ImageProperty im = new ImageProperty();
+        Site site = question.page.lesson.course.term.site;
+
+        def response = AWSUploaderService.upload(params.image, "images",site)
+
+        ImageProperty im = new ImageProperty()
         im.setAutoPlay(false)
-        im.setAwsKey(response.awsKey);
-        im.setAwsUrl(response.s3FileUrl);
-        im.save(flush: true);
+        im.setAwsKey(response.awsKey)
+        im.setAwsUrl(response.s3FileUrl)
+        im.setSite(site);
+        im.save(flush: true)
 
-        question.imagePrompt = im;
+        question.imagePrompt = im
 
-        question.save(flush: true);
+        question.save(flush: true)
 
         respond question, [status: OK, view: "show"]
 
@@ -130,16 +138,16 @@ class QuestionController {
 
     def removePromptImage() {
 
-        def question = Question.get(params.id);
+        def question = Question.get(params.id)
 
         if (question == null) {
             render status: NOT_FOUND
             return
         }
-        ImageProperty property = ImageProperty.findById(question.imagePrompt.id);
-        question.imagePrompt = null;
+        ImageProperty property = ImageProperty.findById(question.imagePrompt.id)
+        question.imagePrompt = null
         question.save(flush: true)
-        property.delete(flush: true);
+        property.delete(flush: true)
 
         respond question, [status: OK, view: "show"]
 
@@ -148,16 +156,16 @@ class QuestionController {
 
     def removePromptRecording() {
 
-        def question = Question.get(params.id);
+        def question = Question.get(params.id)
 
         if (question == null) {
             render status: NOT_FOUND
             return
         }
-        AudioProperty property = AudioProperty.findById(question.audioPrompt.id);
-        question.audioPrompt = null;
+        AudioProperty property = AudioProperty.findById(question.audioPrompt.id)
+        question.audioPrompt = null
         question.save(flush: true)
-        property.delete(flush: true);
+        property.delete(flush: true)
 
         respond question, [status: OK, view: "show"]
 
@@ -165,16 +173,16 @@ class QuestionController {
 
     def removeFeedbackRecording() {
 
-        def question = Question.get(params.id);
+        def question = Question.get(params.id)
 
         if (question == null) {
             render status: NOT_FOUND
             return
         }
-        AudioProperty property = AudioProperty.findById(question.audioFeedback.id);
-        question.audioFeedback = null;
+        AudioProperty property = AudioProperty.findById(question.audioFeedback.id)
+        question.audioFeedback = null
         question.save(flush: true)
-        property.delete(flush: true);
+        property.delete(flush: true)
 
         respond question, [status: OK, view: "show"]
 
@@ -183,25 +191,29 @@ class QuestionController {
 
     def addPromptRecording() {
 
-        def question = Question.get(params.id);
+        def question = Question.get(params.id)
 
         if (question == null) {
             render status: NOT_FOUND
             return
         }
 
-        def response = AWSUploaderService.upload(params.audio_data, "audio");
 
-        AudioProperty im = new AudioProperty();
+        Site site = question.page.lesson.course.term.site;
+
+        def response = AWSUploaderService.upload(params.audio_data, "audio",site)
+
+        AudioProperty im = new AudioProperty()
         im.setAutoPlay(false)
-        im.setAwsKey(response.awsKey);
-        im.setAwsUrl(response.s3FileUrl);
-        im.save(flush: true);
+        im.setAwsKey(response.awsKey)
+        im.setAwsUrl(response.s3FileUrl)
+        im.setSite(site);
+        im.save(flush: true)
 
 
-        question.audioPrompt = im;
+        question.audioPrompt = im
 
-        question.save(flush: true);
+        question.save(flush: true)
 
         respond question, [status: OK, view: "show"]
 
@@ -210,25 +222,28 @@ class QuestionController {
 
     def addFeedbackRecording() {
 
-        def question = Question.get(params.id);
+        def question = Question.get(params.id)
 
         if (question == null) {
             render status: NOT_FOUND
             return
         }
 
-        def response = AWSUploaderService.upload(params.audio_data, "audio");
+        Site site = question.page.lesson.course.term.site;
 
-        AudioProperty im = new AudioProperty();
+        def response = AWSUploaderService.upload(params.audio_data, "audio",site)
+
+        AudioProperty im = new AudioProperty()
         im.setAutoPlay(false)
-        im.setAwsKey(response.awsKey);
-        im.setAwsUrl(response.s3FileUrl);
-        im.save(flush: true);
+        im.setAwsKey(response.awsKey)
+        im.setAwsUrl(response.s3FileUrl)
+        im.setSite(site)
+        im.save(flush: true)
 
 
-        question.audioFeedback = im;
+        question.audioFeedback = im
 
-        question.save(flush: true);
+        question.save(flush: true)
 
         respond question, [status: OK, view: "show"]
 
@@ -273,16 +288,16 @@ class QuestionController {
             return
         }
 
-        Question question = Question.get(id);
+        Question question = Question.get(id)
 
         // reorder the questions now that this one has been deleted.
 
-        def allQuestionsInGroup = Question.findByPage(question.page);
+        def allQuestionsInGroup = Question.findByPage(question.page)
 
         for (Question loopQuestion : allQuestionsInGroup) {
             if (loopQuestion.position > question.position) {
                 loopQuestion.position--
-                println loopQuestion.position;
+                println loopQuestion.position
                 loopQuestion.save(flush: true)
             }
         }

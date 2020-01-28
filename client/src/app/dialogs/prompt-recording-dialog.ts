@@ -96,7 +96,6 @@ export class PromptRecordingDialogComponent {
 
         promise.subscribe(value => {
             this.loading = false;
-            console.log('changed image prompt');
 
             this.url = VoiceRendererComponent.formatAsAWSUrl(value, this.sessionManager.bucket,this.sessionManager.region);
             this.dialogRef.close(value);

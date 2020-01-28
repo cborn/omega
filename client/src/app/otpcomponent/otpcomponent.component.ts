@@ -39,7 +39,7 @@ export class OTPComponentComponent implements OnInit {
             }, error1 => {
                 console.log(error1);
                 this.loading = false;
-            })
+            });
 
 
             if (key == null) {

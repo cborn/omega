@@ -6,13 +6,13 @@ class LessonPage {
         dueDate nullable:true
     }
 
-    String name;
+    String name
 
-    int pageOrder;
+    int pageOrder
 
-    Date dueDate;
+    Date dueDate
 
-    LessonPageStatus status = LessonPageStatus.DRAFT;
+    LessonPageStatus status = LessonPageStatus.DRAFT
 
     static belongsTo = [lesson:Lesson]
 

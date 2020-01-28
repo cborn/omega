@@ -2,7 +2,7 @@ package audioanalysis
 
 import omega.AudioAnalysis
 import omega.PitchAnnotation
-import omega.PraatPitchAnnotation;
+import omega.PraatPitchAnnotation
 
 /*
 Class to run praat scripts and return pitch results from praat.
@@ -14,22 +14,25 @@ For Annotation objects created by PraatPitchDetection, the probability value wil
 be replaced with intensity values.
 */
 
-public class PraatPitchDetection {
+class PraatPitchDetection {
     private String filepath
-    private SCRIPT = "/opt/audio_deps/praat_scripts/get.pitch.and.intensity.praat "
-    String PRAAT = "/opt/audio_deps/praat.app/Contents/MacOS/Praat --run "
+    private String SCRIPT = System.getenv("LL_PRAAT_SCRIPT").trim()
+    String PRAAT = System.getenv("LL_PRAAT_PATH").trim()
+    private String SPACE = " ";
+    private String ARGS = "--run";
+
     String UNDEFINED = "--undefined--"
 
 
-    public PraatPitchDetection(String filepath) {
+    PraatPitchDetection(String filepath) {
         this.filepath = filepath
     }
 
     //public List<List<PitchAnnotation>> executePitchDetection() {
-    public AudioAnalysis executePitchDetection() {
+    AudioAnalysis executePitchDetection() {
         // Create a new command string and run command.
         String cwd = System.getProperty("user.dir")
-        String fullCommand = PRAAT + SCRIPT + this.filepath
+        String fullCommand = PRAAT + SPACE + ARGS + SPACE + SCRIPT + SPACE + this.filepath
         String commandOutput
 
         try {
@@ -44,6 +47,8 @@ public class PraatPitchDetection {
         pitchBlock.save()
 
         String[] lines = commandOutput.split("\n")
+        println(lines);
+
         for (String line : lines) {
             String[] vals = line.split(" ")
             // Output comes in the form of time pitch intensity in .01 second intervals.
@@ -96,9 +101,9 @@ public class PraatPitchDetection {
             }
 
         } catch (Exception e) {
-            throw new Exception(e);
+            throw new Exception(e)
         }
-        return output.toString();
+        return output.toString()
 
 
     }
