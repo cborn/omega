@@ -78,8 +78,13 @@ class LtiController {
         Term currentTerm = Term.findByCurrentAndSite(true,site)
 
 
+        String proxyUrl = System.getenv("LL_PROXY_URL");
+        if(!proxyUrl)
+            proxyUrl = request.getRequestURL().toString();
+
+
         log.debug("Generating OAuth Signature")
-        String sig = LTIService.generateOAuthSignature("POST", request.getRequestURL().toString(), site.getMoodleKey(), fullMap)
+        String sig = LTIService.generateOAuthSignature("POST", proxyUrl, site.getMoodleKey(), fullMap)
         log.debug("OAuth Signature generated - " + sig)
         if (sig == params.oauth_signature) {
 

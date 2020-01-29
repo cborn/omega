@@ -32,7 +32,7 @@ class PraatPitchDetection {
     AudioAnalysis executePitchDetection() {
         // Create a new command string and run command.
         String cwd = System.getProperty("user.dir")
-        String fullCommand = PRAAT + SPACE + ARGS + SPACE + SCRIPT + SPACE + this.filepath
+        String fullCommand = PRAAT + SPACE + ARGS + SPACSCRIPT + SPACE + this.filepath
         String commandOutput
 
         try {
