@@ -15,17 +15,17 @@ import omega.PitchAnnotation
     /**
      * The time of the annotation in seconds.
      */
-    private double start;
+    private double start
 
     /**
      * the pitch of the annotation measured in Hertz.
      */
-    private double pitchInHz;
+    private double pitchInHz
 
     /**
      * The probability or salience. A value between zero and one (inclusive).
      */
-    private double probability;
+    private double probability
 
     /**
      * Create a new annotation with the given data.
@@ -67,7 +67,7 @@ import omega.PitchAnnotation
      *            The pitch in Hz.
      */
     PitchAnnotationDAO(final double timeStamp, final double pitchInHz) {
-        this(timeStamp, pitchInHz, 1.0);
+        this(timeStamp, pitchInHz, 1.0)
     }
 
     /**
@@ -105,7 +105,7 @@ import omega.PitchAnnotation
 
     @Override
      int hashCode() {
-        return Double.valueOf(start).hashCode() + getSource().hashCode();
+        return Double.valueOf(start).hashCode() + getSource().hashCode()
     }
 
     /*
@@ -116,7 +116,7 @@ import omega.PitchAnnotation
 
     @Override
      String toString() {
-        return String.format(Locale.US, "%.5f,%.5f,%.5f", start, getPitch(), probability);
+        return String.format(Locale.US, "%.5f,%.5f,%.5f", start, getPitch(), probability)
     }
 
     /**
@@ -127,11 +127,11 @@ import omega.PitchAnnotation
      * @return A new annotation.
      */
     static PitchAnnotation parse(final String line) {
-        final String[] data = line.split(",");
-        final double timeStamp = Double.parseDouble(data[0]);
-        final double pitch = Double.parseDouble(data[1]);
-        final double probability = Double.parseDouble(data[2]);
-        return new PitchAnnotation(timeStamp, pitch, probability);
+        final String[] data = line.split(",")
+        final double timeStamp = Double.parseDouble(data[0])
+        final double pitch = Double.parseDouble(data[1])
+        final double probability = Double.parseDouble(data[2])
+        return new PitchAnnotation(timeStamp, pitch, probability)
     }
 
 }

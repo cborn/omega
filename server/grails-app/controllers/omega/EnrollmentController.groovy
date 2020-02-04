@@ -24,66 +24,66 @@ class EnrollmentController {
 
     def grades() {
 
-        def enrollment = Enrollment.findAllByTermAndLesson(Term.get(params.term),Lesson.get(params.id));
+        def enrollment = Enrollment.findAllByTermAndLesson(Term.get(params.term),Lesson.get(params.id))
 
-        respond enrollment;
+        respond enrollment
 
     }
 
     def save() {
 
-        Lesson lesson = Lesson.get(request.JSON.lesson);
+        Lesson lesson = Lesson.get(request.JSON.lesson)
 
         if(!lesson) {
-            ErrorMessage message = new ErrorMessage();
-            message.message = "Lesson not found";
-            message.error = 403;
-            response.status = 403;
+            ErrorMessage message = new ErrorMessage()
+            message.message = "Lesson not found"
+            message.error = 403
+            response.status = 403
             respond message: message, [status: FORBIDDEN, message: message.message]
-            return;
+            return
         }
 
-        Term term = Term.get(request.JSON.term);
+        Term term = Term.get(request.JSON.term)
 
         if(!term) {
-            ErrorMessage message = new ErrorMessage();
-            message.message = "Term not found";
-            message.error = 403;
-            response.status = 403;
+            ErrorMessage message = new ErrorMessage()
+            message.message = "Term not found"
+            message.error = 403
+            response.status = 403
             respond message: message, [status: FORBIDDEN, message: message.message]
-            return;
+            return
         }
 
-        User user = User.get(request.JSON.user);
+        User user = User.get(request.JSON.user)
 
         if(!user) {
-            ErrorMessage message = new ErrorMessage();
-            message.message = "User not found";
-            message.error = 403;
-            response.status = 403;
+            ErrorMessage message = new ErrorMessage()
+            message.message = "User not found"
+            message.error = 403
+            response.status = 403
             respond message: message, [status: FORBIDDEN, message: message.message]
-            return;
+            return
         }
 
         if(request.JSON.grade == null) {
-            ErrorMessage message = new ErrorMessage();
-            message.message = "Grade cannot be empty";
-            message.error = 403;
-            response.status = 403;
+            ErrorMessage message = new ErrorMessage()
+            message.message = "Grade cannot be empty"
+            message.error = 403
+            response.status = 403
             respond message: message, [status: FORBIDDEN, message: message.message]
-            return;
+            return
         }
 
 
 
-        Enrollment enrollment = Enrollment.findByTermAndUserAndLesson(term,user,lesson);
+        Enrollment enrollment = Enrollment.findByTermAndUserAndLesson(term,user,lesson)
 
 
         if (enrollment == null) {
-            enrollment = new Enrollment(term: term,user: user,lesson: lesson,grade: request.JSON.grade);
+            enrollment = new Enrollment(term: term,user: user,lesson: lesson,grade: request.JSON.grade)
         }
         else {
-            enrollment.grade = request.JSON.grade;
+            enrollment.grade = request.JSON.grade
         }
 
         try {

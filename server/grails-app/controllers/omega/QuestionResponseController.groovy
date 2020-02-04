@@ -21,25 +21,25 @@ class QuestionResponseController {
 
 
     def addTextComment(){
-        QuestionResponse questionResponse = QuestionResponse.get(params.responseId);
+        QuestionResponse questionResponse = QuestionResponse.get(params.responseId)
 
         if(!questionResponse) {
             respond questionResponse, [status: NOT_FOUND]
         }
 
-        Comment c = new Comment();
-        c.submitted = new Date();
-        c.user = springSecurityService.getCurrentUser();
-        c.comment_text  = params.text_data;
+        Comment c = new Comment()
+        c.submitted = new Date()
+        c.user = springSecurityService.getCurrentUser()
+        c.comment_text  = params.text_data
         c.location = Double.parseDouble(params.start != null ? params.start : "0")
         c.endLocation = Double.parseDouble(params.end != null ? params.end : "0")
         c.save(flush:true)
 
-        questionResponse.addToComments(c);
+        questionResponse.addToComments(c)
 
-        questionResponse.setStatus(QuestionStatus.COMMENTS_PENDING);
+        questionResponse.setStatus(QuestionStatus.COMMENTS_PENDING)
 
-        questionResponse.save(flush:true);
+        questionResponse.save(flush:true)
 
         respond questionResponse, [status: OK, view:"show"]
 
@@ -47,34 +47,36 @@ class QuestionResponseController {
 
     def addRecording() {
 
-        QuestionResponse questionResponse = QuestionResponse.get(params.responseId);
+        QuestionResponse questionResponse = QuestionResponse.get(params.responseId)
 
         if(!questionResponse) {
             respond questionResponse, [status: NOT_FOUND]
         }
 
-        def response = AWSUploaderService.upload(params.audio_data,"audio");
+        Site site = questionResponse.question.page.lesson.course.term.site;
+        def response = AWSUploaderService.upload(params.audio_data,"audio",site)
 
-        AudioProperty audio = new AudioProperty();
+        AudioProperty audio = new AudioProperty()
         audio.setAutoPlay(false)
-        audio.setAwsKey(response.awsKey);
-        audio.setAwsUrl(response.s3FileUrl);
-        audio.save(flush:true);
+        audio.setAwsKey(response.awsKey)
+        audio.setAwsUrl(response.s3FileUrl)
+        audio.setSite(site);
+        audio.save(flush:true,failOnError:true)
 
 
-        Comment c = new Comment();
-        c.submitted = new Date();
-        c.user = springSecurityService.getCurrentUser();
-        c.voice_clip  = response.awsKey;
+        Comment c = new Comment()
+        c.submitted = new Date()
+        c.user = springSecurityService.getCurrentUser()
+        c.voice_clip  = response.awsKey
         c.location = Double.parseDouble(params.start)
         c.endLocation = Double.parseDouble(params.end)
         c.save(flush:true)
 
-        questionResponse.addToComments(c);
+        questionResponse.addToComments(c)
 
-        questionResponse.setStatus(QuestionStatus.COMMENTS_PENDING);
+        questionResponse.setStatus(QuestionStatus.COMMENTS_PENDING)
 
-        questionResponse.save(flush:true);
+        questionResponse.save(flush:true)
 
         respond questionResponse, [status: OK, view:"show"]
     }

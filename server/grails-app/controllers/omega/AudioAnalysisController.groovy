@@ -12,7 +12,7 @@ class AudioAnalysisController {
 
     def getPitchForRecording() {
 
-        def pitchDetection = AudioAnalysis.findByFilepath(params.key);
+        def pitchDetection = AudioAnalysis.findByFilepath(params.key)
 
 
         if(pitchDetection != null) {
@@ -23,16 +23,19 @@ class AudioAnalysisController {
         }
         else {
             // download the audio file locally - then process it.
+            AudioProperty im = AudioProperty.findByAwsKey(params.key);
+            if(!im) {
+                render "";
+            }
+            File file = AWSUploaderService.download(params.key,im.site);
 
-            File file = AWSUploaderService.download(params.key);
-
-            AudioAnalysis pitchData;
+            AudioAnalysis pitchData
             PraatPitchDetection praatPitch = new PraatPitchDetection(file.getAbsolutePath())
             pitchData = praatPitch.executePitchDetection()
-            pitchData.filepath = params.key;
+            pitchData.filepath = params.key
 
 
-            pitchData.save(flush:true);
+            pitchData.save(flush:true)
 
             JSON.use('deep') {
                 render pitchData as JSON

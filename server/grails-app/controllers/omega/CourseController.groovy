@@ -15,7 +15,7 @@ class CourseController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        def term = Term.get(params.term);
+        def term = Term.get(params.term)
 
         if(term == null) {
             render status: NOT_FOUND

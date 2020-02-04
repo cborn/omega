@@ -54,7 +54,6 @@ export class StudentIndexComponent implements OnInit {
         });
 
         (await this.courseService.list()).subscribe(value => {
-            console.log('Courses Loaded');
             this.loading.course = false;
         });
 

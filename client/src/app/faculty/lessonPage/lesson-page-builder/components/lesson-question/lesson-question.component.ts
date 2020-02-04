@@ -9,10 +9,12 @@ import {Subject} from 'rxjs/internal/Subject';
 
 export class QuestionChangedEvent {
 
-    constructor(text, field) {
+    constructor(text, field?) {
         this.text = text;
-        this.field = field;
+        if(field)
+            this.field = field;
     }
+
 
     text: string;
     field: any;
@@ -58,7 +60,9 @@ export class LessonQuestionComponent implements OnInit {
     onOpenPrompt(event) {
         // Run your service call here
 
+
         if (event.detail.questionId === this.question.id) {
+            console.log(this.question);
             const dialogRef = this.dialog.open(RubyPromptEditDialogComponent, {
                 height: '400px',
                 width: '600px',
@@ -133,12 +137,14 @@ export class LessonQuestionComponent implements OnInit {
 
     handleCursorPositioning() {
         let childIndex = -1;
-        for (let i = 0; i < getSelection().anchorNode.parentNode.childNodes.length; i++) {
+        if (getSelection().anchorNode != null) {
+            for (let i = 0; i < getSelection().anchorNode.parentNode.childNodes.length; i++) {
 
-            if (getSelection().anchorNode.parentNode.childNodes[i] === getSelection().anchorNode) {
-                childIndex = i;
+                if (getSelection().anchorNode.parentNode.childNodes[i] === getSelection().anchorNode) {
+                    childIndex = i;
+                }
             }
-        }
+
 
         this.cachedNameSelection = {
             offset: getSelection().anchorOffset,
@@ -166,6 +172,7 @@ export class LessonQuestionComponent implements OnInit {
 
 
         }, 40);
+        }
 
     }
 
@@ -190,6 +197,7 @@ export class LessonQuestionComponent implements OnInit {
         this.questionNameChanged.pipe(debounceTime(3000)).pipe(distinctUntilChanged())
             .subscribe((value) => {
                 // if the user is in the middle of typing an accent dont update the field.
+                console.log("Name changed to : "+ value.text);
                 this.updateQuestionName(value.text);
             });
 

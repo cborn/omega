@@ -9,7 +9,7 @@ import {Question, QuestionType} from '../../../Model/question';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {AuthenticatedHttpClient} from '../../../services/authenticated-http-service.service';
 
-const BOOLEAN_PROPERTIES = ['stack', 'random', 'description_enabled', 'multi', 'alphabetical', 'prompt_sync', 'show_labels', 'rtl_text'];
+const BOOLEAN_PROPERTIES = ['stack', 'random', 'description_enabled', 'multi', 'alphabetical', 'prompt_sync', 'show_labels', 'rtl_text', 'show_pitch_viz'];
 const NUMBER_PROPERTIES = ['min', 'max'];
 
 

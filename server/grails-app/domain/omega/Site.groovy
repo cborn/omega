@@ -3,19 +3,19 @@ package omega
 class Site {
 
 
-    String name;
+    String name
 
-    String awsSecretKey;
+    String awsSecretKey
 
-    String awsAccessKey;
+    String awsAccessKey
 
-    String awsBucketRegion;
+    String awsBucketRegion
 
-    String awsBucketName;
+    String awsBucketName
 
-    String moodleUrl;
+    String moodleUrl
 
-    String moodleKey;
+    String moodleKey
 
 
     static constraints = {

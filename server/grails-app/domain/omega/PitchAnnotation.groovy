@@ -7,24 +7,24 @@ package omega
 
 
 import grails.rest.*
-import java.util.List;
-import java.util.Locale;
+import java.util.List
+import java.util.Locale
 
 class PitchAnnotation {
     /**
      * The time of the annotation in seconds.
      */
-    double start;
+    double start
 
     /**
      * the pitch of the annotation measured in Hertz.
      */
-    double pitch;
+    double pitch
 
     /**
      * The intensity.
      */
-    double intensity;
+    double intensity
 
 
 }

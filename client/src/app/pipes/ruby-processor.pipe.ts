@@ -2,6 +2,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 import {count} from 'rxjs/operators';
 import {DomSanitizer} from '@angular/platform-browser';
 import {LessonPageBuilderService} from '../faculty/lessonPage/lesson-page-builder/lesson-page-builder.service';
+import {QuestionChangedEvent} from '../faculty/lessonPage/lesson-page-builder/components/lesson-question/lesson-question.component';
 
 @Pipe({
     name: 'rubyProcessor'
@@ -21,7 +22,6 @@ export class RubyProcessorPipe implements PipeTransform {
 
         let newValue = value;
 
-
         let changed = false;
         const regex2 = new RegExp(/@RB/g);
         let result2;
@@ -29,7 +29,7 @@ export class RubyProcessorPipe implements PipeTransform {
 
             const replacementText = '<ruby>Ruby Text<rt>Click to edit</rt></ruby>';
             newValue = newValue.replace(regex2, replacementText);
-            changed = true;
+            changed = true
 
         }
 
@@ -42,14 +42,14 @@ export class RubyProcessorPipe implements PipeTransform {
             replacementText += result[0].replace(/<(\/)?ruby>/gm, '').replace('<rt>', '(').replace('</rt>', ')');
             replacementText += '</div>';
 
-
             newValue = newValue.replace(result[0], replacementText);
             index++;
 
         }
 
         if (changed && questionNameChanged) {
-            questionNameChanged.next(newValue);
+            const questionChangedEvent = new QuestionChangedEvent(newValue);
+            questionNameChanged.next(questionChangedEvent);
         }
 
 

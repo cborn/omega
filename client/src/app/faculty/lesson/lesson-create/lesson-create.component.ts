@@ -21,7 +21,6 @@ export class LessonCreateComponent implements OnInit {
 
         this.route.queryParamMap.subscribe(value => {
             if (value.get('courseId') != null) {
-                console.log(value.get('courseId'));
                 this.lesson.course = value.get('courseId');
             } else {
                 this.router.navigate(['/lesson/index']);

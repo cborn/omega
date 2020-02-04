@@ -18,7 +18,7 @@ class LessonController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        Course course = Course.get(params.courseId);
+        Course course = Course.get(params.courseId)
         respond Lesson.findAllByCourse(course), model:[lessonCount: lessonService.count()]
     }
 

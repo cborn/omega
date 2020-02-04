@@ -31,17 +31,17 @@ class LtiController {
     def authenticate() {
 
         if (params.key != null) {
-            User userToLogin = User.findByOtpIsNotNullAndOtp(params.key);
+            User userToLogin = User.findByOtpIsNotNullAndOtp(params.key)
             if (userToLogin != null) {
-                userToLogin.setOtp(null);
-                userToLogin.save(flush: true);
+                userToLogin.setOtp(null)
+                userToLogin.save(flush: true)
 
-                UserDetails details = userDetailsService.loadUserByUsername(userToLogin.username);
+                UserDetails details = userDetailsService.loadUserByUsername(userToLogin.username)
 
                 AccessToken accessToken = tokenGenerator.generateAccessToken(details)
                 response.addHeader 'Cache-Control', 'no-store'
                 response.addHeader 'Pragma', 'no-cache'
-                render contentType: 'application/json', encoding: 'UTF-8', text: accessTokenJsonRenderer.generateJson(accessToken);
+                render contentType: 'application/json', encoding: 'UTF-8', text: accessTokenJsonRenderer.generateJson(accessToken)
 
 //                render status: HttpStatus.FORBIDDEN
 
@@ -57,7 +57,7 @@ class LtiController {
 
     def authorize() {
         def xmlMap = request.getParameterMap()
-        HashMap<String, String> fullMap = new HashMap<String, String>();
+        HashMap<String, String> fullMap = new HashMap<String, String>()
 
         for (String key : xmlMap.keySet()) {
             for (String value : xmlMap.get(key)) {
@@ -71,15 +71,20 @@ class LtiController {
         Site site = Site.findByMoodleUrlIlike("%"+fullMap.get("tool_consumer_instance_guid")+"%")
         if(!site) {
             render "Could not find the site associated to this moodle instance. Please make sure a site with the moodle url : " + fullMap.get("tool_consumer_instance_guid") + " exists."
-            return;
+            return
         }
 
-        log.debug("Getting the current term");
-        Term currentTerm = Term.findByCurrentAndSite(true,site);
+        log.debug("Getting the current term")
+        Term currentTerm = Term.findByCurrentAndSite(true,site)
+
+
+        String proxyUrl = System.getenv("LL_PROXY_URL");
+        if(!proxyUrl)
+            proxyUrl = request.getRequestURL().toString();
 
 
         log.debug("Generating OAuth Signature")
-        String sig = LTIService.generateOAuthSignature("POST", request.getRequestURL().toString(), site.getMoodleKey(), fullMap)
+        String sig = LTIService.generateOAuthSignature("POST", proxyUrl, site.getMoodleKey(), fullMap)
         log.debug("OAuth Signature generated - " + sig)
         if (sig == params.oauth_signature) {
 
@@ -88,21 +93,21 @@ class LtiController {
             // if the user isnt in the system then put them in.
             if (User.findByUsername(params.lis_person_contact_email_primary) == null) {
                 log.debug("failed to find an existing user for the email - " + params.lis_person_contact_email_primary)
-                log.debug("creating a new user from moodle.");
+                log.debug("creating a new user from moodle.")
                 LTIService.createMoodleUser(site,fullMap)
             }
 
             // Get the user to login and log them in..
             String username = params.lis_person_contact_email_primary
-            def toLogin = User.findByUsername(username);
-            toLogin.setOtp(UUID.randomUUID().toString());
-            toLogin.save(flush: true);
+            def toLogin = User.findByUsername(username)
+            toLogin.setOtp(UUID.randomUUID().toString())
+            toLogin.save(flush: true)
 
             // This is the variable to update if we want to change the route action.
-            String url = "/course/index";
+            String url = "/course/index"
 
             if (fullMap.get("lis_course_section_sourcedid")) {
-                Course course = Course.findByMoodle_master_id(fullMap.get("lis_course_section_sourcedid"));
+                Course course = Course.findByMoodle_master_id(fullMap.get("lis_course_section_sourcedid"))
                 if (course) {
                     log.debug("Found the course")
                     if (toLogin.isStudent()) {
@@ -112,17 +117,17 @@ class LtiController {
                             if (lesson) {
                                 
                                 // TODO respond url seems to be something important so work out what this is...
-                                log.debug("Contents of lis_outcome_service_url - " + fullMap.get("lis_outcome_service_url"));
+                                log.debug("Contents of lis_outcome_service_url - " + fullMap.get("lis_outcome_service_url"))
                                 log.debug("contents of lis_result_sourcedid - " + fullMap.get("lis_result_sourcedid"))
-                                Submission submission = Submission.findByUserAndPageAndTerm(toLogin,lesson,currentTerm);
+                                Submission submission = Submission.findByUserAndPageAndTerm(toLogin,lesson,currentTerm)
                                 if(!submission)
-                                    submission = new Submission(page: lesson,user: toLogin,term: currentTerm,drafted: new Date()).save(flush:true);
+                                    submission = new Submission(page: lesson,user: toLogin,term: currentTerm,drafted: new Date()).save(flush:true)
 
-                                url = "/student/submission/" + submission.id;
+                                url = "/student/submission/" + submission.id
 
 
                             } else {
-                                url = "/lesson/index/" + course.id;
+                                url = "/lesson/index/" + course.id
                             }
                         } else {
 //                                Student student = toLogin.student
@@ -134,7 +139,7 @@ class LtiController {
 //                                    course.save(flush: true, failOnError: true)
 //                                }
 //                                redirect(controller: "course", action: "show", params: [courseId: course.id])
-                            url = "/lesson/index/" + course.id;
+                            url = "/lesson/index/" + course.id
                         }
 
 
@@ -151,40 +156,46 @@ class LtiController {
                         }
 
                         if (fullMap.get("custom_direct_link_id")) {
-                            url = "lessonPage/builder/" + fullMap.get("custom_direct_link_id");
+                            LessonPage lesson = LessonPage.get(Long.parseLong(fullMap.get("custom_direct_link_id")))
+                            if (lesson) {
+                                url = "lessonPage/builder/" + fullMap.get("custom_direct_link_id")
+                            }
+                            else {
+                                url = "/lesson/index/" + course.id
+                            }
                         } else {
-                            url = "/lesson/index/" + course.id;
+                            url = "/lesson/index/" + course.id
                         }
 
                     }
                 } else {
                     if (toLogin.isFaculty()) {
-                        log.debug("Course Not Found - Creating a new course");
+                        log.debug("Course Not Found - Creating a new course")
 
                         course = new Course(name: fullMap.get("context_title"),
-                                syllabusId: fullMap.get("lis_course_section_sourcedid"))
+                                moodle_master_id: fullMap.get("lis_course_section_sourcedid"))
                         course.addToOwners(toLogin)
-                        course.term = currentTerm;
+                        course.term = currentTerm
                         course.save(flush: true, failOnError: true)
 
-                        log.debug(course.toString());
+                        log.debug(course.toString())
 
-                        url = "/lesson/index/" + course.id;
+                        url = "/lesson/index/" + course.id
                     } else {
-                        url = "/student/index";
+                        url = "/student/index"
                     }
                 }
             } else {
-                url = "/student/index";
+                url = "/student/index"
             }
 
+            String baseUrl = System.getenv("LL_APPLICATION_URL")
 
-
-            redirect(url: "http://localhost:4200/#/otp?key=" + toLogin.getOtp() + "&resumeRoute=" + url);
+            redirect(url: baseUrl+"/#/otp?key=" + toLogin.getOtp() + "&resumeRoute=" + url)
 
 
         } else {
-            render "Test";
+            render "Test"
         }
     }
 

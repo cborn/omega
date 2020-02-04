@@ -9,13 +9,13 @@ import org.grails.core.artefact.*
 
 model {
     Iterable<Term> terms
-    Term term;
-    Site site;
-    User user;
+    Term term
+    Site site
+    User user
     boolean isSuperAdmin
     boolean isAdminOrSuperAdmin
     boolean isStudent
-    String bucket;
+    String bucket
     String region
 }
 
