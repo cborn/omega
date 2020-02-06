@@ -93,7 +93,7 @@ class AWSUploaderService {
                 .withRegion(site.awsBucketRegion)
                 .withCredentials(credentials)
                 .build()
-        
+
         boolean result = amazonS3Service.deleteFile(bucket, "${prefix}/${path}")
         if (!result) {
             log.warn 'could not remove file {}', path

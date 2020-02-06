@@ -82,15 +82,15 @@ class LTIService {
         def roles = []
 
 
-        if(ConRole.indexOf("Learner") > -1) {
+        if(ConRole.indexOf("Learner") > -1 || ConRole.indexOf("student") > -1) {
             roles.push(PASSBACK_ROLES.STUDENT)
         }
 
-        if(ConRole.indexOf("Instructor") > -1) {
+        if(ConRole.indexOf("Instructor") > -1 || ConRole.indexOf("editingteacher") > -1) {
             roles.push(PASSBACK_ROLES.FACULTY)
         }
 
-        if (ConRole.indexOf("Grader") > -1 || ConRole.indexOf("grader") > -1) {
+        if (ConRole.indexOf("Grader") > -1 || ConRole.indexOf("grader") > -1 || ConRole.indexOf("studentta") > -1) {
             roles.push(PASSBACK_ROLES.GRADER)
         }
 
