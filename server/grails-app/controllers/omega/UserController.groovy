@@ -17,23 +17,28 @@ class UserController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
+            params.max = Math.min(max ?: 10, 100)
 
-        User user = springSecurityService.currentUser as User
-        if(!user) {
-            def siteId = request.getHeader('x-admin-site')
-            Site site = user.site ? user.site : Site.get(siteId)
+            User user = springSecurityService.currentUser as User
+        println("Check user");
+            if(user) {
+                println("User check succeeded");
+                def siteId = request.getHeader('x-admin-site')
+                Site site = user.site ? user.site : Site.get(siteId)
 
-            if (params.student) {
-                respond UserRole.findAllByRole(Role.getStudentRole())*.user.findAll {
-                    it.site.id == site.id
-                }, model: [userCount: userService.count()]
-            } else {
-                respond User.findAllBySite(site), model: [userCount: userService.count()]
+                if (params.student) {
+                    respond UserRole.findAllByRole(Role.getStudentRole())*.user.findAll {
+                        it.site.id == site.id
+                    }, model: [userCount: userService.count()]
+                } else {
+                    respond User.findAllBySite(site), model: [userCount: userService.count()]
+                }
+
             }
-            respond status: 401;
-        }
-
+            else {
+                println("User check failed")
+                respond status: 401;
+            }
     }
 
     def show(Long id) {

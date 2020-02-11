@@ -84,8 +84,10 @@ export class SubmissionGradeComponent implements OnInit {
 
     getMaxGrade() {
         let grade = 0;
-        for (const question of this.submissionService.pageSubject.value.questions) {
-            grade += question.max_grade;
+        if (this.submissionService.pageSubject.value.questions !== undefined) {
+            for (const question of this.submissionService.pageSubject.value.questions) {
+                grade += question.max_grade;
+            }
         }
 
         return grade;
