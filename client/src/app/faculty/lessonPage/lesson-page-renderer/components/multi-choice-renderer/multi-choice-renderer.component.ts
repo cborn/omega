@@ -23,8 +23,8 @@ export class MultiChoiceRendererComponent extends BaseRenderComponent implements
 
         if (this.question.custom_properties.random) {
             this.options = this.question.custom_properties.options.split('@@').sort((a, b) => {
-                const aChar = a.charCodeAt(a.length > 0 ? a.length - 1 : 0);
-                const bChar = b.charCodeAt(b.length > 0 ? b.length - 1 : 0);
+                const aChar = Math.random();
+                const bChar = Math.random();
                 return aChar - bChar;
             });
         } else {
