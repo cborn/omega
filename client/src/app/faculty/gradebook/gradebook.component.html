@@ -1,4 +1,4 @@
-<section class="container mat-elevation-z8">
+<section class="container-gradebook mat-elevation-z8">
 
     <table *ngIf="users$ | async as users" class="grading-table">
 
@@ -18,7 +18,7 @@
                     </th>
                 </ng-container>
             </ng-container>
-            <th rowspan="2" class="grades" style="right: 185px;">Grades</th>
+            <th rowspan="2" class="grades" style="right: 135px;">Grades</th>
             <th rowspan="2" class="grades">Actions</th>
 
         </tr>
@@ -61,7 +61,7 @@
 
                 </ng-container>
             </ng-container>
-            <td class="grades" style="right: 185px;">
+            <td class="grades" style="right: 135px;">
                 <div class="classic-input-style" style="background: white;padding: 1px 3px 1px 1px !important;width: fit-content;">
                     <input class="grade-input" type="number" placeholder="grade" [(ngModel)]="grades[user.id]"/>
                     <span class="grade-input-addon">/{{getMaxPossibleGrade(user)}}</span>

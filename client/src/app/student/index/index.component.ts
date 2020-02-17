@@ -18,6 +18,9 @@ export class StudentIndexComponent implements OnInit {
     submissions$ = this.submissionService.allSubmissions;
     courses$ = this.courseService.serviceSubject;
 
+
+    colCount = 2;
+
     limits = {
         course: 5,
         submission: 5
@@ -32,7 +35,20 @@ export class StudentIndexComponent implements OnInit {
     constructor(private navService: NavService, private router: Router, private submissionService: SubmissionService, private courseService: CourseService, private notificationService: NotificationService) {
     }
 
+
+    onResize(event) {
+        this.recalculatCols(event.target.innerWidth);
+    }
+
+    recalculatCols(width) {
+        this.colCount = (width <= 600) ? 1 : 2;
+    }
+
     ngOnInit(): void {
+
+            this.recalculatCols(window.innerWidth);
+
+
 
 
         this.notificationService.reloadRequiredObserver.subscribe(value => {

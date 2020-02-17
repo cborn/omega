@@ -76,7 +76,7 @@ export class FacultyIndexComponent implements OnInit {
     }
 
     isFaculty() {
-        return this.sessionManagerService.checkRoles(PERMISSION_ROLE.ROLE_FACULTY)
+        return this.sessionManagerService.checkRoles(PERMISSION_ROLE.ROLE_FACULTY);
     }
 
 
