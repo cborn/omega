@@ -11,12 +11,13 @@
 
         <div *ngIf="applicationData && applicationData.isAdmin && applicationData.terms.length > 0">
             <!-- Put a dropdown to pick the current term.... -->
-            <mat-form-field class="toolbar-dropdown">
+            <mat-form-field class="toolbar-dropdown" style="float: left">
                 <mat-label>Select an option</mat-label>
                 <mat-select [(value)]="currentTerm" (selectionChange)="didChangeTerm()">
                     <mat-option *ngFor="let term of applicationData.terms" [value]="term.id">{{term.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
+            <mat-icon style="float: left; margin-left: 5px; line-height: 2" routerLink="/term/index">search</mat-icon>
         </div>
 
         <div *ngIf="applicationData && !applicationData.isAdmin">
@@ -33,11 +34,14 @@
             <mat-icon >person</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
+            <span mat-menu-item style="font-size: 16px">{{applicationData?.user.username}}</span>
+            <mat-divider></mat-divider>
             <button mat-menu-item (click)="logout()">
                 <mat-icon>exit_to_app</mat-icon>
                 <span>Logout</span>
             </button>
-<!--            <button mat-menu-item disabled>-->
+
+            <!--            <button mat-menu-item disabled>-->
 <!--                <mat-icon>voicemail</mat-icon>-->
 <!--                <span>Check voice mail</span>-->
 <!--            </button>-->

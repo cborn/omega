@@ -23,6 +23,7 @@ class UrlMappings {
         get "/lessonPage/moveUp/$id" (controller:'lessonPage', action: 'moveUp')
         get "/lessonPage/moveDown/$id" (controller:'lessonPage', action: 'moveDown')
         get "/enrollment/grades/$id"(controller: "enrollment", action:"grades")
+        get "/term/promote/$id"(controller: "term", action:"promoteToCurrent")
 
         post "/lti/authorize" (controller:'lti', action: 'authorize')
         get "/lti/authenticate" (controller:'lti', action: 'authenticate')

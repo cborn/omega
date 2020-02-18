@@ -25,6 +25,7 @@ import {SuperAdminDashboardComponent} from './superAdmin/super-admin-dashboard/s
 import {SuperAdminSiteCreateComponent} from './superAdmin/super-admin-site-create/super-admin-site-create.component';
 import {SuperAdminSiteEditComponent} from './superAdmin/super-admin-site-edit/super-admin-site-edit.component';
 import {TermCreateComponent} from './term/term-create/term-create.component';
+import {TermEditComponent} from './term/term-edit/term-edit.component';
 
 const routes: Routes = [
     {path: '', redirectTo: 'index', pathMatch: 'full'},
@@ -32,7 +33,7 @@ const routes: Routes = [
     {path: 'lessonPage/builder/:lessonId', component: LessonPageBuilderComponent, canActivate: [FacultyGuard]},
 
     {path: 'term/index', component: TermIndexComponent, canActivate: [AdminGuard]},
-    // {path: 'term/edit/:termId', component: CourseEditComponent, canActivate: [FacultyGuard]},
+    {path: 'term/edit/:termId', component: TermEditComponent, canActivate: [AdminGuard]},
     {path: 'term/create', component: TermCreateComponent, canActivate: [AdminGuard]},
 
 

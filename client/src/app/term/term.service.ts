@@ -15,4 +15,15 @@ export class TermService extends BaseService<Term> {
   getClassName() {
     return 'Term';
   }
+
+
+  async promoteToCurrent(id) {
+    const promise = await this.http.get( AuthenticatedHttpClient.TERM_PROMOTE_URL + '/' + id);
+
+    promise.subscribe(value => {
+      console.log(value);
+      this.serviceSubject.next(value);
+    });
+  }
+
 }

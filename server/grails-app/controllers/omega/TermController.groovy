@@ -29,9 +29,19 @@ class TermController {
         respond Term.findAllBySite(site), model:[termCount: termService.count()]
     }
 
-    def show(Long id) {
-        respond termService.get(id)
-    }
+    def promoteToCurrent() {
+        Term.withTransaction {
+            Term term = Term.get(params.id);
+
+            if (!term.isCurrent()) {
+                Term termToUpdate = Term.findBySiteAndCurrent(term.site,true);
+                termToUpdate.setCurrent(false);
+                term.setCurrent(true);
+            }
+        }
+
+        respond Term.findAllBySite(Term.get(params.id).site), model:[termCount: termService.count()]
+     }
 
     def save(Term term) {
         if (term == null) {

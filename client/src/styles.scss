@@ -36,8 +36,6 @@ $omega-app-theme: mat-light-theme($omega-app-primary, $omega-app-accent, $omega-
 }
 
 
-
-
 a {
   color: #028fa9;
 }
@@ -48,7 +46,8 @@ a {
 }
 
 .standard-table-width {
-  min-width: 100vw;
+  width: 100vw;
+  max-width: fit-content;
 }
 
 .centered {
@@ -61,6 +60,7 @@ a {
 .mat-cell {
   overflow: visible;
   width: fit-content;
+  padding:10px;
 }
 
 .padding-10 {
