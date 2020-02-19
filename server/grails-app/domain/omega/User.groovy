@@ -5,6 +5,8 @@ import groovy.transform.ToString
 import grails.compiler.GrailsCompileStatic
 import org.springframework.security.core.userdetails.UserDetails
 
+import java.util.stream.Collectors
+
 @GrailsCompileStatic
 @EqualsAndHashCode(includes = 'username')
 @ToString(includes = 'username', includeNames = true, includePackage = false)
@@ -78,6 +80,25 @@ class User implements UserDetails, Serializable {
         return (this.getAuthorities().find {
             it.authority == "ROLE_FACULTY"
         })
+    }
+
+    List<LessonPage> getAcceptablePages() {
+
+        def courses = Course.list().findAll({
+            it.owners.contains(this)
+        })
+
+        if(courses != null && courses.size() > 0) {
+            def lessons = courses*.lessons as Set<Lesson>;
+
+            if(lessons != null && lessons.size() > 0)
+                return lessons*.pages as List<LessonPage>;
+            else
+                return [];
+        }
+
+        return [];
+
     }
 
 

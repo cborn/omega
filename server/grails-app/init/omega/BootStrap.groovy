@@ -150,6 +150,14 @@ class BootStrap {
             QuestionResponse q1Resp = new QuestionResponse(question: q, response: "true", submission: sub).save(failOnError: true, flush: true)
             QuestionResponse q2Resp = new QuestionResponse(question: q2, response: "Brifo@@Crio@@Joni bach", submission: sub).save(failOnError: true, flush: true)
             QuestionResponse q3Resp = new QuestionResponse(question: q3, response: "Mae", submission: sub).save(failOnError: true, flush: true)
+
+            facultyUser.refresh()
+            graderUser.refresh()
+            c.addToOwners(facultyUser);
+            c.addToOwners(graderUser);
+
+            c.save(flush:true);
+
         } else {
             // Not Development Channel
             // Enter production code here

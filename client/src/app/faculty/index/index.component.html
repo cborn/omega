@@ -78,7 +78,7 @@
                 </mat-card>
             </div>
 
-            <div class="item" *ngIf="isFaculty() && users$ | async as users">
+            <div class="item" *ngIf="isAdmin() && users$ | async as users">
                 <mat-card class="simple-card-content">
                     <mat-card-header>
                         <mat-card-title>Users</mat-card-title>

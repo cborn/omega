@@ -79,6 +79,9 @@ export class FacultyIndexComponent implements OnInit {
         return this.sessionManagerService.checkRoles(PERMISSION_ROLE.ROLE_FACULTY);
     }
 
+    isAdmin() {
+        return this.sessionManagerService.checkRoles(PERMISSION_ROLE.ROLE_ADMIN);
+    }
 
 
 

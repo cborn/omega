@@ -8,6 +8,7 @@ import static org.springframework.http.HttpStatus.*
 @Secured(['ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_FACULTY','ROLE_GRADER','ROLE_STUDENT'])
 class CourseController {
 
+    transient springSecurityService
     CourseService courseService
 
     static responseFormats = ['json', 'xml']
@@ -21,8 +22,16 @@ class CourseController {
             render status: NOT_FOUND
             return
         }
+        User user = springSecurityService.currentUser as User;
 
-        respond Course.findAllByTerm(term), model:[courseCount: courseService.count()]
+        if(user.isAdminOrSuperAdmin()) {
+            respond Course.findAllByTerm(term), model:[courseCount: courseService.count()]
+        }
+        else {
+            def courses = Course.findAllByTerm(term).findAll({ it.owners.contains(user)});
+            respond courses, model: [courseCount: courses.size()]
+        }
+
     }
 
     def show(Long id) {
