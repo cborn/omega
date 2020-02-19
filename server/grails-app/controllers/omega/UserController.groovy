@@ -20,9 +20,7 @@ class UserController {
             params.max = Math.min(max ?: 10, 100)
 
             User user = springSecurityService.currentUser as User
-        println("Check user");
             if(user) {
-                println("User check succeeded");
                 def siteId = request.getHeader('x-admin-site')
                 Site site = user.site ? user.site : Site.get(siteId)
 
