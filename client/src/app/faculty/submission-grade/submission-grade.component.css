@@ -71,6 +71,24 @@
     display: inline-flex;
 }
 
+
+.single-controls {
+    width: 100%;
+    position: relative;
+    margin: 10px;
+    left: 1%;
+    display: inline-flex;
+}
+
+.single-controls-right {
+    position: absolute;
+    right: 3%;
+}
+
+.single-controls > * > button {
+    margin: 0 10px;
+}
+
 .submit-button {
     background: #3193bb;
     color: white;

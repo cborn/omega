@@ -4,6 +4,13 @@ import {SubmissionService} from '../../student/submission/submission.service';
 import {SubmissionResponse} from '../../Model/submissionResponse';
 import {Submission} from '../../Model/submission';
 import {NotificationService} from '../../services/notification.service';
+import {UserService} from "../../services/user.service";
+
+
+enum ViewMode {
+    SINGLE,
+    FULL
+}
 
 @Component({
     selector: 'app-submission-grade',
@@ -12,17 +19,37 @@ import {NotificationService} from '../../services/notification.service';
 })
 export class SubmissionGradeComponent implements OnInit {
 
+    ViewMode = ViewMode;
+
     submission$ = this.submissionService.submission;
     page$ = this.submissionService.page;
+
+    visibleQuestion = 0;
+
+    viewMode = ViewMode.FULL;
 
 
     originalGrade = 0;
 
+    nextSubmission;
+    previousSubmission;
 
-    constructor(private route: ActivatedRoute, private router: Router, private submissionService: SubmissionService, private notificationService: NotificationService) {
+
+    constructor(private userService: UserService,private route: ActivatedRoute, private router: Router, private submissionService: SubmissionService, private notificationService: NotificationService) {
     }
 
+
+
     ngOnInit() {
+
+        this.userService.list('true', 'student');
+        this.route.queryParams.subscribe(params => {
+            if(params.questionIndex != undefined) {
+                this.viewMode = ViewMode.SINGLE;
+                this.visibleQuestion = parseInt(params.questionIndex);
+            }
+        });
+
         this.route.paramMap.subscribe(async value => {
             if (value.get('submissionId')) {
                 (await this.submissionService.loadData(value.get('submissionId')));
@@ -32,7 +59,79 @@ export class SubmissionGradeComponent implements OnInit {
             }
         });
 
+
+        this.submissionService.submission.subscribe(submission => {
+            if(submission.id != undefined) {
+                this.submissionService.loadAllSubmissions(submission.lesson.id);
+            }
+        })
+
+        this.submissionService.allSubmissions.subscribe(next => {
+            this.calculateNextAndPreviousSubmission();
+        })
+
+
     }
+
+    nextQuestion() {
+        this.visibleQuestion++;
+    }
+
+    previousQuestion() {
+         this.visibleQuestion--;
+    }
+    async nextStudent() {
+
+        if(this.nextSubmission != null) {
+            (await this.submissionService.loadData(this.nextSubmission.id));
+            this.submissionService.markSubmissionAsSeen(this.nextSubmission.id)
+
+        }
+    }
+
+    async previousStudent() {
+        if(this.previousSubmission != null) {
+            (await this.submissionService.loadData(this.previousSubmission.id));
+            this.submissionService.markSubmissionAsSeen(this.previousSubmission.id)
+
+        }
+    }
+
+
+    calculateNextAndPreviousSubmission() {
+
+        this.nextSubmission = null;
+        this.previousSubmission = null;
+        var users = this.userService.serviceSubject.value;
+        var thisUser = -1;
+        for(const i in users) {
+            if (users[i].id === this.submissionService.submissionSubject.value.user.id) {
+                thisUser = parseInt(i);
+            }
+        }
+
+
+
+
+          if(thisUser > -1 && thisUser < users.length) {
+              const submissions = this.submissionService.allSubmissionsSubject.value;
+              for(const j in submissions) {
+
+                  if(thisUser > 0) {
+                      if (submissions[j].user.id == users[thisUser-1].id) {
+                          this.previousSubmission = submissions[j];
+                      }
+                  }
+
+                  if(thisUser < users.length - 1) {
+                      if (submissions[j].user.id == users[thisUser+1].id) {
+                          this.nextSubmission = submissions[j];
+                      }
+                  }
+              }
+            }
+    }
+
 
     getQuestion(id) {
         for (const i in this.submissionService.pageSubject.value.questions) {
@@ -91,6 +190,10 @@ export class SubmissionGradeComponent implements OnInit {
         }
 
         return grade;
+    }
+
+    toggleViewMode() {
+        this.viewMode = ViewMode.FULL;
     }
 
 

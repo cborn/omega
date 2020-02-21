@@ -50,7 +50,7 @@
                         <td class="grading-data grading-data-{{response.status}}"
                             [matTooltip]="getPrettyStatusName(response.status)"
                             *ngIf="getResponseForPageAndQuestion(page,user, question) as response"
-                            [routerLink]="'/faculty/grade/'+getSubmissionIdForPageAndUser(page,user)">
+                            [routerLink]="'/faculty/grade/'+getSubmissionIdForPageAndUser(page,user)" [queryParams]="{questionIndex: question.position}" >
                             <mat-icon>{{getIconForStatus(response.status)}}</mat-icon>
                         </td>
                         <td class="grading-data grading-data-NO_SUB" matTooltip="No Response Yet"

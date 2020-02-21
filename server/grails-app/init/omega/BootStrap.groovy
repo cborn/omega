@@ -22,6 +22,7 @@ class BootStrap {
             def testUser = new User(username: 'superAdmin', password: 'test', firstname: "Administrator", surname: "User").save(failOnError: true)
             def adminUser = new User(username: 'admin', password: 'test', firstname: "Administrator", surname: "User",site: carletonSite).save(failOnError: true)
             def studentUser = new User(username: 'student', password: 'test', firstname: "Student", surname: "User",site: carletonSite).save(failOnError: true)
+            def studentUser2 = new User(username: 'student2', password: 'test', firstname: "Student", surname: "User",site: carletonSite).save(failOnError: true)
             def facultyUser = new User(username: 'faculty', password: 'test', firstname: "Faculty", surname: "User",site: carletonSite).save(failOnError: true)
             def graderUser = new User(username: 'grader', password: 'test', firstname: "Grader", surname: "User",site: carletonSite).save(failOnError: true)
             def FacultyGraderUser = new User(username: 'facultyGrader', password: 'test', firstname: "Faculty Grader", surname: "User",site: carletonSite).save(failOnError: true)
@@ -35,6 +36,7 @@ class BootStrap {
             UserRole.create graderUser, grader
             UserRole.create FacultyGraderUser, faculty
             UserRole.create FacultyGraderUser, grader
+            UserRole.create studentUser2, student
 
 
             UserRole.withSession {
@@ -42,9 +44,9 @@ class BootStrap {
                 it.clear()
             }
 
-            assert User.count() == 6
+            assert User.count() == 7
             assert Role.count() == 5
-            assert UserRole.count() == 7
+            assert UserRole.count() == 8
 
             // Create some demo content in here.
 

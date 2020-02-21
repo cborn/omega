@@ -1,12 +1,29 @@
 <div *ngIf="submission$ | async as submission">
+
+
     <mat-card class="response-card" *ngIf="submission && submission.user">
+        <div class="single-controls" *ngIf="viewMode == ViewMode.SINGLE">
+            <div class="single-controls-left">
+                <button mat-raised-button class="submit-button" (click)="toggleViewMode()">Show all questions</button>
+                <button mat-raised-button class="submit-button" (click)="previousQuestion()" *ngIf="visibleQuestion > 0">Previous Question</button>
+                <button mat-raised-button class="submit-button" (click)="nextQuestion()" *ngIf="submission.responses.length > (visibleQuestion + 1)">Next Question</button>
+            </div>
+
+            <div class="single-controls-right">
+                <button mat-raised-button class="submit-button" *ngIf="this.previousSubmission" (click)="previousStudent()">Previous Student</button>
+                <button mat-raised-button class="submit-button" *ngIf="this.nextSubmission" (click)="nextStudent()">Next Student</button>
+            </div>
+        </div>
+
+
+
         <div class="response-card-content">
             <div class="response-card-header">
-                <h3>{{submission.drafted | date}}</h3><span>{{submission.user.fullName}}</span>
+                <h3>{{submission.drafted | date}} <span *ngIf="viewMode == ViewMode.SINGLE">(Response {{visibleQuestion + 1}} of {{submission.responses.length}})</span></h3><span>{{submission.user.fullName}} ({{submission.user.id}})</span>
             </div>
             <div class="response-card-body">
-                <div class="response-card-question-item"
-                     *ngFor="let response of submission.responses | positionOrder: 'asc'">
+                <ng-container *ngFor="let response of submission.responses | positionOrder: 'asc'">
+                <div class="response-card-question-item" *ngIf="(viewMode == ViewMode.SINGLE && visibleQuestion == response.question.position) || viewMode == ViewMode.FULL">
                     <div class="response-card-question-item-left">
                         <div class="icon-q-block icon-q-block-{{getQuestionType(response.question.id)}} material-icons"></div>
                     </div>
@@ -20,14 +37,14 @@
                         </div>
                     </div>
                 </div>
+                </ng-container>
             </div>
         </div>
-        <div class="submit-button-container">
+        <div class="submit-button-container" *ngIf="viewMode == ViewMode.FULL || (submission.responses.length == visibleQuestion + 1)">
             <button mat-raised-button class="submit-button" (click)="submit(submission)">Submit</button>
             <label for="grade-input" style="margin-left: 15px;margin-top:10px">Grade: </label>
             <input id="grade-input" style="margin-left: 15px; width: 10%;" matInput class="classic-input-style" [(ngModel)]="submission.grade" placeholder="Grade">
             <label for="grade-input" style="margin-left: 15px;margin-top:10px">out of {{getMaxGrade()}} </label>
         </div>
     </mat-card>
-
 </div>

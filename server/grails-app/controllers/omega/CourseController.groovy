@@ -27,8 +27,12 @@ class CourseController {
         if(user.isAdminOrSuperAdmin()) {
             respond Course.findAllByTerm(term), model:[courseCount: courseService.count()]
         }
-        else {
+        else if(!user.isStudent()){
             def courses = Course.findAllByTerm(term).findAll({ it.owners.contains(user)});
+            respond courses, model: [courseCount: courses.size()]
+        }
+        else {
+            def courses = Course.findAllByTerm(term);
             respond courses, model: [courseCount: courses.size()]
         }
 
