@@ -1,10 +1,9 @@
-.container {
+.container-gradebook {
     width: fit-content;
-    max-width: calc(100% - 20px);
+    max-width: 100vw;
     left: 50%;
     transform: translate(-50%, 0);
     position: relative;
-    display: block;
     overflow-x: auto;
     margin-top: 3%;
     border-radius: 5px;
@@ -29,7 +28,7 @@
 .left-table-column {
     left: 0;
     position: sticky;
-    background: #f7f1f1;
+    /*background: #f7f1f1;*/
     z-index: 5;
 }
 
@@ -46,12 +45,12 @@ th.grades, td.grades {
 
 th.grades:last-child{
     text-align: right;
-    padding: 30px 10px 30px 60px;
+    padding: 20px 10px 20px 10px;
 }
 
 td.grades:last-child {
     text-align: right;
-    padding: 0 10px 0 60px;
+    padding: 0 10px 0 10px;
 }
 
 td:last-child {
@@ -106,5 +105,7 @@ th {
 .grade-input {
     padding: 10px 0 10px 10px;
     border: none;
+    min-width: 36px;
+    width: 7vw;
 }
 

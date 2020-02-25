@@ -13,13 +13,17 @@ import {TermService} from '../term.service';
 })
 export class TermIndexComponent extends IndexComponent<Term> implements OnInit {
 
-    displayedColumns = ['id', 'name', 'active', 'courses', 'actions'];
+    displayedColumns = ['id', 'name', 'active', 'actions'];
 
     constructor(private termService: TermService, private notificationService: NotificationService, private router: Router, private route: ActivatedRoute) {
         super(termService, notificationService, router, route);
     }
 
-    ngOnInit() {
-    }
 
+
+    makeCurrent(term) {
+        // Do something to make it current
+        this.termService.promoteToCurrent(term.id);
+
+    }
 }

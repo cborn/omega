@@ -32,6 +32,7 @@ export abstract class IndexComponent<T extends BaseObject> implements OnInit {
             if (value.get(this.paramName) != null) {
                 this.paramValue = value.get(this.paramName);
             }
+            console.log("Load Data for component" + window.location.href);
             this.loadData();
         });
 
@@ -49,7 +50,6 @@ export abstract class IndexComponent<T extends BaseObject> implements OnInit {
             this.service.list();
         }
     }
-
 
     delete(id) {
         this.n.publishConfirmation('Are you sure you want to delete this ' + this.service.getClassName() + '?', () => {

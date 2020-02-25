@@ -1,10 +1,9 @@
 <div id="content" role="main">
-    <section class="container colset-2-its">
+    <section class="colset-2-its">
         <h1 style="text-align:center;">Welcome to LL Faculty</h1>
 
-
-        <mat-grid-list [cols]="isFaculty() ? 3 : 2">
-            <mat-grid-tile *ngIf="submissions$ | async as submissions">
+        <div class="list-container">
+            <div class="item" *ngIf="submissions$ | async as submissions">
                 <mat-card class="simple-card-content">
                     <mat-card-header>
                         <mat-card-title>Recent Submissions</mat-card-title>
@@ -17,7 +16,7 @@
                             <mat-list-item role="listitem" class="clickable-list-item"
                                            *ngFor="let submission of submissions | slice:0:limits.submission" [routerLink]="'/faculty/grade/' + submission.id">
                                 <mat-icon mat-list-icon>create</mat-icon>
-                                <h4 mat-line [style.width.%]="submission.status == 'DRAFT' ? 86 : 80"><span class="special-span-tag-item">{{submission.user.username}}</span> for page <span class="special-span-tag-item">{{submission.page.name}}</span> in lesson <span class="special-span-tag-item">{{submission.lesson.name}}</span> in course <span class="special-span-tag-item">{{submission.lesson.course.name}}</span></h4>
+                                <h4 mat-line [style.width.%]="submission.status == 'DRAFT' ? 78 : 80"  style=" font-size: min(3vw,16px);white-space: pre-wrap;overflow: auto;"><span class="special-span-tag-item">{{submission.user.username}}</span> for page <span class="special-span-tag-item">{{submission.page.name}}</span> in lesson <span class="special-span-tag-item">{{submission.lesson.name}}</span> in course <span class="special-span-tag-item">{{submission.lesson.course.name}}</span></h4>
 
                                 <p mat-line> {{(submission.status === "DRAFT" ? submission.drafted : submission.submitted) | date}} </p>
 
@@ -41,10 +40,8 @@
 
 
                 </mat-card>
-            </mat-grid-tile>
-
-
-            <mat-grid-tile *ngIf="courses$ | async as courses">
+            </div>
+            <div class="item"  *ngIf="courses$ | async as courses">
                 <mat-card class="simple-card-content">
                     <mat-card-header>
                         <mat-card-title>Courses</mat-card-title>
@@ -59,7 +56,7 @@
                                 <h4 mat-line>{{course.name}}</h4>
 
                                 <span
-                                    class="status-icon status-icon-plain">{{course.lessons.length + " "}}Lessons</span>
+                                        class="status-icon status-icon-plain">{{course.lessons.length + " "}}Lessons</span>
 
                                 <p mat-line> ({{course.id}}) </p>
 
@@ -79,10 +76,9 @@
 
 
                 </mat-card>
-            </mat-grid-tile>
+            </div>
 
-
-            <mat-grid-tile *ngIf="isFaculty() && users$ | async as users">
+            <div class="item" *ngIf="isAdmin() && users$ | async as users">
                 <mat-card class="simple-card-content">
                     <mat-card-header>
                         <mat-card-title>Users</mat-card-title>
@@ -112,7 +108,26 @@
 
 
                 </mat-card>
-            </mat-grid-tile>
-        </mat-grid-list>
+            </div>
+
+        </div>
+
+
+
+<!--        <mat-grid-list [cols]="isFaculty() ? 3 : 2">-->
+<!--            <mat-grid-tile >-->
+
+<!--            </mat-grid-tile>-->
+
+
+<!--            <mat-grid-tile>-->
+
+<!--            </mat-grid-tile>-->
+
+
+<!--            <mat-grid-tile >-->
+
+<!--            </mat-grid-tile>-->
+<!--        </mat-grid-list>-->
     </section>
 </div>

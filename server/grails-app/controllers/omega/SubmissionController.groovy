@@ -27,15 +27,28 @@ class SubmissionController {
         }
 
         LessonPage page = LessonPage.get(params.lessonPageId)
-
+        User user = (springSecurityService.getCurrentUser() as User);
         if (page == null) {
-            if (!(springSecurityService.getCurrentUser() as User).isStudent()) {
-                respond Submission.findAllByTerm(term), model: [submissionCount: submissionService.count()]
+            if (!user.isStudent()) {
+
+                // if your an admin or super admin then go ahead and get everything
+                if(user.isAdminOrSuperAdmin())
+                    respond Submission.findAllByTerm(term), model: [submissionCount: submissionService.count()]
+                else {
+                    def pages = user.getAcceptablePages()
+                    if(pages.size() > 0) {
+                        def submissions = Submission.findAllByTermAndPageInList(term, pages);
+                        respond submissions, model: [submissionCount: submissions.size()]
+                    }
+                    else {
+                        respond Collections.emptyList(), model:[submissionCount: 0]
+                    }
+                }
             } else {
                 respond Submission.findAllByTermAndUser(term, springSecurityService.getCurrentUser()), model: [submissionCount: submissionService.count()]
             }
         } else {
-            if (!(springSecurityService.getCurrentUser() as User).isStudent()) {
+            if (!user.isStudent()) {
                 respond Submission.findAllByTermAndPage(term, page), model: [submissionCount: submissionService.count()]
             } else {
                 respond Submission.findAllByTermAndUserAndPage(term, springSecurityService.getCurrentUser(), page), model: [submissionCount: submissionService.count()]

@@ -18,20 +18,20 @@
                 <mat-cell *matCellDef="let term">{{term.current}}</mat-cell>
             </ng-container>
 
-            <ng-container matColumnDef="courses">
-                <mat-header-cell *matHeaderCellDef>Courses</mat-header-cell>
-                <mat-cell *matCellDef="let term">
-                    <button mat-stroked-button color="secondary" *ngIf="term.courses != null && term.courses.length > 0" [routerLink]="'/lesson/index/' + term.id">View {{term.courses.length}} Lessons</button>
-                    <button mat-stroked-button color="secondary" *ngIf="term.courses == null || term.courses.length == 0" [routerLink]="'/lesson/create/' + term.id">Add lesson</button>
-                </mat-cell>
-            </ng-container>
+<!--            <ng-container matColumnDef="courses">-->
+<!--                <mat-header-cell *matHeaderCellDef>Courses</mat-header-cell>-->
+<!--                <mat-cell *matCellDef="let term">-->
+<!--                    <button mat-stroked-button color="secondary" *ngIf="term.courses != null && term.courses.length > 0" [routerLink]="'/course/index/' + term.id">View {{term.courses.length}} Courses</button>-->
+<!--                    <button mat-stroked-button color="secondary" *ngIf="term.courses == null || term.courses.length == 0" [routerLink]="'/course/create/'" [queryParams]="{'termId':term.id}">Add Course</button>-->
+<!--                </mat-cell>-->
+<!--            </ng-container>-->
 
             <ng-container matColumnDef="actions">
                 <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
                 <mat-cell *matCellDef="let term">
 
                     <button mat-stroked-button color="accent" [routerLink]="'/term/edit/'+term.id">Edit</button>&nbsp;
-                    <button mat-stroked-button color="secondary" [routerLink]="['/lesson/create']" [queryParams]="{'termId':term.id}">Add lesson</button>&nbsp;
+                    <button mat-stroked-button color="secondary"  (click)="makeCurrent(term)" [disabled]="term.current">{{term.current ? 'Current Course' : 'Make Current'}}</button>&nbsp;
                     <button mat-stroked-button color="warn" (click)="delete(term.id)">Delete</button>
                 </mat-cell>
             </ng-container>

@@ -95,6 +95,7 @@ import {TermCreateComponent} from './term/term-create/term-create.component';
 import { CommentOrderPipe } from './pipes/comment-order.pipe';
 import { RandomOrderPipe } from './pipes/random-order.pipe';
 import { PitchRenderComponent } from './faculty/lessonPage/lesson-page-renderer/components/voice-renderer/pitch-render/pitch-render.component';
+import {TermEditComponent} from './term/term-edit/term-edit.component';
 
 // @ts-ignore
 @NgModule({
@@ -160,7 +161,8 @@ import { PitchRenderComponent } from './faculty/lessonPage/lesson-page-renderer/
         TermCreateComponent,
         CommentOrderPipe,
         RandomOrderPipe,
-        PitchRenderComponent
+        PitchRenderComponent,
+        TermEditComponent
     ],
     entryComponents: [
         ClozeDialogComponent,

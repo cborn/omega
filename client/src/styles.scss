@@ -21,6 +21,21 @@ $omega-app-theme: mat-light-theme($omega-app-primary, $omega-app-accent, $omega-
 @include angular-material-theme($omega-app-theme);
 
 
+// FlexBox Settings
+
+.list-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.item {
+  overflow: auto;
+  flex-grow: 1;
+  flex-basis: 300px;
+  margin: 10px;
+}
+
+
 a {
   color: #028fa9;
 }
@@ -31,18 +46,26 @@ a {
 }
 
 .standard-table-width {
-  min-width: 1032px;
+  width: 100vw;
+  max-width: fit-content;
 }
 
 .centered {
-  width: fit-content;
-  left: 50%;
+
+  left: calc(50% + 10px);
   position: relative;
   transform: translate(-50%, 0);
 }
 
+
 .width-50 {
   width: 50%;
+}
+
+.mat-cell {
+  overflow: visible;
+  width: fit-content;
+  padding:10px;
 }
 
 .padding-10 {
@@ -300,6 +323,7 @@ body {
   border-radius: 5px;
   background: #3193bb1a;
   color: #3193bb;
+  white-space: nowrap;
 }
 
 .cloze.bordered-option {

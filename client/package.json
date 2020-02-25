@@ -1,6 +1,6 @@
 {
   "name": "omega",
-  "version": "0.16.0",
+  "version": "0.23.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -17,6 +17,7 @@
     "@angular/common": "^8.1.2",
     "@angular/compiler": "^8.1.2",
     "@angular/core": "^8.2.0",
+    "@angular/flex-layout": "^9.0.0-beta.29",
     "@angular/forms": "^8.1.2",
     "@angular/material": "^8.1.2",
     "@angular/material-moment-adapter": "8.1.2",

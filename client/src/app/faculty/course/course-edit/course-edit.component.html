@@ -1,6 +1,9 @@
 <br/>
 
-<mat-card class="centered" *ngIf="course">
+<mat-card class="centered standard-table-width" *ngIf="course">
+    <mat-card-header>
+        <mat-card-title>Edit Course</mat-card-title>
+    </mat-card-header>
     <form>
         <mat-form-field >
             <input matInput placeholder="Name" name="name" [(ngModel)]="course.name">
