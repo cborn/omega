@@ -1,5 +1,5 @@
 
-<mat-card class="centered" *ngIf="site">
+<mat-card class="centered width-50" *ngIf="site">
     <form>
         <mat-form-field >
             <input matInput placeholder="Name" name="name" [(ngModel)]="site.name">
@@ -26,7 +26,7 @@
         </mat-form-field>
 
         <mat-form-field >
-            <input matInput placeholder="Moodle URL" name="name" [(ngModel)]="site.moodleUrl">
+            <input matInput placeholder="Moodle URL" name="url" [(ngModel)]="site.moodleUrl">
         </mat-form-field>
 
 
