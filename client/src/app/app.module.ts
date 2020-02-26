@@ -212,7 +212,6 @@ import {NgxTrumbowygModule} from 'ngx-trumbowyg';
             removeformatPasted: true,
             autogrow: true,
             btns: [
-                ['formatting'],
                 ['strong', 'em', 'del'],
                 ['superscript', 'subscript'],
                 ['ruby']
