@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, NgControl, ReactiveFormsModule} from '@angular/forms';
 import {LocationStrategy, HashLocationStrategy, ViewportScroller} from '@angular/common';
 import {IndexComponent} from './index/index.component';
 import {AppComponent} from './app.component';
@@ -96,6 +96,7 @@ import { CommentOrderPipe } from './pipes/comment-order.pipe';
 import { RandomOrderPipe } from './pipes/random-order.pipe';
 import { PitchRenderComponent } from './faculty/lessonPage/lesson-page-renderer/components/voice-renderer/pitch-render/pitch-render.component';
 import {TermEditComponent} from './term/term-edit/term-edit.component';
+import {NgxTrumbowygModule} from 'ngx-trumbowyg';
 
 // @ts-ignore
 @NgModule({
@@ -204,7 +205,19 @@ import {TermEditComponent} from './term/term-edit/term-edit.component';
         MatNativeDateModule,
         MatTabsModule,
         MatTooltipModule,
-        MatMenuModule
+        MatMenuModule,
+        NgxTrumbowygModule.withConfig({
+            lang: 'hu',
+            svgPath: '/images/icons.svg',
+            removeformatPasted: true,
+            autogrow: true,
+            btns: [
+                ['formatting'],
+                ['strong', 'em', 'del'],
+                ['superscript', 'subscript'],
+                ['ruby']
+            ]
+        })
     ],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},
         {

@@ -1,6 +1,6 @@
 {
   "name": "omega",
-  "version": "0.23.0",
+  "version": "0.24.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -31,9 +31,11 @@
     "http-server": "^0.11.1",
     "jquery": "^3.4.1",
     "moment": "2.24.0",
+    "ngx-trumbowyg": "^6.0.7",
     "npm": "^6.11.3",
     "recordrtc": "^5.5.8",
     "rxjs": "~6.5.2",
+    "trumbowyg": "^2.21.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
   },

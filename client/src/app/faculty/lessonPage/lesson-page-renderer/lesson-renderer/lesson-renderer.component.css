@@ -91,6 +91,7 @@
 
 .keep-format {
     white-space: pre-wrap;
+    font-weight: 100;
 }
 
 .image-prompt {

@@ -11,6 +11,8 @@ Include angular material here first.
 @include mat-core();
 
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import "~trumbowyg/dist/ui/trumbowyg.min.css";
+
 
 $omega-app-primary: mat-palette($mat-cyan, 900);
 $omega-app-accent: mat-palette($mat-cyan, 800);
@@ -20,6 +22,11 @@ $omega-app-theme: mat-light-theme($omega-app-primary, $omega-app-accent, $omega-
 
 @include angular-material-theme($omega-app-theme);
 
+
+.trumbowyg-box,
+.trumbowyg-editor {
+  min-height: 50px;
+}
 
 // FlexBox Settings
 

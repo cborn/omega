@@ -12,9 +12,16 @@
                               <!--[(ngModel)]="question.name" placeholder="Type question here"-->
                               <!--name="question-text" (change)="isChanged()"></textarea>-->
 
-                    <div contenteditable="true" class="content-editable-block" #field (input)="nameChanged(field,$event)" (mousedown)="markStartPosition($event)" (mouseup)="checkTextSelection($event)" [innerHTML]="question.name | rubyProcessor: question.id : questionNameChanged" dir="auto">
+<!--                    <div contenteditable="true" class="content-editable-block" #field (input)="nameChanged(field,$event)" (mousedown)="markStartPosition($event)" (mouseup)="checkTextSelection($event)" [innerHTML]="question.name | rubyProcessor: question.id : questionNameChanged" dir="auto">-->
 
-                    </div>
+<!--                    </div>-->
+
+                    <ngx-trumbowyg-editor name="editor" [(ngModel)]="question.name" class="content-editable-block"   #field (input)="nameChanged(field,$event)"></ngx-trumbowyg-editor>
+
+
+<!--                    <div contenteditable="true" class="content-editable-block"   ngxTrumbowygEditor [innerHTML]="question.name | rubyProcessor: question.id : questionNameChanged" dir="auto">-->
+
+<!--                    </div>-->
 
 
 
@@ -52,7 +59,7 @@
 <div class="formatter" *ngIf="formatter_displayed" [style.left.px]="formatter_position_x" [style.top.px]="formatter_position_y">
    <table>
        <tr>
-           <td class="formatter-button">
+           <td class="formatter-button" (click)="emboldenText()">
                <span style="font-weight: bolder">B</span>
            </td>
            <td  class="formatter-button">

@@ -49,7 +49,10 @@ export class LessonQuestionComponent implements OnInit {
     formatter_position_x: number;
     formatter_position_y: number;
 
-    selection: Selection;
+    selection_start: number;
+    selection_end: number;
+    inside_bold_tag:boolean;
+
 
 
     constructor(private _ngZone: NgZone, public dialog: MatDialog) {
@@ -81,15 +84,91 @@ export class LessonQuestionComponent implements OnInit {
 
 
     emboldenText() {
+        console.log("Bolden called");
+        const existing_text = this.question.name.substring(this.selection_start, this.selection_end);
 
+
+        const before_text = this.question.name.substring(0,this.selection_start);
+        if (before_text.indexOf("<b>") > -1 && before_text.indexOf("</b>") === -1) {
+            // its already bold so dont carry on
+            return;
+        }
+        const end_text = this.question.name.substring(this.selection_end,this.question.name.length);
+
+        this.question.name = before_text + "<b>" + existing_text + "</b>" + end_text;
+
+        console.log(this.question.name);
     }
 
 
+    getActualParentNode(node) {
+
+       if(node.parentElement.hasAttribute('contenteditable')) {
+           return (node.parentElement);
+       }
+       else
+           return this.getActualParentNode(node.parentElement);
+    }
+
+
+    getOffsetForChildNode(node, anchor,innerChild): number {
+
+        var done = false;
+        var offset = 0;
+
+        for(const i in node.childNodes) {
+            if (node.childNodes.hasOwnProperty(i)) {
+
+                const childNode = node.childNodes[i];
+                console.log(childNode);
+                if (childNode.hasChildNodes()) {
+                    offset += this.getOffsetForChildNode(childNode, anchor, true);
+                    offset += 7;
+
+                } else {
+
+                    if (childNode === anchor) {
+                        // this is the one.
+                        done = true;
+                        if(innerChild) {
+                            // this is inside a bold tag so dont show bolden stuff.
+                            this.inside_bold_tag = true;
+                        }
+                    } else if (!done) {
+                        if (childNode.outerHTML !== undefined) {
+                            offset += childNode.outerHTML.length;
+                        } else {
+                            offset += childNode.textContent.length;
+                        }
+
+                    }
+
+                }
+            }
+        }
+
+        return offset;
+
+    }
+
     checkTextSelection(event) {
 
-        this.selection = window.getSelection();
+        var offset = 0;
+        this.inside_bold_tag = false;
 
-        if (this.selection['baseOffset'] !== this.selection['extentOffset']) {
+        const parent = this.getActualParentNode(getSelection().anchorNode);
+
+        offset = this.getOffsetForChildNode(parent, getSelection().anchorNode,false);
+
+        console.log(offset);
+
+        this.selection_start =  offset + getSelection().getRangeAt(0).startOffset;
+        this.selection_end = offset + getSelection().getRangeAt(0).endOffset;
+
+
+        console.log(this.selection_start,this.selection_end);
+
+        if (this.selection_start !== this.selection_end && !this.inside_bold_tag) {
             this.text_selection.emit({shown: true, id: this.question.id});
 
             if (this.clickStartPosition < event.clientX) {
@@ -103,6 +182,9 @@ export class LessonQuestionComponent implements OnInit {
             }
 
             this.formatter_position_y = event.clientY - 80;
+
+
+
 
         } else {
             this.text_selection.emit({shown: false, id: this.question.id});
