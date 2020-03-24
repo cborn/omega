@@ -19,6 +19,9 @@ export class AnswerGradingRendererComponent implements OnInit {
     @Output('gradeChanged')
     gradeChangedEmitter = new EventEmitter<number>();
 
+    @Output('QuestionChanged')
+    questionChanged = new EventEmitter<AnswerChangedEvent>();
+
     constructor(private dialog: MatDialog) {
     }
 
@@ -65,6 +68,7 @@ export class AnswerGradingRendererComponent implements OnInit {
 
     voiceQuestionChanged(event: AnswerChangedEvent) {
         this.response = event.value;
+        this.questionChanged.emit(event);
     }
 
 
@@ -79,7 +83,7 @@ export class AnswerGradingRendererComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            if (result != undefined) {
+            if (result !== undefined) {
                 this.response = result;
             }
         });

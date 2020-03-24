@@ -158,6 +158,11 @@ export class SubmissionGradeComponent implements OnInit {
         }
     }
 
+
+    questionUpdated(id, event) {
+        
+    }
+
     submit(submission: Submission) {
 
         this.submissionService.grade(submission, () => {
