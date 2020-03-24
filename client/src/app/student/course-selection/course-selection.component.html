@@ -1,6 +1,15 @@
 <div *ngIf="course" style="padding: 10px;">
     <h1>Course: {{course.name}}</h1>
-    <div *ngFor="let lesson of course.lessons">
+
+    <div>
+        <h3>Lesson Filter</h3>
+    <mat-select style="width: 10%" [(ngModel)]="filter">
+        <mat-option value="all">All</mat-option>
+        <mat-option *ngFor="let lesson of course.lessons" [value]="lesson.id">{{lesson.name}}</mat-option>
+
+    </mat-select>
+    </div>
+    <div *ngFor="let lesson of course.lessons | lessonFilter:filter">
 
         <app-page-selection [lesson]="lesson"></app-page-selection>
 
