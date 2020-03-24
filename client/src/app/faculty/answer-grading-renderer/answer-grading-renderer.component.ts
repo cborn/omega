@@ -85,6 +85,11 @@ export class AnswerGradingRendererComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result => {
             if (result !== undefined) {
                 this.response = result;
+                var answerChanged = new AnswerChangedEvent();
+                answerChanged.question = result.question;
+                answerChanged.value = result;
+                answerChanged.shouldReloadFromWeb = true;
+                this.questionChanged.emit(answerChanged)
             }
         });
 

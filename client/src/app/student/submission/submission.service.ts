@@ -111,6 +111,37 @@ export class SubmissionService {
 
     }
 
+    async softUpdate(event: AnswerChangedEvent) {
+        const submission = this.submissionSubject.value;
+        if(event.shouldReloadFromWeb) {
+            this.loadData(submission.id);
+        }
+        else {
+            let responseIndex: string;
+            for (const i in submission.responses) {
+                if (submission.responses.hasOwnProperty(i)) {
+                    if (submission.responses[i].question.id === event.question.id) {
+                        responseIndex = i;
+                    }
+                }
+            }
+
+            if (responseIndex) {
+                submission.responses[responseIndex].response = event.value;
+                console.log(submission.responses[responseIndex].response);
+                this.submissionSubject.next(submission);
+            }
+
+
+
+        }
+
+
+
+
+
+    }
+
 
     async processChangesForQuestion(event: AnswerChangedEvent) {
         let responseIndex: string;
@@ -140,19 +171,22 @@ export class SubmissionService {
         }
 
 
-        submission.responses.forEach(value => {
-            for (const customPropertiesKey in value.question.custom_properties) {
-                if (value.question.custom_properties.hasOwnProperty(customPropertiesKey)) {
-                    value.question.custom_properties[customPropertiesKey] = value.question.custom_properties[customPropertiesKey] + '';
+
+        if(event.shouldReloadFromWeb) {
+
+            submission.responses.forEach(value => {
+                for (const customPropertiesKey in value.question.custom_properties) {
+                    if (value.question.custom_properties.hasOwnProperty(customPropertiesKey)) {
+                        value.question.custom_properties[customPropertiesKey] = value.question.custom_properties[customPropertiesKey] + '';
+                    }
+
                 }
 
-            }
-
-        });
+            });
 
 
-        this.save(submission);
-
+            this.save(submission);
+        }
 
     }
 

@@ -21,7 +21,7 @@ export class SubmissionGradeComponent implements OnInit {
 
     ViewMode = ViewMode;
 
-    submission$ = this.submissionService.submission;
+    submission: Submission;
     page$ = this.submissionService.page;
 
     visibleQuestion = 0;
@@ -61,10 +61,12 @@ export class SubmissionGradeComponent implements OnInit {
 
 
         this.submissionService.submission.subscribe(submission => {
+            console.log("submission changed");
             if(submission.id != undefined) {
                 this.submissionService.loadAllSubmissions(submission.lesson.id);
             }
-        })
+            this.submission = submission;
+        });
 
         this.submissionService.allSubmissions.subscribe(next => {
             this.calculateNextAndPreviousSubmission();
@@ -157,7 +159,9 @@ export class SubmissionGradeComponent implements OnInit {
     }
 
 
-    questionUpdated(id, event) {
+    questionUpdated(event) {
+        this.submissionService.softUpdate(event)
+
         
     }
 

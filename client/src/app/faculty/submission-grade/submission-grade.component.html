@@ -1,4 +1,4 @@
-<div *ngIf="submission$ | async as submission">
+<div *ngIf="submission">
 
 
     <mat-card class="response-card" *ngIf="submission && submission.user">
@@ -33,7 +33,7 @@
                         <div class="spacer-medium"></div>
                         <div class="response-card-question-item-answer">
                             <app-answer-grading-renderer [question]="getQuestion(response.question.id)"
-                                                         [response]="response" (gradeChanged)="updateGrade(submission)" (QuestionChanged)="questionUpdated(response.question.id,$event)"></app-answer-grading-renderer>
+                                                         [response]="response" (gradeChanged)="updateGrade(submission)" (QuestionChanged)="questionUpdated($event)"></app-answer-grading-renderer>
                         </div>
                     </div>
                 </div>
