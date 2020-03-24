@@ -85,7 +85,7 @@ import {FacultyIndexComponent} from './faculty/index/index.component';
 import { AnswerGradingRendererComponent } from './faculty/answer-grading-renderer/answer-grading-renderer.component';
 import { GradebookComponent } from './faculty/gradebook/gradebook.component';
 import {PromptRecordingDialogComponent} from './dialogs/prompt-recording-dialog';
-import {CourseSelectionComponent} from './student/course-selection/course-selection.component';
+import {CourseSelectionComponent, LessonFilterPipe} from './student/course-selection/course-selection.component';
 import {RubyProcessorPipe} from './pipes/ruby-processor.pipe';
 import {RubyPromptEditDialogComponent} from './dialogs/ruby-edit-dialog';
 import { SuperAdminDashboardComponent } from './superAdmin/super-admin-dashboard/super-admin-dashboard.component';
@@ -109,6 +109,7 @@ import {NgxTrumbowygModule} from 'ngx-trumbowyg';
         SidebarComponent,
         ClozeQuestionComponent,
         ClozeFormatPipe,
+        LessonFilterPipe,
         ClozeFormatRenderPipe,
         ClozeDialogComponent,
         MultipleSelectComponent,

@@ -111,8 +111,6 @@ export class SubmissionGradeComponent implements OnInit {
         }
 
 
-
-
           if(thisUser > -1 && thisUser < users.length) {
               const submissions = this.submissionService.allSubmissionsSubject.value;
               for(const j in submissions) {

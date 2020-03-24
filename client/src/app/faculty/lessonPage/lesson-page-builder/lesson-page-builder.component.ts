@@ -26,6 +26,7 @@ export class LessonPageBuilderComponent implements OnInit {
     // DATA OBJECTS
     lesson$ = this.lessonBuilderService.editingLessonPage;
 
+    preview_hidden = true;
 
     selectedTextQuestion = -1;
     selectionShown = false;
@@ -35,6 +36,11 @@ export class LessonPageBuilderComponent implements OnInit {
 
     constructor(private lessonBuilderService: LessonPageBuilderService, private router: Router, private route: ActivatedRoute) {
 
+    }
+
+
+    togglePreview() {
+        this.preview_hidden = !this.preview_hidden;
     }
 
     ngOnInit() {
