@@ -9,8 +9,8 @@
     <mat-sidenav-content>
 
 
-        <mat-grid-list cols="4" rowHeight="100%">
-            <mat-grid-tile [colspan]="2" [rowspan]="1" style="overflow-y: scroll;">
+        <mat-grid-list cols="4" rowHeight="100%" style="height: calc(100% + 0px + 1px);">
+            <mat-grid-tile [colspan]="preview_hidden ? 4 : 2" [rowspan]="1" style="overflow-y: scroll;">
 
 
                 <div *ngIf="lesson$ | async as lesson" style="width: 100%">
@@ -44,10 +44,10 @@
                     <div>
                         <table class="explainer_content_table">
                             <tbody>
-                            <tr>
-                                <td><span>@RB</span></td>
-                                <td width="150px"><p>Add Ruby text into the title or description of the question.</p></td>
-                            </tr>
+<!--                            <tr>-->
+<!--                                <td><span>@RB</span></td>-->
+<!--                                <td width="150px"><p>Add Ruby text into the title or description of the question.</p></td>-->
+<!--                            </tr>-->
                             <tr>
                                 <td><span>@@</span></td>
                                 <td width="150px"><p>Add a cloze prompt into a cloze question.</p></td>
@@ -59,10 +59,14 @@
 
                 </div>
 
+<!--                                Toggle preview -->
+                <i class="material-icons preview-toggle" (click)="togglePreview()" [style.background-color]="preview_hidden ? '#fff' : '#006064'" [style.color]="preview_hidden ? '#006064' : '#fff'">search</i>
+
+
 
 
             </mat-grid-tile>
-            <mat-grid-tile [colspan]="2" [rowspan]="1" class="right-panel">
+            <mat-grid-tile *ngIf="!preview_hidden" [colspan]="2" [rowspan]="1" class="right-panel">
                 <!--// This is the preview panel.-->
                 <div *ngIf="lesson$ | async as lesson" style="width: 100%;">
                     <app-lesson-renderer [lesson]="lesson" [builderView]="true"></app-lesson-renderer>
