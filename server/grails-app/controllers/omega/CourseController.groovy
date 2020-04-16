@@ -61,6 +61,7 @@ class CourseController {
         }
 
         try {
+            course.addToOwners(springSecurityService.currentUser as User);
             courseService.save(course)
         } catch (ValidationException e) {
             respond course.errors, view:'create'

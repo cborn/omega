@@ -5,6 +5,7 @@ import grails.rest.Resource
 class Course {
 
     static constraints = {
+        name unique: true
         moodle_master_id nullable: true
     }
 
@@ -14,6 +15,7 @@ class Course {
 
     static hasMany = [lessons:Lesson, enrollments:Enrollment, owners:User]
     static belongsTo = [term:Term]
+
 
 
 

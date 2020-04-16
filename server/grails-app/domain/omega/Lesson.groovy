@@ -3,7 +3,7 @@ package omega
 class Lesson {
 
     static constraints = {
-
+        name(unique: ['course'])
         due nullable: true
     }
 
