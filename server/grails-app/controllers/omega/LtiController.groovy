@@ -112,16 +112,28 @@ class LtiController {
                     log.debug("Found the course")
                     if (toLogin.isStudent()) {
 
+                        // Enroll the student on the course..
+
+                        // Find a lesson on this course.
+                        Lesson lesson = course.lessons.first();
+
+                        // With the lesson - enroll the user.
+
+                        if(!Enrollment.findByUserAndTermAndLesson(toLogin,currentTerm,lesson)) {
+                            // we're not already enrolled onto this lesson so go and do it.
+                            new Enrollment(user:toLogin,lesson: lesson,term: currentTerm).save(flush:true);
+                        }
+
                         if (fullMap.get("custom_direct_link_id")) {
-                            LessonPage lesson = LessonPage.get(Long.parseLong(fullMap.get("custom_direct_link_id")))
-                            if (lesson) {
+                            LessonPage lessonPage = LessonPage.get(Long.parseLong(fullMap.get("custom_direct_link_id")))
+                            if (lessonPage) {
                                 
                                 // TODO respond url seems to be something important so work out what this is...
                                 log.debug("Contents of lis_outcome_service_url - " + fullMap.get("lis_outcome_service_url"))
                                 log.debug("contents of lis_result_sourcedid - " + fullMap.get("lis_result_sourcedid"))
-                                Submission submission = Submission.findByUserAndPageAndTerm(toLogin,lesson,currentTerm)
+                                Submission submission = Submission.findByUserAndPageAndTerm(toLogin,lessonPage,currentTerm)
                                 if(!submission)
-                                    submission = new Submission(page: lesson,user: toLogin,term: currentTerm,drafted: new Date()).save(flush:true)
+                                    submission = new Submission(page: lessonPage,user: toLogin,term: currentTerm,drafted: new Date()).save(flush:true)
 
                                 url = "/student/submission/" + submission.id
 

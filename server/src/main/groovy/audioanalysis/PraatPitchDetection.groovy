@@ -47,7 +47,6 @@ class PraatPitchDetection {
         pitchBlock.save()
 
         String[] lines = commandOutput.split("\n")
-        println(lines);
 
         for (String line : lines) {
             String[] vals = line.split(" ")

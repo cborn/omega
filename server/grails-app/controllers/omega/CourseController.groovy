@@ -32,8 +32,20 @@ class CourseController {
             respond courses, model: [courseCount: courses.size()]
         }
         else {
-            def courses = Course.findAllByTerm(term);
-            respond courses, model: [courseCount: courses.size()]
+            // This is a student so we need to check enrollment before we show this course to the user.
+            def rawCourses = Course.findAllByTerm(term);
+
+
+            List<Course> courses = new ArrayList<Course>();
+
+            rawCourses*.lessons*.forEach({
+                if(Enrollment.findByLessonAndUserAndTerm(it,user,term)) {
+                    // there is an enrollment so we can add this course.
+                    courses.push(it.course);
+                }
+            })
+
+            respond courses.unique(), model: [courseCount: courses.size()]
         }
 
     }

@@ -149,6 +149,10 @@ class BootStrap {
             Submission sub = new Submission(user: studentUser, term: t1, page: page, drafted: new Date())
             sub.save(failOnError: true, flush: true)
 
+
+            Enrollment enr = new Enrollment(user: studentUser,term: t1,lesson: page.lesson).save(flush:true);
+
+
             QuestionResponse q1Resp = new QuestionResponse(question: q, response: "true", submission: sub).save(failOnError: true, flush: true)
             QuestionResponse q2Resp = new QuestionResponse(question: q2, response: "Brifo@@Crio@@Joni bach", submission: sub).save(failOnError: true, flush: true)
             QuestionResponse q3Resp = new QuestionResponse(question: q3, response: "Mae", submission: sub).save(failOnError: true, flush: true)
