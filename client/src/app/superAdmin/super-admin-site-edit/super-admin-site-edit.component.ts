@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Site} from '../../Model/site';
 import {SiteService} from '../../services/site.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {SessionManagerService} from '../../services/session-manager.service';
+import {PERMISSION_ROLE, SessionManagerService} from '../../services/session-manager.service';
 
 @Component({
   selector: 'app-super-admin-site-edit',
@@ -113,7 +113,13 @@ export class SuperAdminSiteEditComponent implements OnInit {
 
   save() {
     this.siteService.update(this.site.id, this.site, () => {
-      this.router.navigate(['/superAdmin/dashboard']);
+      if(this.sessionManager.checkRoles(PERMISSION_ROLE.ROLE_SUPER_ADMIN)) {
+        this.router.navigate(['/superAdmin/dashboard']);
+      } else {
+        this.router.navigate(['/faculty/index']);
+      }
+
+
     });
   }
 

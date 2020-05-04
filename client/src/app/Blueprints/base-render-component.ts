@@ -17,7 +17,7 @@ export abstract class BaseRenderComponent implements OnChanges {
         const changedEvent = new AnswerChangedEvent();
         changedEvent.question = question;
         changedEvent.value = value;
-        changedEvent.shouldReloadFromWeb = reloadFromWeb;
+        changedEvent.shouldReloadFromWeb = true;
 
         this.changedEmitter.emit(changedEvent);
     }

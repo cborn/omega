@@ -21,10 +21,11 @@ export class BooleanRendererComponent extends BaseRenderComponent implements OnI
 
     didSelect(value) {
         this.value = value;
-        this.answerDidChange(this.question, this.value);
+        this.answerDidChange(this.question, this.value + '', true);
     }
 
     setValue(value) {
+        console.log(value);
         this.value = value === 'true';
     }
 

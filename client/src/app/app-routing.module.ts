@@ -73,7 +73,7 @@ const routes: Routes = [
     {path: 'superAdmin/dashboard', component: SuperAdminDashboardComponent, canActivate: [SuperAdminGuard]},
 
     {path: 'superAdmin/site/create', component: SuperAdminSiteCreateComponent, canActivate: [SuperAdminGuard]},
-    {path: 'superAdmin/site/edit/:siteId', component: SuperAdminSiteEditComponent, canActivate: [SuperAdminGuard]},
+    {path: 'superAdmin/site/edit/:siteId', component: SuperAdminSiteEditComponent, canActivate: [AdminGuard]},
 
     {path: 'superAdmin/user/create', component: SuperAdminUserCreateComponent, canActivate: [SuperAdminGuard]},
     {path: 'superAdmin/user/edit/:userId', component: SuperAdminUserEditComponent, canActivate: [SuperAdminGuard]},
@@ -81,9 +81,9 @@ const routes: Routes = [
     {path: 'superAdmin/alert/create', component: SuperAdminAlertCreateComponent, canActivate: [SuperAdminGuard]},
 
 
-    {path: 'user/index', component: UserIndexComponent, canActivate: [FacultyGuard]},
-    {path: 'user/edit/:userId', component: UserEditComponent, canActivate: [FacultyGuard]},
-    {path: 'user/create', component: UserCreateComponent, canActivate: [FacultyGuard]},
+    {path: 'user/index', component: UserIndexComponent, canActivate: [AdminGuard]},
+    {path: 'user/edit/:userId', component: UserEditComponent, canActivate: [AdminGuard]},
+    {path: 'user/create', component: UserCreateComponent, canActivate: [AdminGuard]},
 
 
 

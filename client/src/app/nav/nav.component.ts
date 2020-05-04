@@ -26,7 +26,7 @@ export class NavComponent implements OnInit {
     alerts = [];
 
 
-    alertTimeout = setTimeout(async () => {
+    alertTimeout = setInterval(async () => {
 
         const promise = await this.http.get(AuthenticatedHttpClient.ALERTS_URL + '?now=true');
 
@@ -34,7 +34,7 @@ export class NavComponent implements OnInit {
            this.alerts = value;
         });
 
-    }, 1000);
+    }, 15000);
 
 
     constructor(private http: AuthenticatedHttpClient, private navService: NavService, private router: Router, private sessionService: SessionManagerService, private notificationService: NotificationService) {
