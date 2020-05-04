@@ -35,8 +35,6 @@ export class SuperAdminAlertCreateComponent implements OnInit {
 
     create() {
 
-        console.log(this.alert, this.alert_start, this.alert_end);
-
         // "2020-05-18T20:20" "2020-04-18T20:25"
 
         this.alert.alert_start = new Date(this.alert_start);
