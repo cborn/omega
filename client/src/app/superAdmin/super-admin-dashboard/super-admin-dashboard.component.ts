@@ -13,12 +13,14 @@ import {SessionManagerService} from '../../services/session-manager.service';
 export class SuperAdminDashboardComponent implements OnInit {
 
     sites: any;
+    users: any;
 
     constructor(private http: AuthenticatedHttpClient, private siteService: SiteService, private sessionController: SessionManagerService, private notificationService: NotificationService, private router: Router) {
     }
 
     ngOnInit() {
         this.loadSites();
+        this.loadSuperUsers();
     }
 
     loadSites() {
@@ -32,10 +34,21 @@ export class SuperAdminDashboardComponent implements OnInit {
     }
 
 
+    async loadSuperUsers() {
+        const promise = await this.http.get(AuthenticatedHttpClient.USER_URL);
+        promise.subscribe(data => {
+
+            this.users = data.filter(user => user.role.indexOf('ROLE_SUPER_ADMIN') > -1);
+        });
+    }
+
+
     edit(site) {
-
         this.router.navigate(['superAdmin/site/edit', site.id]);
+    }
 
+    editUser(user) {
+        this.router.navigate(['superAdmin/user/edit', user.id]);
     }
 
     select(site) {

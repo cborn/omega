@@ -26,6 +26,12 @@ import {SuperAdminSiteCreateComponent} from './superAdmin/super-admin-site-creat
 import {SuperAdminSiteEditComponent} from './superAdmin/super-admin-site-edit/super-admin-site-edit.component';
 import {TermCreateComponent} from './term/term-create/term-create.component';
 import {TermEditComponent} from './term/term-edit/term-edit.component';
+import {SuperAdminUserCreateComponent} from './superAdmin/super-admin-user-create/super-admin-user-create.component';
+import {SuperAdminUserEditComponent} from './superAdmin/super-admin-user-edit/super-admin-user-edit.component';
+import {UserIndexComponent} from './faculty/users/index/user-index.component';
+import {UserCreateComponent} from './faculty/users/user-create/user-create.component';
+import {UserEditComponent} from './faculty/users/user-edit/user-edit.component';
+import {SuperAdminAlertCreateComponent} from './superAdmin/super-admin-alert-create/super-admin-alert-create.component';
 
 const routes: Routes = [
     {path: '', redirectTo: 'index', pathMatch: 'full'},
@@ -69,6 +75,15 @@ const routes: Routes = [
     {path: 'superAdmin/site/create', component: SuperAdminSiteCreateComponent, canActivate: [SuperAdminGuard]},
     {path: 'superAdmin/site/edit/:siteId', component: SuperAdminSiteEditComponent, canActivate: [SuperAdminGuard]},
 
+    {path: 'superAdmin/user/create', component: SuperAdminUserCreateComponent, canActivate: [SuperAdminGuard]},
+    {path: 'superAdmin/user/edit/:userId', component: SuperAdminUserEditComponent, canActivate: [SuperAdminGuard]},
+
+    {path: 'superAdmin/alert/create', component: SuperAdminAlertCreateComponent, canActivate: [SuperAdminGuard]},
+
+
+    {path: 'user/index', component: UserIndexComponent, canActivate: [FacultyGuard]},
+    {path: 'user/edit/:userId', component: UserEditComponent, canActivate: [FacultyGuard]},
+    {path: 'user/create', component: UserCreateComponent, canActivate: [FacultyGuard]},
 
 
 

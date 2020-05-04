@@ -42,3 +42,16 @@
     font-size: 13px;
     bottom: -5px;
 }
+
+
+.alert-banner {
+    background: orange;
+    color: #773d00;
+    padding: 10px;
+    text-align: center;
+}
+
+.alert-banner > p {
+    padding: 0;
+    margin: 0;
+}

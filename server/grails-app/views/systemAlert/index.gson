@@ -1,0 +1,8 @@
+import omega.SystemAlert
+
+model {
+	Iterable<SystemAlert> systemAlertList
+}
+
+json tmpl.systemAlert(systemAlertList ?: [])
+

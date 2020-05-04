@@ -14,5 +14,6 @@ export class User extends BaseObject {
     accountLocked: boolean;
     password: string;
     enabled: boolean;
+    role: any;
 
 }

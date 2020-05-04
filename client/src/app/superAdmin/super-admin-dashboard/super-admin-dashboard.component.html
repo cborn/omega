@@ -1,4 +1,8 @@
 
+<div style="padding: 10px;">
+        <button mat-raised-button routerLink="/superAdmin/alert/create" color="accent">Add System Alert</button>
+</div>
+
     <div style="padding: 10px;">
         <h2>Sites</h2>
 
@@ -23,6 +27,40 @@
                 <mat-card style="height: fit-content" routerLink="/superAdmin/site/create">
                     <mat-card-header style="padding: 0; text-align: center;">
                         <mat-card-title>Add Site</mat-card-title>
+                        <mat-card-subtitle><mat-icon>add</mat-icon></mat-card-subtitle>
+
+                    </mat-card-header>
+
+
+                </mat-card>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+    </div>
+
+    <div style="padding: 10px;">
+        <h2>Users</h2>
+
+        <mat-grid-list cols="6" rowHeight="180px">
+            <mat-grid-tile *ngFor="let user of users">
+
+                <mat-card style="height: fit-content">
+                    <mat-card-header>
+                        <mat-card-title>{{user.firstname + ' ' + user.surname}}</mat-card-title>
+
+                    </mat-card-header>
+
+                    <mat-card-actions style="text-align: center;">
+                        <button mat-button  (click)="editUser(user)">EDIT</button>
+                    </mat-card-actions>
+                </mat-card>
+
+
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-card style="height: fit-content" routerLink="/superAdmin/user/create">
+                    <mat-card-header style="padding: 0; text-align: center;">
+                        <mat-card-title>Add User</mat-card-title>
                         <mat-card-subtitle><mat-icon>add</mat-icon></mat-card-subtitle>
 
                     </mat-card-header>

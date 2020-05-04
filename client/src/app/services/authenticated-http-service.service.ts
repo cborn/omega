@@ -76,7 +76,7 @@ export class AuthenticatedHttpClient {
 
     static GET_PITCH = environment.BASE_URL + 'audioAnalysis/getPitch';
 
-
+    static ALERTS_URL = environment.BASE_URL + 'systemAlert';
 
 
     helper = new JwtHelperService();

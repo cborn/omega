@@ -12,6 +12,20 @@ export class UserService extends BaseService<User> {
         super(h, AuthenticatedHttpClient.USER_URL);
     }
 
+
+    async saveAsSuperAdmin(updatePackage, handler?) {
+        const promise = await this.h.post<User>(this.URL + '/saveAsSuperAdmin', updatePackage);
+
+        promise.subscribe(value => {
+             if (handler) {
+                handler(value);
+            }
+
+        });
+
+    }
+
+
     getClassName() {
         return 'User';
     }

@@ -7,7 +7,8 @@ import {User} from '../Model/user';
 import {SessionManagerService} from '../services/session-manager.service';
 import {NotificationService} from '../services/notification.service';
 import {Site} from '../Model/site';
-import { version } from '../../../package.json';
+import {version} from '../../../package.json';
+import {AuthenticatedHttpClient} from '../services/authenticated-http-service.service';
 
 @Component({
     selector: 'app-navigation',
@@ -22,7 +23,21 @@ export class NavComponent implements OnInit {
 
     public version: string = version;
 
-    constructor(private navService: NavService, private router: Router, private sessionService: SessionManagerService, private notificationService: NotificationService) {
+    alerts = [];
+
+
+    alertTimeout = setTimeout(async () => {
+
+        const promise = await this.http.get(AuthenticatedHttpClient.ALERTS_URL + '?now=true');
+
+        promise.subscribe(value => {
+           this.alerts = value;
+        });
+
+    }, 1000);
+
+
+    constructor(private http: AuthenticatedHttpClient, private navService: NavService, private router: Router, private sessionService: SessionManagerService, private notificationService: NotificationService) {
 
 
     }

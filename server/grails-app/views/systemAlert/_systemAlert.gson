@@ -1,0 +1,7 @@
+import omega.SystemAlert
+
+model {
+	SystemAlert systemAlert
+}
+
+json g.render(systemAlert, [resolveTemplate: false])

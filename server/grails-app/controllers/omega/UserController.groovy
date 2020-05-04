@@ -43,7 +43,7 @@ class UserController {
         respond userService.get(id)
     }
 
-    def save(User user) {
+    def saveAsSuperAdmin(User user) {
         if (user == null) {
             render status: NOT_FOUND
             return
@@ -51,6 +51,46 @@ class UserController {
 
         try {
             userService.save(user)
+
+            UserRole.create user, Role.getSuperAdminRole()
+            UserRole.withSession {
+                it.flush()
+                it.clear()
+            }
+        } catch (ValidationException e) {
+            respond user.errors, view:'create'
+            return
+        }
+
+        respond user, [status: CREATED, view:"show"]
+    }
+
+    def save() {
+
+        User u = springSecurityService.currentUser as User
+        def role = Role.findByAuthority(request.JSON.role);
+
+        def user = request.getJSON() as User;
+
+        if (user == null || role == null ) {
+            render status: NOT_FOUND
+            return
+        }
+        def siteId = request.getHeader('x-admin-site')
+        Site site = u.site ? u.site : Site.get(siteId)
+
+        user.site = site;
+
+        try {
+            userService.save(user)
+
+            UserRole.create user, role;
+
+            UserRole.withSession {
+                it.flush()
+                it.clear()
+            }
+
         } catch (ValidationException e) {
             respond user.errors, view:'create'
             return
@@ -80,6 +120,19 @@ class UserController {
             render status: NOT_FOUND
             return
         }
+
+        def user = User.get(id);
+        UserRole.removeAll(user)
+        Enrollment.where { user == user }.deleteAll();
+        def submissions = Submission.findAllByUser(user);
+
+        submissions.each { s ->
+           QuestionResponse.where {submission == s}.deleteAll()
+        }
+
+        submissions*.delete();
+
+
 
         userService.delete(id)
 

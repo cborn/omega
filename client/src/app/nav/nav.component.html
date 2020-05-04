@@ -22,7 +22,7 @@
 
         <div *ngIf="applicationData && !applicationData.isAdmin">
             <!-- Just show the current term -->
-            <p class="term-display">{{applicationData.term.name}}</p>
+            <p class="term-display">{{applicationData?.term?.name}}</p>
         </div>
 
         <span class="navbar-spacer-small"></span>
@@ -52,3 +52,7 @@
         </mat-menu>
     </mat-toolbar-row>
 </mat-toolbar>
+<div class="alert-banner" *ngFor="let alert of alerts">
+    <b>{{alert.title}}</b>
+    <p>{{alert.body}}</p>
+</div>

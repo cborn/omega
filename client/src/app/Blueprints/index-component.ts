@@ -32,13 +32,13 @@ export abstract class IndexComponent<T extends BaseObject> implements OnInit {
             if (value.get(this.paramName) != null) {
                 this.paramValue = value.get(this.paramName);
             }
-            console.log("Load Data for component" + window.location.href);
+            console.log("Load Data for component " + window.location.href);
             this.loadData();
         });
 
         this.service.serviceObservable.subscribe(value => {
             this.dataSource.data = value;
-            this.sourceData = value;
+            this.sourceData =  value;
         });
     }
 

@@ -10,6 +10,10 @@ class UrlMappings {
         put "/$controller/$id(.$format)?"(action:"update")
         patch "/$controller/$id(.$format)?"(action:"patch")
 
+
+        post "/user/saveAsSuperAdmin"(controller:'user', action:'saveAsSuperAdmin')
+
+
         post "/question/addImage/$id" (controller:'question', action: 'addImage')
         delete "/question/removeImage/$id" (controller:'question', action: 'removeImage')
         post "/question/promptRecording/$id" (controller:'question', action: ' addPromptRecording')

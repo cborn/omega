@@ -22,6 +22,10 @@ class Role implements GrantedAuthority, Serializable {
 		return Role.findByAuthority("ROLE_STUDENT")
 	}
 
+	static getSuperAdminRole() {
+		return Role.findByAuthority("ROLE_SUPER_ADMIN")
+	}
+
 	static mapping = {
 		cache true
 		table '`role`'

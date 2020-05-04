@@ -97,6 +97,12 @@ import { RandomOrderPipe } from './pipes/random-order.pipe';
 import { PitchRenderComponent } from './faculty/lessonPage/lesson-page-renderer/components/voice-renderer/pitch-render/pitch-render.component';
 import {TermEditComponent} from './term/term-edit/term-edit.component';
 import {NgxTrumbowygModule} from 'ngx-trumbowyg';
+import {SuperAdminUserCreateComponent} from './superAdmin/super-admin-user-create/super-admin-user-create.component';
+import {SuperAdminUserEditComponent} from './superAdmin/super-admin-user-edit/super-admin-user-edit.component';
+import {UserIndexComponent} from './faculty/users/index/user-index.component';
+import {UserCreateComponent} from './faculty/users/user-create/user-create.component';
+import {UserEditComponent} from './faculty/users/user-edit/user-edit.component';
+import {SuperAdminAlertCreateComponent} from './superAdmin/super-admin-alert-create/super-admin-alert-create.component';
 
 // @ts-ignore
 @NgModule({
@@ -164,7 +170,13 @@ import {NgxTrumbowygModule} from 'ngx-trumbowyg';
         CommentOrderPipe,
         RandomOrderPipe,
         PitchRenderComponent,
-        TermEditComponent
+        TermEditComponent,
+        SuperAdminUserCreateComponent,
+        SuperAdminUserEditComponent,
+         UserIndexComponent,
+        UserCreateComponent,
+         UserEditComponent,
+         SuperAdminAlertCreateComponent
     ],
     entryComponents: [
         ClozeDialogComponent,

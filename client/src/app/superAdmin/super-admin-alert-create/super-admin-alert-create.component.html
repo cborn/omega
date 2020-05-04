@@ -1,0 +1,25 @@
+<br/>
+
+<mat-card class="centered standard-table-width">
+    <form>
+        <mat-form-field >
+            <input matInput placeholder="Title" name="name" [(ngModel)]="alert.title">
+        </mat-form-field>
+
+        <mat-form-field >
+            <textarea matInput placeholder="Body" name="name" [(ngModel)]="alert.body"></textarea>
+        </mat-form-field>
+
+
+        <mat-form-field>
+            <input matInput type="datetime-local" placeholder="Start Date" name="alert_start" [(ngModel)]="alert_start">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput type="datetime-local" placeholder="End Date" name="alert_end" [(ngModel)]="alert_end">
+        </mat-form-field>
+
+
+        <br/>
+        <button mat-raised-button color="primary" (click)="create()">Create</button>
+    </form>
+</mat-card>

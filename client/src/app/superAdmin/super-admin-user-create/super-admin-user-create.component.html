@@ -1,0 +1,25 @@
+<br/>
+
+<mat-card class="centered standard-table-width">
+    <form>
+        <mat-form-field >
+            <input matInput placeholder="Username" name="name" [(ngModel)]="user.username">
+        </mat-form-field>
+
+        <mat-form-field >
+            <input matInput placeholder="Password" name="name" [(ngModel)]="user.password">
+        </mat-form-field>
+
+        <mat-form-field >
+            <input matInput placeholder="First Name" name="name" [(ngModel)]="user.firstname">
+        </mat-form-field>
+
+        <mat-form-field >
+            <input matInput placeholder="Surname" name="name" [(ngModel)]="user.surname">
+        </mat-form-field>
+
+
+        <br/>
+        <button mat-raised-button color="primary" (click)="create()">Create</button>
+    </form>
+</mat-card>

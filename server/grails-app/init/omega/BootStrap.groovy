@@ -49,6 +49,10 @@ class BootStrap {
             assert UserRole.count() == 8
 
             // Create some demo content in here.
+            def hourAhead = Calendar.getInstance();
+            hourAhead.add(Calendar.HOUR,1);
+            def alert = new SystemAlert(title: 'Maintenance', body: 'The system is about to be turned off', alert_start: new Date(), alert_end:hourAhead.getTime()).save(flush:true);
+
 
 
             Term t1 = new Term(name: "Term 1", current: true,site: carletonSite).save(failOnError: true, flush: true)

@@ -11,4 +11,10 @@ json {
     fromMoodle user.fromMoodle
     username user.username
     fullName user.firstname + ' ' + user.surname
+//    isSuperAdmin user.isSuperAdmin()
+//    isAdmin user.isAdmin()
+//    isFaculty user.isFaculty()
+//    isGrader user.isGrader()
+//    isStudent user.isStudent()
+    role user.authorities*.authority
 }
