@@ -25,7 +25,6 @@ export class BooleanRendererComponent extends BaseRenderComponent implements OnI
     }
 
     setValue(value) {
-        console.log(value);
         this.value = value === 'true';
     }
 

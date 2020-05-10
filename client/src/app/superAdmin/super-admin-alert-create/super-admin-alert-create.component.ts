@@ -17,6 +17,8 @@ import {AlertService} from '../../services/alert.service';
 export class SuperAdminAlertCreateComponent implements OnInit {
 
     alert: {
+        title?: string,
+        body?: string,
         alert_start?: Date;
         alert_end?: Date;
 
