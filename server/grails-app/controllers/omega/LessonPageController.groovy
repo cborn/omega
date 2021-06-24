@@ -7,6 +7,9 @@ import grails.validation.ValidationException
 import groovy.json.JsonBuilder
 import org.grails.web.json.JSONObject
 
+import java.util.zip.ZipEntry
+import java.util.zip.ZipOutputStream
+
 import static org.springframework.http.HttpStatus.*
 
 @Secured(['ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_FACULTY','ROLE_GRADER','ROLE_STUDENT'])
@@ -129,13 +132,27 @@ class LessonPageController {
     def export(Long id) {
 
         LessonPage page = LessonPage.findById(id);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream()
+        ZipOutputStream zipFile = new ZipOutputStream(baos)
 
-        File f = File.createTempDir("lessonPage-"+page.id.toString(),new Date().getTime().toString());
+        def pageAsJson = new JsonBuilder(page.extract()).toPrettyString();
 
-        def pageAsJson = render(template: 'lessonPage', model: [lessonPage:page]) as JSON;
+        InputStream pageAsJsonInputStream = new ByteArrayInputStream(pageAsJson.getBytes());
 
 
-        render pageAsJson as JSON;
+        zipFile.putNextEntry(new ZipEntry("data.json"))
+        pageAsJsonInputStream.withStream {zipFile << it}
+        zipFile.closeEntry()
+        zipFile.finish()
+        response.setHeader("Content-disposition", "filename=\"test.zip\"")
+        response.contentType = "application/zip"
+        response.outputStream << baos.toByteArray()
+        response.outputStream.flush()
+
+
+
+
+        render pageAsJson;
     }
 
 

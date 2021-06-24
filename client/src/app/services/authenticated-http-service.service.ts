@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {throwError} from 'rxjs/internal/observable/throwError';
 import {of} from 'rxjs/internal/observable/of';
-import {catchError} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {SessionManagerService} from './session-manager.service';
 import {Router} from '@angular/router';
 import {NotificationService} from './notification.service';
@@ -15,7 +15,7 @@ export interface IRequestOptions {
     observe?: 'body';
     params?: HttpParams;
     reportProgress?: boolean;
-    responseType?: 'json';
+    responseType?: string;
     withCredentials?: boolean;
     body?: any;
 }
@@ -235,6 +235,15 @@ export class AuthenticatedHttpClient {
         await this.refreshSessionToken();
         return this.http.delete<T>(endPoint, Object.assign({}, options, {headers: this.headers}))
             .pipe(catchError(err => throwError(this.errorHandler(err, mute))));
+    }
+
+
+    public async download<T>(endPoint: string, options?: IRequestOptions, mute?: boolean) {
+        await this.refreshSessionToken();
+        if(!options)
+            options = {};
+        options.responseType = 'application/zip';
+        return this.http.get<T>(endPoint, Object.assign({}, options, {headers: this.headers})).pipe(map(res =>  res));
     }
 
 }
