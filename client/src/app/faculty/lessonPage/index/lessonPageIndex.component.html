@@ -16,6 +16,7 @@
         <ng-container matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
             <mat-cell *matCellDef="let page">
+                <button mat-stroked-button color="accent"(click)="exportData(page.id)">Export</button>   &nbsp;
                 <button mat-stroked-button color="accent" [routerLink]="'/lessonPage/builder/'+page.id">Edit</button>   &nbsp;
                 <button mat-stroked-button color="warn" (click)="delete(page.id)">Delete</button>
                 <button mat-icon-button (click)="moveDown(page.id)" *ngIf="page.pageOrder > 0"><mat-icon>arrow_upward</mat-icon></button>

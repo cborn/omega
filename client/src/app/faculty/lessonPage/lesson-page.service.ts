@@ -31,6 +31,15 @@ export class LessonPageService extends BaseService<LessonPage> {
 
     }
 
+    async exportData(id) {
+        const promise = await this.http.get(AuthenticatedHttpClient.LESSON_PAGE_EXPORT_URL + '/' + id);
+
+        promise.subscribe(value => {
+            this.serviceSubject.next(value);
+        });
+
+    }
+
 
     getClassName() {
         return 'Page';

@@ -26,6 +26,8 @@ class UrlMappings {
         delete "/question/remove/$id" (controller:'question', action: 'remove')
         get "/lessonPage/moveUp/$id" (controller:'lessonPage', action: 'moveUp')
         get "/lessonPage/moveDown/$id" (controller:'lessonPage', action: 'moveDown')
+        get "/lessonPage/export/$id" (controller:'lessonPage', action: 'export')
+
         get "/enrollment/grades/$id"(controller: "enrollment", action:"grades")
         get "/term/promote/$id"(controller: "term", action:"promoteToCurrent")
 

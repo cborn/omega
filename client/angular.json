@@ -21,13 +21,12 @@
               "src/favicon.ico"
             ],
             "styles": [
-              "src/styles.scss",
+              "src/styles.scss"
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.js",
               "./node_modules/trumbowyg/dist/trumbowyg.min.js",
               "./node_modules/trumbowyg/dist/plugins/ruby/trumbowyg.ruby.js"
-
             ]
           },
           "configurations": {
@@ -76,7 +75,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [],
             "styles": [
-              "src/styles.scss",
+              "src/styles.scss"
             ],
             "assets": [
               "src/images",
@@ -133,5 +132,8 @@
     "@schematics/angular:directive": {
       "prefix": "app"
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

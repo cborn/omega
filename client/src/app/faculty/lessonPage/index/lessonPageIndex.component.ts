@@ -39,5 +39,9 @@ export class LessonPageIndexComponent extends IndexComponent<LessonPage> {
         this.lessonPageService.moveDown(id);
     }
 
+    exportData(id) {
+        this.lessonPageService.exportData(id);
+    }
+
 
 }

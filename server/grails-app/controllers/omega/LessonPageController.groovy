@@ -1,7 +1,12 @@
 package omega
 
+import grails.converters.JSON
+import grails.gsp.PageRenderer
 import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
+import groovy.json.JsonBuilder
+import org.grails.web.json.JSONObject
+
 import static org.springframework.http.HttpStatus.*
 
 @Secured(['ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_FACULTY','ROLE_GRADER','ROLE_STUDENT'])
@@ -120,5 +125,19 @@ class LessonPageController {
 
         render status: NO_CONTENT
     }
+
+    def export(Long id) {
+
+        LessonPage page = LessonPage.findById(id);
+
+        File f = File.createTempDir("lessonPage-"+page.id.toString(),new Date().getTime().toString());
+
+        def pageAsJson = render(template: 'lessonPage', model: [lessonPage:page]) as JSON;
+
+
+        render pageAsJson as JSON;
+    }
+
+
 
 }
