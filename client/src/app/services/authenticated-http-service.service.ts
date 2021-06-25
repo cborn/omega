@@ -12,7 +12,7 @@ import {LoginResponse} from '../login/login.component';
 
 export interface IRequestOptions {
     headers?: HttpHeaders;
-    observe?: 'body';
+    observe?: any;
     params?: HttpParams;
     reportProgress?: boolean;
     responseType?: string;
@@ -242,7 +242,8 @@ export class AuthenticatedHttpClient {
         await this.refreshSessionToken();
         if(!options)
             options = {};
-        options.responseType = 'application/zip';
+        options.responseType = 'arraybuffer';
+        options.observe = 'response'
         return this.http.get<T>(endPoint, Object.assign({}, options, {headers: this.headers})).pipe(map(res =>  res));
     }
 

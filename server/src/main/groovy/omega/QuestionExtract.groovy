@@ -11,15 +11,15 @@ class QuestionExtract {
 
         this.type = question.type;
         this.position = question.position;
-        this.audioFeedback = question.audioFeedback;
+        this.audioFeedback = new PropertyExtract(question.audioFeedback);
         this.required = question.required;
-        this.audioPrompt = question.audioPrompt;
+        this.audioPrompt = new PropertyExtract(question.audioPrompt);
         this.description = question.description;
         this.name = question.name;
-        this.imageFeedback = question.imageFeedback;
-        this.imagePrompt  = question.imagePrompt;
-        this.videoFeedback = question.videoFeedback;
-        this.videoPrompt = question.videoPrompt;
+        this.imageFeedback = new PropertyExtract(question.imageFeedback);
+        this.imagePrompt  = new PropertyExtract(question.imagePrompt);
+        this.videoFeedback = new PropertyExtract(question.videoFeedback);
+        this.videoPrompt = new PropertyExtract(question.videoPrompt);
         this.max_grade = question.max_grade;
         this.custom_properties = question.custom_properties;
 
@@ -36,17 +36,17 @@ class QuestionExtract {
 
     String name;
 
-    ImageProperty imagePrompt;
+    PropertyExtract imagePrompt;
 
-    ImageProperty imageFeedback;
+    PropertyExtract imageFeedback;
 
-    VideoProperty videoPrompt;
+    PropertyExtract videoPrompt;
 
-    VideoProperty videoFeedback;
+    PropertyExtract videoFeedback;
 
-    AudioProperty audioPrompt;
+    PropertyExtract audioPrompt;
 
-    AudioProperty audioFeedback;
+    PropertyExtract audioFeedback;
 
     int max_grade;
 

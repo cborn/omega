@@ -17,6 +17,12 @@ class Site {
 
     String moodleKey
 
+    String getAwsUrl(prefix) {
+
+        return "https://s3-"+awsBucketRegion+".amazonaws.com/"+awsBucketName+"/"+ prefix;
+
+    }
+
 
     static constraints = {
     }

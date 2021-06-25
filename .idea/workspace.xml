@@ -5,18 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="21734fad-bd45-42ac-bfea-4670a2d5e347" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/server/src/main/groovy/omega/LessonPageExtract.groovy" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/main/groovy/omega/QuestionExtract.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/omega.iml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/groovy/omega/PropertyExtract.groovy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/app/faculty/lessonPage/lesson-page.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/faculty/lessonPage/lesson-page.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/app/services/authenticated-http-service.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/services/authenticated-http-service.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/grails-app/controllers/omega/LessonPageController.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/server/grails-app/controllers/omega/LessonPageController.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/grails-app/domain/omega/LessonPage.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/server/grails-app/domain/omega/LessonPage.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/grails-app/domain/omega/Site.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/server/grails-app/domain/omega/Site.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/groovy/omega/QuestionExtract.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/groovy/omega/QuestionExtract.groovy" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -409,6 +404,15 @@
     <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="masterDetails">
