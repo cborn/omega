@@ -168,7 +168,10 @@ export class AuthenticatedHttpClient {
      * @returns {Observable<T>}
      */
     public async get<T>(endPoint: string, options?: IRequestOptions, disableErrorHandling?: boolean, mute?: boolean, needsTerm?: boolean) {
+        console.log("First - " + (this.headers != null ? this.headers.get("Authorization") : 'No Headers'));
         await this.refreshSessionToken();
+        console.log("Second - " + (this.headers != null ? this.headers.get("Authorization") : 'No Headers'));
+
 
         if (this.sessionManager.displayTerm != null) {
             if (endPoint.indexOf('?') > -1) {

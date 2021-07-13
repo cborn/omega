@@ -68,9 +68,9 @@ class LtiController {
 
         // firstly lets get the site..
 
-        Site site = Site.findByMoodleUrlIlike("%"+fullMap.get("tool_consumer_instance_guid")+"%")
+        Site site = Site.findByMoodleUrlIlike("%"+request.getHeader("Origin")+"%")
         if(!site) {
-            render "Could not find the site associated to this moodle instance. Please make sure a site with the moodle url : " + fullMap.get("tool_consumer_instance_guid") + " exists."
+            render "Could not find the site associated to this moodle instance. Please make sure a site with the moodle url : " + request.getHeader("Origin") + " exists."
             return
         }
 
@@ -90,16 +90,23 @@ class LtiController {
 
             log.debug("Signature from request matched - That means this is a validated request.")
 
+            //TODO change this to use the moodle userid not the email address.
+
+            def toLogin = User.findByMoodle_user_id(params.user_id)
             // if the user isnt in the system then put them in.
-            if (User.findByUsername(params.lis_person_contact_email_primary) == null) {
-                log.debug("failed to find an existing user for the email - " + params.lis_person_contact_email_primary)
+            if (toLogin == null) {
+                log.debug("failed to find an existing user for moodle id  - " + params.user_id)
                 log.debug("creating a new user from moodle.")
                 LTIService.createMoodleUser(site,fullMap)
+                toLogin = User.findByMoodle_user_id(params.user_id)
+            } else if(!toLogin.getUsername().equalsIgnoreCase(params.lis_person_contact_email_primary))
+            {
+                // check the username is still the same ...
+                toLogin.setUsername(params.lis_person_contact_email_primary);
+                toLogin.setFirstname(params.lis_person_name_given);
+                toLogin.setSurname(params.lis_person_name_family);
             }
-
             // Get the user to login and log them in..
-            String username = params.lis_person_contact_email_primary
-            def toLogin = User.findByUsername(username)
             toLogin.setOtp(UUID.randomUUID().toString())
             toLogin.save(flush: true)
 
@@ -207,7 +214,8 @@ class LtiController {
 
 
         } else {
-            render "Test"
+            render "Signature of the Tool configured in moodle does not match the signature of this application. Please check your moodle secret key configuration and ensure it matches this sites configuration."
+
         }
     }
 

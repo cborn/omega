@@ -15,6 +15,7 @@ class User implements UserDetails, Serializable {
     private static final long serialVersionUID = 1
 
     String username
+    String moodle_user_id;
     String password
     String firstname
     String surname
@@ -107,6 +108,7 @@ class User implements UserDetails, Serializable {
     static constraints = {
         password nullable: false, blank: false, password: true
         username nullable: false, blank: false, unique: true
+        moodle_user_id nullable: true;
         salt nullable: true
         otp nullable: true
         site nullable: true

@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticatedHttpClient} from '../services/authenticated-http-service.service';
 import {LoginResponse} from '../login/login.component';
 import {SessionManagerService} from '../services/session-manager.service';
+import {NotificationService} from '../services/notification.service';
 
 @Component({
     selector: 'app-otpcomponent',
@@ -11,7 +12,7 @@ import {SessionManagerService} from '../services/session-manager.service';
 })
 export class OTPComponentComponent implements OnInit {
 
-    constructor(private route: ActivatedRoute, private router: Router, private http: AuthenticatedHttpClient, private sessionManager:SessionManagerService) {
+    constructor(private route: ActivatedRoute, private router: Router, private http: AuthenticatedHttpClient, private sessionManager: SessionManagerService, private notificationService: NotificationService) {
     }
 
     loading = true;
@@ -23,7 +24,7 @@ export class OTPComponentComponent implements OnInit {
             const key = value.get('key');
             const resumeRoute = value.get('resumeRoute');
 
-            const promise = await this.http.get<LoginResponse>(AuthenticatedHttpClient.LTI_OTP_LOGIN_URL + "?key=" + key);
+            const promise = await this.http.get<LoginResponse>(AuthenticatedHttpClient.LTI_OTP_LOGIN_URL + '?key=' + key);
 
             promise.subscribe(auth => {
                 this.sessionManager.setSessionToken(auth.access_token);
@@ -31,6 +32,11 @@ export class OTPComponentComponent implements OnInit {
                 this.sessionManager.setRefreshToken(auth.refresh_token);
                 this.sessionManager.setRoles(auth.roles);
                 this.sessionManager.setUsername(auth.username);
+
+                // This is required to tell the system that a new login has happened therefore we need to refresh our term caches and data.
+
+                this.notificationService.didLoginObserver.next(true);
+
                 if (resumeRoute !== undefined) {
                     this.router.navigate([resumeRoute]);
                 } else {
