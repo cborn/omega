@@ -29,7 +29,7 @@ class LTIService {
 
         def roles = decideUserRole(parameters.get("roles"))
 
-        def user = new User(site: site, username: parameters.get("lis_person_contact_email_primary"), password:pw, fromMoodle:true, firstname: parameters.get("lis_person_name_given"), surname: parameters.get("lis_person_name_family"), enabled: 'true', salt: salt).save(failOnError:true)
+        def user = new User(site: site, username: parameters.get("lis_person_contact_email_primary"),moodle_user_id: parameters.get("user_id"), password:pw, fromMoodle:true, firstname: parameters.get("lis_person_name_given"), surname: parameters.get("lis_person_name_family"), enabled: 'true', salt: salt).save(failOnError:true)
 
         if(roles.contains(PASSBACK_ROLES.STUDENT)) {
             UserRole.create user, Role.findByAuthority('ROLE_STUDENT')

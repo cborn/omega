@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {BaseService} from '../../Blueprints/base-service';
 import {LessonPage} from '../../Model/lesson-page';
 import {AuthenticatedHttpClient} from '../../services/authenticated-http-service.service';
+import {HttpResponse} from "@angular/common/http";
 
 @Injectable({
     providedIn: 'root'
@@ -32,13 +33,29 @@ export class LessonPageService extends BaseService<LessonPage> {
     }
 
     async exportData(id) {
-        const promise = await this.http.get(AuthenticatedHttpClient.LESSON_PAGE_EXPORT_URL + '/' + id);
+        const promise = await this.http.download<HttpResponse<ArrayBuffer>>(AuthenticatedHttpClient.LESSON_PAGE_EXPORT_URL + '/' + id);
 
         promise.subscribe(value => {
-            this.serviceSubject.next(value);
+            this.getZipFile(value.headers.get('content-disposition').replace('filename="',"").replace('"',""),value.body);
         });
 
     }
+
+
+    private getZipFile(name:string , data: any) {
+        const blob = new Blob([data], { type: 'application/zip' });
+        const a: any = document.createElement('a');
+        document.body.appendChild(a);
+
+        a.style = 'display: none';
+        const url = window.URL.createObjectURL(blob);
+        a.href = url;
+        a.download = name;
+        a.click();
+        window.URL.revokeObjectURL(url);
+
+    }
+
 
 
     getClassName() {

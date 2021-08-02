@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {throwError} from 'rxjs/internal/observable/throwError';
 import {of} from 'rxjs/internal/observable/of';
-import {catchError} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {SessionManagerService} from './session-manager.service';
 import {Router} from '@angular/router';
 import {NotificationService} from './notification.service';
@@ -12,10 +12,10 @@ import {LoginResponse} from '../login/login.component';
 
 export interface IRequestOptions {
     headers?: HttpHeaders;
-    observe?: 'body';
+    observe?: any;
     params?: HttpParams;
     reportProgress?: boolean;
-    responseType?: 'json';
+    responseType?: string;
     withCredentials?: boolean;
     body?: any;
 }
@@ -168,7 +168,10 @@ export class AuthenticatedHttpClient {
      * @returns {Observable<T>}
      */
     public async get<T>(endPoint: string, options?: IRequestOptions, disableErrorHandling?: boolean, mute?: boolean, needsTerm?: boolean) {
+        console.log("First - " + (this.headers != null ? this.headers.get("Authorization") : 'No Headers'));
         await this.refreshSessionToken();
+        console.log("Second - " + (this.headers != null ? this.headers.get("Authorization") : 'No Headers'));
+
 
         if (this.sessionManager.displayTerm != null) {
             if (endPoint.indexOf('?') > -1) {
@@ -235,6 +238,16 @@ export class AuthenticatedHttpClient {
         await this.refreshSessionToken();
         return this.http.delete<T>(endPoint, Object.assign({}, options, {headers: this.headers}))
             .pipe(catchError(err => throwError(this.errorHandler(err, mute))));
+    }
+
+
+    public async download<T>(endPoint: string, options?: IRequestOptions, mute?: boolean) {
+        await this.refreshSessionToken();
+        if(!options)
+            options = {};
+        options.responseType = 'arraybuffer';
+        options.observe = 'response'
+        return this.http.get<T>(endPoint, Object.assign({}, options, {headers: this.headers})).pipe(map(res =>  res));
     }
 
 }

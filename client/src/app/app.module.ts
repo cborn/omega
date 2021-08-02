@@ -103,6 +103,7 @@ import {UserIndexComponent} from './faculty/users/index/user-index.component';
 import {UserCreateComponent} from './faculty/users/user-create/user-create.component';
 import {UserEditComponent} from './faculty/users/user-edit/user-edit.component';
 import {SuperAdminAlertCreateComponent} from './superAdmin/super-admin-alert-create/super-admin-alert-create.component';
+import { SanitizeDomContentPipe } from './pipes/sanitize-dom-content.pipe';
 
 // @ts-ignore
 @NgModule({
@@ -176,7 +177,8 @@ import {SuperAdminAlertCreateComponent} from './superAdmin/super-admin-alert-cre
          UserIndexComponent,
         UserCreateComponent,
          UserEditComponent,
-         SuperAdminAlertCreateComponent
+         SuperAdminAlertCreateComponent,
+         SanitizeDomContentPipe
     ],
     entryComponents: [
         ClozeDialogComponent,
@@ -224,11 +226,29 @@ import {SuperAdminAlertCreateComponent} from './superAdmin/super-admin-alert-cre
             svgPath: '/images/icons.svg',
             removeformatPasted: true,
             autogrow: true,
+            btnsDef: {
+                image: {
+                    dropdown: ['insertImage', 'base64'],
+                    ico: 'insertImage'
+                }
+            },
             btns: [
+                ['viewHTML'],
                 ['strong', 'em', 'del'],
+                ['foreColor', 'backColor'],
                 ['superscript', 'subscript'],
+                ['image'],
+                ['unorderedList', 'orderedList'],
+                ['table'],
                 ['ruby']
-            ]
+
+            ],
+            plugins : {
+                table: {
+                    // Some table plugin options, see details below
+                    styler: 'ccTable'
+                }
+            }
         })
     ],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},

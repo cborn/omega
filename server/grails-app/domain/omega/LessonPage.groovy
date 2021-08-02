@@ -18,4 +18,15 @@ class LessonPage {
 
     static hasMany = [questions:Question]
 
+
+    LessonPageExtract extract() {
+
+        LessonPageExtract extract = new LessonPageExtract(this);
+
+        return extract;
+
+
+
+    }
+
 }

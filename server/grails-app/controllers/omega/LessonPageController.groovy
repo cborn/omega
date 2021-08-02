@@ -4,8 +4,12 @@ import grails.converters.JSON
 import grails.gsp.PageRenderer
 import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
+import grails.web.http.HttpHeaders
 import groovy.json.JsonBuilder
 import org.grails.web.json.JSONObject
+
+import java.util.zip.ZipEntry
+import java.util.zip.ZipOutputStream
 
 import static org.springframework.http.HttpStatus.*
 
@@ -129,15 +133,121 @@ class LessonPageController {
     def export(Long id) {
 
         LessonPage page = LessonPage.findById(id);
+        LessonPageExtract extract = page.extract();
+        def pageAsJson = new JsonBuilder(extract).toPrettyString();
 
-        File f = File.createTempDir("lessonPage-"+page.id.toString(),new Date().getTime().toString());
-
-        def pageAsJson = render(template: 'lessonPage', model: [lessonPage:page]) as JSON;
+        Site site = page.lesson.course.term.site;
 
 
-        render pageAsJson as JSON;
+
+        // we've got the data now so lets zip it up :
+
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream()
+        ZipOutputStream zipFile = new ZipOutputStream(baos)
+
+        ByteArrayInputStream bais = new ByteArrayInputStream(pageAsJson.getBytes());
+
+        zipFile.putNextEntry(new ZipEntry("lessonPage.json"))
+
+        byte[] bytes = new byte[1024];
+        int length;
+        while((length = bais.read(bytes)) >= 0 ) {
+            zipFile.write(bytes, 0, length);
+        }
+        zipFile.closeEntry();
+
+        for(QuestionExtract q in extract.questions) {
+
+            this.getQuestionProperties(q, zipFile,site.getAwsUrl(""));
+
+        }
+
+
+
+
+        zipFile.close();
+        bais.close();
+        baos.close();
+
+        response.setHeader("Content-disposition", "filename=\"${page.name + "-extract"}.zip\"")
+        response.setHeader('Access-Control-Expose-Headers', HttpHeaders.CONTENT_DISPOSITION);
+        response.contentType = "application/zip"
+        response.outputStream << baos.toByteArray()
+        response.outputStream.flush()
+
+
+
+    }
+
+    void getQuestionProperties(QuestionExtract q, ZipOutputStream zipFile, String awsUrl) {
+
+        if(!q.getImagePrompt().isNull) {
+            extractProperty(q.getImagePrompt(), zipFile);
+        }
+
+        if(!q.getImageFeedback().isNull) {
+            extractProperty(q.getImageFeedback(), zipFile);
+        }
+
+        if(!q.getAudioPrompt().isNull) {
+            extractProperty(q.getAudioPrompt(), zipFile);
+        }
+
+        if(!q.getAudioFeedback().isNull) {
+            extractProperty(q.getAudioFeedback(), zipFile);
+        }
+
+
+        if(!q.getVideoPrompt().isNull) {
+            extractProperty(q.getVideoPrompt(), zipFile);
+        }
+
+        if(!q.getVideoFeedback().isNull) {
+            extractProperty(q.getVideoFeedback(), zipFile);
+        }
+
+        if(q.custom_properties.containsKey(Question.QuestionPropertyKeys.IMAGES.key_name)) {
+            extractImageList(q.custom_properties.get(Question.QuestionPropertyKeys.IMAGES.key_name).toString(),zipFile,awsUrl + "images/");
+        }
+
+
+    }
+
+    void extractImageList(String images, ZipOutputStream zipFile, String awsUrl) {
+
+        for(String imageKey in images.split("@@")) {
+
+            // Go through properties and download them into the zip file.
+            zipFile.putNextEntry(new ZipEntry(imageKey))
+
+
+            ByteArrayInputStream bais = new ByteArrayInputStream(new URL(awsUrl + imageKey).getBytes())
+
+            byte[] bytes = new byte[1024];
+            int length;
+            while ((length = bais.read(bytes)) >= 0) {
+                zipFile.write(bytes, 0, length);
+            }
+            zipFile.closeEntry();
+        }
+
     }
 
 
+    void extractProperty(PropertyExtract p, ZipOutputStream zipFile) {
 
+        // Go through properties and download them into the zip file.
+        zipFile.putNextEntry(new ZipEntry(p.awsKey))
+
+        ByteArrayInputStream bais = new ByteArrayInputStream(new URL(p.awsUrl).getBytes())
+
+        byte[] bytes = new byte[1024];
+        int length;
+        while ((length = bais.read(bytes)) >= 0) {
+            zipFile.write(bytes, 0, length);
+        }
+        zipFile.closeEntry();
+
+    }
 }
