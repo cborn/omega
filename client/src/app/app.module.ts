@@ -104,6 +104,7 @@ import {UserCreateComponent} from './faculty/users/user-create/user-create.compo
 import {UserEditComponent} from './faculty/users/user-edit/user-edit.component';
 import {SuperAdminAlertCreateComponent} from './superAdmin/super-admin-alert-create/super-admin-alert-create.component';
 import { SanitizeDomContentPipe } from './pipes/sanitize-dom-content.pipe';
+import {RubricGradingDialog} from "./dialogs/rubric-grading-dialog";
 
 // @ts-ignore
 @NgModule({
@@ -178,7 +179,8 @@ import { SanitizeDomContentPipe } from './pipes/sanitize-dom-content.pipe';
         UserCreateComponent,
          UserEditComponent,
          SuperAdminAlertCreateComponent,
-         SanitizeDomContentPipe
+         SanitizeDomContentPipe,
+        RubricGradingDialog
     ],
     entryComponents: [
         ClozeDialogComponent,
@@ -186,7 +188,8 @@ import { SanitizeDomContentPipe } from './pipes/sanitize-dom-content.pipe';
         ConfirmDialogComponent,
         CommentAddingDialogComponent,
         PromptRecordingDialogComponent,
-        RubyPromptEditDialogComponent
+        RubyPromptEditDialogComponent,
+        RubricGradingDialog
     ],
     imports: [
         BrowserModule,

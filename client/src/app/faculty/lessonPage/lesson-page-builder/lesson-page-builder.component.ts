@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {LessonPageBuilderService} from './lesson-page-builder.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Question} from '../../../Model/question';
+import {MatDialog} from '@angular/material';
+import {RubricGradingDialog} from '../../../dialogs/rubric-grading-dialog';
 
 @Component({
     selector: 'app-lesson-page-builder',
@@ -34,10 +36,27 @@ export class LessonPageBuilderComponent implements OnInit {
 
 
 
-    constructor(private lessonBuilderService: LessonPageBuilderService, private router: Router, private route: ActivatedRoute) {
+    constructor(private lessonBuilderService: LessonPageBuilderService,
+                private router: Router,
+                private route: ActivatedRoute,
+                private dialog: MatDialog) {
 
     }
 
+
+    openGradingPopup() {
+
+        const dialogRef = this.dialog.open(RubricGradingDialog, {
+            height: '400px',
+            width: '600px',
+        });
+
+        dialogRef.afterClosed().subscribe(value => {
+            // Closed.
+        });
+
+
+    }
 
     togglePreview() {
         this.preview_hidden = !this.preview_hidden;

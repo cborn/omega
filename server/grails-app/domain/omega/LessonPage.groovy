@@ -4,11 +4,16 @@ class LessonPage {
 
     static constraints = {
         dueDate nullable:true
+        rubricGradebook nullable:true
     }
 
     String name
 
     int pageOrder
+
+    boolean rubricGrading;
+
+    RubricGradebook rubricGradebook;
 
     Date dueDate
 

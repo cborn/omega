@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Grading Configuration</h1>
+<div mat-dialog-content>
+    <mat-radio-group [(ngModel)]="gradingType">
+        <mat-radio-button value="1">Points</mat-radio-button>
+        <mat-radio-button value="2">Rubric</mat-radio-button>
+    </mat-radio-group>
+
+    {{gradingType}}
+</div>
+<div mat-dialog-actions>
+    <button mat-button >Save</button>
+</div>
+

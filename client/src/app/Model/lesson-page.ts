@@ -11,6 +11,7 @@ export class LessonPage extends BaseObject {
     name: string;
     pageOrder: number;
     questions: Question[];
+    rubricGrading: boolean;
 
     status: string;
 

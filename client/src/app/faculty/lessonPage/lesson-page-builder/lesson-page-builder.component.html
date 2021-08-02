@@ -1,3 +1,4 @@
+
 <mat-sidenav-container class="panel-containers">
     <mat-sidenav mode="side" [(opened)]="sidebar_open" class="side-panel">
         <!--// This side panel content will be populated by what ever question is currently selected-->
@@ -8,8 +9,15 @@
     </mat-sidenav>
     <mat-sidenav-content>
 
+        <mat-toolbar color="secondary" *ngIf="lesson$ | async as lesson">
+            <mat-toolbar-row>
+                <button mat-raised-button style="margin-right: 20px;" (click)="openGradingPopup()">Grading</button>
+                <p>{{lesson.rubricGrading ? "Rubric" : "Points"}}</p>
 
-        <mat-grid-list cols="4" rowHeight="100%" style="height: calc(100% + 0px + 1px);">
+            </mat-toolbar-row>
+        </mat-toolbar>
+
+        <mat-grid-list cols="4" rowHeight="100%" style="height: calc(100% + 1px);">
             <mat-grid-tile [colspan]="preview_hidden ? 4 : 2" [rowspan]="1" style="overflow-y: scroll;">
 
 
