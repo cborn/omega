@@ -105,6 +105,7 @@ import {UserEditComponent} from './faculty/users/user-edit/user-edit.component';
 import {SuperAdminAlertCreateComponent} from './superAdmin/super-admin-alert-create/super-admin-alert-create.component';
 import { SanitizeDomContentPipe } from './pipes/sanitize-dom-content.pipe';
 import {RubricGradingDialogComponent} from "./dialogs/rubric-grading-dialog";
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 // @ts-ignore
 @NgModule({
@@ -246,13 +247,14 @@ import {RubricGradingDialogComponent} from "./dialogs/rubric-grading-dialog";
                 ['ruby']
 
             ],
-            plugins : {
+            plugins: {
                 table: {
                     // Some table plugin options, see details below
                     styler: 'ccTable'
                 }
             }
-        })
+        }),
+        DragDropModule
     ],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},
         {

@@ -1,4 +1,3 @@
-
 <mat-sidenav-container class="panel-containers">
     <mat-sidenav mode="side" [(opened)]="sidebar_open" class="side-panel">
         <!--// This side panel content will be populated by what ever question is currently selected-->
@@ -21,13 +20,18 @@
             <mat-grid-tile [colspan]="preview_hidden ? 4 : 2" [rowspan]="1" style="overflow-y: scroll;">
 
 
-                <div *ngIf="lesson$ | async as lesson" style="width: 100%">
-                    <app-lesson-question class="question-item"
-                                         *ngFor="let question of lesson.questions | positionOrder : 'asc'"
-                                         [question]="question" (questionDeleted)="deleteQuestion($event)"
-                                         (questionSelected)="openSidebar($event)" [selectedQuestion]="currentQuestion"
-                                         (click)="currentQuestion = question.id;sidebar_question = question"
-                                         (questionChanged)="changed()" (text_selection)="text_selection($event)" [formatter_displayed]="selectedTextQuestion == question.id ? selectionShown : false"></app-lesson-question>
+                <div *ngIf="lesson$ | async as lesson" style="width: 100%" class="question-list" cdkDropList (cdkDropListDropped)="drop($event)">
+                    <div class="question-drag-item" *ngFor="let question of lesson.questions | positionOrder : 'asc'"
+                         cdkDrag>
+                        <app-lesson-question class="question-item"
+                                             [question]="question" (questionDeleted)="deleteQuestion($event)"
+                                             (questionSelected)="openSidebar($event)"
+                                             [selectedQuestion]="currentQuestion"
+                                             (click)="currentQuestion = question.id;sidebar_question = question"
+                                             (questionChanged)="changed()" (text_selection)="text_selection($event)"
+                                             [formatter_displayed]="selectedTextQuestion == question.id ? selectionShown : false"></app-lesson-question>
+                    </div>
+
                     <div class="add_new_primary_button">
                         <button mat-fab color="primary" (click)="addNewQuestion()"><i class="material-icons">add</i>
                         </button>
@@ -45,17 +49,18 @@
                 </div>
 
 
-                <i class="material-icons explainer" (mouseenter)="explainerContentDisplayed = true" (mouseleave)="explainerContentDisplayed = false">help</i>
+                <i class="material-icons explainer" (mouseenter)="explainerContentDisplayed = true"
+                   (mouseleave)="explainerContentDisplayed = false">help</i>
                 <div class="explainer_content" *ngIf="explainerContentDisplayed">
-                   <span>Keyboard Shortcuts</span>
+                    <span>Keyboard Shortcuts</span>
 
                     <div>
                         <table class="explainer_content_table">
                             <tbody>
-<!--                            <tr>-->
-<!--                                <td><span>@RB</span></td>-->
-<!--                                <td width="150px"><p>Add Ruby text into the title or description of the question.</p></td>-->
-<!--                            </tr>-->
+                            <!--                            <tr>-->
+                            <!--                                <td><span>@RB</span></td>-->
+                            <!--                                <td width="150px"><p>Add Ruby text into the title or description of the question.</p></td>-->
+                            <!--                            </tr>-->
                             <tr>
                                 <td><span>@@</span></td>
                                 <td width="150px"><p>Add a cloze prompt into a cloze question.</p></td>
@@ -67,10 +72,10 @@
 
                 </div>
 
-<!--                                Toggle preview -->
-                <i class="material-icons preview-toggle" (click)="togglePreview()" [style.background-color]="preview_hidden ? '#fff' : '#006064'" [style.color]="preview_hidden ? '#006064' : '#fff'">search</i>
-
-
+                <!--                                Toggle preview -->
+                <i class="material-icons preview-toggle" (click)="togglePreview()"
+                   [style.background-color]="preview_hidden ? '#fff' : '#006064'"
+                   [style.color]="preview_hidden ? '#006064' : '#fff'">search</i>
 
 
             </mat-grid-tile>

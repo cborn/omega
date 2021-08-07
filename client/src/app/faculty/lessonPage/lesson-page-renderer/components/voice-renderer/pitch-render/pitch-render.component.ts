@@ -34,18 +34,18 @@ export class PitchRenderComponent implements OnChanges {
     // define the line
     // model - green
     valueline = d3.line().defined(function (d) {
-        return d.model !== 0;
+        return d['model'] !== 0;
     })
-        .x(d => this.x(d.start))
-        .y(d => this.y(d.model));
+        .x(d => this.x(d['start']))
+        .y(d => this.y(d['model']));
 
     // define the line
     // student - blue
     valueline2 = d3.line().defined(function (d) {
-        return d.student !== 0;
+        return d['student'] !== 0;
     })
-        .x((d) => this.x(d.start))
-        .y((d) => this.y(d.student));
+        .x((d) => this.x(d['start']))
+        .y((d) => this.y(d['student']));
 
 // append the svg obgect to the body of the page
 // appends a 'group' element to 'svg'

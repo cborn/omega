@@ -8,6 +8,7 @@ import {of} from 'rxjs/internal/observable/of';
 import {Question, QuestionType} from '../../../Model/question';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {AuthenticatedHttpClient} from '../../../services/authenticated-http-service.service';
+import {moveItemInArray} from '@angular/cdk/drag-drop';
 
 const BOOLEAN_PROPERTIES = ['stack', 'random', 'description_enabled', 'multi', 'alphabetical', 'prompt_sync', 'show_labels', 'rtl_text', 'show_pitch_viz'];
 const NUMBER_PROPERTIES = ['min', 'max'];
@@ -145,6 +146,25 @@ export class LessonPageBuilderService {
         const lessonPage = this.editingLessonPageSubject.value;
 
         lessonPage.questions.push(new Question(type, lessonPage.questions.length));
+
+        this.sync();
+
+
+    }
+
+    reorder(event) {
+
+        const lessonPage = this.editingLessonPageSubject.value;
+        lessonPage.questions = lessonPage.questions.sort(a => a.position);
+        moveItemInArray(lessonPage.questions, event.previousIndex, event.currentIndex);
+
+        let i = 0;
+        for (const index in lessonPage.questions) {
+            console.log(index, lessonPage.questions[index].position, i);
+            lessonPage.questions[index].position = i++;
+
+
+        }
 
         this.sync();
 

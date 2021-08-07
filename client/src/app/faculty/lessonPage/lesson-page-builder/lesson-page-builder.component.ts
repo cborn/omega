@@ -4,6 +4,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Question} from '../../../Model/question';
 import {MatDialog} from '@angular/material';
 import {RubricGradingDialogComponent} from '../../../dialogs/rubric-grading-dialog';
+import {CdkDragDrop} from '@angular/cdk/drag-drop';
+import {AuthenticatedHttpClient} from '../../../services/authenticated-http-service.service';
 
 @Component({
     selector: 'app-lesson-page-builder',
@@ -39,7 +41,8 @@ export class LessonPageBuilderComponent implements OnInit {
     constructor(private lessonBuilderService: LessonPageBuilderService,
                 private router: Router,
                 private route: ActivatedRoute,
-                private dialog: MatDialog) {
+                private dialog: MatDialog,
+                private http: AuthenticatedHttpClient) {
 
     }
 
@@ -125,5 +128,14 @@ export class LessonPageBuilderComponent implements OnInit {
     deleteQuestion(event) {
         this.lessonBuilderService.deleteQuestion(event);
     }
+
+    drop(event: CdkDragDrop<string[]>) {
+
+        this.lessonBuilderService.reorder(event);
+
+    }
+
+
+
 
 }

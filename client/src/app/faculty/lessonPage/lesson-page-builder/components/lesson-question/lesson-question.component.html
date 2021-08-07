@@ -1,70 +1,81 @@
-<form [ngClass]="{'selected': isSelected()}" class="parent-container">
 
-    <table class="full-width" cellspacing="0">
-        <tr>
-            <td style="vertical-align: top;width: 60px;">
-                <i class="field-required" *ngIf="question.required">*</i>
-                <div [classList]="'icon-q-block icon-q-block-'+question.type + ' material-icons'" (click)="toggleSidebar()"></div>
-            </td>
-            <td>
-                <div class="full-width">
-                    <!--<textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"-->
-                              <!--[(ngModel)]="question.name" placeholder="Type question here"-->
-                              <!--name="question-text" (change)="isChanged()"></textarea>-->
+    <form [ngClass]="{'selected': isSelected()}" class="parent-container">
 
-<!--                    <div contenteditable="true" class="content-editable-block" #field (input)="nameChanged(field,$event)" (mousedown)="markStartPosition($event)" (mouseup)="checkTextSelection($event)" [innerHTML]="question.name | rubyProcessor: question.id : questionNameChanged" dir="auto">-->
+        <table class="full-width" cellspacing="0">
+            <tr>
+                <td style="vertical-align: top;width: 60px;">
+                    <i class="field-required" *ngIf="question.required">*</i>
+                    <div [classList]="'icon-q-block icon-q-block-'+question.type + ' material-icons'"
+                         (click)="toggleSidebar()"></div>
+                </td>
+                <td>
+                    <div class="full-width">
+                        <!--<textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"-->
+                        <!--[(ngModel)]="question.name" placeholder="Type question here"-->
+                        <!--name="question-text" (change)="isChanged()"></textarea>-->
 
-<!--                    </div>-->
+                        <!--                    <div contenteditable="true" class="content-editable-block" #field (input)="nameChanged(field,$event)" (mousedown)="markStartPosition($event)" (mouseup)="checkTextSelection($event)" [innerHTML]="question.name | rubyProcessor: question.id : questionNameChanged" dir="auto">-->
 
-                    <ngx-trumbowyg-editor name="editor" [(ngModel)]="question.name" class="content-editable-block"   #field (input)="nameChanged(field,$event)"></ngx-trumbowyg-editor>
+                        <!--                    </div>-->
 
-
-<!--                    <div contenteditable="true" class="content-editable-block"   ngxTrumbowygEditor [innerHTML]="question.name | rubyProcessor: question.id : questionNameChanged" dir="auto">-->
-
-<!--                    </div>-->
+                        <ngx-trumbowyg-editor name="editor" [(ngModel)]="question.name" class="content-editable-block"
+                                              #field (input)="nameChanged(field,$event)"></ngx-trumbowyg-editor>
 
 
+                        <!--                    <div contenteditable="true" class="content-editable-block"   ngxTrumbowygEditor [innerHTML]="question.name | rubyProcessor: question.id : questionNameChanged" dir="auto">-->
+
+                        <!--                    </div>-->
 
 
-                </div>
+                    </div>
 
-                <mat-form-field class="full-width" *ngIf="question.custom_properties != null && question.custom_properties.description_enabled">
-                    <textarea matInput cdkTextareaAutosize #autosize2="cdkTextareaAutosize" cdkAutosizeMinRows="1" dir="auto"
+                    <mat-form-field class="full-width"
+                                    *ngIf="question.custom_properties != null && question.custom_properties.description_enabled">
+                    <textarea matInput cdkTextareaAutosize #autosize2="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                              dir="auto"
                               [(ngModel)]="question.description" (change)="isChanged()"
-                              placeholder="Write your description here" name="description-text" style="color: #7d7d7d;"></textarea>
-                </mat-form-field>
-            </td>
+                              placeholder="Write your description here" name="description-text"
+                              style="color: #7d7d7d;"></textarea>
+                    </mat-form-field>
+                </td>
 
-        </tr>
-        <tr>
-            <td colspan="2" style="padding-top: 15px" *ngIf="question.type == 11"><app-cloze-question  [question]="question"></app-cloze-question></td>
-            <td colspan="2" style="padding-top: 15px" *ngIf="question.type == 0 || question.type == 9"><app-multiple-select [question]="question" (questionChanged)="isChanged()"></app-multiple-select></td>
-            <td colspan="2" style="padding-top: 15px" *ngIf="question.type == 4"><app-picture-select [question]="question"></app-picture-select></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="padding-top: 15px" *ngIf="question.type == 11">
+                    <app-cloze-question [question]="question"></app-cloze-question>
+                </td>
+                <td colspan="2" style="padding-top: 15px" *ngIf="question.type == 0 || question.type == 9">
+                    <app-multiple-select [question]="question" (questionChanged)="isChanged()"></app-multiple-select>
+                </td>
+                <td colspan="2" style="padding-top: 15px" *ngIf="question.type == 4">
+                    <app-picture-select [question]="question"></app-picture-select>
+                </td>
 
-        </tr>
-        <tr>
-            <td  colspan="2">
-                <div class="aux-buttons" [ngClass]="{'aux-selected': isSelected()}">
-                    <i class="material-icons primary" (click)="toggleSidebar()">edit</i>
-                    <i class="material-icons warn" (click)="delete()">delete</i>
-                </div>
-            </td>
-        </tr>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="aux-buttons" [ngClass]="{'aux-selected': isSelected()}">
+                        <i class="material-icons primary" (click)="toggleSidebar()">edit</i>
+                        <i class="material-icons warn" (click)="delete()">delete</i>
+                    </div>
+                </td>
+            </tr>
 
-    </table>
+        </table>
 
-</form>
+    </form>
 
 
-<div class="formatter" *ngIf="formatter_displayed" [style.left.px]="formatter_position_x" [style.top.px]="formatter_position_y">
-   <table>
-       <tr>
-           <td class="formatter-button" (click)="emboldenText()">
-               <span style="font-weight: bolder">B</span>
-           </td>
-           <td  class="formatter-button">
-               <span style="font-style: italic">i</span>
-           </td>
-       </tr>
-   </table>
-</div>
+    <div class="formatter" *ngIf="formatter_displayed" [style.left.px]="formatter_position_x"
+         [style.top.px]="formatter_position_y">
+        <table>
+            <tr>
+                <td class="formatter-button" (click)="emboldenText()">
+                    <span style="font-weight: bolder">B</span>
+                </td>
+                <td class="formatter-button">
+                    <span style="font-style: italic">i</span>
+                </td>
+            </tr>
+        </table>
+    </div>
