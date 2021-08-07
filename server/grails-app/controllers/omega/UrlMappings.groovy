@@ -41,6 +41,7 @@ class UrlMappings {
         post "/questionResponse/addTextComment" (controller:'questionResponse',action: 'addTextComment')
 
         get "/audioAnalysis/getPitch"(controller: "audioAnalysis", action:"getPitchForRecording")
+        post "/audioAnalysis/compare"(controller: "audioAnalysis", action:"compPitches")
 
 
 

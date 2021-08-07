@@ -41,7 +41,6 @@ class PraatPitchDetection {
             throw e
         }
 
-
         def pitchAnnotations = new AudioAnalysis()
         def pitchBlock = new PraatPitchAnnotation()
         pitchBlock.save()
@@ -50,6 +49,10 @@ class PraatPitchDetection {
 
         for (String line : lines) {
             String[] vals = line.split(" ")
+
+            if(vals.length < 3)
+                continue;
+
             // Output comes in the form of time pitch intensity in .01 second intervals.
             // Check if either pitch or intensity is undefined.
             if (vals[1].contains(UNDEFINED) || vals[2].contains(UNDEFINED)) {

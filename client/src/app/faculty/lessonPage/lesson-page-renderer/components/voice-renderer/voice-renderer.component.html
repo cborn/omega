@@ -6,7 +6,8 @@
     <div *ngIf="isReal">
 
 
-        <audio class="audio-controller" *ngIf="question.prompts?.audioPrompt" [controls]="!question.custom_properties.prompt_sync" [id]="'prompt_'+question.id">
+        <audio class="audio-controller" *ngIf="question.prompts?.audioPrompt"
+               [controls]="!question.custom_properties.prompt_sync" [id]="'prompt_'+question.id">
             <source [src]="question.prompts?.audioPrompt.url">
         </audio>
         <div *ngIf="question.custom_properties.prompt_sync && question.prompts?.audioPrompt">
@@ -27,7 +28,7 @@
                                [style.left.px]="getCommentLocation(comment.location, comment.endLocation)">
                     <mat-chip color="primary" class="comment-bubble-item"
                               (click)="selectComment(comment)">
-                        <p [ngClass]="{'comment-bubble-ope-header':comment.id === selectedComment,'comment-bubble-closed-header':comment.id !== selectedComment}" >{{comment.user.firstname + " " + comment.user.surname}}</p>
+                        <p [ngClass]="{'comment-bubble-ope-header':comment.id === selectedComment,'comment-bubble-closed-header':comment.id !== selectedComment}">{{comment.user.firstname + " " + comment.user.surname}}</p>
 
                         <i class="material-icons comment-bubble-close" (click)="deSelectComment($event)"
                            *ngIf="comment.id === selectedComment">close</i>
@@ -50,8 +51,9 @@
 
 
         </div>
-
-        <app-pitch-render *ngIf="hasRecording && duration != undefined && question.custom_properties.show_pitch_viz"  [recordingId]="rawValue" [duration]="duration"></app-pitch-render>
+        <app-pitch-render *ngIf="hasRecording && duration != undefined && question.custom_properties.show_pitch_viz"
+                          [recordingId]="rawValue" [duration]="duration"
+                          [modelId]="question.prompts.audioPrompt.key" [questionId]="question.id"></app-pitch-render>
 
         <div class="viz-container" [id]="'container_'+ question.id" *ngIf="hasRecording">
 

@@ -79,6 +79,7 @@ export class AuthenticatedHttpClient {
     static COMMENT_TEXT_ADD_URL = environment.BASE_URL + 'questionResponse/addTextComment';
 
     static GET_PITCH = environment.BASE_URL + 'audioAnalysis/getPitch';
+    static COMPARE_PITCHES = environment.BASE_URL + 'audioAnalysis/compare';
 
     static ALERTS_URL = environment.BASE_URL + 'systemAlert';
 

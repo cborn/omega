@@ -47,7 +47,7 @@ mv final_$s.wav student_$4_final.wav
 
 #remove all temp files except the two final files
 shopt -s extglob
-rm -v !("model_$4_final.wav"|"student_$4_final.wav")
+#rm -v !("model_$4_final.wav"|"student_$4_final.wav")
 
 echo "finished"
 exit 0

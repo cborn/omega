@@ -20,10 +20,11 @@ class ComparePitches{
   //Executes the preprocessing bash script which removes noise and silence and the beginning and end of both recoridngs  
     def audioPreprocessing(String f1, String f2, String location,String requestId) {
         try {
-            Process procBuildScript = new ProcessBuilder("src/main/shell/dtw_preproc.sh",f1, f2, location,requestId).inheritIO().start()
+            Process procBuildScript = new ProcessBuilder(System.getenv("LL_DTW_PATH"),f1, f2, location,requestId).inheritIO().start()
             procBuildScript.waitFor()
+
         }catch (Exception e) {
-        throw new Exception(e)
+            throw new Exception(e)
         }
     }
     

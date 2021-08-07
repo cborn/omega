@@ -1,95 +1,164 @@
 import {Component, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {AuthenticatedHttpClient} from '../../../../../../services/authenticated-http-service.service';
+import * as d3 from 'd3';
+
+declare const $;
 
 @Component({
     selector: 'app-pitch-render',
     templateUrl: './pitch-render.component.html',
     styleUrls: ['./pitch-render.component.css']
 })
-export class PitchRenderComponent implements OnInit, OnChanges {
-
-    private canvasContext: CanvasRenderingContext2D;
-    private canvas: HTMLCanvasElement;
+export class PitchRenderComponent implements OnChanges {
 
     loading = false;
 
+    @Input() modelId: string;
     @Input() recordingId: string;
     @Input() duration: number;
+    @Input() questionId: number;
+
 
 
     private audioAnalysis: any;
 
+    width = 800;
+    height = 500;
+    margin = {top: 20, right: 20, bottom: 30, left: 50};
+
+
+// set the ranges
+    x = d3.scaleLinear().range([0, this.width]);
+    y = d3.scaleLinear().range([this.height, 0]);
+
+    // define the line
+    // model - green
+    valueline = d3.line().defined(function (d) {
+        return d.model !== 0;
+    })
+        .x(d => this.x(d.start))
+        .y(d => this.y(d.model));
+
+    // define the line
+    // student - blue
+    valueline2 = d3.line().defined(function (d) {
+        return d.student !== 0;
+    })
+        .x((d) => this.x(d.start))
+        .y((d) => this.y(d.student));
+
+// append the svg obgect to the body of the page
+// appends a 'group' element to 'svg'
+// moves the 'group' element to the top left margin
+    svg;
+
+
     constructor(private http: AuthenticatedHttpClient) {
-    }
-
-    ngOnInit() {
-
-
-        // this.loadData();
 
     }
+
+
+    draw(data) {
+
+
+        this.svg = d3.select('#svg-container').append('svg')
+            .attr('width', this.width + this.margin.left + this.margin.right)
+            .attr('height', this.height + this.margin.top + this.margin.bottom)
+            .append('g').attr('transform',
+                'translate(' + this.margin.left + ',' + this.margin.top + ')');
+
+        data = data[1];
+
+        // format the data
+        data.forEach(function (d) {
+            d.start = +d.start;
+            d.model = +d.model;
+            d.student = +d.student;
+        });
+
+        // sort years ascending
+
+        // Scale the range of the data
+        // @ts-ignore
+        this.x.domain(d3.extent(data, (d) => d.start));
+        // @ts-ignore
+        this.y.domain([0, d3.max(data, (d) => d.model)]);
+
+        // Add the valueline path.
+        this.svg.append('path')
+            .data([data])
+            .attr('class', 'line')
+            .attr('d', this.valueline)
+            .attr('id', 'valueline1');
+        // Add the valueline path.
+        this.svg.append('path')
+            .data([data])
+            .attr('class', 'line')
+            .attr('d', this.valueline2);
+
+        const rectangle = this.svg.append('rect')
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('width', this.width)
+            .attr('height', this.height)
+            .attr('fill', 'none')
+            .attr('stroke', 'black');
+
+
+        // Add the X Axis
+        this.svg.append('g')
+            .attr('transform', 'translate(0,' + this.height + ')')
+            .call(d3.axisBottom(this.x));
+
+        // Add the Y Axis
+        this.svg.append('g')
+            .call(d3.axisLeft(this.y));
+        d3.select('.domain')
+            .remove();
+
+
+        this.svg.append('text')
+            .attr('transform', 'translate(' + (this.width - 100) + ',' + (this.height - 40) + ')')
+            .attr('dy', '.5em')
+            .attr('text-anchor', 'start')
+            .style('fill', 'steelblue')
+            .style('font-size', '20px')
+            .text('Model');
+
+        this.svg.append('text')
+            .attr('transform', 'translate(' + (this.width - 100) + ',' + (this.height - 20) + ')')
+            .attr('dy', '.5em')
+            .attr('text-anchor', 'start')
+            .style('fill', '#e67e22')
+            .style('font-size', '20px')
+            .text('Student');
+
+        this.loading = false;
+    }
+
+// Get the data
 
 
     async loadData() {
-        const promise = await this.http.get(AuthenticatedHttpClient.GET_PITCH + '?key=' + this.recordingId);
+
+        $('#svg-container>svg').remove();
+        this.loading = true;
+
+        const dataToSend = {
+            student: this.recordingId,
+            model: this.modelId
+        };
+
+        const promise = await this.http.post(AuthenticatedHttpClient.COMPARE_PITCHES, dataToSend);
 
         promise.subscribe(data => {
             this.audioAnalysis = data;
-            this.graphPitchAnnotations(this, this.audioAnalysis, this.duration, 'canvas_pitch_' + this.recordingId);
+            this.draw(this.audioAnalysis);
+
         });
     }
 
-
-    graphPitchAnnotations(context, data, duration, canvasId) {
-
-
-        context.canvas = document.getElementById(canvasId);
-
-        let maxPitch = 0;
-        for (let i = 0; i < data.praatPitchAnnotations.length; i++) {
-            const pi = data.praatPitchAnnotations[i];
-            for (let j = 0; j < pi.pitchAnnotations.length; j++) {
-                if (pi.pitchAnnotations[j].pitch > maxPitch) {
-                    maxPitch = pi.pitchAnnotations[j].pitch;
-                }
-            }
-        }
-
-        const heightStep = .8 * (context.canvas.height) / maxPitch;
-        context.canvasContext = context.canvas.getContext('2d');
-        context.canvasContext.clearRect(0, 0, context.canvas.width, context.canvas.height);
-
-        context.canvasContext.strokeStyle = '#42eef4';
-        context.canvasContext.lineWidth = 1.4;
-
-        for (let i = 0; i < data.praatPitchAnnotations.length; i++) {
-
-            const pi = data.praatPitchAnnotations[i];
-            const pitchAnnotations = pi.pitchAnnotations.sort((a, b) => {
-                return a.start - b.start;
-            });
-            context.canvasContext.beginPath();
-
-            const start = pitchAnnotations[0].start;
-            const pitch = pitchAnnotations[0].pitch;
-            const x = context.canvas.width * (start / duration);
-            const y = context.canvas.height - (pitch * heightStep);
-            context.canvasContext.moveTo(x, y);
-
-            for (let j = 0; j < pitchAnnotations.length; j++) {
-
-                const start2 = pitchAnnotations[j].start;
-                const pitch2 = pitchAnnotations[j].pitch;
-                const x2 = Math.round(context.canvas.width * (start2 / duration));
-                const y2 = Math.round(context.canvas.height - (pitch2 * heightStep));
-                context.canvasContext.lineTo(x2, y2);
-            }
-            context.canvasContext.stroke();
-        }
-    };
-
     ngOnChanges(changes: SimpleChanges): void {
-
         this.loadData();
     }
 

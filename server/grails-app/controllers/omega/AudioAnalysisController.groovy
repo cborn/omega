@@ -7,13 +7,9 @@ import grails.converters.*
 import org.grails.web.json.JSONObject
 
 
-class TwoAudioFiles implements grails.validation.Validateable {
+class TwoAudioFiles  {
     String model
     String student
-    static constraints = {
-        filepath1 nullable:true
-        filepath2 nullable:true
-    }
 }
 
 
@@ -38,7 +34,7 @@ class AudioAnalysisController {
 
     def compPitches() {
         def d = request.JSON
-        if (EmptyData(d)) {
+        if (EmptyData(d as JSONObject)) {
             return
         }
         TwoAudioFiles d_info
@@ -78,11 +74,11 @@ class AudioAnalysisController {
         }
         File file2 = AWSUploaderService.download(key2,im2.site);
 
-
+    
         // Now we have the 2 files downloaded to compare.
 
 
-        def location = 'src/temp/' // TODO change this ..
+        def location = System.getenv("LL_DTW_WORKDIR");
 
 
         ComparePitches pitches = new ComparePitches();
