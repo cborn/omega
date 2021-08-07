@@ -66,6 +66,8 @@ dependencies {
 
     compile "com.github.davidmoten:fastdtw:0.1"
 
+    compile 'org.apache.commons:commons-compress:1.21'
+
 }
 
 bootRun {

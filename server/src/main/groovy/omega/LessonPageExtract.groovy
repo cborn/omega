@@ -13,6 +13,8 @@ class LessonPageExtract {
         this.pageOrder = page.pageOrder;
         this.dueDate = page.dueDate;
         this.status = page.status;
+        this.rubricGradebook = rubricGradebook;
+        this.rubricGrading = rubricGrading;
 
         for(def question in page.questions) {
 
@@ -38,4 +40,7 @@ class LessonPageExtract {
 
     List<QuestionExtract> questions = new ArrayList<>();
 
+    boolean rubricGrading;
+
+    RubricGradebook rubricGradebook;
 }

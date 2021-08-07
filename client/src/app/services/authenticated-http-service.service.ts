@@ -43,7 +43,7 @@ export class AuthenticatedHttpClient {
     static LESSON_PAGE_MOVE_UP_URL = environment.BASE_URL + 'lessonPage/moveUp';
     static LESSON_PAGE_MOVE_DOWN_URL = environment.BASE_URL + 'lessonPage/moveDown';
     static LESSON_PAGE_EXPORT_URL = environment.BASE_URL + 'lessonPage/export';
-
+    static LESSON_PAGE_IMPORT_URL = environment.BASE_URL + 'lessonPage/import';
 
 
     static QUESTION_IMAGE_ADD_URL = environment.BASE_URL + 'question/addImage';

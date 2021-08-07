@@ -34,7 +34,7 @@ class AudioAnalysisController {
 
     def compPitches() {
         def d = request.JSON
-        if (EmptyData(d as JSONObject)) {
+        if (EmptyData(d)) {
             return
         }
         TwoAudioFiles d_info

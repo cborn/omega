@@ -52,6 +52,36 @@ class AWSUploaderService {
 
     }
 
+    def uploadWithKey(File req, String prefix, Site site, String AWS_key) {
+
+        String bucket = System.getenv("LL_AWS_BUCKET_NAME")
+
+        if (site) {
+            bucket = site.awsBucketName
+        }
+
+        if (!bucket)
+            bucket = "omegadev"
+
+//        if(!amazonS3Service.listBucketNames().contains(bucket))
+//        {
+//            amazonS3Service.createBucket(bucket);
+//        }
+
+        String path = "${prefix}/${AWS_key}"
+
+        AWSStaticCredentialsProvider credentials = new AWSStaticCredentialsProvider(new BasicAWSCredentials(site.awsAccessKey, site.awsSecretKey))
+        amazonS3Service.client = AmazonS3ClientBuilder.standard()
+                .withRegion(site.awsBucketRegion)
+                .withCredentials(credentials)
+                .build()
+
+        String s3FileUrl = amazonS3Service.storeFile(bucket, path, req)
+
+        return [awsKey: AWS_key, s3FileUrl: s3FileUrl]
+
+    }
+
     def download(String key) {
         return download(key, null)
     }

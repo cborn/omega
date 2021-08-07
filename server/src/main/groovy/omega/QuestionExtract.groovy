@@ -11,15 +11,15 @@ class QuestionExtract {
 
         this.type = question.type;
         this.position = question.position;
-        this.audioFeedback = new PropertyExtract(question.audioFeedback);
+        this.audioFeedback = question.audioFeedback != null ? new PropertyExtract(question.audioFeedback) : null;
         this.required = question.required;
-        this.audioPrompt = new PropertyExtract(question.audioPrompt);
+        this.audioPrompt = question.audioPrompt != null ?new PropertyExtract(question.audioPrompt) : null;
         this.description = question.description;
         this.name = question.name;
-        this.imageFeedback = new PropertyExtract(question.imageFeedback);
-        this.imagePrompt  = new PropertyExtract(question.imagePrompt);
-        this.videoFeedback = new PropertyExtract(question.videoFeedback);
-        this.videoPrompt = new PropertyExtract(question.videoPrompt);
+        this.imageFeedback = question.imageFeedback != null ?new PropertyExtract(question.imageFeedback) : null;
+        this.imagePrompt  = question.imagePrompt != null ?new PropertyExtract(question.imagePrompt) : null;
+        this.videoFeedback = question.videoFeedback != null ?new PropertyExtract(question.videoFeedback) : null;
+        this.videoPrompt = question.videoPrompt != null ?new PropertyExtract(question.videoPrompt) : null;
         this.max_grade = question.max_grade;
         this.custom_properties = question.custom_properties;
 

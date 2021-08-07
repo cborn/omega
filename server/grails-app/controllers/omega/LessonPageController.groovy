@@ -6,17 +6,27 @@ import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 import grails.web.http.HttpHeaders
 import groovy.json.JsonBuilder
+import groovy.json.JsonSlurper
+import org.apache.commons.fileupload.disk.DiskFileItem
 import org.grails.web.json.JSONObject
+import org.springframework.web.multipart.MultipartFile
+import org.springframework.web.multipart.commons.CommonsMultipartFile
 
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+import java.text.SimpleDateFormat
 import java.util.zip.ZipEntry
+import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
 
 import static org.springframework.http.HttpStatus.*
 
-@Secured(['ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_FACULTY','ROLE_GRADER','ROLE_STUDENT'])
+@Secured(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_FACULTY', 'ROLE_GRADER', 'ROLE_STUDENT'])
 class LessonPageController {
 
     LessonPageService lessonPageService
+    AWSUploaderService AWSUploaderService
 
     static responseFormats = ['json', 'xml']
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -24,14 +34,14 @@ class LessonPageController {
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         Lesson lesson = Lesson.get(params.lessonId)
-        respond LessonPage.findAllByLesson(lesson).sort {it.pageOrder}, model:[lessonPageCount: lessonPageService.count()]
+        respond LessonPage.findAllByLesson(lesson).sort { it.pageOrder }, model: [lessonPageCount: lessonPageService.count()]
     }
 
 
     def moveUp(Long id) {
         LessonPage lp = LessonPage.get(id)
         Lesson l = lp.lesson
-        LessonPage lp2 = LessonPage.findByPageOrderAndLesson(lp.pageOrder + 1,l)
+        LessonPage lp2 = LessonPage.findByPageOrderAndLesson(lp.pageOrder + 1, l)
 
         lp.pageOrder++
         lp2.pageOrder--
@@ -45,7 +55,7 @@ class LessonPageController {
             it.clear()
         }
 
-        respond LessonPage.findAllByLesson(l).sort {it.pageOrder}, model:[lessonPageCount: lessonPageService.count()]
+        respond LessonPage.findAllByLesson(l).sort { it.pageOrder }, model: [lessonPageCount: lessonPageService.count()]
 
     }
 
@@ -53,7 +63,7 @@ class LessonPageController {
     def moveDown(Long id) {
         LessonPage lp = LessonPage.get(id)
         Lesson l = lp.lesson
-        LessonPage lp2 = LessonPage.findByPageOrderAndLesson(lp.pageOrder - 1,l)
+        LessonPage lp2 = LessonPage.findByPageOrderAndLesson(lp.pageOrder - 1, l)
 
 
         lp.pageOrder--
@@ -68,7 +78,7 @@ class LessonPageController {
             it.clear()
         }
 
-        respond LessonPage.findAllByLesson(l).sort {it.pageOrder}, model:[lessonPageCount: lessonPageService.count()]
+        respond LessonPage.findAllByLesson(l).sort { it.pageOrder }, model: [lessonPageCount: lessonPageService.count()]
 
     }
 
@@ -88,11 +98,11 @@ class LessonPageController {
         try {
             lessonPageService.save(lessonPage)
         } catch (ValidationException e) {
-            respond lessonPage.errors, view:'create'
+            respond lessonPage.errors, view: 'create'
             return
         }
 
-        respond lessonPage, [status: CREATED, view:"show"]
+        respond lessonPage, [status: CREATED, view: "show"]
     }
 
 
@@ -109,14 +119,14 @@ class LessonPageController {
             try {
                 lessonPageService.save(lessonPage)
             } catch (ValidationException e) {
-                respond lessonPage.errors, view:'edit'
+                respond lessonPage.errors, view: 'edit'
                 return
             }
 
 
         }
 
-        respond lessonPage, [status: OK, view:"show"]
+        respond lessonPage, [status: OK, view: "show"]
     }
 
     def delete(Long id) {
@@ -134,10 +144,9 @@ class LessonPageController {
 
         LessonPage page = LessonPage.findById(id);
         LessonPageExtract extract = page.extract();
-        def pageAsJson = new JsonBuilder(extract).toPrettyString();
+        def pageAsJson = new JsonBuilder(extract).toString();
 
         Site site = page.lesson.course.term.site;
-
 
 
         // we've got the data now so lets zip it up :
@@ -150,20 +159,18 @@ class LessonPageController {
 
         zipFile.putNextEntry(new ZipEntry("lessonPage.json"))
 
-        byte[] bytes = new byte[1024];
+        byte[] bytes = new byte[1];
         int length;
-        while((length = bais.read(bytes)) >= 0 ) {
+        while ((length = bais.read(bytes)) >= 0) {
             zipFile.write(bytes, 0, length);
         }
         zipFile.closeEntry();
 
-        for(QuestionExtract q in extract.questions) {
+        for (QuestionExtract q in extract.questions) {
 
-            this.getQuestionProperties(q, zipFile,site.getAwsUrl(""));
+            this.getQuestionProperties(q, zipFile, site.getAwsUrl(""));
 
         }
-
-
 
 
         zipFile.close();
@@ -177,38 +184,124 @@ class LessonPageController {
         response.outputStream.flush()
 
 
+    }
+
+    def importAction() {
+
+
+        MultipartFile file = params.zipFile;
+
+        println(file);
+
+        ZipInputStream zis = new ZipInputStream(file.getInputStream());
+
+        String id = UUID.randomUUID().toString();
+
+        Path outDir = Paths.get("/opt/praat/import_unwrap/" + id);
+        Files.createDirectories(outDir);
+
+        byte[] buffer = new byte[1];
+
+        List<String> resources = new ArrayList<>();
+
+        ZipEntry entry = null;
+        while ((entry = zis.getNextEntry()) != null) {
+            System.out.println(entry.getName());
+
+            if (!entry.getName().equalsIgnoreCase('lessonPage.json')) {
+                resources.add(entry.getName());
+            }
+
+            Path filePath = outDir.resolve(entry.getName());
+            FileOutputStream fos = new FileOutputStream(filePath.toFile())
+            BufferedOutputStream bos = new BufferedOutputStream(fos, buffer.length)
+
+            int len;
+            while ((len = zis.read(buffer)) > 0) {
+                bos.write(buffer, 0, len);
+            }
+
+        }
+
+        zis.close();
+
+
+        // Now we have extracted the files - lets process them
+
+        File f = new File(outDir.toString() + '/lessonPage.json');
+        def slurper = new JsonSlurper()
+        def jsonText = f.getText()
+        def json = slurper.parseText(jsonText)
+
+        Lesson lesson = Lesson.get(params.id);
+        LessonPage page = new LessonPage(json);
+        page.lesson = lesson;
+
+        page.setDueDate(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(json.dueDate));
+
+        page.pageOrder = lesson.pages.size();
+
+        page.clearErrors();
+
+        for (Question q : page.questions) {
+            q.setPage(page);
+            if (q.audioFeedback != null)
+                q.audioFeedback.site = lesson.course.term.site;
+            if (q.audioPrompt != null)
+                q.audioPrompt.site = lesson.course.term.site;
+            if (q.imagePrompt != null)
+                q.imagePrompt.site = lesson.course.term.site;
+            if (q.imageFeedback != null)
+                q.imageFeedback.site = lesson.course.term.site;
+            if (q.videoPrompt != null)
+                q.videoPrompt.site = lesson.course.term.site;
+
+        }
+
+
+        for (String resource : resources) {
+            File resourceFile = new File(outDir.toString() + '/' + resource);
+            def response = AWSUploaderService.uploadWithKey(resourceFile, "audio", page.lesson.course.term.site, resource);
+        }
+
+        page.save([flush: true, failOnError: true]);
+
+
+        respond page
+
 
     }
 
+
     void getQuestionProperties(QuestionExtract q, ZipOutputStream zipFile, String awsUrl) {
 
-        if(!q.getImagePrompt().isNull) {
+        if (q.getImagePrompt() != null) {
             extractProperty(q.getImagePrompt(), zipFile);
         }
 
-        if(!q.getImageFeedback().isNull) {
+        if (q.getImageFeedback() != null) {
             extractProperty(q.getImageFeedback(), zipFile);
         }
 
-        if(!q.getAudioPrompt().isNull) {
+        if (q.getAudioPrompt() != null) {
             extractProperty(q.getAudioPrompt(), zipFile);
         }
 
-        if(!q.getAudioFeedback().isNull) {
+        if (q.getAudioFeedback() != null) {
             extractProperty(q.getAudioFeedback(), zipFile);
         }
 
 
-        if(!q.getVideoPrompt().isNull) {
+        if (q.getVideoPrompt() != null) {
             extractProperty(q.getVideoPrompt(), zipFile);
         }
 
-        if(!q.getVideoFeedback().isNull) {
+        if (q.getVideoFeedback() != null) {
             extractProperty(q.getVideoFeedback(), zipFile);
         }
 
-        if(q.custom_properties.containsKey(Question.QuestionPropertyKeys.IMAGES.key_name)) {
-            extractImageList(q.custom_properties.get(Question.QuestionPropertyKeys.IMAGES.key_name).toString(),zipFile,awsUrl + "images/");
+        if (q.custom_properties.containsKey(Question.QuestionPropertyKeys.IMAGES.key_name)) {
+            extractImageList(q.custom_properties.get(Question.QuestionPropertyKeys.IMAGES.key_name).toString(), zipFile, awsUrl + "images/");
         }
 
 
@@ -216,7 +309,7 @@ class LessonPageController {
 
     void extractImageList(String images, ZipOutputStream zipFile, String awsUrl) {
 
-        for(String imageKey in images.split("@@")) {
+        for (String imageKey in images.split("@@")) {
 
             // Go through properties and download them into the zip file.
             zipFile.putNextEntry(new ZipEntry(imageKey))
@@ -250,4 +343,6 @@ class LessonPageController {
         zipFile.closeEntry();
 
     }
+
+
 }

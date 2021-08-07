@@ -9,7 +9,7 @@ class PropertyExtract {
 
 
     PropertyExtract(Property property) {
-        if(property) {
+        if(property != null) {
             this.awsKey = property.awsKey;
             this.awsUrl = property.awsUrl;
             this.autoPlay = property.autoPlay;
