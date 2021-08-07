@@ -1,0 +1,8 @@
+import omega.RubricGradebook
+
+model {
+	Iterable<RubricGradebook> rubricGradebookList
+}
+
+json tmpl.rubricGradebook(rubricGradebookList ?: [])
+

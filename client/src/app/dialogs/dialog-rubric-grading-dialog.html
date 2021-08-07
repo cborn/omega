@@ -1,13 +1,60 @@
 <h1 mat-dialog-title>Grading Configuration</h1>
-<div mat-dialog-content>
+<div mat-dialog-content style="height:70%;padding:10px;">
+    <div>
     <mat-radio-group [(ngModel)]="gradingType">
-        <mat-radio-button value="1">Points</mat-radio-button>
+        <mat-radio-button value="1" style="margin-right:15px">Points</mat-radio-button>
         <mat-radio-button value="2">Rubric</mat-radio-button>
     </mat-radio-group>
+    </div>
 
-    {{gradingType}}
+    <div *ngIf="gradingType == '2'">
+<!--        This is rubric so lets show the rubric grading stuff. -->
+        <div *ngIf="!createNew" style="padding: 25px;margin-top: 20px;">
+            <mat-select [(value)]="lessonPage.rubricGradebook"  placeholder="Please select">
+                <mat-option *ngFor="let gradebook of gradebooks" [value]="gradebook">{{gradebook.name}}</mat-option>
+            </mat-select>
+
+            <p>- or -</p>
+
+            <button mat-button (click)="createNewAction()">Create new </button>
+        </div>
+        <div *ngIf="createNew">
+
+            <mat-form-field appearance="standard">
+                <mat-label>Name</mat-label>
+                <input matInput [(ngModel)]="newGradingLabels.name">
+<!--                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>-->
+<!--                <mat-hint>Hint</mat-hint>-->
+            </mat-form-field>
+
+
+            <h4>Grades</h4>
+
+            <div>
+                <mat-form-field appearance="outline" *ngFor="let grade of workingCopy;let index = index">
+<!--                    <mat-label>name</mat-label>-->
+                    <input matInput placeholder="Grade value" [ngModel]="grade" (ngModelChange)="newGradingLabels.grades[index] = $event"/>
+                    <!--                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>-->
+                    <!--                <mat-hint>Hint</mat-hint>-->
+                </mat-form-field>
+            </div>
+
+
+            <button mat-button (click)="newGradingLabels.grades.push(''); workingCopy.push('');">add</button>
+
+
+
+
+
+
+
+        </div>
+
+
+    </div>
+
 </div>
 <div mat-dialog-actions>
-    <button mat-button >Save</button>
+    <button mat-button (click)="save()" >Save</button>
 </div>
 

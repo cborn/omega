@@ -66,6 +66,8 @@ export class AuthenticatedHttpClient {
     static SUBMISSION_URL = environment.BASE_URL + 'submission';
     static SUBMISSION_GRADE_URL = environment.BASE_URL + 'submission/grade';
 
+    static GRADEBOOK_URL =  environment.BASE_URL + 'rubricGradebook';
+
 
     static SUBMISSION_SEEN_URL = environment.BASE_URL + 'submission/seen';
     static USER_URL = environment.BASE_URL + 'user';
@@ -168,9 +170,7 @@ export class AuthenticatedHttpClient {
      * @returns {Observable<T>}
      */
     public async get<T>(endPoint: string, options?: IRequestOptions, disableErrorHandling?: boolean, mute?: boolean, needsTerm?: boolean) {
-        console.log("First - " + (this.headers != null ? this.headers.get("Authorization") : 'No Headers'));
         await this.refreshSessionToken();
-        console.log("Second - " + (this.headers != null ? this.headers.get("Authorization") : 'No Headers'));
 
 
         if (this.sessionManager.displayTerm != null) {

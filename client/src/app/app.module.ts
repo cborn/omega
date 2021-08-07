@@ -104,7 +104,7 @@ import {UserCreateComponent} from './faculty/users/user-create/user-create.compo
 import {UserEditComponent} from './faculty/users/user-edit/user-edit.component';
 import {SuperAdminAlertCreateComponent} from './superAdmin/super-admin-alert-create/super-admin-alert-create.component';
 import { SanitizeDomContentPipe } from './pipes/sanitize-dom-content.pipe';
-import {RubricGradingDialog} from "./dialogs/rubric-grading-dialog";
+import {RubricGradingDialogComponent} from "./dialogs/rubric-grading-dialog";
 
 // @ts-ignore
 @NgModule({
@@ -180,7 +180,7 @@ import {RubricGradingDialog} from "./dialogs/rubric-grading-dialog";
          UserEditComponent,
          SuperAdminAlertCreateComponent,
          SanitizeDomContentPipe,
-        RubricGradingDialog
+        RubricGradingDialogComponent
     ],
     entryComponents: [
         ClozeDialogComponent,
@@ -189,7 +189,7 @@ import {RubricGradingDialog} from "./dialogs/rubric-grading-dialog";
         CommentAddingDialogComponent,
         PromptRecordingDialogComponent,
         RubyPromptEditDialogComponent,
-        RubricGradingDialog
+        RubricGradingDialogComponent
     ],
     imports: [
         BrowserModule,

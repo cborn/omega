@@ -24,6 +24,8 @@ json {
 	page {
 		id submission.page.id
 		name submission.page.name
+		rubricGrading submission.page.rubricGrading
+		rubricGradebook g.render(submission.page.rubricGradebook, [resolveTemplate: true, deep: true])
 	}
 	lesson {
 		id submission.page.lesson.id

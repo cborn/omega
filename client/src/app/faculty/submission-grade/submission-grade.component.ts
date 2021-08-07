@@ -4,7 +4,7 @@ import {SubmissionService} from '../../student/submission/submission.service';
 import {SubmissionResponse} from '../../Model/submissionResponse';
 import {Submission} from '../../Model/submission';
 import {NotificationService} from '../../services/notification.service';
-import {UserService} from "../../services/user.service";
+import {UserService} from '../../services/user.service';
 
 
 enum ViewMode {
@@ -35,18 +35,17 @@ export class SubmissionGradeComponent implements OnInit {
     previousSubmission;
 
 
-    constructor(private userService: UserService,private route: ActivatedRoute, private router: Router, private submissionService: SubmissionService, private notificationService: NotificationService) {
+    constructor(private userService: UserService, private route: ActivatedRoute, private router: Router, private submissionService: SubmissionService, private notificationService: NotificationService) {
     }
-
 
 
     ngOnInit() {
 
         this.userService.list('true', 'student');
         this.route.queryParams.subscribe(params => {
-            if(params.questionIndex != undefined) {
+            if (params.questionIndex != undefined) {
                 this.viewMode = ViewMode.SINGLE;
-                this.visibleQuestion = parseInt(params.questionIndex);
+                this.visibleQuestion = parseInt(params.questionIndex,10);
             }
         });
 
@@ -61,8 +60,8 @@ export class SubmissionGradeComponent implements OnInit {
 
 
         this.submissionService.submission.subscribe(submission => {
-            console.log("submission changed");
-            if(submission.id != undefined) {
+            console.log('submission changed');
+            if (submission.id != undefined) {
                 this.submissionService.loadAllSubmissions(submission.lesson.id);
             }
             this.submission = submission;
@@ -70,7 +69,7 @@ export class SubmissionGradeComponent implements OnInit {
 
         this.submissionService.allSubmissions.subscribe(next => {
             this.calculateNextAndPreviousSubmission();
-        })
+        });
 
 
     }
@@ -80,21 +79,22 @@ export class SubmissionGradeComponent implements OnInit {
     }
 
     previousQuestion() {
-         this.visibleQuestion--;
+        this.visibleQuestion--;
     }
+
     async nextStudent() {
 
-        if(this.nextSubmission != null) {
+        if (this.nextSubmission != null) {
             (await this.submissionService.loadData(this.nextSubmission.id));
-            this.submissionService.markSubmissionAsSeen(this.nextSubmission.id)
+            this.submissionService.markSubmissionAsSeen(this.nextSubmission.id);
 
         }
     }
 
     async previousStudent() {
-        if(this.previousSubmission != null) {
+        if (this.previousSubmission != null) {
             (await this.submissionService.loadData(this.previousSubmission.id));
-            this.submissionService.markSubmissionAsSeen(this.previousSubmission.id)
+            this.submissionService.markSubmissionAsSeen(this.previousSubmission.id);
 
         }
     }
@@ -106,30 +106,30 @@ export class SubmissionGradeComponent implements OnInit {
         this.previousSubmission = null;
         var users = this.userService.serviceSubject.value;
         var thisUser = -1;
-        for(const i in users) {
+        for (const i in users) {
             if (users[i].id === this.submissionService.submissionSubject.value.user.id) {
-                thisUser = parseInt(i);
+                thisUser = parseInt(i,10);
             }
         }
 
 
-          if(thisUser > -1 && thisUser < users.length) {
-              const submissions = this.submissionService.allSubmissionsSubject.value;
-              for(const j in submissions) {
+        if (thisUser > -1 && thisUser < users.length) {
+            const submissions = this.submissionService.allSubmissionsSubject.value;
+            for (const j in submissions) {
 
-                  if(thisUser > 0) {
-                      if (submissions[j].user.id == users[thisUser-1].id) {
-                          this.previousSubmission = submissions[j];
-                      }
-                  }
+                if (thisUser > 0) {
+                    if (submissions[j].user.id == users[thisUser - 1].id) {
+                        this.previousSubmission = submissions[j];
+                    }
+                }
 
-                  if(thisUser < users.length - 1) {
-                      if (submissions[j].user.id == users[thisUser+1].id) {
-                          this.nextSubmission = submissions[j];
-                      }
-                  }
-              }
+                if (thisUser < users.length - 1) {
+                    if (submissions[j].user.id == users[thisUser + 1].id) {
+                        this.nextSubmission = submissions[j];
+                    }
+                }
             }
+        }
     }
 
 
@@ -160,9 +160,9 @@ export class SubmissionGradeComponent implements OnInit {
 
 
     questionUpdated(event) {
-        this.submissionService.softUpdate(event)
+        this.submissionService.softUpdate(event);
 
-        
+
     }
 
     submit(submission: Submission) {
@@ -180,11 +180,14 @@ export class SubmissionGradeComponent implements OnInit {
 
     updateGrade(submission: Submission) {
 
-        submission.grade = 0;
-        for (const response of submission.responses) {
-            submission.grade += response.grade == null ? 0 : response.grade;
-        }
+        if (!submission.page.rubricGrading) {
+            let grade = 0;
+            for (const response of submission.responses) {
+                grade += response.grade == null ? 0 : parseInt(response.grade, 10);
+            }
 
+            submission.grade = grade + '';
+        }
 
     }
 

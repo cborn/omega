@@ -10,7 +10,7 @@ export class SubmissionResponse extends BaseObject {
 
     comments: ResponseComment[];
 
-    grade: number;
+    grade: string;
 
     status:any;
 

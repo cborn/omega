@@ -12,7 +12,7 @@ class Submission {
 
     SubmissionStatus status = SubmissionStatus.DRAFT
 
-    Integer grade
+    String grade
 
 
     Optional<String> verifyCompleteness() {

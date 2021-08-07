@@ -7,7 +7,7 @@ class QuestionResponse {
 
     Question question
 
-    Integer grade
+    String grade
 
     QuestionStatus status = QuestionStatus.AWAITING_REVIEW
 

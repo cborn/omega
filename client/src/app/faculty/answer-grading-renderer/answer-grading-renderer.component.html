@@ -37,9 +37,15 @@
 
     <div class="grading-section">
         <div class="grade-input">
-            <div>
-                <input matInput placeholder="grade" class="classic-input-style" type="number" [(ngModel)]="response.grade" (change)="gradeChanged($event)" min="0" [max]="response.question.max_grade">
-                <mat-hint>Maximum grade that can be given is {{response.question.max_grade}}</mat-hint>
+            <div style="width: 106px;">
+                <input matInput placeholder="grade" class="classic-input-style" type="number"  *ngIf="!page.rubricGrading" [(ngModel)]="response.grade" (change)="gradeChanged($event)" min="0" [max]="response.question.max_grade">
+                <mat-select placeholder="Grade" *ngIf="page.rubricGrading" [(value)]="response.grade" (change)="gradeChanged($event)">
+                    <mat-option *ngFor="let option of page.rubricGradebook.grades" [value]="option">{{option}}</mat-option>
+                </mat-select>
+
+<!--                {{response.grade}}-->
+
+                <mat-hint *ngIf="!page.rubricGrading">Maximum grade that can be given is {{response.question.max_grade}}</mat-hint>
             </div>
         </div>
 

@@ -1,0 +1,8 @@
+import omega.RubricGradebook
+import omega.Site
+
+model {
+	RubricGradebook rubricGradebook
+}
+
+json tmpl.rubricGradebook(rubricGradebook)

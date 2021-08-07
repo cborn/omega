@@ -3,7 +3,7 @@ import {LessonPageBuilderService} from './lesson-page-builder.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Question} from '../../../Model/question';
 import {MatDialog} from '@angular/material';
-import {RubricGradingDialog} from '../../../dialogs/rubric-grading-dialog';
+import {RubricGradingDialogComponent} from '../../../dialogs/rubric-grading-dialog';
 
 @Component({
     selector: 'app-lesson-page-builder',
@@ -46,9 +46,12 @@ export class LessonPageBuilderComponent implements OnInit {
 
     openGradingPopup() {
 
-        const dialogRef = this.dialog.open(RubricGradingDialog, {
+        const dialogRef = this.dialog.open(RubricGradingDialogComponent, {
             height: '400px',
             width: '600px',
+            data: {
+                page: this.lessonBuilderService.editingLessonPageSubject.value
+            }
         });
 
         dialogRef.afterClosed().subscribe(value => {

@@ -32,7 +32,7 @@
                         <span [innerHTML]="getQuestionName(response.question.id)"></span>
                         <div class="spacer-medium"></div>
                         <div class="response-card-question-item-answer">
-                            <app-answer-grading-renderer [question]="getQuestion(response.question.id)"
+                            <app-answer-grading-renderer [page]="submission.page" [question]="getQuestion(response.question.id)"
                                                          [response]="response" (gradeChanged)="updateGrade(submission)" (QuestionChanged)="questionUpdated($event)"></app-answer-grading-renderer>
                         </div>
                     </div>
@@ -42,9 +42,15 @@
         </div>
         <div class="submit-button-container" *ngIf="viewMode == ViewMode.FULL || (submission.responses.length == visibleQuestion + 1)">
             <button mat-raised-button class="submit-button" (click)="submit(submission)">Submit</button>
-            <label for="grade-input" style="margin-left: 15px;margin-top:10px">Grade: </label>
-            <input id="grade-input" style="margin-left: 15px; width: 10%;" matInput class="classic-input-style" [(ngModel)]="submission.grade" placeholder="Grade">
-            <label for="grade-input" style="margin-left: 15px;margin-top:10px">out of {{getMaxGrade()}} </label>
+            <label for="grade-input" style="margin-left: 15px;margin-top:10px" >Grade: </label>
+            <input id="grade-input" style="margin-left: 15px; width: 10%;" matInput class="classic-input-style" [(ngModel)]="submission.grade"  *ngIf="!submission.page.rubricGrading" placeholder="Grade">
+            <label for="grade-input" style="margin-left: 15px;margin-top:10px" *ngIf="!submission.page.rubricGrading">out of {{getMaxGrade()}} </label>
+
+            <mat-select placeholder="grade" *ngIf="submission.page.rubricGrading" [(ngModel)]="submission.grade">
+                <mat-option *ngFor="let option of submission.page.rubricGradebook.grades" [value]="option">{{option}}</mat-option>
+            </mat-select>
+
+
         </div>
     </mat-card>
 </div>
