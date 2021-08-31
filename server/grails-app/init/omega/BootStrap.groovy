@@ -188,7 +188,7 @@ class BootStrap {
 
             if(adminUser == null)
             {
-                adminUser = new User(username: 'admin', password: '12345', email: "admin@email.com").save(flush: true)
+                adminUser = new User(username: 'admin', password: 'test', firstname: "Administrator", surname: "User").save(failOnError: true)
 
                 UserRole.create adminUser, superAdminRole
 

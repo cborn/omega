@@ -214,7 +214,7 @@ class LtiController {
 
 
         } else {
-            render "Signature of the Tool configured in moodle does not match the signature of this application. Please check your moodle secret key configuration and ensure it matches this sites configuration."
+            render "Signature of the Tool configured in moodle does npot match the signature of this aplication. Please check your moodle secret key configuration and ensure it matches this sites configuration."
 
         }
     }
