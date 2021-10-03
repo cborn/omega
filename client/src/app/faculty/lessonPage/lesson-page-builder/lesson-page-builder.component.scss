@@ -23,6 +23,16 @@
   background-color: white;
 }
 
+.question-drag-item {
+  position: relative;
+}
+
+.drag-handle {
+  position: absolute;
+  bottom: 12px;
+  right: 15px;
+}
+
 .explainer {
   bottom: 12px;
   position: fixed;
