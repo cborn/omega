@@ -46,7 +46,11 @@ class AWSUploaderService {
                 .withCredentials(credentials)
                 .build()
 
-        String s3FileUrl = amazonS3Service.storeMultipartFile(bucket, path, req)
+        amazonS3Service.storeMultipartFile(bucket, path, req)
+
+        // Generate the path ourselves because the aws client gets the site url from the config files.
+        String s3FileUrl = "https://s3-${site.getAwsBucketRegion()}.amazonaws.com/${bucket}/${path}"
+
 
         return [awsKey: AWS_key, s3FileUrl: s3FileUrl]
 
@@ -76,7 +80,10 @@ class AWSUploaderService {
                 .withCredentials(credentials)
                 .build()
 
-        String s3FileUrl = amazonS3Service.storeFile(bucket, path, req)
+        amazonS3Service.storeFile(bucket, path, req)
+
+        // Generate the path ourselves because the aws client gets the site url from the config files.
+        String s3FileUrl = "https://s3-${site.getAwsBucketRegion()}.amazonaws.com/${bucket}/${path}"
 
         return [awsKey: AWS_key, s3FileUrl: s3FileUrl]
 
