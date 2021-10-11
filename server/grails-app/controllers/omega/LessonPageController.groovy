@@ -197,7 +197,7 @@ class LessonPageController {
 
         String id = UUID.randomUUID().toString();
 
-        Path outDir = Paths.get("/opt/praat/import_unwrap/" + id);
+        Path outDir = Paths.get(System.getenv("LL_IMPORT_DIR") + id);
         Files.createDirectories(outDir);
 
         byte[] buffer = new byte[1];
