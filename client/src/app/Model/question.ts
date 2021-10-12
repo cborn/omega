@@ -46,18 +46,18 @@ export class Question extends BaseObject {
 
     static questionTypeList() {
 
-        return [{name: 'Block Text', value: QuestionType.BLOCK_TEXT},
-            {name: 'Yes / No', value: QuestionType.BOOLEAN},
+        return [{name: 'Recording', value: QuestionType.VOICE},
+            {name: 'Block Text', value: QuestionType.BLOCK_TEXT},
+            {name: 'Multiple Choice', value: QuestionType.MULTI_CHOICE},
             {name: 'Cloze', value: QuestionType.CLOZE},
+            {name: 'Short Text', value: QuestionType.SHORT_TEXT},
             {name: 'Date', value: QuestionType.DATE},
             {name: 'Dropdown', value: QuestionType.DROPDOWN},
             {name: 'Long Text', value: QuestionType.LONG_TEXT},
-            {name: 'Multiple Choice', value: QuestionType.MULTI_CHOICE},
             {name: 'Number', value: QuestionType.NUMBER},
             {name: 'Picture Choice', value: QuestionType.PICTURE_CHOICE},
             {name: 'Scale', value: QuestionType.SCALE},
-            {name: 'Short Text', value: QuestionType.SHORT_TEXT},
-            {name: 'Recording', value: QuestionType.VOICE}];
+            {name: 'Yes / No', value: QuestionType.BOOLEAN}];
 
     }
 
