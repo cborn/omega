@@ -121,7 +121,7 @@ export class PitchRenderComponent implements OnChanges {
             .attr('transform', 'translate(' + (this.width - 100) + ',' + (this.height - 40) + ')')
             .attr('dy', '.5em')
             .attr('text-anchor', 'start')
-            .style('fill', 'steelblue')
+            .style('fill', 'none')
             .style('font-size', '20px')
             .text('Model');
 
@@ -129,7 +129,7 @@ export class PitchRenderComponent implements OnChanges {
             .attr('transform', 'translate(' + (this.width - 100) + ',' + (this.height - 20) + ')')
             .attr('dy', '.5em')
             .attr('text-anchor', 'start')
-            .style('fill', '#e67e22')
+            .style('fill', 'none')
             .style('font-size', '20px')
             .text('Student');
 
