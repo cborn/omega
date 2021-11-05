@@ -68,18 +68,18 @@ class LtiController {
 
         // firstly lets get the site..
 
-        Site site = Site.findByMoodleUrlIlike("%"+request.getHeader("Origin")+"%")
-        if(!site) {
+        Site site = Site.findByMoodleUrlIlike("%" + request.getHeader("Origin") + "%")
+        if (!site) {
             render "Could not find the site associated to this moodle instance. Please make sure a site with the moodle url : " + request.getHeader("Origin") + " exists."
             return
         }
 
         log.debug("Getting the current term")
-        Term currentTerm = Term.findByCurrentAndSite(true,site)
+        Term currentTerm = Term.findByCurrentAndSite(true, site)
 
 
         String proxyUrl = System.getenv("LL_PROXY_URL");
-        if(!proxyUrl)
+        if (!proxyUrl)
             proxyUrl = request.getRequestURL().toString();
 
 
@@ -97,10 +97,9 @@ class LtiController {
             if (toLogin == null) {
                 log.debug("failed to find an existing user for moodle id  - " + params.user_id)
                 log.debug("creating a new user from moodle.")
-                LTIService.createMoodleUser(site,fullMap)
+                LTIService.createMoodleUser(site, fullMap)
                 toLogin = User.findByMoodle_user_id(params.user_id)
-            } else if(!toLogin.getUsername().equalsIgnoreCase(params.lis_person_contact_email_primary))
-            {
+            } else if (!toLogin.getUsername().equalsIgnoreCase(params.lis_person_contact_email_primary)) {
                 // check the username is still the same ...
                 toLogin.setUsername(params.lis_person_contact_email_primary);
                 toLogin.setFirstname(params.lis_person_name_given);
@@ -126,21 +125,21 @@ class LtiController {
 
                         // With the lesson - enroll the user.
 
-                        if(!Enrollment.findByUserAndTermAndLesson(toLogin,currentTerm,lesson)) {
+                        if (!Enrollment.findByUserAndTermAndLesson(toLogin, currentTerm, lesson)) {
                             // we're not already enrolled onto this lesson so go and do it.
-                            new Enrollment(user:toLogin,lesson: lesson,term: currentTerm).save(flush:true);
+                            new Enrollment(user: toLogin, lesson: lesson, term: currentTerm).save(flush: true);
                         }
 
                         if (fullMap.get("custom_direct_link_id")) {
                             LessonPage lessonPage = LessonPage.get(Long.parseLong(fullMap.get("custom_direct_link_id")))
                             if (lessonPage) {
-                                
+
                                 // TODO respond url seems to be something important so work out what this is...
                                 log.debug("Contents of lis_outcome_service_url - " + fullMap.get("lis_outcome_service_url"))
                                 log.debug("contents of lis_result_sourcedid - " + fullMap.get("lis_result_sourcedid"))
-                                Submission submission = Submission.findByUserAndPageAndTerm(toLogin,lessonPage,currentTerm)
-                                if(!submission)
-                                    submission = new Submission(page: lessonPage,user: toLogin,term: currentTerm,drafted: new Date()).save(flush:true)
+                                Submission submission = Submission.findByUserAndPageAndTerm(toLogin, lessonPage, currentTerm)
+                                if (!submission)
+                                    submission = new Submission(page: lessonPage, user: toLogin, term: currentTerm, drafted: new Date()).save(flush: true)
 
                                 url = "/student/submission/" + submission.id
 
@@ -177,9 +176,9 @@ class LtiController {
                         if (fullMap.get("custom_direct_link_id")) {
                             LessonPage lesson = LessonPage.get(Long.parseLong(fullMap.get("custom_direct_link_id")))
                             if (lesson) {
-                                url = "lessonPage/builder/" + fullMap.get("custom_direct_link_id")
-                            }
-                            else {
+                                url = "/faculty/gradebook/" + lesson.lessonId;
+//                                url = "lessonPage/builder/" + fullMap.get("custom_direct_link_id")
+                            } else {
                                 url = "/lesson/index/" + course.id
                             }
                         } else {
@@ -210,7 +209,7 @@ class LtiController {
 
             String baseUrl = System.getenv("LL_APPLICATION_URL")
 
-            redirect(url: baseUrl+"/#/otp?key=" + toLogin.getOtp() + "&resumeRoute=" + url)
+            redirect(url: baseUrl + "/#/otp?key=" + toLogin.getOtp() + "&resumeRoute=" + url)
 
 
         } else {
