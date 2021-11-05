@@ -51,6 +51,7 @@
 
 
         </div>
+        <small>pitch V</small>
         <app-pitch-render *ngIf="hasRecording && duration != undefined && question.custom_properties.show_pitch_viz && question.prompts && question.prompts.audioPrompt"
                           [recordingId]="rawValue" [duration]="duration"
                           [modelId]="question.prompts.audioPrompt.key" [questionId]="question.id"></app-pitch-render>

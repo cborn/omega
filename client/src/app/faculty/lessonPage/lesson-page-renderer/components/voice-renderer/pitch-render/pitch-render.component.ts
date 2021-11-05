@@ -18,6 +18,7 @@ export class PitchRenderComponent implements OnChanges {
     @Input() duration: number;
     @Input() questionId: number;
 
+    containerLabel: string;
 
 
     private audioAnalysis: any;
@@ -54,14 +55,13 @@ export class PitchRenderComponent implements OnChanges {
 
 
     constructor(private http: AuthenticatedHttpClient) {
-
     }
 
 
     draw(data) {
 
-
-        this.svg = d3.select('#svg-container').append('svg')
+        console.log(this.containerLabel);
+        this.svg = d3.select(this.containerLabel).append('svg')
             .attr('width', this.width + this.margin.left + this.margin.right)
             .attr('height', this.height + this.margin.top + this.margin.bottom)
             .append('g').attr('transform',
@@ -141,7 +141,8 @@ export class PitchRenderComponent implements OnChanges {
 
     async loadData() {
 
-        $('#svg-container>svg').remove();
+        console.log(this.containerLabel + ' load');
+        $(this.containerLabel + '>svg').remove();
         this.loading = true;
 
         const dataToSend = {
@@ -159,6 +160,7 @@ export class PitchRenderComponent implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
+        this.containerLabel = '#svg-container-' + this.questionId;
         this.loadData();
     }
 
