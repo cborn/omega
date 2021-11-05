@@ -237,8 +237,9 @@ class LessonPageController {
         LessonPage page = new LessonPage(json);
         page.lesson = lesson;
 
-        page.setDueDate(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(json.dueDate));
-
+        if(json.dueDate != null) {
+            page.setDueDate(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(json.dueDate));
+        }
         page.pageOrder = lesson.pages.size();
 
         page.clearErrors();
