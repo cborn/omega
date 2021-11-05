@@ -26,8 +26,8 @@
         <app-voice-renderer [submission]="submission" [isReal]="!builderView" (answerChanged)="answerChanged($event)" *ngIf="question.type == 10" class="answer-input answer-input-wide" [question]="question" [response]="getResponseForQuestion(question)"> </app-voice-renderer>
     <app-cloze-renderer  (answerChanged)="answerChanged($event)" *ngIf="question.type == 11" [question]="question" [response]="getResponseForQuestion(question)"> </app-cloze-renderer>
 
-    <div *ngIf="question && getResponseForQuestion(question) != null && question.prompts?.audioFeedback">
-        <h3>Feedback</h3>
+    <div *ngIf="question && (getResponseForQuestion(question) != null  || question.type == 3 ) && question.prompts?.audioFeedback">
+        <h3 *ngIf="question.type !== 3">Feedback</h3>
         <audio class="audio-controller" controls *ngIf="question.prompts?.audioFeedback">
             <source [src]="question.prompts?.audioFeedback.url">
         </audio>
