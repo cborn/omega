@@ -8,6 +8,7 @@ package audioanalysis
 import com.fastdtw.dtw.FastDTW
 import com.fastdtw.timeseries.*
 import com.fastdtw.util.Distances
+import omega.AudioComparisonPoint
 import org.grails.web.json.JSONArray
 import org.grails.web.json.JSONException
 import org.grails.web.json.JSONObject
@@ -59,16 +60,16 @@ class ComparePitches{
 
     class SimArray
     {
-        JSONArray arr_two
-        double sc
+        List<AudioComparisonPoint> dtw_distances
+        double similarity_score
         
-        SimArray(JSONArray a, double s){
-            arr_two = a
-            sc = s
+        SimArray(List<AudioComparisonPoint> a, double s){
+            dtw_distances = a
+            similarity_score = s
         }
     }
 
-    def similarityScore(pitch1, pitch2, location){
+    def similarityScore(pitch1, pitch2){
         //troughout this file, 1 refers to model and 2 refers to student
         def str_p1 = pitch1.toString()
         def str_p2 = pitch2.toString()
@@ -163,7 +164,6 @@ class ComparePitches{
 
         def time_ratio = max_start1.div(max_start2) 
         time_ratio = Math.round(time_ratio*100)/100
-        println time_ratio
         
         for (Float pitchKey2 : pitches2_fin.keySet()){
             def key_rescaled = Math.round((pitchKey2*time_ratio)*100)/100
@@ -187,7 +187,6 @@ class ComparePitches{
         def s = student.build()
         
         double dtwDist = FastDTW.compare(m, s, 10, Distances.EUCLIDEAN_DISTANCE).getDistance()
-        println dtwDist
         
         def json_arr = CreateJsonArray(pitches1_fin, pitches2_rescaled)
 
@@ -196,7 +195,8 @@ class ComparePitches{
 
 
     def CreateJsonArray(pitches1_fin, pitches2_rescaled){
-        List<Map<String, Object>> Json = new ArrayList<Map<String, Object>>()
+//        List<Map<String, Object>> Json = new ArrayList<Map<String, Object>>()
+        List<AudioComparisonPoint> points = new ArrayList<>();
         
         /*
          I had problems earlier with variable types - the two lines of code below are
@@ -208,60 +208,81 @@ class ComparePitches{
         
         //creates a combined array of the form {timestamp, model pitch, student pitch}
         for (int i=0; i<pitches1_fin.size();i++){
-            Map<String, Object> t = new HashMap<String, Object>()
+            AudioComparisonPoint point = new AudioComparisonPoint();
+//            Map<String, Object> t = new HashMap<String, Object>()
             def st1 = pitches1_fin.keySet().sort()[i]
-            t.put("start",Math.round(st1 * 100.0) / 100.00)
+//            t.put("start",Math.round(st1 * 100.0) / 100.00)
+            point.start = Math.round(st1 * 100.0) / 100.00;
+
             def p1 = pitches1_fin[st1]
-            t.put("model",Math.round(p1 * 100.0) / 100.00)
+//            t.put("model",Math.round(p1 * 100.0) / 100.00)
+            point.model = Math.round(p1 * 100.0) / 100.00
     
             if (pitches2_rescaled.keySet().contains(st1)){
                 def p2 = pitches2_rescaled[st1]
-                t.put("student",Math.round(p2 * 100.0) / 100.00)
+//                t.put("student",Math.round(p2 * 100.0) / 100.00)
+                point.student = (long) (Math.round(p2 * 100.0f) / 100l);
                 pitches2_rescaled.keySet().remove(st1)
             }
             else{
-            t.put("student",0)  
+//            t.put("student",0)
+                point.student = 0;
             }
-            
-            Json.add(t) 
+
+            points.add(point);
+//            Json.add(t)
             
         }
             
         for (int j=0; j<pitches2_rescaled.keySet().size();j++){
-            Map<String, Object> t2 = new HashMap<String, Object>()
+            AudioComparisonPoint point = new AudioComparisonPoint();
+//            Map<String, Object> t2 = new HashMap<String, Object>()
             def st2 = pitches2_rescaled.keySet().sort()[j]
-            t2.put("start",Math.round(st2 * 100.0) / 100.00)
-            t2.put("model",0)
+            point.start = Math.round(st2 * 100.0) / 100.00
+//            t2.put("start",Math.round(st2 * 100.0) / 100.00)
+//            t2.put("model",0)
+            point.model = 0;
             def p_st = pitches2_rescaled[st2]
-            t2.put("student",Math.round(p_st * 100.0) / 100.00)
-            
-            Json.add(t2)
+//            t2.put("student",Math.round(p_st * 100.0) / 100.00)
+            point.student = Math.round(p_st * 100.0) / 100.00
+
+//            Json.add(t2)
+            points.add(point);
             }
         
-        Comparator<Map<String, Object>> mapComparator = new Comparator<Map<String, Object>>() {
-        int compare(Map<String, Object> m1, Map<String, Object> m2) {
-        return m1.get("start").compareTo(m2.get("start"))
-        }
-        }
+//        Comparator<Map<String, Object>> mapComparator = new Comparator<Map<String, Object>>() {
+//            int compare(Map<String, Object> m1, Map<String, Object> m2) {
+//                return m1.get("start").compareTo(m2.get("start"))
+//            }
+//        }
         
         //sorts by array by time
-        Collections.sort(Json, mapComparator)
+//        Collections.sort(Json, mapComparator)
+//        points.sort {a,b ->
+//            return a.start <=> b.start;
+//        }
 
-        JSONArray json_arr=new JSONArray()
-        for (Map<String, Object> map : Json) {
-            JSONObject json_obj=new JSONObject()
-            for (Map.Entry<String, Object> entry : map.entrySet()) {
-                String key = entry.getKey()
-                Object value = entry.getValue()
-                try {
-                    json_obj.put(key,value)
-                } catch (JSONException e) {
-                    e.printStackTrace()
-                }                           
-            }
-            json_arr.put(json_obj)
-        }
-        return json_arr
+
+
+//        JSONArray json_arr=new JSONArray()
+//        for (Map<String, Object> map : Json) {
+//            JSONObject json_obj=new JSONObject()
+//            for (Map.Entry<String, Object> entry : map.entrySet()) {
+//                String key = entry.getKey()
+//                Object value = entry.getValue()
+//                try {
+//                    json_obj.put(key,value)
+//                } catch (JSONException e) {
+//                    e.printStackTrace()
+//                }
+//            }
+//            json_arr.put(json_obj)
+//        }
+
+        return points;
+
+//        return json_arr;
+
     }
 }
 

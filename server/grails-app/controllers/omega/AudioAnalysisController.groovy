@@ -4,6 +4,7 @@ import audioanalysis.ComparePitches
 import audioanalysis.PraatPitchDetection
 import grails.plugin.springsecurity.annotation.Secured
 import grails.converters.*
+import net.minidev.json.JSONArray
 import org.grails.web.json.JSONObject
 
 
@@ -37,9 +38,9 @@ class AudioAnalysisController {
         if (EmptyData(d)) {
             return
         }
-        TwoAudioFiles d_info
+        TwoAudioFiles source_filenames
         try {
-            d_info = new TwoAudioFiles(d)
+            source_filenames = new TwoAudioFiles(d)
         } catch (Exception e){
             log.error("invalid parameters", e)
             render(status: 400, contentType: 'application/json'){
@@ -48,8 +49,18 @@ class AudioAnalysisController {
             return
         }
 
-        def arr_simsc = compareTwo(d_info.model, d_info.student)
-        return ReturnAll3(arr_simsc)
+
+        AudioComparison comparison = AudioComparison.findByModelAndSource(source_filenames.model,source_filenames.student);
+
+        if(comparison) {
+            return ReturnAll3(comparison)
+        }
+
+        def arr_simsc = compareTwo(source_filenames.model, source_filenames.student);
+
+        comparison = new AudioComparison(model: source_filenames.model,source: source_filenames.student, score: arr_simsc[0] as double, dtw_distances: arr_simsc[1] as List<AudioComparisonPoint>).save(flush:true);
+
+        return ReturnAll3(comparison)
     }
 
     /*******************************************************
@@ -88,10 +99,10 @@ class AudioAnalysisController {
         //println pitch1
         def pitch2 = getPitchJson(location + 'student_'+requestId+'_final.wav')
         //println pitch2
-        def out = pitches.similarityScore(pitch1, pitch2, location)
+        def out = pitches.similarityScore(pitch1, pitch2)
 
-        def vals = out.arr_two
-        def sim_score = out.sc
+        def vals = out.dtw_distances
+        def sim_score = out.similarity_score
 
         return [sim_score, vals]
     }
@@ -114,8 +125,15 @@ class AudioAnalysisController {
     }
 
 
-    def ReturnAll3(l) {
+    def ReturnAll3(comparison) {
         //returns (1) similarity score, (2&3) rescaled pitches and intensities for the model & student recordings
+
+        def points = comparison.dtw_distances.sort {a,b ->
+            return a.start <=> b.start;
+        }
+        def l = [comparison.score,points];
+
+
         JSON.use('deep') {
             render l as JSON
         }

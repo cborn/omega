@@ -102,12 +102,12 @@ class SubmissionController {
         def response = AWSUploaderService.upload(params.audio_data, "audio",site)
 
 
-//        AudioProperty audio = new AudioProperty()
-//        audio.setAutoPlay(false)
-//        audio.setAwsKey(response.awsKey)
-//        audio.setAwsUrl(response.s3FileUrl)
-//        audio.setSite(site);
-//        audio.save(flush:true,failOnError:true)
+        AudioProperty audio = new AudioProperty()
+        audio.setAutoPlay(false)
+        audio.setAwsKey(response.awsKey)
+        audio.setAwsUrl(response.s3FileUrl)
+        audio.setSite(site);
+        audio.save(flush:true,failOnError:true)
 
 
 //        QuestionResponse.withNewTransaction {
