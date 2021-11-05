@@ -4,4 +4,8 @@ model {
 	LessonPage lessonPage
 }
 
-json g.render(lessonPage, [resolveTemplate: true,deep: true, excludes: ["lesson"]])
+json g.render(lessonPage, [resolveTemplate: true,deep: true, excludes: ["lesson"]]) {
+	lesson {
+		id lessonPage.lessonId
+	}
+}

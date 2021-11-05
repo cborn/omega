@@ -13,6 +13,9 @@ export class LessonPage extends BaseObject {
     questions: Question[];
     rubricGrading: boolean;
     rubricGradebook?: any;
+    lesson?: {
+        id: number;
+    };
 
     status: string;
 
@@ -22,10 +25,8 @@ export class LessonPage extends BaseObject {
 
 
     public isPublished() {
-         return this.status === LessonPage.STATUS_PUBLISHED;
+        return this.status === LessonPage.STATUS_PUBLISHED;
     }
-
-
 
 
 }

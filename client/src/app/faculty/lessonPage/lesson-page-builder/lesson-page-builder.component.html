@@ -10,6 +10,7 @@
 
         <mat-toolbar color="secondary" *ngIf="lesson$ | async as lesson">
             <mat-toolbar-row>
+                <button mat-raised-button style="margin-right: 20px;" (click)="navBack()">Back</button>
                 <button mat-raised-button style="margin-right: 20px;" (click)="openGradingPopup()">Grading</button>
                 <p>{{lesson.rubricGrading ? "Rubric" : "Points"}}</p>
 

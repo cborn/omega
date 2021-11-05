@@ -36,14 +36,17 @@ export class LessonPageBuilderComponent implements OnInit {
     selectionShown = false;
 
 
-
-
     constructor(private lessonBuilderService: LessonPageBuilderService,
                 private router: Router,
                 private route: ActivatedRoute,
                 private dialog: MatDialog,
                 private http: AuthenticatedHttpClient) {
 
+    }
+
+
+    navBack() {
+        this.router.navigate(['lessonPage', 'index', this.lessonBuilderService.editingLessonPageSubject.value.lesson.id]);
     }
 
 
@@ -120,8 +123,8 @@ export class LessonPageBuilderComponent implements OnInit {
     }
 
     text_selection(event) {
-       this.selectedTextQuestion = event.id;
-       this.selectionShown = event.shown;
+        this.selectedTextQuestion = event.id;
+        this.selectionShown = event.shown;
     }
 
 
@@ -134,8 +137,6 @@ export class LessonPageBuilderComponent implements OnInit {
         this.lessonBuilderService.reorder(event);
 
     }
-
-
 
 
 }
