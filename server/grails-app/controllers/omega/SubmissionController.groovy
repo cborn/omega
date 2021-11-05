@@ -102,15 +102,15 @@ class SubmissionController {
         def response = AWSUploaderService.upload(params.audio_data, "audio",site)
 
 
-        AudioProperty audio = new AudioProperty()
-        audio.setAutoPlay(false)
-        audio.setAwsKey(response.awsKey)
-        audio.setAwsUrl(response.s3FileUrl)
-        audio.setSite(site);
-        audio.save(flush:true,failOnError:true)
+//        AudioProperty audio = new AudioProperty()
+//        audio.setAutoPlay(false)
+//        audio.setAwsKey(response.awsKey)
+//        audio.setAwsUrl(response.s3FileUrl)
+//        audio.setSite(site);
+//        audio.save(flush:true,failOnError:true)
 
 
-        QuestionResponse.withNewTransaction {
+//        QuestionResponse.withNewTransaction {
 
             if (!questionResponse) {
                 questionResponse = new QuestionResponse(question: Question.get(params.questionId),submission: Submission.get(params.submissionId))
@@ -126,8 +126,8 @@ class SubmissionController {
 
             questionResponse.response = response.awsKey
 
-            questionResponse.save(failOnError: true, flush: true)
-        }
+//            questionResponse.save(failOnError: true, flush: true)
+//        }
 
 
         respond questionResponse, [status: OK, view: "addRecording"]

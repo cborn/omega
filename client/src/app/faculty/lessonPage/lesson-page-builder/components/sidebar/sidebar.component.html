@@ -90,7 +90,6 @@
                     (click)="deletePromptRecording()">REMOVE
             </button>
         </div>
-        {{question.prompts?.audioPrompt | json}}
         <audio class="audio-controller" style="width: 100%;" controls="" *ngIf="question.prompts?.audioPrompt">
             <source [src]="question.prompts?.audioPrompt.url">
         </audio>

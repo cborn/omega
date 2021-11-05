@@ -151,7 +151,7 @@ export class VoiceRendererComponent extends BaseRenderComponent implements OnIni
         const promise = await this.http.post<any>(AuthenticatedHttpClient.RECORDING_ADD_URL + '?submissionId=' + this.submission.id + '&questionId=' + this.question.id, form);
 
         promise.subscribe(value1 => {
-            this.answerDidChange(this.question, value1.message,true);
+            this.answerDidChange(this.question, value1.message, true);
             // this.setValue(value1.message);
         });
 
