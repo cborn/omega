@@ -228,7 +228,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
         NgxTrumbowygModule.withConfig({
             lang: 'hu',
             svgPath: '/images/icons.svg',
-            removeformatPasted: true,
+            removeformatPasted: false,
             autogrow: true,
             btnsDef: {
                 image: {
@@ -238,6 +238,9 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
             },
             btns: [
                 ['viewHTML'],
+                ['template'],
+                ['fontfamily'],
+                ['indent', 'outdent'],
                 ['strong', 'em', 'del'],
                 ['foreColor', 'backColor'],
                 ['superscript', 'subscript'],
@@ -245,13 +248,38 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
                 ['unorderedList', 'orderedList'],
                 ['table'],
                 ['ruby']
-
             ],
             plugins: {
                 table: {
                     // Some table plugin options, see details below
-                    styler: 'ccTable'
+                    row: 4,
+                    column: 4,
+                    styler: 'table'
+                },
+                allowTagsFromPaste: {
+                    allowedTags: ['h3', 'p', 'br']
+                },
+                fontFamily: {
+                    fontList: [
+                        {name: 'Arial', family: 'Arial, Helvetica, sans-serif'},
+                        {name: 'Open Sans', family: '\'Open Sans\', sans-serif'}
+                    ]
+                },
+                fontsize: {
+                    sizeList: [
+                        '12px', '14px', '16px'
+                    ]
                 }
+                /*templates: [
+                    {
+                        name: 'Verb Chart',
+                        html: '<table style="border:1px solid black"><tr><td>Column 1</td><td>Column 2</td></tr><tr><td></td><td></td></tr></table>'
+                    },
+                    {
+                        name: 'Template 2',
+                        html: '<p>this is another template</p>'
+                    }
+                ]*/
             }
         }),
         DragDropModule

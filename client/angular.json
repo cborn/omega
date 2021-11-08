@@ -21,7 +21,8 @@
               "src/favicon.ico"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "./node_modules/trumbowyg/dist/plugins/table/ui/trumbowyg.table.min.css"
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.js",
@@ -29,9 +30,11 @@
               "./node_modules/trumbowyg/dist/plugins/ruby/trumbowyg.ruby.js",
               "./node_modules/trumbowyg/dist/plugins/colors/trumbowyg.colors.js",
               "./node_modules/trumbowyg/dist/plugins/base64/trumbowyg.base64.js",
-              "./node_modules/trumbowyg/dist/plugins/table/trumbowyg.table.js"
-
-
+              "./node_modules/trumbowyg/dist/plugins/table/trumbowyg.table.js",
+              "./node_modules/trumbowyg/dist/plugins/fontfamily/trumbowyg.fontfamily.min.js",
+              "./node_modules/trumbowyg/dist/plugins/fontsize/trumbowyg.fontsize.min.js",
+              "./node_modules/trumbowyg/dist/plugins/indent/trumbowyg.indent.min.js",
+              "./node_modules/trumbowyg/dist/plugins/allowtagsfrompaste/trumbowyg.allowtagsfrompaste.min.js"
             ]
           },
           "configurations": {

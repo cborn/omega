@@ -50,7 +50,7 @@ export class Question extends BaseObject {
             {name: 'Block Text', value: QuestionType.BLOCK_TEXT},
             {name: 'Multiple Choice', value: QuestionType.MULTI_CHOICE},
             {name: 'Cloze', value: QuestionType.CLOZE},
-            {name: 'Short Text', value: QuestionType.SHORT_TEXT},
+            {name: 'Short Answer', value: QuestionType.SHORT_TEXT},
             {name: 'Date', value: QuestionType.DATE},
             {name: 'Dropdown', value: QuestionType.DROPDOWN},
             {name: 'Long Text', value: QuestionType.LONG_TEXT},
