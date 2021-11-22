@@ -33,8 +33,24 @@
 
         <h2 *ngIf="lesson">Lesson: {{lesson.name}}</h2>
         <h5 *ngIf="lesson?.due">Due On: {{lesson.due | date}}</h5>
+        <mat-accordion class="example-headers-align">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title *ngIf="lesson">{{lesson.name}}</mat-panel-title>
+                    <mat-panel-description>{{lesson.pages.length}} pages</mat-panel-description>
+                </mat-expansion-panel-header>
+                <ng-container *ngFor="let page of pages">
+                <mat-nav-list *ngIf="(page.status == 'PUBLISHED')">
+                    <mat-list-item>
+                        <a mat-list-item *ngIf="page.submissions == null || page.submissions.length == 0" (click)=startNewSubmission(page)>{{page.name}}</a>
+                        <a mat-list-item *ngIf="page.submissions != null && page.submissions.length > 0" (click)=continueSubmission(page.submissions[0].id)>{{page.name}}</a>
+                    </mat-list-item>
 
-        <mat-grid-list cols="6" rowHeight="180px" >
+                </mat-nav-list>
+                </ng-container>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <!--<mat-grid-list cols="6" rowHeight="180px" >
             <ng-container *ngFor="let page of pages">
             <mat-grid-tile *ngIf="page.status == 'PUBLISHED'">
 
@@ -50,13 +66,13 @@
 
 
                         <mat-card-title class="single-line">{{"("+ (page.pageOrder + 1) + ") " + page.name}}</mat-card-title>
-                        <mat-card-subtitle class="single-line">{{page.questions.length}} Questions</mat-card-subtitle>
+&lt;!&ndash;                        <mat-card-subtitle class="single-line">{{page.questions.length}} Questions</mat-card-subtitle>&ndash;&gt;
                     </mat-card-header>
-                    <mat-card-content *ngIf="page.submissions">
+           &lt;!&ndash;         <mat-card-content *ngIf="page.submissions">
                         <p *ngIf="page.submissions.length == 0">No submissions</p>
                         <p *ngIf="page.submissions.length > 0 && !hasGradedPage(page)">{{page.submissions[0].status.substring(0,1) + page.submissions[0].status.substring(1,page.submissions[0].status.length).toLocaleLowerCase()}} <span *ngIf="hasGradedPage(page)">- {{page.submissions[0].grade}}</span></p>
                         <p *ngIf="page.submissions.length > 0 && hasGradedPage(page)">You recieved the grade <b>{{page.submissions[0].grade}}</b></p>
-                    </mat-card-content>
+                    </mat-card-content>&ndash;&gt;
                     <mat-card-actions >
                         <button mat-button *ngIf="page.submissions == null || page.submissions.length == 0" (click)="startNewSubmission(page)">START</button>
                         <button mat-button *ngIf="page.submissions != null && page.submissions.length > 0 && !hasCompletedPage(page)" (click)="continueSubmission(page.submissions[0].id)">CONTINUE</button>
@@ -70,7 +86,7 @@
 
             </mat-grid-tile>
             </ng-container>
-        </mat-grid-list>
+        </mat-grid-list>-->
 
 
 
