@@ -10,7 +10,12 @@ export class Question extends BaseObject {
             cloze_text: ''
         };
         this.position = position;
-        this.max_grade = 1;
+        if (type !== QuestionType.BLOCK_TEXT){
+            this.max_grade = 1;
+        } else {
+            this.max_grade = 0;
+        }
+
 
         if (name) {
             this.name = name;
@@ -49,15 +54,15 @@ export class Question extends BaseObject {
         return [{name: 'Recording', value: QuestionType.VOICE},
             {name: 'Block Text', value: QuestionType.BLOCK_TEXT},
             {name: 'Multiple Choice', value: QuestionType.MULTI_CHOICE},
-            {name: 'Cloze', value: QuestionType.CLOZE},
             {name: 'Short Answer', value: QuestionType.SHORT_TEXT},
-            {name: 'Date', value: QuestionType.DATE},
-            {name: 'Dropdown', value: QuestionType.DROPDOWN},
-            {name: 'Long Text', value: QuestionType.LONG_TEXT},
-            {name: 'Number', value: QuestionType.NUMBER},
-            {name: 'Picture Choice', value: QuestionType.PICTURE_CHOICE},
-            {name: 'Scale', value: QuestionType.SCALE},
-            {name: 'Yes / No', value: QuestionType.BOOLEAN}];
+            {name: 'Long Text', value: QuestionType.LONG_TEXT}];
+            //{name: 'Date', value: QuestionType.DATE},
+            //{name: 'Dropdown', value: QuestionType.DROPDOWN},
+            //{name: 'Cloze', value: QuestionType.CLOZE},
+            //{name: 'Number', value: QuestionType.NUMBER},
+            //{name: 'Picture Choice', value: QuestionType.PICTURE_CHOICE},
+            //{name: 'Scale', value: QuestionType.SCALE},
+            //{name: 'Yes / No', value: QuestionType.BOOLEAN}];
 
     }
 
