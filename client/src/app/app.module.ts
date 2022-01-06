@@ -106,7 +106,6 @@ import {SuperAdminAlertCreateComponent} from './superAdmin/super-admin-alert-cre
 import { SanitizeDomContentPipe } from './pipes/sanitize-dom-content.pipe';
 import {RubricGradingDialogComponent} from "./dialogs/rubric-grading-dialog";
 import {DragDropModule} from '@angular/cdk/drag-drop';
-import {MatExpansionModule} from "@angular/material/expansion";
 
 // @ts-ignore
 @NgModule({
@@ -227,41 +226,28 @@ import {MatExpansionModule} from "@angular/material/expansion";
         MatTooltipModule,
         MatMenuModule,
         NgxTrumbowygModule.withConfig({
-            lang: 'en',
+            lang: 'hu',
             svgPath: '/images/icons.svg',
             removeformatPasted: false,
             autogrow: true,
-            imageWidthModalEdit: true,
-            semantic: false,
             btnsDef: {
                 image: {
                     dropdown: ['insertImage', 'base64'],
                     ico: 'insertImage'
-                },
-                align: {
-                    dropdown: ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
-                    ico: 'justifyLeft'
-                },
-                indent: {
-                    title: 'Indent',
-                    ico: 'indent'
-                },
-                outdent: {
-                    title: 'Outdent',
-                    ico: 'outdent'
                 }
             },
             btns: [
                 ['viewHTML'],
-                ['fontfamily', 'fontsize'],
-                ['foreColor', 'backColor'],
-                ['align'],
+                ['template'],
+                ['fontfamily'],
+                ['indent', 'outdent'],
                 ['strong', 'em', 'del'],
-                ['unorderedList', 'orderedList'],
+                ['foreColor', 'backColor'],
                 ['superscript', 'subscript'],
-                ['image', 'link', 'ruby'],
+                ['image'],
+                ['unorderedList', 'orderedList'],
                 ['table'],
-                ['removeformat']
+                ['ruby']
             ],
             plugins: {
                 table: {
@@ -271,20 +257,18 @@ import {MatExpansionModule} from "@angular/material/expansion";
                     styler: 'table'
                 },
                 allowTagsFromPaste: {
-                    allowedTags: ['a', 'b', 'bdi', 'br', 'em', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'i', 'pre',
-                        'rp', 'rt', 'ruby', 'small', 'span', 'strong', 'sub', 'u', 'var', 'wbr', 'img', 'map', 'area',
-                        'canvas', 'figcaption', 'figure', 'picture', 'audio', 'source', 'track', 'video', 'ul', 'ol',
-                        'li', 'dl', 'dt', 'dd', 'table', 'caption', 'th', 'tr', 'td', 'thead', 'tbody', 'tfoot', 'col',
-                        'colgroup', 'style', 'div', 'p', 'form', 'input', 'textarea', 'button', 'select', 'optgroup',
-                        'option', 'label', 'fieldset', 'legend', 'iframe', 'link', 'embed', 'object', 'param',
-                        'x-small','x-large', 'medium']
+                    allowedTags: ['h3', 'p', 'br']
                 },
-                resizimg: {
-                    minSize: 64,
-                    step: 16,
+                fontFamily: {
+                    fontList: [
+                        {name: 'Arial', family: 'Arial, Helvetica, sans-serif'},
+                        {name: 'Open Sans', family: '\'Open Sans\', sans-serif'}
+                    ]
                 },
                 fontsize: {
-                    allowCustomSize: false
+                    sizeList: [
+                        '12px', '14px', '16px'
+                    ]
                 }
                 /*templates: [
                     {
@@ -298,8 +282,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
                 ]*/
             }
         }),
-        DragDropModule,
-        MatExpansionModule
+        DragDropModule
     ],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},
         {
