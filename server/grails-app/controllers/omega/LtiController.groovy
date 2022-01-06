@@ -32,6 +32,8 @@ class LtiController {
 
         if (params.key != null) {
             User userToLogin = User.findByOtpIsNotNullAndOtp(params.key)
+            println(userToLogin);
+
             if (userToLogin != null) {
                 userToLogin.setOtp(null)
                 userToLogin.save(flush: true)
@@ -131,7 +133,15 @@ class LtiController {
                         }
 
                         if (fullMap.get("custom_direct_link_id")) {
-                            LessonPage lessonPage = LessonPage.get(Long.parseLong(fullMap.get("custom_direct_link_id")))
+                            Lesson this_lesson = Lesson.get(Long.parseLong(fullMap.get("custom_direct_link_id")))
+                            if (this_lesson) {
+                                url = "/student/lesson" + lesson.id
+                                // somehow get lesson id to filter component on course-selection.
+                            } else {
+                                url = "/student/course" + course.id
+                            }
+
+                            /*LessonPage lessonPage = LessonPage.get(Long.parseLong(fullMap.get("custom_direct_link_id")))
                             if (lessonPage) {
 
                                 // TODO respond url seems to be something important so work out what this is...
@@ -145,8 +155,8 @@ class LtiController {
 
 
                             } else {
-                                url = "/lesson/index/" + course.id
-                            }
+                                url = "/student/course/" + course.id
+                            }*/
                         } else {
 //                                Student student = toLogin.student
 //                                if (!course.results.find { it.student.id == student.id }) {
@@ -157,7 +167,7 @@ class LtiController {
 //                                    course.save(flush: true, failOnError: true)
 //                                }
 //                                redirect(controller: "course", action: "show", params: [courseId: course.id])
-                            url = "/lesson/index/" + course.id
+                            url = "/student/course/" + course.id
                         }
 
 
