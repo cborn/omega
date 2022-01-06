@@ -265,10 +265,9 @@ class LessonPageController {
             def response = AWSUploaderService.uploadWithKey(resourceFile, "audio", page.lesson.course.term.site, resource);
         }
 
-        page.save([flush: true, failOnError: true]);
+        page.save([flush: true, failOnError: false]);
 
-
-        respond page
+        respond page, [status: OK, view: "index"]
 
 
     }
