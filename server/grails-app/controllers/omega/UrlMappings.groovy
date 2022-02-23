@@ -29,6 +29,8 @@ class UrlMappings {
         get "/lessonPage/export/$id" (controller:'lessonPage', action: 'export')
         post "/lessonPage/import/$id" (controller:'lessonPage', action: 'importAction')
 
+        get "/enrollment/$id" (controller: "enrollment", action:"index")
+        get "/enrollment/show/$id"(controller: "enrollment", action:"show")
         get "/enrollment/grades/$id"(controller: "enrollment", action:"grades")
         get "/term/promote/$id"(controller: "term", action:"promoteToCurrent")
 

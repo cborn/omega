@@ -96,7 +96,7 @@ environments:
             driverClassName: org.postgresql.Driver
             username: ${LL_DB_USERNAME}
             password: ${LL_DB_PASSWORD}
-            dbCreate: create-drop
+            dbCreate: update
             url: jdbc:postgresql://${LL_DB_HOSTNAME}:${LL_DB_PORT}/${LL_DB_NAME}
             properties:
                 timeBetweenEvictionRunsMillis: 5000

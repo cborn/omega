@@ -107,6 +107,7 @@ import { SanitizeDomContentPipe } from './pipes/sanitize-dom-content.pipe';
 import {RubricGradingDialogComponent} from "./dialogs/rubric-grading-dialog";
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatExpansionModule} from "@angular/material/expansion";
+import {User} from "./Model/user";
 
 // @ts-ignore
 @NgModule({
@@ -241,14 +242,6 @@ import {MatExpansionModule} from "@angular/material/expansion";
                 align: {
                     dropdown: ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
                     ico: 'justifyLeft'
-                },
-                indent: {
-                    title: 'Indent',
-                    ico: 'indent'
-                },
-                outdent: {
-                    title: 'Outdent',
-                    ico: 'outdent'
                 }
             },
             btns: [

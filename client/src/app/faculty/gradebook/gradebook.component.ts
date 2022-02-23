@@ -7,6 +7,7 @@ import {SubmissionResponse} from '../../Model/submissionResponse';
 import {User} from '../../Model/user';
 import {AuthenticatedHttpClient} from '../../services/authenticated-http-service.service';
 import {NotificationService} from '../../services/notification.service';
+import {any} from "codelyzer/util/function";
 
 @Component({
     selector: 'app-gradebook',
@@ -18,6 +19,7 @@ export class GradebookComponent implements OnInit {
     users$ = this.userService.serviceObservable;
     submissions$ = this.submissionService.allSubmissions;
     pages$ = this.lessonPageService.serviceObservable;
+
     lessonId;
 
     grades = {};
@@ -42,10 +44,12 @@ export class GradebookComponent implements OnInit {
     }
 
     loadData() {
-        this.userService.list('true', 'student');
+
+        this.userService.getEnrolled(this.lessonId);
+        //this.userService.list('true', 'student');
         this.submissionService.loadAllSubmissions(this.lessonId);
         this.lessonPageService.list(this.lessonId, 'lessonId');
-
+        console.log(this.users$, 'loadData')
         this.loadGrades();
     }
 
@@ -54,15 +58,15 @@ export class GradebookComponent implements OnInit {
         const promise = await this.http.get(AuthenticatedHttpClient.ENROLLMENT_GRADES_URL + this.lessonId, {}, false, true, true);
 
         promise.subscribe(value => {
-
             if(value.hasOwnProperty("ignore"))
                 return;
-
             for (const i in value) {
                 this.grades[value[i].user.id] = value[i].grade;
             }
-
         });
+
+        return promise;
+
     }
 
     getResponseForPageAndQuestion(page, user, question) {
@@ -163,6 +167,4 @@ export class GradebookComponent implements OnInit {
 
 
     }
-
-
 }
