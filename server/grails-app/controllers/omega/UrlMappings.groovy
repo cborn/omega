@@ -13,6 +13,7 @@ class UrlMappings {
 
         post "/user/saveAsSuperAdmin"(controller:'user', action:'saveAsSuperAdmin')
 
+        get "/course/$id"(controller:'course', action:'index')
 
         post "/question/addImage/$id" (controller:'question', action: 'addImage')
         delete "/question/removeImage/$id" (controller:'question', action: 'removeImage')
