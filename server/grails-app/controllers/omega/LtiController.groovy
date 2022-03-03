@@ -130,6 +130,8 @@ class LtiController {
                         if (!Enrollment.findByUserAndTermAndLesson(toLogin, currentTerm, lesson)) {
                             // we're not already enrolled onto this lesson so go and do it.
                             new Enrollment(user: toLogin, lesson: lesson, term: currentTerm).save(flush: true);
+                            //add enrollment to user object
+
                         }
 
                         if (fullMap.get("custom_direct_link_id")) {

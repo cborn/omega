@@ -7,7 +7,7 @@ import {SubmissionResponse} from '../../Model/submissionResponse';
 import {User} from '../../Model/user';
 import {AuthenticatedHttpClient} from '../../services/authenticated-http-service.service';
 import {NotificationService} from '../../services/notification.service';
-import {any} from "codelyzer/util/function";
+import {EnrollmentService} from "../../enrollment/enrollment.service";
 
 @Component({
     selector: 'app-gradebook',
@@ -25,7 +25,11 @@ export class GradebookComponent implements OnInit {
     grades = {};
 
 
-    constructor(private userService: UserService, private submissionService: SubmissionService, private notificationService: NotificationService, private lessonPageService: LessonPageService, private rt: ActivatedRoute, private http: AuthenticatedHttpClient) {
+    constructor(private userService: UserService, private submissionService: SubmissionService,
+                private notificationService: NotificationService, private lessonPageService: LessonPageService,
+                private rt: ActivatedRoute, private http: AuthenticatedHttpClient,
+                private enrollmentService: EnrollmentService<any>) {
+
     }
 
     ngOnInit() {
@@ -45,11 +49,18 @@ export class GradebookComponent implements OnInit {
 
     loadData() {
 
-        this.userService.getEnrolled(this.lessonId);
         //this.userService.list('true', 'student');
+        this.enrollmentService.getEnrollment(this.lessonId, true);
+        //can't read properties of above call/???
+
+
+        // need to model after base service for handler thingy
+        /*for (let e of enrolls){
+            this.userService.get(e.user_id, handler, 'true')
+        }*/
         this.submissionService.loadAllSubmissions(this.lessonId);
         this.lessonPageService.list(this.lessonId, 'lessonId');
-        console.log(this.users$, 'loadData')
+
         this.loadGrades();
     }
 
@@ -58,15 +69,15 @@ export class GradebookComponent implements OnInit {
         const promise = await this.http.get(AuthenticatedHttpClient.ENROLLMENT_GRADES_URL + this.lessonId, {}, false, true, true);
 
         promise.subscribe(value => {
+
             if(value.hasOwnProperty("ignore"))
                 return;
+
             for (const i in value) {
                 this.grades[value[i].user.id] = value[i].grade;
             }
+
         });
-
-        return promise;
-
     }
 
     getResponseForPageAndQuestion(page, user, question) {
