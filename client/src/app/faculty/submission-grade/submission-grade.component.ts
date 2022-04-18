@@ -52,7 +52,9 @@ export class SubmissionGradeComponent implements OnInit {
         this.route.paramMap.subscribe(async value => {
             if (value.get('submissionId')) {
                 (await this.submissionService.loadData(value.get('submissionId')));
-                this.submissionService.markSubmissionAsSeen(value.get('submissionId'));
+                if (this.viewMode == ViewMode.FULL) {
+                    this.submissionService.markSubmissionAsSeen(value.get('submissionId'));
+                }
             } else {
                 this.router.navigate(['faculty/index']);
             }
@@ -60,7 +62,7 @@ export class SubmissionGradeComponent implements OnInit {
 
 
         this.submissionService.submission.subscribe(submission => {
-            console.log('submission changed');
+            console.log(submission, 'submission changed');
             if (submission.id != undefined) {
                 this.submissionService.loadAllSubmissions(submission.lesson.id);
             }
@@ -203,7 +205,11 @@ export class SubmissionGradeComponent implements OnInit {
     }
 
     toggleViewMode() {
-        this.viewMode = ViewMode.FULL;
+        if (this.viewMode == ViewMode.FULL) {
+            this.viewMode = ViewMode.SINGLE;
+        } else {
+            this.viewMode = ViewMode.FULL;
+        }
     }
 
 
