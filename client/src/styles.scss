@@ -54,7 +54,7 @@ a {
 
 .standard-table-width {
   width: 100vw;
-  max-width: fit-content;
+  max-width: 75%;
 }
 
 .centered {
@@ -448,11 +448,11 @@ body {
 
 #valueline1{
   stroke: steelblue ;
-  fill: steelblue;
+  fill: transparent;
 }
 
 .line {
-  fill:  #e67e22;
+  fill:  transparent;
   stroke: #e67e22;
   stroke-width: 3px;
 }
