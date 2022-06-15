@@ -241,14 +241,6 @@ import {MatExpansionModule} from "@angular/material/expansion";
                 align: {
                     dropdown: ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
                     ico: 'justifyLeft'
-                },
-                indent: {
-                    title: 'Indent',
-                    ico: 'indent'
-                },
-                outdent: {
-                    title: 'Outdent',
-                    ico: 'outdent'
                 }
             },
             btns: [

@@ -33,7 +33,6 @@
               "./node_modules/trumbowyg/dist/plugins/table/trumbowyg.table.js",
               "./node_modules/trumbowyg/dist/plugins/fontfamily/trumbowyg.fontfamily.min.js",
               "./node_modules/trumbowyg/dist/plugins/fontsize/trumbowyg.fontsize.min.js",
-              "./node_modules/trumbowyg/dist/plugins/indent/trumbowyg.indent.min.js",
               "./node_modules/trumbowyg/dist/plugins/allowtagsfrompaste/trumbowyg.allowtagsfrompaste.min.js"
             ]
           },
