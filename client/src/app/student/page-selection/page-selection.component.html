@@ -37,13 +37,13 @@
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title *ngIf="lesson">{{lesson.name}}</mat-panel-title>
-                    <mat-panel-description>{{lesson.pages.length}} pages</mat-panel-description>
+                    <mat-panel-description>{{lesson.pages.length}} pages<mat-icon></mat-icon></mat-panel-description>
                 </mat-expansion-panel-header>
                 <ng-container *ngFor="let page of pages">
                 <mat-nav-list *ngIf="(page.status == 'PUBLISHED')">
                     <mat-list-item>
-                        <a mat-list-item *ngIf="page.submissions == null || page.submissions.length == 0" (click)=startNewSubmission(page)>{{page.name}}</a>
-                        <a mat-list-item *ngIf="page.submissions != null && page.submissions.length > 0" (click)=continueSubmission(page.submissions[0].id)>{{page.name}}</a>
+                        <a mat-list-item *ngIf="page.submissions == null || page.submissions.length == 0" (click)=startNewSubmission(page)>{{page.name}}<mat-icon>mic</mat-icon></a>
+                        <a mat-list-item *ngIf="page.submissions != null && page.submissions.length > 0" (click)=continueSubmission(page.submissions[0].id)>{{page.name}}<mat-icon>{{getIconForStatus(page.submissions[0].status)}}</mat-icon></a>
                     </mat-list-item>
 
                 </mat-nav-list>
