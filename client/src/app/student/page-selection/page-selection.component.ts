@@ -141,4 +141,18 @@ export class PageSelectionComponent implements OnInit {
 
     }
 
+    getIconForStatus(status: string) {
+        switch (status) {
+            case 'SUBMITTED' :
+                return 'done_outline';
+            case 'SEEN' :
+                return 'done_outline';
+            case 'COMMENTS_PENDING' :
+                return 'mark_unread_chat_alt';
+            case 'COMMENTS_RESPONDED' :
+                return 'quickreply';
+            case 'GRADED' :
+                return 'grade';
+        }
+    }
 }

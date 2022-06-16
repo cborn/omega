@@ -33,17 +33,17 @@
 
         <h2 *ngIf="lesson">Lesson: {{lesson.name}}</h2>
         <h5 *ngIf="lesson?.due">Due On: {{lesson.due | date}}</h5>
-        <mat-accordion class="example-headers-align">
+        <mat-accordion width="80%" class="example-headers-align">
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title *ngIf="lesson">{{lesson.name}}</mat-panel-title>
-                    <mat-panel-description>{{lesson.pages.length}} pages</mat-panel-description>
+                    <mat-panel-description>{{lesson.pages.length}} pages<mat-icon></mat-icon></mat-panel-description>
                 </mat-expansion-panel-header>
                 <ng-container *ngFor="let page of pages">
                 <mat-nav-list *ngIf="(page.status == 'PUBLISHED')">
                     <mat-list-item>
-                        <a mat-list-item *ngIf="page.submissions == null || page.submissions.length == 0" (click)=startNewSubmission(page)>{{page.name}}</a>
-                        <a mat-list-item *ngIf="page.submissions != null && page.submissions.length > 0" (click)=continueSubmission(page.submissions[0].id)>{{page.name}}</a>
+                        <a mat-list-item *ngIf="page.submissions == null || page.submissions.length == 0" (click)=startNewSubmission(page)><mat-icon class="icon-spacing">check_box_outline_blank</mat-icon> {{page.name}}</a>
+                        <a mat-list-item *ngIf="page.submissions != null && page.submissions.length > 0" (click)=continueSubmission(page.submissions[0].id)><mat-icon class="icon-spacing">{{getIconForStatus(page.submissions[0].status)}}</mat-icon>{{page.name}}</a>
                     </mat-list-item>
 
                 </mat-nav-list>
