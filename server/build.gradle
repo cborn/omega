@@ -57,7 +57,7 @@ dependencies {
     testCompile "org.grails:grails-datastore-rest-client"
     testCompile "org.grails:grails-web-testing-support"
 
-    compile group: 'org.postgresql', name: 'postgresql', version: '9.4.1212'
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
 
     compile "org.grails.plugins:aws-sdk-s3:$awsSdkS3Version"
 

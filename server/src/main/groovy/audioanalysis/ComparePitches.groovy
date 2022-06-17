@@ -70,7 +70,7 @@ class ComparePitches{
     }
 
     def similarityScore(pitch1, pitch2){
-        //troughout this file, 1 refers to model and 2 refers to student
+        //throughout this file, 1 refers to model and 2 refers to student
         def str_p1 = pitch1.toString()
         def str_p2 = pitch2.toString()
         

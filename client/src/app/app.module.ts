@@ -242,14 +242,6 @@ import {MatStepperModule} from "@angular/material/stepper";
                 align: {
                     dropdown: ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
                     ico: 'justifyLeft'
-                },
-                indent: {
-                    title: 'Indent',
-                    ico: 'indent'
-                },
-                outdent: {
-                    title: 'Outdent',
-                    ico: 'outdent'
                 }
             },
             btns: [
