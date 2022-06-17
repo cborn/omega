@@ -39,5 +39,43 @@ export class LessonRendererComponent implements OnInit {
             return value.question.id === question.id;
         });
     }
+    activedStep = 0;
+
+    prevStep(step) {
+        this.activedStep = step - 1;
+    }
+
+    nextStep(step) {
+        this.activedStep = step + 1;
+    }
+
+    getIconForQuestionType(type: string) {
+        switch (type) {
+            case 'VOICE' :
+                return 'mic';
+            case 'MULTI_CHOICE' :
+                return 'format_list_bulleted';
+            case 'CLOZE' :
+                return 'app_registration';
+            case 'BOOLEAN' :
+                return 'toggle_on';
+            case 'SHORT_TEXT' :
+                return 'smart_button';
+            case 'LONG_TEXT' :
+                return 'notes';
+            case 'BLOCK_TEXT' :
+                return 'info';
+            case 'PICTURE_CHOICE' :
+                return 'switch_account';
+            case 'SCALE' :
+                return 'linear_scale';
+            case 'DATE' :
+                return 'calendar_month';
+            case 'NUMBER' :
+                return 'calculate';
+            case 'DROPDOWN' :
+                return 'arrow_drop_down_circle';
+        }
+    }
 
 }

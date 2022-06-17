@@ -43,3 +43,7 @@ mat-card-header {
 .graded-marker {
     background: #3F51B5;
 }
+
+.icon-spacing {
+    padding-right:5px;
+}
