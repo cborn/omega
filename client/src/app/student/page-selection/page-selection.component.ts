@@ -141,4 +141,18 @@ export class PageSelectionComponent implements OnInit {
 
     }
 
+    getIconForStatus(status: string) {
+        switch (status) {
+            case 'AWAITING_REVIEW' :
+                return 'queue';
+            case 'SEEN' :
+                return 'remove_red_eye';
+            case 'COMMENTS_PENDING' :
+                return 'comment';
+            case 'COMMENTS_RESPONDED' :
+                return 'reply';
+            case 'GRADED' :
+                return 'grade';
+        }
+    }
 }
