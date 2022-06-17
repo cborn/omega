@@ -1,4 +1,5 @@
-<div *ngFor="let question of lesson.questions | positionOrder:'asc'" class="question" [ngClass]="{ 'rtl':question.custom_properties.rtl_text}">
+<mat-horizontal-stepper>
+<mat-step *ngFor="let question of lesson.questions | positionOrder:'asc';" class="question" [ngClass]="{ 'rtl':question.custom_properties.rtl_text}">
 
 
     <img *ngIf="question.prompts?.imagePrompt" [src]="question.prompts?.imagePrompt.url" class="image-prompt" />
@@ -40,6 +41,11 @@
             <small class="right">{{comment.user.username}}</small>
         </div>
     </div>
+    <div>
+        <button mat-button matStepperPrevious class="btn btn-primary" type="button">Back</button>
+        <button  mat-button matStepperNext class="btn btn-primary" type="button" >Next</button>
+    </div>
 
+</mat-step>
 
-</div>
+</mat-horizontal-stepper>

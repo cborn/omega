@@ -107,6 +107,7 @@ import { SanitizeDomContentPipe } from './pipes/sanitize-dom-content.pipe';
 import {RubricGradingDialogComponent} from "./dialogs/rubric-grading-dialog";
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatExpansionModule} from "@angular/material/expansion";
+import {MatStepperModule} from "@angular/material/stepper";
 
 // @ts-ignore
 @NgModule({
@@ -295,7 +296,8 @@ import {MatExpansionModule} from "@angular/material/expansion";
             }
         }),
         DragDropModule,
-        MatExpansionModule
+        MatExpansionModule,
+        MatStepperModule
     ],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},
         {

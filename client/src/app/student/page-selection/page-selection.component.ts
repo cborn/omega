@@ -144,9 +144,9 @@ export class PageSelectionComponent implements OnInit {
     getIconForStatus(status: string) {
         switch (status) {
             case 'SUBMITTED' :
-                return 'done_outline';
+                return 'check_box';
             case 'SEEN' :
-                return 'done_outline';
+                return 'check_box';
             case 'COMMENTS_PENDING' :
                 return 'mark_unread_chat_alt';
             case 'COMMENTS_RESPONDED' :
