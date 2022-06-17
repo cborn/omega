@@ -68,7 +68,8 @@ export class PromptRecordingDialogComponent {
     successCallback(stream) {
         const options = {
             mimeType: 'audio/wav',
-            numberOfAudioChannels: 1
+            numberOfAudioChannels: 1,
+            sampleRate: 44100
         };
 
         // Start Actual Recording
