@@ -28,10 +28,10 @@
 @media only screen and (min-width: 1400px){
 
     .lesson-renderer {
-        width: 90%;
-        left: 50%;
+        width: 80%;
+        left: 10%;
         display: block;
-        transform: translate(-35%, 0);
+       /* transform: translate(-35%, 0); */
         position: absolute;
     }
 
